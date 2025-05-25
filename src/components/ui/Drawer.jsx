@@ -1,12 +1,35 @@
 import React, { useRef, useState } from "react";
 import { X, Trash2 } from "lucide-react";
+import { BsXLg } from "react-icons/bs";
 
 const Drawer = ({ setIsOpen }) => {
+  const [showForm, setShowForm] = useState(false);
+  const [adminEmail, setAdminEmail] = useState("");
+  const [adminUsername, setAdminUsername] = useState("");
+  const [admins, setAdmins] = useState([]);
   const [imageSrc, setImageSrc] = useState(null);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
 
   const MAX_SIZE_MB = 3;
+
+  const handleAddAdmin = () => {
+    if (!adminEmail || !adminUsername) return;
+
+    const newAdmin = {
+      email: adminEmail,
+      username: adminUsername,
+    };
+
+    setAdmins((prev) => [newAdmin, ...prev]);
+    setAdminEmail("");
+    setAdminUsername("");
+    setShowForm(false);
+  };
+
+  const handleRemoveAdmin = (indexToRemove) => {
+    setAdmins((prev) => prev.filter((_, index) => index !== indexToRemove));
+  };
 
   const handleUploadClick = () => {
     setError("");
@@ -177,29 +200,77 @@ const Drawer = ({ setIsOpen }) => {
                 </div>
               </div>
               <div className="space-y-3">
-                <p>Add a team member</p>
-                <div className="space-y-2">
-                  <div className="space-y-2 w-full">
-                    <label className="text-sm font-medium text-gray-700 block">
-                      Team member email
-                    </label>
-                    <input
-                      type="email"
-                      placeholder="Enter team member email"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
-                    />
+                {admins.length > 0 && (
+                  <div className="space-y-2">
+                    <p className="font-medium text-gray-700">Added Admins:</p>
+                    {admins.map((admin, index) => (
+                      <div className="flex items-center justify-between">
+                        <div
+                          key={index}
+                          className="text-sm flex flex-col gap-1 justify-between"
+                        >
+                          <p className="font-semibold">{admin.username}</p>
+                          <p className="text-gray-500">{admin.email}</p>
+                        </div>
+                        <button
+                          onClick={() => handleRemoveAdmin(index)}
+                          className="text-gray-400 hover:text-gray-600"
+                        >
+                          <BsXLg />
+                        </button>
+                      </div>
+                    ))}
                   </div>
+                )}
+                {!showForm ? (
+                  <button
+                    onClick={() => setShowForm(true)}
+                    className="px-6 py-2.5 bg-c-bg hover:bg-c-color text-white rounded-lg cursor-pointer transition-colors text-sm"
+                  >
+                    Add Admin
+                  </button>
+                ) : (
                   <div className="space-y-2 w-full">
-                    <label className="text-sm font-medium text-gray-700 block">
-                      Team member username
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Enter team member email"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
-                    />
+                    <div className="space-y-2 w-full">
+                      <label className="text-sm font-medium text-gray-700 block">
+                        Admin email
+                      </label>
+                      <input
+                        type="email"
+                        value={adminEmail}
+                        onChange={(e) => setAdminEmail(e.target.value)}
+                        placeholder="Enter team member email"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
+                      />
+                    </div>
+                    <div className="space-y-2 w-full">
+                      <label className="text-sm font-medium text-gray-700 block">
+                        Admin username
+                      </label>
+                      <input
+                        type="text"
+                        value={adminUsername}
+                        onChange={(e) => setAdminUsername(e.target.value)}
+                        placeholder="Enter team member username"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
+                      />
+                    </div>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={handleAddAdmin}
+                        className="px-6 py-2.5 bg-c-bg hover:bg-c-color text-white rounded-lg cursor-pointer transition-colors text-sm"
+                      >
+                        Confirm Add
+                      </button>
+                      <button
+                        onClick={() => setShowForm(false)}
+                        className="px-6 py-2.5 bg-gray-200 text-gray-600 rounded-lg cursor-pointer text-sm"
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
