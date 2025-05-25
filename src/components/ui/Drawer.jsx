@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { X, Trash2 } from "lucide-react";
 import { BsXLg } from "react-icons/bs";
+import { useForm } from "react-hook-form";
 
 const Drawer = ({ setIsOpen }) => {
   const [showForm, setShowForm] = useState(false);
@@ -8,8 +9,10 @@ const Drawer = ({ setIsOpen }) => {
   const [adminUsername, setAdminUsername] = useState("");
   const [admins, setAdmins] = useState([]);
   const [imageSrc, setImageSrc] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
+  const { register, handleSubmit } = useForm();
 
   const MAX_SIZE_MB = 3;
 
@@ -47,6 +50,7 @@ const Drawer = ({ setIsOpen }) => {
       return;
     }
 
+    setImageFile(file);
     const reader = new FileReader();
     reader.onloadend = () => {
       setImageSrc(reader.result);
@@ -56,11 +60,21 @@ const Drawer = ({ setIsOpen }) => {
   };
 
   const handleRemove = () => {
+    setImageFile(null);
     setImageSrc(null);
     setError("");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+  };
+
+  const onSubmit = (data) => {
+    const updatedData = {
+      ...data,
+      workspaceLogo: imageFile,
+      admins: admins,
+    };
+    console.log("Form submitted with data:", updatedData);
   };
 
   return (
@@ -87,7 +101,7 @@ const Drawer = ({ setIsOpen }) => {
 
         <div className="p-6 space-y-6">
           <div className="space-y-4">
-            <div className="space-y-6 pl-0">
+            <div div className="space-y-6 pl-0">
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700 block mb-4">
                   Workspace logo
@@ -143,6 +157,7 @@ const Drawer = ({ setIsOpen }) => {
                   <input
                     type="text"
                     placeholder="Enter workspace name"
+                    {...register("workspaceName", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -153,6 +168,7 @@ const Drawer = ({ setIsOpen }) => {
                   <input
                     type="email"
                     placeholder="Enter workspace email"
+                    {...register("workspaceEmail", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -165,6 +181,7 @@ const Drawer = ({ setIsOpen }) => {
                     id=""
                     rows="3"
                     placeholder="Enter workspace description"
+                    {...register("workspaceDescription", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   ></textarea>
                 </div>
@@ -175,6 +192,7 @@ const Drawer = ({ setIsOpen }) => {
                   <input
                     type="text"
                     placeholder="Enter monthly revenue (USD)"
+                    {...register("monthlyRevenue", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -185,6 +203,7 @@ const Drawer = ({ setIsOpen }) => {
                   <select
                     name=""
                     id=""
+                    {...register("numberOfEmployees", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   >
                     <option value="" disabled selected>
@@ -204,11 +223,11 @@ const Drawer = ({ setIsOpen }) => {
                   <div className="space-y-2">
                     <p className="font-medium text-gray-700">Added Admins:</p>
                     {admins.map((admin, index) => (
-                      <div className="flex items-center justify-between">
-                        <div
-                          key={index}
-                          className="text-sm flex flex-col gap-1 justify-between"
-                        >
+                      <div
+                        className="flex items-center justify-between"
+                        key={index}
+                      >
+                        <div className="text-sm flex flex-col gap-1 justify-between">
                           <p className="font-semibold">{admin.username}</p>
                           <p className="text-gray-500">{admin.email}</p>
                         </div>
@@ -284,7 +303,10 @@ const Drawer = ({ setIsOpen }) => {
             >
               Cancel
             </button>
-            <button className="flex-1 py-2 px-4 bg-c-color text-white rounded-lg text-sm font-medium hover:bg-c-bg transition-colors">
+            <button
+              className="flex-1 py-2 px-4 bg-c-color text-white rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
+              onClick={handleSubmit(onSubmit)}
+            >
               Save Changes
             </button>
           </div>

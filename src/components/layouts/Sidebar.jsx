@@ -57,9 +57,8 @@ export default function Sidebar() {
         <div className="w-full space-y-4">
           <div className="py-5 px-3 flex items-center gap-2 border-b border-b-white/10 h-[85.12px]">
             <div
-              className={`w-full h-full gap-2 rounded-lg px-3 py-3 flex items-center justify-center text-sm font-light cursor-pointer bg-c-color`}
+              className={`w-full h-full gap-2 rounded-lg px-3 py-3 font-light`}
             >
-              <PiPokerChip size={22} />
               Look up
             </div>
             {/* <div

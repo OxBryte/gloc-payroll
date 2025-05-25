@@ -6,7 +6,7 @@ export default function Navbar() {
   return (
     <div className="w-full mx-auto py-5 border-b border-black/10 h-[85.12px]">
       <div className="mx-auto px-4 md:px-6 flex items-center justify-between max-w-[1280px]">
-        <p>logo</p>
+        <p className="font-semibold text-[20px]">Welcome, Bright Team</p>
         {/* <div className="flex items-center gap-3 h-auto">
           <Link to="/signup">
             <button className="px-5 py-2.5 bg-c-color rounded-lg hover:bg-c-bg cursor-pointer text-white">
