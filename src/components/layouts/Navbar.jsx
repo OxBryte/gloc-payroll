@@ -8,12 +8,12 @@ export default function Navbar() {
         <p>logo</p>
         <div className="flex items-center gap-3 h-auto">
           <Link to="/signup">
-            <button className="px-5 py-2.5 bg-c-color rounded-lg hover:opacity-70 cursor-pointer text-white">
+            <button className="px-5 py-2.5 bg-c-color rounded-lg hover:bg-c-bg cursor-pointer text-white">
               Create account
             </button>
           </Link>
           <Link to="/login">
-            <button className="px-5 py-2.5 bg-c-bg rounded-lg hover:opacity-70 cursor-pointer text-white">
+            <button className="px-5 py-2.5 bg-c-bg rounded-lg hover:bg-c-color cursor-pointer text-white">
               Login
             </button>
           </Link>
