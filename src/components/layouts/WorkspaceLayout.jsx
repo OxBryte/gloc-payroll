@@ -2,7 +2,7 @@ import React from "react";
 import { GoRocket } from "react-icons/go";
 import { IoDiceOutline } from "react-icons/io5";
 import { LuHandshake } from "react-icons/lu";
-import { PiHeadphones, PiPokerChip, PiVolleyballLight } from "react-icons/pi";
+import { PiHeadphones } from "react-icons/pi";
 import { RiHome5Line, RiSettingsLine } from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
 
@@ -42,59 +42,41 @@ const data2 = [
   },
   {
     id: 3,
-    name: "live Support",
+    name: "Live Support",
     icon: <PiHeadphones size={22} />,
     link: "/live-support",
   },
 ];
 
-export default function Sidebar() {
-  const [selectTab, setSelectTab] = React.useState("Casino");
+export default function WorkspaceLayout() {
   const { pathname } = useLocation();
 
   return (
-    <div className="hidden md:block text-white">
-      <div className="bg-c-bg w-[16rem] border-r border-r-white/10 h-screen">
+    <div className="hidden md:block">
+      <div className="bg-[#f4f6f8] w-[12rem] h-screen">
         <div className="w-full space-y-4">
-          <div className="py-5 px-3 flex items-center gap-2 border-b border-b-white/10 h-[85.12px]">
-            <div
-              onClick={() => setSelectTab("Casino")}
-              className={`w-full h-full gap-2 rounded-lg px-3 py-3 flex items-center justify-center text-sm font-light cursor-pointer ${
-                selectTab === "Casino" ? "bg-c-color" : "bg-c-bg-2"
-              }`}
-            >
-              <PiPokerChip size={22} />
-              Look up
-            </div>
-            {/* <div
-              onClick={() => setSelectTab("Sport")}
-              className={`w-full h-full gap-2 rounded-lg px-3 py-3 flex items-center justify-center text-sm font-light cursor-pointer ${
-                selectTab === "Sport" ? "bg-c-color" : "bg-c-bg-2"
-              }`}
-            >
-              <PiVolleyballLight size={22} />
-              Sport
-            </div> */}
+          <div className="py-5 px-3 flex items-center gap-2 border-b border-b-black/10 h-[85.12px]">
+            
           </div>
 
-          <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
+          <div className="py-3 px-2 flex flex-col gap-3 w-full border-b border-b-white/10">
             {data.map((item) => {
               const isActive = pathname === item.link;
               return (
                 <Link to={item.link} key={item.id} className="flex">
                   {/* left indicator only if active */}
-                  <div
+                  {/* <div
                     className={`w-[5px] h-[50px] ${
                       isActive && "bg-c-color"
                     } rounded-r-lg`}
-                  ></div>
+                  ></div> */}
 
                   <div
-                    className={`flex items-center w-full h-[50px] px-3 ml-2 text-sm font-light cursor-pointer rounded-lg hover:opacity-60
+                    className={`flex flex-col gap-2 items-center w-full py-2 px-3 text-sm font-light cursor-pointer rounded-lg hover:opacity-60
                       ${isActive ? "bg-c-color text-white" : ""}`}
                   >
                     {item.icon}
-                    <span className="ml-2">{item.name}</span>
+                    <span className="">{item.name}</span>
                   </div>
                 </Link>
               );
@@ -106,18 +88,18 @@ export default function Sidebar() {
               return (
                 <Link to={item.link} key={item.id} className="flex">
                   {/* left indicator only if active */}
-                  <div
+                  {/* <div
                     className={`w-[5px] h-[50px] ${
                       isActive && "bg-c-color"
                     } rounded-r-lg`}
-                  ></div>
+                  ></div> */}
 
                   <div
-                    className={`flex items-center w-full h-[50px] px-3 ml-2 text-sm font-light cursor-pointer rounded-lg hover:opacity-60
+                    className={`flex flex-col gap-2 items-center w-full py-2 px-3 text-sm font-light cursor-pointer rounded-lg hover:opacity-60
                       ${isActive ? "bg-c-color" : ""}`}
                   >
                     {item.icon}
-                    <span className="ml-2">{item.name}</span>
+                    <span className="">{item.name}</span>
                   </div>
                 </Link>
               );

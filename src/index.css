@@ -2,12 +2,12 @@
 
 @theme {
   --color-c-bg: #0f0f0f;
-  --color-c-bg-2: #1d283a;
+  /* --color-c-bg-2: #1d283a; */
   --color-c-color: #5044f5;
 }
 
 body {
   font-family: "Inter Variable", sans-serif;
-  background: #f4f6f8;
+  background: #F9FAFB;
   color: #0f0f0f;
 }
