@@ -17,7 +17,7 @@ const data = [
     id: 2,
     name: "Workspace",
     icon: <GoRocket size={22} />,
-    link: "/workspace/:slug",
+    link: "workspace",
   },
   {
     id: 3,
