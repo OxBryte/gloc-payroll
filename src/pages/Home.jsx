@@ -19,7 +19,7 @@ export default function Home() {
               </button>
             </div>
             <div className="space-y-2">
-              <p className="text-[20px] font-semibold">Workspace Name</p>
+              <p className="text-[20px] font-semibold">Bright Team</p>
               <p className="text-gray-500 text-sm font-light">
                 This is a description of the workspace. It can be a brief
                 overview or any other relevant information...

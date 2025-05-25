@@ -1,4 +1,5 @@
 import React from "react";
+import { CgChevronDown } from "react-icons/cg";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
@@ -6,7 +7,7 @@ export default function Navbar() {
     <div className="w-full mx-auto py-5 border-b border-black/10">
       <div className="mx-auto px-4 flex items-center justify-between max-w-[1280px]">
         <p>logo</p>
-        <div className="flex items-center gap-3 h-auto">
+        {/* <div className="flex items-center gap-3 h-auto">
           <Link to="/signup">
             <button className="px-5 py-2.5 bg-c-color rounded-lg hover:bg-c-bg cursor-pointer text-white">
               Create account
@@ -17,6 +18,14 @@ export default function Navbar() {
               Login
             </button>
           </Link>
+        </div> */}
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-c-color"></div>
+          <div className="space-y-0">
+            <p className="text-sm font-semibold">Olumide Silas</p>
+            <p className="text-xs text-gray-500">Admin</p>
+          </div>
+          <CgChevronDown/>
         </div>
       </div>
     </div>

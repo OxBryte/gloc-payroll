@@ -4,6 +4,7 @@ import AppLayout from "./components/layouts/AppLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Settings from "./pages/Settings";
+import Workspace from "./pages/Workspace";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<AppLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/workspace" element={<Workspace />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/:id" element={<h1>Dynamic Route</h1>} />
           </Route>
