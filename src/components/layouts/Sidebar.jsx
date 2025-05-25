@@ -21,7 +21,7 @@ const data = [
   },
   {
     id: 2,
-    name: "Dice",
+    name: "Payroll",
     icon: <IoDiceOutline size={22} />,
     link: "/dice",
   },
@@ -83,10 +83,10 @@ export default function Sidebar() {
   const { pathname } = useLocation();
 
   return (
-    <div className="hidden md:block">
-      <div className="bg-c-bg w-[16rem] border-r border-r-c-border h-screen">
+    <div className="hidden md:block text-white">
+      <div className="bg-c-bg w-[16rem] border-r border-r-white/10 h-screen">
         <div className="w-full space-y-4">
-          <div className="py-5 px-3 flex items-center gap-2 border-b border-b-c-border h-[85.12px]">
+          <div className="py-5 px-3 flex items-center gap-2 border-b border-b-white/10 h-[85.12px]">
             <div
               onClick={() => setSelectTab("Casino")}
               className={`w-full h-full gap-2 rounded-lg px-3 py-3 flex items-center justify-center text-sm font-light cursor-pointer ${
@@ -107,7 +107,7 @@ export default function Sidebar() {
             </div>
           </div>
           {selectTab === "Casino" && (
-            <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-c-border">
+            <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
               {data.map((item) => {
                 const isActive = pathname === item.link;
                 return (
@@ -131,7 +131,7 @@ export default function Sidebar() {
               })}
             </div>
           )}
-          <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-c-border">
+          <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
             {data2.map((item) => {
               const isActive = pathname === item.link;
               return (

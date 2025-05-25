@@ -14,6 +14,7 @@ function App() {
           <Route path="/" element={<AppLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/:id" element={<h1>Dynamic Route</h1>} />
           </Route>
         </Routes>
       </BrowserRouter>
