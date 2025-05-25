@@ -53,7 +53,7 @@ export default function Sidebar() {
 
   return (
     <div className="hidden md:block text-white">
-      <div className="bg-c-bg w-[16rem] border-r border-r-white/10 h-screen">
+      <div className="bg-c-bg w-[16rem] sticky top-0 border-r border-r-white/10 h-screen">
         <div className="w-full space-y-4">
           <div className="py-5 px-3 flex items-center gap-2 border-b border-b-white/10 h-[85.12px]">
             <div

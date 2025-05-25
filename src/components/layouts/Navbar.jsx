@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <div className="w-full mx-auto py-5 border-b border-black/10">
-      <div className="mx-auto px-4 flex items-center justify-between max-w-[1280px]">
+    <div className="w-full mx-auto py-5 border-b border-black/10 h-[85.12px]">
+      <div className="mx-auto px-4 md:px-6 flex items-center justify-between max-w-[1280px]">
         <p>logo</p>
         {/* <div className="flex items-center gap-3 h-auto">
           <Link to="/signup">
@@ -25,7 +25,7 @@ export default function Navbar() {
             <p className="text-sm font-semibold">Olumide Silas</p>
             <p className="text-xs text-gray-500">Admin</p>
           </div>
-          <CgChevronDown/>
+          <CgChevronDown />
         </div>
       </div>
     </div>
