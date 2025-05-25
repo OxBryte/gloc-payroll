@@ -14,7 +14,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<AppLayout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/workspace" element={<Workspace />} />
+            {/* <Route path="/workspace/:slug" element={<Workspace />} /> */}
+            <Route path="/workspace/:id" element={<Workspace />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/:id" element={<h1>Dynamic Route</h1>} />
           </Route>

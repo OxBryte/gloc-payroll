@@ -4,7 +4,7 @@ import { IoDiceOutline } from "react-icons/io5";
 import { LuHandshake } from "react-icons/lu";
 import { PiHeadphones, PiPokerChip, PiVolleyballLight } from "react-icons/pi";
 import { RiHome5Line, RiSettingsLine } from "react-icons/ri";
-import { Link, useLocation } from "react-router-dom";
+import { Link, matchPath, useLocation } from "react-router-dom";
 
 const data = [
   {
@@ -17,7 +17,7 @@ const data = [
     id: 2,
     name: "Workspace",
     icon: <GoRocket size={22} />,
-    link: "/workspace",
+    link: "/workspace/:slug",
   },
   {
     id: 3,
@@ -49,7 +49,6 @@ const data2 = [
 ];
 
 export default function Sidebar() {
-  const [selectTab, setSelectTab] = React.useState("Casino");
   const { pathname } = useLocation();
 
   return (
@@ -58,10 +57,7 @@ export default function Sidebar() {
         <div className="w-full space-y-4">
           <div className="py-5 px-3 flex items-center gap-2 border-b border-b-white/10 h-[85.12px]">
             <div
-              onClick={() => setSelectTab("Casino")}
-              className={`w-full h-full gap-2 rounded-lg px-3 py-3 flex items-center justify-center text-sm font-light cursor-pointer ${
-                selectTab === "Casino" ? "bg-c-color" : "bg-c-bg-2"
-              }`}
+              className={`w-full h-full gap-2 rounded-lg px-3 py-3 flex items-center justify-center text-sm font-light cursor-pointer bg-c-color`}
             >
               <PiPokerChip size={22} />
               Look up
@@ -79,7 +75,11 @@ export default function Sidebar() {
 
           <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
             {data.map((item) => {
-              const isActive = pathname === item.link;
+                const match = matchPath(
+                  { path: item.link, end: item.link === "/" },
+                  pathname
+                );
+                const isActive = Boolean(match);
               return (
                 <Link to={item.link} key={item.id} className="flex">
                   {/* left indicator only if active */}
