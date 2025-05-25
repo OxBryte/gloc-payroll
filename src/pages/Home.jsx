@@ -11,7 +11,7 @@ export default function Home() {
           <p className="font-semibold text-[24px]">Workspace</p>
         </div>
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 hover:shadow-lg transition-shadow duration-200 ease-in-out">
+          <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
             <div className="flex w-full items-center justify-between gap-5">
               <div className="w-12 h-12 rounded-lg bg-gray-200"></div>
               <button className="">
@@ -40,7 +40,7 @@ export default function Home() {
               <p className="text-gray-500 text-xs">Last updated: 2 days ago</p>
             </div> */}
           </div>
-          <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 hover:shadow-lg transition-shadow duration-200 ease-in-out">
+          <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
             <div className="flex w-full items-center justify-between gap-5">
               <div className="w-12 h-12 rounded-lg bg-gray-200"></div>
               <button className="">
@@ -69,7 +69,7 @@ export default function Home() {
               <p className="text-gray-500 text-xs">Last updated: 2 days ago</p>
             </div> */}
           </div>
-          <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 hover:shadow-lg transition-shadow duration-200 ease-in-out">
+          <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
             <div className="flex w-full items-center justify-between gap-5">
               <div className="w-12 h-12 rounded-lg bg-gray-200"></div>
               <button className="">
@@ -98,7 +98,7 @@ export default function Home() {
               <p className="text-gray-500 text-xs">Last updated: 2 days ago</p>
             </div> */}
           </div>
-          <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 hover:shadow-lg transition-shadow duration-200 ease-in-out">
+          <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
             <div className="flex w-full items-center justify-between gap-5">
               <div className="w-12 h-12 rounded-lg bg-gray-200"></div>
               <button className="">
@@ -127,7 +127,7 @@ export default function Home() {
               <p className="text-gray-500 text-xs">Last updated: 2 days ago</p>
             </div> */}
           </div>
-          <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 hover:shadow-lg transition-shadow duration-200 ease-in-out">
+          <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
             <div className="flex w-full items-center justify-between gap-5">
               <div className="w-12 h-12 rounded-lg bg-gray-200"></div>
               <button className="">
