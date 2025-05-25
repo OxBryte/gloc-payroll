@@ -15,7 +15,7 @@ export default function Home() {
           </button>
         </div>
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <Link to="/workspace/bright-team">
+          <Link to="/workspace/bright-team/overview">
             <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
               <div className="flex w-full items-center justify-between gap-5">
                 <div className="w-12 h-12 rounded-lg bg-gray-200"></div>
@@ -46,7 +46,7 @@ export default function Home() {
               </div> */}
             </div>
           </Link>
-          <Link to="/workspace/bright-team">
+          <Link to="/workspace/bright-team/overview">
             <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
               <div className="flex w-full items-center justify-between gap-5">
                 <div className="w-12 h-12 rounded-lg bg-gray-200"></div>
@@ -77,7 +77,7 @@ export default function Home() {
               </div> */}
             </div>
           </Link>
-          <Link to="/workspace/bright-team">
+          <Link to="/workspace/bright-team/overview">
             <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
               <div className="flex w-full items-center justify-between gap-5">
                 <div className="w-12 h-12 rounded-lg bg-gray-200"></div>
@@ -108,7 +108,7 @@ export default function Home() {
               </div> */}
             </div>
           </Link>
-          <Link to="/workspace/bright-team">
+          <Link to="/workspace/bright-team/overview">
             <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
               <div className="flex w-full items-center justify-between gap-5">
                 <div className="w-12 h-12 rounded-lg bg-gray-200"></div>
@@ -139,7 +139,7 @@ export default function Home() {
               </div> */}
             </div>
           </Link>
-          <Link to="/workspace/bright-team">
+          <Link to="/workspace/bright-team/overview">
             <div className="w-full h-[300px] bg-white rounded-lg flex flex-col gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
               <div className="flex w-full items-center justify-between gap-5">
                 <div className="w-12 h-12 rounded-lg bg-gray-200"></div>
