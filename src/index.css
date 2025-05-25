@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+ --border-color-c-border: #CCCCCC40;
+  --color-c-bg: #2B394E;
+  --color-c-bg-2: #1D283A;
+  --color-c-color: #5044F5;
+}
+
+body {
+  font-family: "Inter Variable", sans-serif;
+  background: #1D283A;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+
+
+
+
+
+  /*  */
+
+  /* --border-color-c-border: #2a2e38;
+  --color-c-bg: #121418;
+  --color-c-color: #5044F5; */
+  /* --color-c-bg: #080808;
