@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import AuthLayout from "./components/layouts/AuthLayout";
 import SignUp from "./pages/SignUp";
 import VerifyEmail from "./pages/VerifyEmail";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const NavigationLoader = () => {
@@ -46,13 +47,18 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
           </Route>
-          <Route path="/" element={<AppLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/workspace" element={<Workspace />} />
-            <Route path="/workspace/:slug" element={<SingleWorkspace />} />
-            <Route path="/workspace/:slug/:id" element={<SingleWorkspace />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/:id" element={<h1>Dynamic Route</h1>} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<AppLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/workspace" element={<Workspace />} />
+              <Route path="/workspace/:slug" element={<SingleWorkspace />} />
+              <Route
+                path="/workspace/:slug/:id"
+                element={<SingleWorkspace />}
+              />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/:id" element={<h1>Dynamic Route</h1>} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
