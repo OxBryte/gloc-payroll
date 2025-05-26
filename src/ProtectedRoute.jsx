@@ -4,7 +4,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "./components/hooks/auth";
 
 const ProtectedRoute = ({ redirectTo = "/login" }) => {
-  const { user, isAuthenticated, isLoadingUser } = useAuth();
+  const { isAuthenticated, isLoadingUser } = useAuth();
   const location = useLocation();
 
   // Show loading spinner while checking auth status
@@ -27,9 +27,9 @@ const ProtectedRoute = ({ redirectTo = "/login" }) => {
   if (!isAuthenticated) {
     return <Navigate to={redirectTo} state={{ from: location }} replace />;
   }
-  if (!user?.isEmailVerified) {
-    return <Navigate to={"verify-email"} state={{ from: location }} replace />;
-  }
+  // if (!user?.isEmailVerified) {
+  //   return <Navigate to={"verify-email"} state={{ from: location }} replace />;
+  // }
 
   // If user is authenticated, render the protected component
   return <Outlet />;
