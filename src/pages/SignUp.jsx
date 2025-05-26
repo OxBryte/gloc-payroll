@@ -1,9 +1,10 @@
 import { Trash2, Eye, EyeOff, Check, X } from "lucide-react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSignup } from "../components/hooks/useAuth";
+import { getCookie } from "../components/lib/utils";
 
 export default function SignUp() {
   const [imageSrc, setImageSrc] = useState(null);
@@ -13,6 +14,15 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const fileInputRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = getCookie("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const { signupFn, isPending: isSigningUp } = useSignup();
   const {

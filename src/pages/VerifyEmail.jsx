@@ -1,10 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useVerify } from "../components/hooks/useAuth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getCookie } from "../components/lib/utils";
 
 export default function VerifyEmail() {
   const [otp, setOtp] = useState(new Array(4).fill(""));
   const userEmail = localStorage.getItem("userEmail");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = getCookie("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const { verifyFn, isPending } = useVerify();
 
@@ -73,12 +84,10 @@ export default function VerifyEmail() {
 
           <div className="text-center w-full">
             <p className="text-sm font-light ">
-              Don't have an account?{" "}
-              <Link to="/signup">
-                <span className="text-c-color font-bold cursor-pointer">
-                  SignUp
-                </span>
-              </Link>
+              Resend code?{" "}
+              <span className="text-c-color font-bold cursor-pointer">
+                Resend
+              </span>
             </p>
           </div>
         </div>

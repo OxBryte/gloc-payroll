@@ -1,11 +1,21 @@
 import { Eye, EyeOff } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../components/hooks/useAuth";
+import { getCookie } from "../components/lib/utils";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = getCookie("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const { loginFn, isPending: isLoginingIn } = useLogin();
   const {

@@ -1,8 +1,12 @@
 import React from "react";
 import { CgChevronDown } from "react-icons/cg";
 import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/auth";
 
 export default function Navbar() {
+
+  // const { user, isAuthenticated } = useAuth();
+
   return (
     <div className="w-full mx-auto py-5 border-b border-black/10 h-[85.12px]">
       <div className="mx-auto px-4 md:px-6 flex items-center justify-between max-w-[1280px]">
