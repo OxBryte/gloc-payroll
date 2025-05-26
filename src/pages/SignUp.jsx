@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { useSignup } from "../components/hooks/useAuth";
 
 export default function SignUp() {
   const [imageSrc, setImageSrc] = useState(null);
@@ -13,16 +14,13 @@ export default function SignUp() {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const fileInputRef = useRef(null);
 
+  const { signupFn, isPending: isSigningUp } = useSignup();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
-    // defaultValues: {
-    //   username: "",
-    //   password: "",
-    // },
   });
 
   const MAX_SIZE_MB = 3;
@@ -43,13 +41,17 @@ export default function SignUp() {
       return;
     }
 
+    // Store the actual File object
     setImageFile(file);
+
+    // Create preview
     const reader = new FileReader();
     reader.onloadend = () => {
       setImageSrc(reader.result);
       setError("");
     };
     reader.readAsDataURL(file);
+
   };
 
   const handleRemove = () => {
@@ -63,7 +65,7 @@ export default function SignUp() {
 
   // Enhanced password validation with individual checks
   const passwordValidation = {
-    minLength: password.length >= 8,
+    minLength: password.length >= 6,
     hasUpperCase: /[A-Z]/.test(password),
     hasLowerCase: /[a-z]/.test(password),
     hasNumber: /\d/.test(password),
@@ -76,10 +78,26 @@ export default function SignUp() {
     setPassword(e.target.value);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
+    // Method 1: Using FormData (recommended for file uploads)
+    const formData = new FormData();
 
-    alert("Form submitted successfully!");
+    // Append text fields
+    formData.append("email", data.email);
+    formData.append("fullName", data.fullName);
+    formData.append("username", data.username);
+    formData.append("password", password);
+    formData.append(
+      "walletAddress",
+      "0x1234567890abcdef1234567890abcdef12345678"
+    );
+
+    // Append file if exists
+    if (imageFile) {
+      formData.append("avatar", imageFile, imageFile.name);
+    }
+    
+    signupFn(formData);
   };
 
   const ValidationItem = ({ isValid, text }) => (
@@ -105,7 +123,10 @@ export default function SignUp() {
         </p>
       </div>
       <div className="space-y-7 w-full">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-4 w-full"
+        >
           <div className="flex items-end space-x-4 justify-between">
             <div className="h-24 w-24 rounded-lg border border-dashed overflow-hidden relative">
               {imageSrc ? (
@@ -132,7 +153,7 @@ export default function SignUp() {
                 onChange={handleFileChange}
               />
               <p className="text-xs text-gray-500 mt-1">
-                JPG, GIF or PNG. 2MB Max.
+                JPG, GIF or PNG. 3MB Max.
               </p>
               {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
               {imageSrc && (
@@ -234,13 +255,6 @@ export default function SignUp() {
                     : "border-black/10 focus:border-blue-500 focus:ring-blue-500"
                 } focus:outline-none focus:ring-1`}
                 required
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 8 characters long",
-                  },
-                })}
               />
               <button
                 type="button"
@@ -268,7 +282,7 @@ export default function SignUp() {
                 </p>
                 <ValidationItem
                   isValid={passwordValidation.minLength}
-                  text="At least 8 characters"
+                  text="At least 6 characters"
                 />
                 <ValidationItem
                   isValid={passwordValidation.hasUpperCase}
@@ -284,26 +298,26 @@ export default function SignUp() {
                 />
                 <ValidationItem
                   isValid={passwordValidation.hasSpecialChar}
-                  text="One special character (@$!%*?&)"
+                  text="One special character (@$!%*?&#)"
                 />
               </div>
             )}
           </div>
+
           <div className="px-5 w-full py-3 flex justify-center rounded-md cursor-pointer transition-colors text-white bg-c-color hover:bg-c-bg">
             Connect Wallet
           </div>
 
           <button
             type="submit"
-            onClick={handleSubmit(onSubmit)}
             className={`px-5 py-3 rounded-md text-white cursor-pointer transition-colors ${
-              isPasswordValid
+              isPasswordValid && imageFile
                 ? "bg-c-color hover:bg-c-bg"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
-            disabled={!isPasswordValid || !imageFile}
+            disabled={!isPasswordValid || !imageFile || isSigningUp}
           >
-            Sign Up
+            {isSigningUp ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
 

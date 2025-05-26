@@ -9,6 +9,7 @@ import SingleWorkspace from "./pages/SingleWorkspace";
 import { useEffect, useState } from "react";
 import AuthLayout from "./components/layouts/AuthLayout";
 import SignUp from "./pages/SignUp";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
   const NavigationLoader = () => {
@@ -43,6 +44,7 @@ function App() {
           <Route element={<AuthLayout />}>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
           </Route>
           <Route path="/" element={<AppLayout />}>
             <Route path="/" element={<Home />} />
