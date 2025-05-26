@@ -1,8 +1,35 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useVerify } from "../components/hooks/useAuth";
 
 export default function VerifyEmail() {
+  const [otp, setOtp] = useState(new Array(4).fill(""));
+  const userEmail = localStorage.getItem("userEmail");
+
+  const { verifyFn, isPending } = useVerify();
+
+  // Handle OTP change
+  const handleOtpChange = (element, index) => {
+    const newOtp = [...otp];
+    newOtp[index] = element.value;
+    setOtp(newOtp);
+
+    // Auto-focus to next input
+    if (element.nextSibling && element.value) {
+      element.nextSibling.focus();
+    }
+  };
+
+  // Handle OTP submit
+  const handleVerify = () => {
+    const otpInput = otp.join("");
+    if (otpInput) {
+      verifyFn({ email: userEmail, code: otpInput });
+    } else {
+      alert("Invalid OTP");
+    }
+  };
+
   return (
     <>
       <div className="w-full max-w-[36rem] space-y-6 p-20">
@@ -18,22 +45,29 @@ export default function VerifyEmail() {
         <div className="space-y-7 w-full">
           <form className="flex flex-col gap-4 w-full">
             <div className="space-y-2 w-full">
-              <p className="text-sm">Username*</p>
-              <input
-                type="text"
-                name="username"
-                placeholder="Enter your username"
-                className="p-3 w-full rounded-md border border-black/10 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                required
-              />
+              <div className="flex justify-center space-x-2">
+                {otp.map((data, index) => (
+                  <input
+                    key={index}
+                    className="w-12 h-12 text-center form-control border !border-black/10 text-black rounded-lg"
+                    maxLength="1"
+                    value={data}
+                    onChange={(e) => handleOtpChange(e.target, index)}
+                    autoFocus={!index} // Auto-focus the first input
+                  />
+                ))}
+              </div>
             </div>
 
             <button
               type="submit"
               className={`px-5 py-3 rounded-md text-white cursor-pointer transition-colors bg-c-color hover:bg-c-bg`}
-              //   disabled={errors.username || errors.password}
+              onClick={(e) => {
+                e.preventDefault();
+                handleVerify();
+              }}
             >
-              Continue
+              {isPending ? "Verifying..." : "Verify Email"}
             </button>
           </form>
 

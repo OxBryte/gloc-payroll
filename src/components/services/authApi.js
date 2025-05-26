@@ -16,12 +16,12 @@ export async function signup(body) {
 
 export async function verifyEmail(body) {
   try {
-    const { data } = await axios.post(`${apiURL}auth/signup`, body);
+    const { data } = await axios.post(`${apiURL}auth/verify-email`, body);
     return data;
   } catch (error) {
-    console.error("Error during signup:", error);
+    console.error("Error during verification:", error);
     throw new Error(
-      error.response?.data?.message || "An error occurred during signup"
+      error.response?.data?.message || "An error occurred during verification"
     );
   }
 }

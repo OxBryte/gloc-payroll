@@ -51,7 +51,6 @@ export default function SignUp() {
       setError("");
     };
     reader.readAsDataURL(file);
-
   };
 
   const handleRemove = () => {
@@ -96,7 +95,8 @@ export default function SignUp() {
     if (imageFile) {
       formData.append("avatar", imageFile, imageFile.name);
     }
-    
+
+    localStorage.setItem("userEmail", formData.get("email"));
     signupFn(formData);
   };
 
