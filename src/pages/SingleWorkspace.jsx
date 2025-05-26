@@ -51,7 +51,6 @@ export default function SingleWorkspace() {
 
   const { singleWorkspace, isLoadingSingleWorkspace } =
     useGetSingleWorkspace(slug);
-  console.log("Single Workspace Data:", singleWorkspace);
 
   if (isLoadingSingleWorkspace) {
     return (
@@ -68,7 +67,10 @@ export default function SingleWorkspace() {
     <div className="w-full space-y-5">
       <div className="space-y-6 w-full">
         <div className="w-full flex items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <img src={singleWorkspace?.logo} alt="" className="rounded-lg w-10" />
           <h1 className="text-2xl font-semibold">{singleWorkspace?.name}</h1>
+          </div>
         </div>
         <Tabbar slug={slug} data={data} />
 
