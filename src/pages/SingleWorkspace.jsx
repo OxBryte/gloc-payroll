@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Overview from "../components/features/workspace/Overview";
 import Payroll from "../components/features/workspace/Payroll";
 import Employees from "../components/features/workspace/Employees";
+import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 
 const data = [
   {
@@ -48,6 +49,18 @@ const data = [
 export default function SingleWorkspace() {
   const { slug, id: activeLink } = useParams();
 
+  const { singleWorkspace, isLoadingSingleWorkspace } =
+    useGetSingleWorkspace(slug);
+  console.log("Single Workspace Data:", singleWorkspace);
+
+  if (isLoadingSingleWorkspace) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <p className="text-gray-500">Loading workspace...</p>
+      </div>
+    );
+  }
+
   // find the tab whose `link` matches the URL param
   const activeTab = data.find((tab) => tab.link === activeLink);
 
@@ -55,7 +68,7 @@ export default function SingleWorkspace() {
     <div className="w-full space-y-5">
       <div className="space-y-6 w-full">
         <div className="w-full flex items-center justify-between gap-6">
-          <h1 className="text-2xl font-semibold">Bright Team</h1>
+          <h1 className="text-2xl font-semibold">{singleWorkspace?.name}</h1>
         </div>
         <Tabbar slug={slug} data={data} />
 

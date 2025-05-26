@@ -22,12 +22,12 @@ export async function getWorkspace() {
     );
   }
 }
-export async function getSingleWorkspace(id) {
+export async function getSingleWorkspace(slug) {
   try {
     // Get token from cookies
     const token = getCookie("token"); // or whatever your cookie name is
 
-    const { data } = await axios.get(`${apiURL}workspace/${id}`, {
+    const { data } = await axios.get(`${apiURL}workspace/slug/${slug}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -47,11 +47,15 @@ export async function acceptAdmin(body) {
     // Get token from cookies
     const token = getCookie("token"); // or whatever your cookie name is
 
-    const response = await axios.post(`${apiURL}workspace/admins/accept`, body, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(
+      `${apiURL}workspace/admins/accept`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Error during while  accepting admin invite", error);
@@ -61,7 +65,6 @@ export async function acceptAdmin(body) {
     );
   }
 }
-
 
 export async function createWorkspace(body) {
   try {

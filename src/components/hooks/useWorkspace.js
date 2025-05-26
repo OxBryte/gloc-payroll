@@ -24,14 +24,14 @@ export function useGetWorkspace() {
   };
 }
 
-export function useGetSingleWorkspace(id) {
+export function useGetSingleWorkspace(slug) {
   const {
     isPending: isLoadingSingleWorkspace,
     data: workspace,
     error,
   } = useQuery({
-    queryKey: ["singleWorkspace", id],
-    queryFn: () => getSingleWorkspace(id),
+    queryKey: ["singleWorkspace", slug],
+    queryFn: () => getSingleWorkspace(slug),
   });
 
   return {
