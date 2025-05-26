@@ -1,38 +1,20 @@
 import React, { useRef, useState } from "react";
 import { X, Trash2 } from "lucide-react";
-import { BsXLg } from "react-icons/bs";
+
 import { useForm } from "react-hook-form";
+import { useCreateWorkspace } from "../hooks/useWorkspace";
 
 const Drawer = ({ setIsOpen }) => {
-  const [showForm, setShowForm] = useState(false);
-  const [adminEmail, setAdminEmail] = useState("");
-  const [adminUsername, setAdminUsername] = useState("");
-  const [admins, setAdmins] = useState([]);
   const [imageSrc, setImageSrc] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
+
   const { register, handleSubmit } = useForm();
+  const { createWorkspaceFn, isPending: isCreatingWorkspace } =
+    useCreateWorkspace();
 
   const MAX_SIZE_MB = 3;
-
-  const handleAddAdmin = () => {
-    if (!adminEmail || !adminUsername) return;
-
-    const newAdmin = {
-      email: adminEmail,
-      username: adminUsername,
-    };
-
-    setAdmins((prev) => [newAdmin, ...prev]);
-    setAdminEmail("");
-    setAdminUsername("");
-    setShowForm(false);
-  };
-
-  const handleRemoveAdmin = (indexToRemove) => {
-    setAdmins((prev) => prev.filter((_, index) => index !== indexToRemove));
-  };
 
   const handleUploadClick = () => {
     setError("");
@@ -69,12 +51,29 @@ const Drawer = ({ setIsOpen }) => {
   };
 
   const onSubmit = (data) => {
-    const updatedData = {
-      ...data,
-      workspaceLogo: imageFile,
-      admins: admins,
-    };
-    console.log("Form submitted with data:", updatedData);
+    // Create FormData object
+    const formData = new FormData();
+
+    // Append all form fields to FormData
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("description", data.description);
+    formData.append("monthlyRevenue", data.monthlyRevenue);
+    formData.append("employeeCount", data.employeeCount);
+
+    // Append the image file if it exists
+    if (imageFile) {
+      formData.append("logo", imageFile);
+    }
+
+    console.log("Form submitted with FormData:", formData);
+
+    // Log FormData contents for debugging
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
+    createWorkspaceFn(formData);
   };
 
   return (
@@ -157,7 +156,7 @@ const Drawer = ({ setIsOpen }) => {
                   <input
                     type="text"
                     placeholder="Enter workspace name"
-                    {...register("workspaceName", { required: true })}
+                    {...register("name", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -168,7 +167,7 @@ const Drawer = ({ setIsOpen }) => {
                   <input
                     type="email"
                     placeholder="Enter workspace email"
-                    {...register("workspaceEmail", { required: true })}
+                    {...register("email", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -181,7 +180,7 @@ const Drawer = ({ setIsOpen }) => {
                     id=""
                     rows="3"
                     placeholder="Enter workspace description"
-                    {...register("workspaceDescription", { required: true })}
+                    {...register("description", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   ></textarea>
                 </div>
@@ -203,7 +202,7 @@ const Drawer = ({ setIsOpen }) => {
                   <select
                     name=""
                     id=""
-                    {...register("numberOfEmployees", { required: true })}
+                    {...register("employeeCount", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   >
                     <option value="" disabled selected>
@@ -218,79 +217,6 @@ const Drawer = ({ setIsOpen }) => {
                   </select>
                 </div>
               </div>
-              <div className="space-y-3">
-                {admins.length > 0 && (
-                  <div className="space-y-2">
-                    <p className="font-medium text-gray-700">Added Admins:</p>
-                    {admins.map((admin, index) => (
-                      <div
-                        className="flex items-center justify-between"
-                        key={index}
-                      >
-                        <div className="text-sm flex flex-col gap-1 justify-between">
-                          <p className="font-semibold">{admin.username}</p>
-                          <p className="text-gray-500">{admin.email}</p>
-                        </div>
-                        <button
-                          onClick={() => handleRemoveAdmin(index)}
-                          className="text-gray-400 hover:text-gray-600"
-                        >
-                          <BsXLg />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                {!showForm ? (
-                  <button
-                    onClick={() => setShowForm(true)}
-                    className="px-6 py-2.5 bg-c-bg hover:bg-c-color text-white rounded-lg cursor-pointer transition-colors text-sm"
-                  >
-                    Add Admin
-                  </button>
-                ) : (
-                  <div className="space-y-2 w-full">
-                    <div className="space-y-2 w-full">
-                      <label className="text-sm font-medium text-gray-700 block">
-                        Admin email
-                      </label>
-                      <input
-                        type="email"
-                        value={adminEmail}
-                        onChange={(e) => setAdminEmail(e.target.value)}
-                        placeholder="Enter team member email"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
-                      />
-                    </div>
-                    <div className="space-y-2 w-full">
-                      <label className="text-sm font-medium text-gray-700 block">
-                        Admin username
-                      </label>
-                      <input
-                        type="text"
-                        value={adminUsername}
-                        onChange={(e) => setAdminUsername(e.target.value)}
-                        placeholder="Enter team member username"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
-                      />
-                    </div>
-                    <div className="flex gap-3">
-                      <button
-                        onClick={handleAddAdmin}
-                        className="px-6 py-2.5 bg-c-bg hover:bg-c-color text-white rounded-lg cursor-pointer transition-colors text-sm"
-                      >
-                        Confirm Add
-                      </button>
-                      <button
-                        onClick={() => setShowForm(false)}
-                        className="px-6 py-2.5 bg-gray-200 text-gray-600 rounded-lg cursor-pointer text-sm"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         </div>
@@ -299,15 +225,15 @@ const Drawer = ({ setIsOpen }) => {
           <div className="flex space-x-3">
             <button
               onClick={() => setIsOpen(false)}
-              className="flex-1 py-2 px-4 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              className="flex-1 py-3 px-6 border border-gray-300 cursor-pointer rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
             >
               Cancel
             </button>
             <button
-              className="flex-1 py-2 px-4 bg-c-color text-white rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
+              className="flex-1 py-3 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
               onClick={handleSubmit(onSubmit)}
             >
-              Save Changes
+              {isCreatingWorkspace ? "Creating..." : "Create Workspace"}
             </button>
           </div>
         </div>

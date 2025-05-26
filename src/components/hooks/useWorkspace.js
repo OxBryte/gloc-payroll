@@ -1,5 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { getSingleWorkspace, getWorkspace } from "../services/workspaceApi";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  createWorkspace,
+  getSingleWorkspace,
+  getWorkspace,
+} from "../services/workspaceApi";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export function useGetWorkspace() {
   const {
@@ -34,3 +40,27 @@ export function useGetSingleWorkspace(id) {
     error,
   };
 }
+
+export const useCreateWorkspace = () => {
+  const navigate = useNavigate();
+
+  const { mutateAsync: createWorkspaceFn, isPending } = useMutation({
+    mutationKey: ["createWorkspace"],
+    mutationFn: async (body) => {
+      return await createWorkspace(body);
+    },
+    onSuccess(data) {
+      console.log(data);
+      toast.success(`${data.message}`);
+
+      //redirect to dashboard
+      navigate("/verify-email");
+    },
+    onError(error) {
+      console.log(error);
+
+      toast.error(`${error.message}`);
+    },
+  });
+  return { createWorkspaceFn, isPending };
+};
