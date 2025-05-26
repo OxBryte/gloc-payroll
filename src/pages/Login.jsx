@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
   return (
-    <div className="w-full h-full space-y-6 p-20">
+    <div className="w-full space-y-6 p-20">
       <div className="space-y-1 place-items-center">
         <p className="font-bold text-3xl ">Welcome back!</p>
         <p className="font-light text-sm">Log in to your Account</p>

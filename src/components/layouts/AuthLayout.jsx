@@ -9,7 +9,7 @@ export default function AuthLayout() {
         <div className="min-w-[36rem] bg-gray-200 h-full overflow-hidden rounded-xl">
           {/* <img src="login-bg.jpg" alt="" className="w-full h-full" /> */}
         </div>
-        <div className="w-full h-full">
+        <div className="w-full h-full flex items-center justify-center">
           <Outlet />
         </div>
       </div>

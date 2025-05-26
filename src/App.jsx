@@ -8,6 +8,7 @@ import Workspace from "./pages/Workspace";
 import SingleWorkspace from "./pages/SingleWorkspace";
 import { useEffect, useState } from "react";
 import AuthLayout from "./components/layouts/AuthLayout";
+import SignUp from "./pages/SignUp";
 
 function App() {
   const NavigationLoader = () => {
@@ -40,6 +41,7 @@ function App() {
         {/* <NavigationLoader /> */}
         <Routes>
           <Route path="/" element={<AuthLayout />}>
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
           </Route>
           <Route path="/" element={<AppLayout />}>
