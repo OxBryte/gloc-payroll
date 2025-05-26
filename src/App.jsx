@@ -7,6 +7,7 @@ import Settings from "./pages/Settings";
 import Workspace from "./pages/Workspace";
 import SingleWorkspace from "./pages/SingleWorkspace";
 import { useEffect, useState } from "react";
+import AuthLayout from "./components/layouts/AuthLayout";
 
 function App() {
   const NavigationLoader = () => {
@@ -38,7 +39,9 @@ function App() {
       <BrowserRouter>
         {/* <NavigationLoader /> */}
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+          </Route>
           <Route path="/" element={<AppLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/workspace" element={<Workspace />} />
