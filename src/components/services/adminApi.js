@@ -21,8 +21,7 @@ export async function inviteAdmin(body, id) {
   } catch (error) {
     console.error("Error while inviting admin", error);
     throw new Error(
-      error.response?.data?.message ||
-        "An error occurred while inviting admin"
+      error.response?.data?.message || "An error occurred while inviting admin"
     );
   }
 }

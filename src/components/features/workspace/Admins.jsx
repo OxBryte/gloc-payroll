@@ -3,12 +3,13 @@ import { useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../../hooks/useWorkspace";
 import { useInviteAdmin } from "../../hooks/useAcceptAdmin";
 import InviteAdminModal from "../../ui/InviteAdminModal";
+import { useAuth } from "../../hooks/auth";
 
 export default function Admins() {
   const [showInviteModal, setShowInviteModal] = useState(false);
   const { slug } = useParams();
   const { singleWorkspace } = useGetSingleWorkspace(slug);
-  console.log("singleWorkspace", singleWorkspace.id);
+  const { user } = useAuth();
 
   const { inviteFn, isPending: isInvitingAdmin } = useInviteAdmin();
 
@@ -35,6 +36,38 @@ export default function Admins() {
         >
           Add admin
         </button>
+      </div>
+
+      <div className="w-full">
+        {singleWorkspace?.admins?.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {singleWorkspace?.admins.map((admin) => (
+              <div
+                key={admin?.id}
+                className="border border-black/10 w-full p-4 rounded-lg flex items-center justify-between gap-4"
+              >
+                <div className="flex items-center gap-2.5">
+                  <img
+                    src={admin?.avatar || "/default-avatar.png"}
+                    alt={admin?.name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <h2 className="text-lg font-semibold">{admin.name}</h2>
+                    <p className="text-gray-600">{admin.email}</p>
+                  </div>
+                </div>
+                {user?._id === admin?.userId?._id && (
+                  <span className="justify-self-right text-xs bg-c-color px-2.5 py-1 rounded-lg text-white/70">
+                    You
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500">No admins found.</p>
+        )}
       </div>
       {showInviteModal && (
         <InviteAdminModal
