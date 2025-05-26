@@ -52,8 +52,8 @@ export const useVerify = () => {
     },
     onError(error) {
       console.log(error);
-
       toast.error(`${error.message}`);
+      navigate("/");
     },
   });
   return { verifyFn, isPending };
