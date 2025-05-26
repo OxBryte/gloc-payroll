@@ -8,6 +8,7 @@ import Overview from "../components/features/workspace/Overview";
 import Payroll from "../components/features/workspace/Payroll";
 import Employees from "../components/features/workspace/Employees";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
+import Admins from "../components/features/workspace/Admins";
 
 const data = [
   {
@@ -43,6 +44,7 @@ const data = [
     name: "Admins",
     icon: <RiAdminLine size={22} />,
     link: "admins",
+    content: <Admins />,
   },
 ];
 

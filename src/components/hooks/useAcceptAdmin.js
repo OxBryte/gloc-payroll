@@ -28,21 +28,18 @@ export const useAcceptAdmin = () => {
 };
 
 export const useInviteAdmin = () => {
-  const navigate = useNavigate();
-
   const { mutateAsync: inviteFn, isPending } = useMutation({
     mutationKey: ["inviteAdmin"],
-    mutationFn: async (body, id) => {
+    mutationFn: async ({ body, id }) => {
+      console.log("Inviting admin with body:", body, "and workspace ID:", id);
       return await inviteAdmin(body, id);
     },
     onSuccess(data) {
-      // console.log(data);
-      toast.success(`${data.message}`);
+      toast.success(data.message);
     },
     onError(error) {
-      console.log(error);
-      toast.error(`${error.message}`);
-      navigate("/");
+      console.error(error);
+      toast.error(error.message);
     },
   });
   return { inviteFn, isPending };
