@@ -13,6 +13,18 @@ export default function SignUp() {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const fileInputRef = useRef(null);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: "onBlur",
+    // defaultValues: {
+    //   username: "",
+    //   password: "",
+    // },
+  });
+
   const MAX_SIZE_MB = 3;
 
   const handleUploadClick = () => {
@@ -64,7 +76,7 @@ export default function SignUp() {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     alert("Form submitted successfully!");
@@ -144,7 +156,19 @@ export default function SignUp() {
               placeholder="Enter your email"
               className="p-3 w-full rounded-md border border-black/10 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               required
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Invalid email address",
+                },
+              })}
             />
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2 w-full">
@@ -155,7 +179,19 @@ export default function SignUp() {
               placeholder="Enter your full name"
               className="p-3 w-full rounded-md border border-black/10 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               required
+              {...register("fullName", {
+                required: "Full name is required",
+                minLength: {
+                  value: 3,
+                  message: "Full name must be at least 3 characters long",
+                },
+              })}
             />
+            {errors.fullName && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.fullName.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2 w-full">
@@ -166,7 +202,19 @@ export default function SignUp() {
               placeholder="Enter your username"
               className="p-3 w-full rounded-md border border-black/10 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               required
+              {...register("username", {
+                required: "Username is required",
+                minLength: {
+                  value: 3,
+                  message: "Username must be at least 3 characters long",
+                },
+              })}
             />
+            {errors.username && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.username.message}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2 w-full">
@@ -186,6 +234,13 @@ export default function SignUp() {
                     : "border-black/10 focus:border-blue-500 focus:ring-blue-500"
                 } focus:outline-none focus:ring-1`}
                 required
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 8 characters long",
+                  },
+                })}
               />
               <button
                 type="button"
@@ -198,6 +253,11 @@ export default function SignUp() {
                   <Eye className="w-5 h-5" />
                 )}
               </button>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             {/* Password requirements - show when password field is focused or has content */}
@@ -235,12 +295,13 @@ export default function SignUp() {
 
           <button
             type="submit"
+            onClick={handleSubmit(onSubmit)}
             className={`px-5 py-3 rounded-md text-white cursor-pointer transition-colors ${
               isPasswordValid
                 ? "bg-c-color hover:bg-c-bg"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
-            disabled={!isPasswordValid}
+            disabled={!isPasswordValid || !imageFile}
           >
             Sign Up
           </button>

@@ -40,7 +40,7 @@ function App() {
       <BrowserRouter>
         {/* <NavigationLoader /> */}
         <Routes>
-          <Route path="/" element={<AuthLayout />}>
+          <Route element={<AuthLayout />}>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
           </Route>
