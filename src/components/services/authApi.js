@@ -25,3 +25,15 @@ export async function verifyEmail(body) {
     );
   }
 }
+
+export async function login(body) {
+  try {
+    const { data } = await axios.post(`${apiURL}auth/login`, body);
+    return data;
+  } catch (error) {
+    console.error("Error during login:", error);
+    throw new Error(
+      error.response?.data?.message || "An error occurred during login"
+    );
+  }
+}

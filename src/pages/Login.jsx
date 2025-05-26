@@ -2,10 +2,12 @@ import { Eye, EyeOff } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useLogin } from "../components/hooks/useAuth";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
+  const { loginFn, isPending: isLoginingIn } = useLogin();
   const {
     register,
     handleSubmit,
@@ -18,10 +20,8 @@ export default function Login() {
     // },
   });
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    alert("Form submitted successfully!");
+  const onSubmit = (data) => {
+    loginFn(data);
   };
 
   return (
@@ -101,7 +101,7 @@ export default function Login() {
             className={`px-5 py-3 rounded-md text-white cursor-pointer transition-colors bg-c-color hover:bg-c-bg`}
             disabled={errors.username || errors.password}
           >
-            Login
+            {isLoginingIn ? "Logging in..." : "Login"}
           </button>
         </form>
 
