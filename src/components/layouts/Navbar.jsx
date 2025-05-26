@@ -26,7 +26,9 @@ export default function Navbar() {
           </Link>
         </div> */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-c-color"></div>
+          <div className="w-12 h-12 rounded-full bg-c-color overflow-hidden">
+            <img src={user.avatar} alt="" />
+          </div>
           <div className="space-y-0">
             <p className="text-sm font-semibold capitalize">{user.fullName}</p>
             <p className="text-xs text-gray-500 capitalize">{user.role}</p>
