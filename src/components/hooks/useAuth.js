@@ -12,7 +12,7 @@ export const useSignup = () => {
       return await signup(body);
     },
     onSuccess(data) {
-      console.log(data);
+      // console.log(data);
       toast.success(`${data.message}`);
 
       //redirect to dashboard
@@ -37,7 +37,7 @@ export const useVerify = () => {
       return await verifyEmail(body);
     },
     onSuccess(data) {
-      console.log(data);
+      // console.log(data);
       toast.success(`${data.message}`);
 
       //set user data and session in global state
@@ -69,7 +69,7 @@ export const useLogin = () => {
       return await login(body);
     },
     onSuccess(data) {
-      console.log(data);
+      // console.log(data);
       toast(`${data.message}`, { icon: "🚀" });
 
       //set user data and session in global state

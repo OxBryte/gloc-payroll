@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { acceptAdmin } from "../services/workspaceApi";
+import { acceptAdmin, inviteAdmin } from "../services/adminApi";
 
 export const useAcceptAdmin = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export const useAcceptAdmin = () => {
       return await acceptAdmin(body);
     },
     onSuccess(data) {
-      console.log(data);
+      // console.log(data);
       toast.success(`${data.message}`);
 
       //redirect to dashboard
@@ -25,4 +25,25 @@ export const useAcceptAdmin = () => {
     },
   });
   return { acceptFn, isPending };
+};
+
+export const useInviteAdmin = () => {
+  const navigate = useNavigate();
+
+  const { mutateAsync: inviteFn, isPending } = useMutation({
+    mutationKey: ["inviteAdmin"],
+    mutationFn: async (body, id) => {
+      return await inviteAdmin(body, id);
+    },
+    onSuccess(data) {
+      // console.log(data);
+      toast.success(`${data.message}`);
+    },
+    onError(error) {
+      console.log(error);
+      toast.error(`${error.message}`);
+      navigate("/");
+    },
+  });
+  return { inviteFn, isPending };
 };

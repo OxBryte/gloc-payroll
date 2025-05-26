@@ -42,30 +42,6 @@ export async function getSingleWorkspace(slug) {
   }
 }
 
-export async function acceptAdmin(body) {
-  try {
-    // Get token from cookies
-    const token = getCookie("token"); // or whatever your cookie name is
-
-    const response = await axios.post(
-      `${apiURL}workspace/admins/accept`,
-      body,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error during while  accepting admin invite", error);
-    throw new Error(
-      error.response?.data?.message ||
-        "An error occurred while accepting admin invite"
-    );
-  }
-}
-
 export async function createWorkspace(body) {
   try {
     // Get token from cookies

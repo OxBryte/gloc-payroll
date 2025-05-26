@@ -50,7 +50,7 @@ export const useCreateWorkspace = () => {
       return await createWorkspace(body);
     },
     onSuccess(data) {
-      console.log(data);
+      // console.log(data);
       toast.success(`${data.message}`);
 
       //redirect to dashboard

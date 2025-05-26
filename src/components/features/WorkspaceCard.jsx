@@ -1,9 +1,58 @@
 import moment from "moment";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GoKebabHorizontal } from "react-icons/go";
 import { Link } from "react-router-dom";
 
 export default function WorkspaceCard({ space }) {
+  const [showOption, setShowOption] = useState(false);
+  const optionsRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (optionsRef.current && !optionsRef.current.contains(event.target)) {
+        setShowOption(false);
+      }
+    };
+
+    if (showOption) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showOption]);
+
+  const handleKebabClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowOption(!showOption);
+  };
+
+  const handleOptionClick = (e, action) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Handle different actions
+    switch (action) {
+      case "edit":
+        console.log("Edit clicked");
+        break;
+      case "delete":
+        console.log("Delete clicked");
+        // handleDelete();
+        break;
+      case "share":
+        console.log("Share clicked");
+        break;
+      default:
+        break;
+    }
+
+    setShowOption(false);
+  };
+
   return (
     <div>
       <Link to={`/workspace/${space?.slug}/overview`}>
@@ -12,9 +61,39 @@ export default function WorkspaceCard({ space }) {
             <div className="w-12 h-12 rounded-lg bg-gray-200 overflow-hidden">
               <img src={space?.logo} alt="" />
             </div>
-            <button className="">
-              <GoKebabHorizontal size={26} />
-            </button>
+            <div className="relative">
+              <button
+                className="cursor-pointer px-2 py-1"
+                onClick={handleKebabClick}
+              >
+                <GoKebabHorizontal size={26} />
+              </button>
+              {showOption && (
+                <div
+                  ref={optionsRef}
+                  className="absolute top-8 left-2 w-30 min-h-20 bg-gray-100 overflow-hidden rounded-xl"
+                >
+                  <div
+                    className="p-3 w-full hover:bg-black/20 cursor-pointer"
+                    onClick={(e) => handleOptionClick(e, "edit")}
+                  >
+                    Edit
+                  </div>
+                  <div
+                    className="p-3 w-full hover:bg-black/20 cursor-pointer"
+                    onClick={(e) => handleOptionClick(e, "delete")}
+                  >
+                    Delete
+                  </div>
+                  <div
+                    className="p-3 w-full hover:bg-black/20 cursor-pointer"
+                    onClick={(e) => handleOptionClick(e, "share")}
+                  >
+                    Share
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
           <div className="space-y-2">
             <p className="text-[20px] font-semibold">{space?.name}</p>
