@@ -67,11 +67,6 @@ export default function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!isPasswordValid) {
-      alert("Please ensure your password meets all requirements.");
-      return;
-    }
-
     alert("Form submitted successfully!");
   };
 
@@ -206,7 +201,7 @@ export default function SignUp() {
             </div>
 
             {/* Password requirements - show when password field is focused or has content */}
-            {(passwordFocused || password) && (
+            {(passwordFocused || !password) && (
               <div className="mt-2 p-3 bg-gray-50 rounded-md space-y-1">
                 <p className="text-xs font-medium text-gray-700 mb-2">
                   Password must contain:
@@ -234,12 +229,15 @@ export default function SignUp() {
               </div>
             )}
           </div>
+          <div className="px-5 w-full py-3 flex justify-center rounded-md cursor-pointer transition-colors text-white bg-c-color hover:bg-c-bg">
+            Connect Wallet
+          </div>
 
           <button
             type="submit"
-            className={`px-5 py-3 rounded-md font-bold cursor-pointer transition-colors ${
+            className={`px-5 py-3 rounded-md text-white cursor-pointer transition-colors ${
               isPasswordValid
-                ? "bg-c-color hover:bg-c-bg-2"
+                ? "bg-c-color hover:bg-c-bg"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
             disabled={!isPasswordValid}
