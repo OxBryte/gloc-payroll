@@ -78,7 +78,7 @@ export default function SignUp() {
     hasUpperCase: /[A-Z]/.test(password),
     hasLowerCase: /[a-z]/.test(password),
     hasNumber: /\d/.test(password),
-    hasSpecialChar: /[@$!%*?&#]/.test(password),
+    hasSpecialChar: /[@$!%*?&#.]/.test(password),
   };
 
   const isPasswordValid = Object.values(passwordValidation).every(Boolean);
