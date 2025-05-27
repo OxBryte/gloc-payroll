@@ -54,9 +54,6 @@ export default function WorkspaceCard({ space }) {
     setShowOption(false);
   };
 
-  console.log("WorkspaceCard space:", space);
-  
-
   return (
     <div>
       <Link to={`/workspace/${space?.slug}/overview`}>
@@ -113,11 +110,14 @@ export default function WorkspaceCard({ space }) {
             )}
             {space?.admins?.length > 0 && (
               <div className="flex items-center">
-                <div className="flex items-center"></div>
-                {space?.admins.slice(0, 4).map((admin) => (
+                {space?.admins.slice(0, 4).map((admin, index) => (
                   <div
                     key={admin?._id}
-                    className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden mr-2"
+                    className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden relative"
+                    style={{
+                      marginLeft: index > 0 ? "-12px" : "0",
+                      zIndex: space?.admins.length - index,
+                    }}
                   >
                     <img
                       src={admin?.avatar || "/default-avatar.png"}
@@ -126,11 +126,13 @@ export default function WorkspaceCard({ space }) {
                     />
                   </div>
                 ))}
-                {space?.admins?.length > 4 && (
-                  <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                    <p className="text-xs font-light text-gray-600">
-                      +{space?.admins?.length - 4}
-                    </p>
+
+                {space?.admins.length > 4 && (
+                  <div
+                    className="w-8 h-8 rounded-full bg-gray-400 border-2 border-white flex items-center justify-center text-xs text-white font-medium"
+                    style={{ marginLeft: "-8px", zIndex: 0 }}
+                  >
+                    +{space?.admins.length - 4}
                   </div>
                 )}
               </div>
