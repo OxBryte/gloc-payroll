@@ -22,6 +22,7 @@ export async function getWorkspace() {
     );
   }
 }
+
 export async function getSingleWorkspace(slug) {
   try {
     // Get token from cookies

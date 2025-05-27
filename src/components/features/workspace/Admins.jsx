@@ -5,7 +5,6 @@ import { useInviteAdmin } from "../../hooks/useAcceptAdmin";
 import InviteAdminModal from "../../ui/InviteAdminModal";
 import { useUser } from "../../hooks/useUser";
 
-
 export default function Admins() {
   const [showInviteModal, setShowInviteModal] = useState(false);
   const { slug } = useParams();
@@ -43,7 +42,7 @@ export default function Admins() {
 
       <div className="w-full">
         {singleWorkspace?.admins?.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {singleWorkspace?.admins.map((admin) => (
               <div
                 key={admin?.id}
@@ -69,7 +68,10 @@ export default function Admins() {
             ))}
           </div>
         ) : (
-          <p className="text-gray-500">No admins found.</p>
+          <div className="w-full h-[320px] bg-white rounded-lg flex flex-col items-center justify-center gap-4 p-6">
+            <img src="/empty.svg" alt="No admins" className="w-20" />
+            <p className="text-gray-500">No admins found.</p>
+          </div>
         )}
       </div>
       {showInviteModal && (

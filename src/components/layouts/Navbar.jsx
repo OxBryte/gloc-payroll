@@ -1,6 +1,5 @@
 import React from "react";
 import { CgChevronDown } from "react-icons/cg";
-import { Link } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 
 export default function Navbar() {
@@ -13,18 +12,6 @@ export default function Navbar() {
           Welcome,{" "}
           <span className="text-c-color capitalize">{user?.username}</span>
         </p>
-        {/* <div className="flex items-center gap-3 h-auto">
-          <Link to="/signup">
-            <button className="px-5 py-2.5 bg-c-color rounded-lg hover:bg-c-bg cursor-pointer text-white">
-              Create account
-            </button>
-          </Link>
-          <Link to="/login">
-            <button className="px-5 py-2.5 bg-c-bg rounded-lg hover:bg-c-color cursor-pointer text-white">
-              Login
-            </button>
-          </Link>
-        </div> */}
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-full bg-c-color overflow-hidden">
             <img src={user?.avatar} alt="" />

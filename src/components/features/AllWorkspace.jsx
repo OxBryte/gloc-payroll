@@ -31,7 +31,7 @@ export default function AllWorkspace() {
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {workspace?.length === 0 && (
               <div className="w-full h-[320px] bg-white rounded-lg flex flex-col items-center justify-center gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
-                <div className="w-12 h-12 rounded-lg bg-gray-200"></div>
+                <img src="empty.svg" alt="" className="w-20" />
                 <p className="text-gray-500 text-sm font-light">
                   No workspace yet!
                 </p>

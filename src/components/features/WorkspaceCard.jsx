@@ -113,6 +113,7 @@ export default function WorkspaceCard({ space }) {
             )}
             {space?.admins?.length > 0 && (
               <div className="flex items-center">
+                <div className="flex items-center"></div>
                 {space?.admins.slice(0, 4).map((admin) => (
                   <div
                     key={admin?._id}

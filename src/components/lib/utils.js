@@ -6,7 +6,6 @@ export function getCookie(name) {
   return null;
 }
 
-
 // utils/truncate.js
 export const truncate = (text = "", maxLength = 50) => {
   const ellipsis = "...";
