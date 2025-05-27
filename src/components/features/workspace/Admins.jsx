@@ -55,8 +55,12 @@ export default function Admins() {
                     className="w-12 h-12 rounded-full object-cover"
                   />
                   <div>
-                    <h2 className="text-lg font-semibold">{admin.name}</h2>
-                    <p className="text-gray-600">{admin.email}</p>
+                    <h2 className="text-sm md:text-lg font-semibold">
+                      {admin.name}
+                    </h2>
+                    <p className="text-gray-600 text-xs mdtext-md">
+                      {admin.email}
+                    </p>
                   </div>
                 </div>
                 {user?._id === admin?.userId?._id && (

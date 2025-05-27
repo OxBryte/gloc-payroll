@@ -6,10 +6,10 @@ export default function Tabbar({ slug, data }) {
   const { pathname } = useLocation();
 
   return (
-    <div className="hidden md:block">
-      <div className="w-full bg-gray-100 rounded-lg px-4 py-2.5 flex gap-3 w-full border-b border-b-white/10">
+    <div className="w-full relative">
+      <div className="w-full overflow-x-auto bg-gray-100 rounded-lg px-4 py-2.5 flex gap-3 w-full border-b border-b-white/10">
         {data.map((item) => {
-           const fullPath = `/workspace/${slug}/${item.link}`;
+          const fullPath = `/workspace/${slug}/${item.link}`;
           const isActive = pathname === fullPath;
           return (
             <NavLink
@@ -29,7 +29,7 @@ export default function Tabbar({ slug, data }) {
                       ${isActive ? "bg-c-color text-white" : ""}`}
               >
                 {item.icon}
-                <span className="">
+                <span className="whitespace-nowrap">
                   {item.name} {item.id === 4 && "(Coimg soon)"}{" "}
                 </span>
               </div>

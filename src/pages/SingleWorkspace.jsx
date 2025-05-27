@@ -82,7 +82,7 @@ export default function SingleWorkspace() {
         <Tabbar slug={slug} data={data} />
 
         <div className="w-full">
-          <div className="w-full min-h-[calc(100vh-300px)] bg-white rounded-lg p-6">
+          <div className="w-full min-h-[calc(100vh-300px)] bg-white rounded-lg p-3 md:p-6">
             {activeTab ? (
               activeTab.content
             ) : (

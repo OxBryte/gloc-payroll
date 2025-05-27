@@ -1,18 +1,22 @@
 import React from "react";
 import { CgChevronDown } from "react-icons/cg";
 import { useUser } from "../hooks/useUser";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 export default function Navbar() {
   const { user } = useUser();
 
   return (
     <div className="w-full mx-auto py-5 border-b border-black/10 h-[85.12px]">
-      <div className="mx-auto px-4 md:px-6 flex items-center justify-between max-w-[1280px]">
-        <p className="font-semibold text-[20px]">
+      <div className="mx-auto px-4 md:px-6 flex items-center h-full justify-between max-w-[1280px]">
+        <p className="font-semibold text-[16px] md:text-[20px]">
           Welcome,{" "}
           <span className="text-c-color capitalize">{user?.username}</span>
         </p>
-        <div className="flex items-center gap-3">
+        <div className="block md:hidden">
+          <GiHamburgerMenu size={24} />
+        </div>
+        <div className="hidden md:flex items-center gap-3">
           <div className="w-12 h-12 rounded-full bg-c-color overflow-hidden">
             <img src={user?.avatar} alt="" />
           </div>
