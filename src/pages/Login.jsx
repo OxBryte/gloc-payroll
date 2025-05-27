@@ -24,10 +24,6 @@ export default function Login() {
     formState: { errors },
   } = useForm({
     mode: "onBlur",
-    // defaultValues: {
-    //   username: "",
-    //   password: "",
-    // },
   });
 
   const onSubmit = (data) => {
@@ -35,7 +31,7 @@ export default function Login() {
   };
 
   return (
-    <div className="w-full max-w-[36rem] space-y-6 p-20">
+    <div className="w-full max-w-[36rem] space-y-6 p-6 md:p-20">
       <div className="space-y-2 place-items-center">
         <div className="">
           <p>Logo</p>

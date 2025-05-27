@@ -21,13 +21,13 @@ export default function AcceptAdmin() {
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center">
+    <div className="w-full h-screen flex items-center justify-center p-6 md:p-10">
       <div className="flex flex-col items-center gap-4 bg-white w-[26rem] p-8 rounded-lg">
         <h1 className="text-2xl font-bold text-gray-800">
           Accept Admin Invite
         </h1>
         {/* <p>{token}</p> */}
-        <p className="text-gray-600 text-sm">
+        <p className="text-gray-600 text-sm text-center">
           You have been invited to be an admin. Please click the button below to
           accept the invitation.
         </p>

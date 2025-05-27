@@ -122,7 +122,7 @@ export default function SignUp() {
   );
 
   return (
-    <div className="w-full max-w-[36rem] space-y-6 p-20">
+    <div className="w-full max-w-[36rem] space-y-6 h-full overflow-y-auto p-6 md:p-20">
       <div className="space-y-2 place-items-center">
         <div className="">
           <p>Logo</p>
