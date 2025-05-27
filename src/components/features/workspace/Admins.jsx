@@ -28,10 +28,10 @@ export default function Admins() {
   return (
     <div className="w-full space-y-6">
       <div className="flex items-center justify-between w-full gap-2">
-        <h1 className="text-2xl font-bold text-gray-800">Admins</h1>
+        <h1 className="text-xl font-bold text-gray-800">Admins</h1>
         {user?._id === singleWorkspace?.userId?._id && (
           <button
-            className="bg-c-color text-white px-6 py-2.5 rounded-lg"
+            className="bg-c-color text-white px-6 py-2.5 rounded-lg cursor-pointer"
             onClick={() => setShowInviteModal(true)}
             disabled={isInvitingAdmin}
           >
