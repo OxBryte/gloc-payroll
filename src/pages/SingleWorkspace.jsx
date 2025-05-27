@@ -56,7 +56,8 @@ export default function SingleWorkspace() {
 
   if (isLoadingSingleWorkspace) {
     return (
-      <div className="w-full h-screen flex items-center justify-center">
+      <div className="w-full h-full min-h-[70dvh] flex flex-col gap-3 items-center justify-center">
+        <img src="/loading.svg" alt="" className="w-30" />
         <p className="text-gray-500">Loading workspace...</p>
       </div>
     );
@@ -70,8 +71,12 @@ export default function SingleWorkspace() {
       <div className="space-y-6 w-full">
         <div className="w-full flex items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <img src={singleWorkspace?.logo} alt="" className="rounded-lg w-10" />
-          <h1 className="text-2xl font-semibold">{singleWorkspace?.name}</h1>
+            <img
+              src={singleWorkspace?.logo}
+              alt=""
+              className="rounded-lg w-10"
+            />
+            <h1 className="text-2xl font-semibold">{singleWorkspace?.name}</h1>
           </div>
         </div>
         <Tabbar slug={slug} data={data} />
