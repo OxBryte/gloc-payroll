@@ -2,6 +2,7 @@
 
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "./components/hooks/auth";
+import Spinner from "./components/ui/Spinner";
 
 const ProtectedRoute = ({ redirectTo = "/login" }) => {
   const { isAuthenticated, isLoadingUser } = useAuth();
@@ -13,11 +14,12 @@ const ProtectedRoute = ({ redirectTo = "/login" }) => {
       <div className="w-full h-screen flex items-center justify-center">
         <div className="flex flex-col items-center space-y-4">
           <img
-            src="/session_logo.png"
+            src="/loading.svg"
             alt="Loading"
             className="animate-pulse w-16"
           />
-          <p className="text-gray-600">Checking authentication...</p>
+          <Spinner className="text-blue-500" />
+          {/* <p className="text-gray-600">Checking authentication...</p> */}
         </div>
       </div>
     );

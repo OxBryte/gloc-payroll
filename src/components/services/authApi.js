@@ -58,3 +58,27 @@ export async function getCurrentUser() {
     );
   }
 }
+
+export async function forgetPassword(body) {
+  try {
+    const { data } = await axios.post(`${apiURL}auth/forgot-password`, body);
+    return data;
+  } catch (error) {
+    console.error("Error during forget password:", error);
+    throw new Error(
+      error.response?.data?.message || "An error occurred during forget password"
+    );
+  }
+}
+
+export async function resetPassword(body) {
+  try {
+    const { data } = await axios.post(`${apiURL}auth/reset-password`, body);
+    return data;
+  } catch (error) {
+    console.error("Error during reset password:", error);
+    throw new Error(
+      error.response?.data?.message || "An error occurred during reset password"
+    );
+  }
+}

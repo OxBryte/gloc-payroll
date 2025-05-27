@@ -110,16 +110,24 @@ export default function Login() {
             {isLoginingIn ? "Logging in..." : "Login"}
           </button>
         </form>
-
-        <div className="text-center w-full">
-          <p className="text-sm font-light ">
-            Don't have an account?{" "}
-            <Link to="/signup">
-              <span className="text-c-color font-bold cursor-pointer">
-                SignUp
+        <div className="space-y-2">
+          <div className="w-full flex justify-center">
+            <Link to="/forget-password">
+              <span className="text-c-color font-medium cursor-pointer text-sm">
+                Forget Password?
               </span>
             </Link>
-          </p>
+          </div>
+          <div className="text-center w-full">
+            <p className="text-sm font-light ">
+              Don't have an account?{" "}
+              <Link to="/signup">
+                <span className="text-c-color font-bold cursor-pointer">
+                  SignUp
+                </span>
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
