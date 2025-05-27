@@ -284,7 +284,7 @@ export default function SignUp() {
             </div>
 
             {/* Password requirements - show when password field is focused or has content */}
-            {(passwordFocused || !password) && (
+            {(passwordFocused || password) && (
               <div className="mt-2 p-3 bg-gray-50 rounded-md space-y-1">
                 <p className="text-xs font-medium text-gray-700 mb-2">
                   Password must contain:

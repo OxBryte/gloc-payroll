@@ -13,6 +13,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import ProtectedRoute from "./ProtectedRoute";
 import AcceptAdmin from "./pages/AcceptAdmin";
 import ForgetPassword from "./pages/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   const NavigationLoader = () => {
@@ -63,7 +64,8 @@ function App() {
             </Route>
           </Route>
           <Route path="*" element={<h1>404 Not Found</h1>} />
-            <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/reset-password/" element={<ResetPassword />} />
           <Route path="/accept-admin" element={<AcceptAdmin />} />
         </Routes>
       </BrowserRouter>

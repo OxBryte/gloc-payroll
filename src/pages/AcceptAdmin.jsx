@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useAcceptAdmin } from "../components/hooks/useAcceptAdmin";
+import toast from "react-hot-toast";
 
 export default function AcceptAdmin() {
   const queryParams = new URLSearchParams(useLocation().search);
@@ -10,6 +11,7 @@ export default function AcceptAdmin() {
 
   const handleAccept = async () => {
     if (!token) {
+      toast.error("No token provided");
       console.error("No token provided");
       return;
     }

@@ -13,7 +13,7 @@ export default function ForgetPassword() {
   return (
     <div className="w-full h-screen flex items-center justify-center p-6 md:p-10">
       <div className="flex flex-col items-center gap-4 bg-white w-[26rem] p-8 rounded-lg">
-        <h1 className="text-2xl font-bold text-gray-800">Reset Pasword</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Forgot Pasword</h1>
         {/* <p>{token}</p> */}
         <p className="text-gray-600 text-sm text-center">
           Enter your email address to receive a link to reset your password.
@@ -40,10 +40,6 @@ export default function ForgetPassword() {
         >
           {isPending ? "Sending..." : " Send Reset Link"}
         </button>
-        <p className="text-black/40 text-xs mt-4 text-center">
-          If you did not receive an invitation, please contact the workspace
-          owner.
-        </p>
       </div>
     </div>
   );
