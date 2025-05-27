@@ -1,10 +1,10 @@
 import React from "react";
 import { CgChevronDown } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/auth";
+import { useUser } from "../hooks/useUser";
 
 export default function Navbar() {
-  const { user } = useAuth();
+  const { user } = useUser();
 
   return (
     <div className="w-full mx-auto py-5 border-b border-black/10 h-[85.12px]">
