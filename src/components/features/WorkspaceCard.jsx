@@ -104,7 +104,7 @@ export default function WorkspaceCard({ space }) {
           </div>
           <hr className="border-black/10" />
           <div className="space-y-2">
-            <p className="font-light text-xs">Members/Staffs</p>
+            <p className="font-light text-xs">Admins/Staffs</p>
             {space?.admins?.length === 0 && (
               <p className="text-xs font-light text-gray-600">No admins yet</p>
             )}
