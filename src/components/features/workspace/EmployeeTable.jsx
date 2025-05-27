@@ -1,94 +1,12 @@
 import React, { useState } from "react";
-import {
-  Search,
-  Filter,
-  MoreVertical,
-  Mail,
-  Phone,
-  Edit,
-  Trash2,
-  Eye,
-} from "lucide-react";
+import { Search, Filter, MoreVertical, Edit, Trash2, Eye } from "lucide-react";
+import moment from "moment/moment";
 
-export default function EmployeeTable() {
+export default function EmployeeTable({ employees }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterDepartment, setFilterDepartment] = useState("all");
 
-  // Sample employee data
-  const employees = [
-    {
-      id: 1,
-      name: "Sarah Johnson",
-      email: "sarah.johnson@company.com",
-      phone: "+1 (555) 123-4567",
-      position: "Senior Developer",
-      department: "Engineering",
-      status: "Active",
-      joinDate: "2022-03-15",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
-    },
-    {
-      id: 2,
-      name: "Michael Chen",
-      email: "michael.chen@company.com",
-      phone: "+1 (555) 234-5678",
-      position: "Product Manager",
-      department: "Product",
-      status: "Active",
-      joinDate: "2021-11-08",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    },
-    {
-      id: 3,
-      name: "Emily Rodriguez",
-      email: "emily.rodriguez@company.com",
-      phone: "+1 (555) 345-6789",
-      position: "UX Designer",
-      department: "Design",
-      status: "Active",
-      joinDate: "2023-01-20",
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-    },
-    {
-      id: 4,
-      name: "David Park",
-      email: "david.park@company.com",
-      phone: "+1 (555) 456-7890",
-      position: "Data Analyst",
-      department: "Analytics",
-      status: "On Leave",
-      joinDate: "2022-07-12",
-      avatar:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-    },
-    {
-      id: 5,
-      name: "Lisa Thompson",
-      email: "lisa.thompson@company.com",
-      phone: "+1 (555) 567-8901",
-      position: "HR Manager",
-      department: "Human Resources",
-      status: "Active",
-      joinDate: "2020-09-03",
-      avatar:
-        "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=150&h=150&fit=crop&crop=face",
-    },
-    {
-      id: 6,
-      name: "James Wilson",
-      email: "james.wilson@company.com",
-      phone: "+1 (555) 678-9012",
-      position: "Sales Lead",
-      department: "Sales",
-      status: "Inactive",
-      joinDate: "2021-05-18",
-      avatar:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-    },
-  ];
+  console.log("Employees:", employees);
 
   const departments = [
     "all",
@@ -109,19 +27,6 @@ export default function EmployeeTable() {
       filterDepartment === "all" || employee.department === filterDepartment;
     return matchesSearch && matchesDepartment;
   });
-
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "Active":
-        return "bg-green-100 text-green-800";
-      case "On Leave":
-        return "bg-yellow-100 text-yellow-800";
-      case "Inactive":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
 
   return (
     <>
@@ -162,23 +67,21 @@ export default function EmployeeTable() {
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Employee
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Contact
+                    Email
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Position
-                  </th>
-                  {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Department
-                  </th> */}
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
+                    Role
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Join Date
+                    Salary
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Employment Date
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
@@ -186,56 +89,38 @@ export default function EmployeeTable() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredEmployees.map((employee) => (
+                {filteredEmployees.map((employee, index) => (
                   <tr
-                    key={employee.id}
+                    key={index}
                     className="hover:bg-gray-50 transition-colors duration-150"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">
-                            {employee.name}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            ID: {employee.id}
-                          </div>
-                        </div>
+                      <div className="text-sm font-medium text-gray-400">
+                        {index + 1}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex flex-col space-y-1">
-                        <div className="flex items-center text-sm text-gray-600">
-                          <Mail className="w-4 h-4 mr-2 text-gray-400" />
-                          {employee.email}
-                        </div>
-                        <div className="flex items-center text-sm text-gray-600">
-                          <Phone className="w-4 h-4 mr-2 text-gray-400" />
-                          {employee.phone}
-                        </div>
+                      <div className="text-sm font-medium text-gray-700">
+                        {employee?.name}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">
-                        {employee.position}
+                      <div className="text-sm font-medium text-gray-700">
+                        {employee?.email}
                       </div>
                     </td>
-                    {/* <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
-                        {employee.department}
-                      </div>
-                    </td> */}
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(
-                          employee.status
-                        )}`}
-                      >
-                        {employee.status}
-                      </span>
+                      <div className="text-sm font-medium text-gray-700">
+                        {employee?.role}
+                      </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {new Date(employee.joinDate).toLocaleDateString()}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-700">
+                        {employee?.salary}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                      {moment(employee?.employmentDate).format("LL")}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center space-x-2">

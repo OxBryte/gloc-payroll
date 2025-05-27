@@ -60,6 +60,7 @@ export default function VerifyEmail() {
                 {otp.map((data, index) => (
                   <input
                     key={index}
+                    type="number"
                     className="w-12 h-12 text-center form-control border !border-black/10 text-black rounded-lg"
                     maxLength="1"
                     value={data}

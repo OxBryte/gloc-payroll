@@ -4,7 +4,6 @@ import {
   getSingleWorkspace,
   getWorkspace,
 } from "../services/workspaceApi";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function useGetWorkspace() {
@@ -42,8 +41,6 @@ export function useGetSingleWorkspace(slug) {
 }
 
 export const useCreateWorkspace = () => {
-  const navigate = useNavigate();
-
   const { mutateAsync: createWorkspaceFn, isPending } = useMutation({
     mutationKey: ["createWorkspace"],
     mutationFn: async (body) => {
@@ -52,9 +49,6 @@ export const useCreateWorkspace = () => {
     onSuccess(data) {
       // console.log(data);
       toast.success(`${data.message}`);
-
-      //redirect to dashboard
-      navigate("/verify-email");
     },
     onError(error) {
       console.log(error);

@@ -217,13 +217,7 @@ const Drawer = ({ setIsOpen }) => {
         <div className="border-t border-gray-200 p-6 bg-gray-50">
           <div className="flex space-x-3">
             <button
-              onClick={() => setIsOpen(false)}
-              className="flex-1 py-3 px-6 border border-gray-300 cursor-pointer rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              className="flex-1 py-3 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
+              className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
               onClick={handleSubmit(onSubmit)}
             >
               {isCreatingWorkspace ? "Creating..." : "Create Workspace"}
