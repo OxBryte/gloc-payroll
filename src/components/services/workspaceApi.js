@@ -54,10 +54,10 @@ export async function createWorkspace(body) {
     });
     return response.data;
   } catch (error) {
-    console.error("Error during while  accepting admin invite", error);
+    console.error("Error during while creating workspace", error);
     throw new Error(
-      error.response?.data?.message ||
-        "An error occurred while accepting admin invite"
+      error.response?.data?.error ||
+        "An error occurred while creating workspace"
     );
   }
 }

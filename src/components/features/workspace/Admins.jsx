@@ -3,13 +3,14 @@ import { useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../../hooks/useWorkspace";
 import { useInviteAdmin } from "../../hooks/useAcceptAdmin";
 import InviteAdminModal from "../../ui/InviteAdminModal";
-import { useAuth } from "../../hooks/auth";
+import { useUser } from "../../hooks/useUser";
+
 
 export default function Admins() {
   const [showInviteModal, setShowInviteModal] = useState(false);
   const { slug } = useParams();
   const { singleWorkspace } = useGetSingleWorkspace(slug);
-  const { user } = useAuth();
+  const { user } = useUser();
 
   const { inviteFn, isPending: isInvitingAdmin } = useInviteAdmin();
 
