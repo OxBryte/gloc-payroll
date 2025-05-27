@@ -8,13 +8,13 @@ export const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const { isLoadingUser, isAuthenticated, user } = useUser();
 
-  if (isLoadingUser) {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs">
-        <Spinner />
-      </div>
-    );
-  }
+  // if (isLoadingUser) {
+  //   return (
+  //     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs">
+  //       <Spinner />
+  //     </div>
+  //   );
+  // }
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, isLoadingUser }}>
