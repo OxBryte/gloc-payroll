@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Search, Filter, MoreVertical, Edit, Trash2, Eye } from "lucide-react";
+import { Search, Filter, MoreVertical, Edit, Trash2 } from "lucide-react";
 import moment from "moment/moment";
+import { formatNumberWithCommas } from "../../lib/utils";
 
 export default function EmployeeTable({ employees }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterDepartment, setFilterDepartment] = useState("all");
 
-  console.log("Employees:", employees);
+  // console.log("Employees:", employees);
 
   const departments = [
     "all",
@@ -20,9 +21,9 @@ export default function EmployeeTable({ employees }) {
 
   const filteredEmployees = employees.filter((employee) => {
     const matchesSearch =
-      employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      employee.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      employee.position.toLowerCase().includes(searchTerm.toLowerCase());
+      employee.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      employee.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      employee.role?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesDepartment =
       filterDepartment === "all" || employee.department === filterDepartment;
     return matchesSearch && matchesDepartment;
@@ -78,6 +79,9 @@ export default function EmployeeTable({ employees }) {
                     Role
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Employment Type
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Salary
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -100,7 +104,7 @@ export default function EmployeeTable({ employees }) {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-700">
+                      <div className="text-sm font-medium text-gray-700 capitalize">
                         {employee?.name}
                       </div>
                     </td>
@@ -110,13 +114,18 @@ export default function EmployeeTable({ employees }) {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-700">
+                      <div className="text-sm font-medium text-gray-700 capitalize">
                         {employee?.role}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-700 capitalize">
+                        {employee?.employmentType}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-700">
-                        {employee?.salary}
+                        ${formatNumberWithCommas(employee?.salary)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
@@ -124,9 +133,6 @@ export default function EmployeeTable({ employees }) {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center space-x-2">
-                        <button className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50 transition-colors">
-                          <Eye className="w-4 h-4" />
-                        </button>
                         <button className="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-50 transition-colors">
                           <Edit className="w-4 h-4" />
                         </button>

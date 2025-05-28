@@ -16,3 +16,10 @@ export const truncate = (text = "", maxLength = 50) => {
 
   return text.slice(0, maxLength - ellipsis.length) + ellipsis;
 };
+
+
+// Utility function to format numbers with commas
+export const formatNumberWithCommas = (number) => {
+  if (typeof number !== "number") return "";
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
