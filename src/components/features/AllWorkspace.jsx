@@ -10,6 +10,10 @@ export default function AllWorkspace() {
   const { workspace, isLoadingWorkspace } = useGetWorkspace();
   // console.log(workspace);
 
+  const sortedWorkspace = workspace
+    ?.slice()
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
   return (
     <>
       <div className="space-y-4 w-full">
@@ -29,7 +33,7 @@ export default function AllWorkspace() {
           </div>
         ) : (
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {workspace?.length === 0 && (
+            {sortedWorkspace?.length === 0 && (
               <div className="w-full h-[320px] bg-white rounded-lg flex flex-col items-center justify-center gap-4 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
                 <img src="empty.svg" alt="" className="w-20" />
                 <p className="text-gray-500 text-sm font-light">
@@ -43,7 +47,7 @@ export default function AllWorkspace() {
                 </button>
               </div>
             )}
-            {workspace?.map((space, index) => (
+            {sortedWorkspace?.map((space, index) => (
               <WorkspaceCard space={space} key={index} />
             ))}
           </div>
