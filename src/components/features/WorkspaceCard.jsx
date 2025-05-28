@@ -97,7 +97,12 @@ export default function WorkspaceCard({ space }) {
             </div>
           </div>
           <div className="space-y-2">
-            <p className="text-[20px] font-semibold">{space?.name}</p>
+            <p className="text-[20px] font-semibold">
+              {space?.name}{" "}
+              <span className="bg-c-color text-[10px] text-white px-2 py-1 font-medium capitalize rounded-full">
+                {space?.myRole}
+              </span>
+            </p>
             <p className="text-gray-500 text-sm font-light">
               {truncate(space?.description, 100)}
             </p>
