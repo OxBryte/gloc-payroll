@@ -66,7 +66,14 @@ const Drawer = ({ setIsOpen }) => {
       formData.append("logo", imageFile);
     }
 
-    createWorkspaceFn(formData);
+    createWorkspaceFn(formData, {
+      onSuccess: () => {
+        setIsOpen(false);
+        setImageSrc(null);
+        setImageFile(null);
+        setError("");
+      },
+    });
   };
 
   return (
