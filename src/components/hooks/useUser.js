@@ -12,6 +12,8 @@ export function useUser() {
   } = useQuery({
     queryKey: ["user"],
     queryFn: getCurrentUser,
+    enabled: token !== null, // Only run the query if the token exists
+    retry: 2,
   });
 
   return {
