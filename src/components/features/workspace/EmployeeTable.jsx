@@ -2,12 +2,23 @@ import React, { useState } from "react";
 import { Search, Filter, MoreVertical, Edit, Trash2 } from "lucide-react";
 import moment from "moment/moment";
 import { formatNumberWithCommas } from "../../lib/utils";
+import { useDeleteEmployee } from "../../hooks/useEmployee";
 
 export default function EmployeeTable({ employees }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterDepartment, setFilterDepartment] = useState("all");
 
   // console.log("Employees:", employees);
+  const { deleteEmployeeFn, isPending } = useDeleteEmployee();
+  const handleDelete = async (employeeId) => {
+    if (window.confirm("Are you sure you want to delete this employee?")) {
+      try {
+        await deleteEmployeeFn(employeeId);
+      } catch (error) {
+        console.error("Error deleting employee:", error);
+      }
+    }
+  };
 
   const departments = [
     "all",
@@ -136,12 +147,16 @@ export default function EmployeeTable({ employees }) {
                         <button className="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-50 transition-colors">
                           <Edit className="w-4 h-4" />
                         </button>
-                        <button className="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-50 transition-colors">
+                        <button
+                          className="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-50 transition-colors"
+                          onClick={() => handleDelete(employee.id)}
+                          disabled={isPending}
+                        >
                           <Trash2 className="w-4 h-4" />
                         </button>
-                        <button className="text-gray-400 hover:text-gray-600 p-1 rounded hover:bg-gray-50 transition-colors">
+                        {/* <button className="text-gray-400 hover:text-gray-600 p-1 rounded hover:bg-gray-50 transition-colors">
                           <MoreVertical className="w-4 h-4" />
-                        </button>
+                        </button> */}
                       </div>
                     </td>
                   </tr>

@@ -15,7 +15,11 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
       ...data,
       workspaceId: workspaceId,
     };
-    createEmployeeFn(updatedData);
+    createEmployeeFn(updatedData, {
+      onSuccess: () => {
+        setIsOpen(false);
+      },
+    });
   };
 
   return (

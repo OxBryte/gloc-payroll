@@ -22,3 +22,23 @@ export async function createEmployee(body) {
     );
   }
 }
+
+export async function deleteEmployee(employeeId) {
+  try {
+    // Get token from cookies
+    const token = getCookie("token"); // or whatever your cookie name is
+
+    const response = await axios.delete(`${apiURL}employees/${employeeId}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error during while deleting an employee", error);
+    throw new Error(
+      error.response?.data?.message ||
+        "An error occurred while deleting the employee."
+    );
+  }
+}

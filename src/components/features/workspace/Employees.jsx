@@ -7,7 +7,8 @@ import AddEmployeeDrawer from "../../ui/AddEmployeeDrawer";
 export default function Employees() {
   const [isOpen, setIsOpen] = useState(false);
   const { slug } = useParams();
-  const { singleWorkspace } = useGetSingleWorkspace(slug);
+  const { singleWorkspace, isLoadingSingleWorkspace } =
+    useGetSingleWorkspace(slug);
 
   return (
     <div className="w-full space-y-6">
@@ -21,13 +22,22 @@ export default function Employees() {
         </button>
       </div>
       <div className="w-full">
-        {singleWorkspace?.employees?.length > 0 ? (
-          <EmployeeTable employees={singleWorkspace?.employees}  />
-        ) : (
-          <div className="w-full h-[320px] bg-white rounded-lg flex flex-col items-center justify-center gap-4 p-6">
-            <img src="/empty.svg" alt="No admins" className="w-20" />
-            <p className="text-gray-500">No employee found.</p>
+        {isLoadingSingleWorkspace ? (
+          <div className="w-full h-full min-h-[70dvh] flex flex-col gap-3 items-center justify-center">
+            <img src="/loading.svg" alt="" className="w-30" />
+            <p className="text-gray-500">Loading workspace...</p>
           </div>
+        ) : (
+          <>
+            {singleWorkspace?.employees?.length > 0 ? (
+              <EmployeeTable employees={singleWorkspace?.employees} />
+            ) : (
+              <div className="w-full h-[320px] bg-white rounded-lg flex flex-col items-center justify-center gap-4 p-6">
+                <img src="/empty.svg" alt="No admins" className="w-20" />
+                <p className="text-gray-500">No employee found.</p>
+              </div>
+            )}
+          </>
         )}
       </div>
       {isOpen && (
