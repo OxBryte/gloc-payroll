@@ -1,7 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { login, signup, verifyEmail } from "../services/authApi";
+import {
+  login,
+  resendVerification,
+  signup,
+  verifyEmail,
+} from "../services/authApi";
 
 export const useSignup = () => {
   const navigate = useNavigate();
@@ -85,4 +90,41 @@ export const useLogin = () => {
     },
   });
   return { loginFn, isPending };
+};
+
+export const useResendVerification = () => {
+  const { mutateAsync: resendVerificationFn, isPending } = useMutation({
+    mutationKey: ["resendVerification"],
+    mutationFn: async (body) => {
+      return await resendVerification(body);
+    },
+    onSuccess(data) {
+      // console.log(data);
+      toast.success(`${data.message}`);
+    },
+    onError(error) {
+      console.log(error);
+      toast.error(`${error.message}`);
+    },
+  });
+  return { resendVerificationFn, isPending };
+};
+
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const logoutFn = () => {
+    //remove token from local storage
+    localStorage.removeItem("token");
+    document.cookie = "token=; path=/; max-age=0; Secure; SameSite=Strict;";
+
+    //clear user data from global state
+    queryClient.setQueryData(["user"], null);
+
+    //redirect to login page
+    navigate("/login");
+  };
+
+  return { logoutFn };
 };

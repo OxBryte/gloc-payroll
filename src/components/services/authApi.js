@@ -66,7 +66,8 @@ export async function forgetPassword(body) {
   } catch (error) {
     console.error("Error during forget password:", error);
     throw new Error(
-      error.response?.data?.message || "An error occurred during forget password"
+      error.response?.data?.message ||
+        "An error occurred during forget password"
     );
   }
 }
@@ -79,6 +80,22 @@ export async function resetPassword(body) {
     console.error("Error during reset password:", error);
     throw new Error(
       error.response?.data?.message || "An error occurred during reset password"
+    );
+  }
+}
+
+export async function resendVerification(body) {
+  try {
+    const { data } = await axios.post(
+      `${apiURL}auth/resend-verification`,
+      body
+    );
+    return data;
+  } catch (error) {
+    console.error("Error during resend verification", error);
+    throw new Error(
+      error.response?.data?.message ||
+        "An error occurred during resend verification"
     );
   }
 }

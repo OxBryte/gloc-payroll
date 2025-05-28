@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useVerify } from "../components/hooks/useAuth";
+import { useResendVerification, useVerify } from "../components/hooks/useAuth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../components/lib/utils";
@@ -18,6 +18,7 @@ export default function VerifyEmail() {
   }, [navigate]);
 
   const { verifyFn, isPending } = useVerify();
+  const { resendVerificationFn } = useResendVerification();
 
   // Handle OTP change
   const handleOtpChange = (element, index) => {
@@ -39,6 +40,10 @@ export default function VerifyEmail() {
     } else {
       alert("Invalid OTP");
     }
+  };
+
+  const handleResend = () => {
+    resendVerificationFn({ email: userEmail });
   };
 
   return (
@@ -84,7 +89,7 @@ export default function VerifyEmail() {
           </form>
 
           <div className="text-center w-full">
-            <p className="text-sm font-light ">
+            <p className="text-sm font-light" onClick={handleResend}>
               Resend code?{" "}
               <span className="text-c-color font-bold cursor-pointer">
                 Resend
