@@ -5,7 +5,7 @@ import { useAuth } from "./components/hooks/auth";
 import Spinner from "./components/ui/Spinner";
 
 const ProtectedRoute = ({ redirectTo = "/login" }) => {
-  const { isAuthenticated, isLoadingUser } = useAuth();
+  const { isAuthenticated, isLoadingUser, error } = useAuth();
   const location = useLocation();
 
   // Show loading spinner while checking auth status
@@ -26,7 +26,7 @@ const ProtectedRoute = ({ redirectTo = "/login" }) => {
   }
 
   // If user is not authenticated, redirect to login with the current location
-  if (!isAuthenticated) {
+  if (!isAuthenticated || isAuthenticated === undefined || error) {
     return <Navigate to={redirectTo} state={{ from: location }} replace />;
   }
   // if (!user?.isEmailVerified) {

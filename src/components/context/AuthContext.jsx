@@ -6,7 +6,7 @@ import Spinner from "../ui/Spinner";
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const { isLoadingUser, isAuthenticated, user } = useUser();
+  const { isLoadingUser, isAuthenticated, user, error } = useUser();
 
   // if (isLoadingUser) {
   //   return (
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   // }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, isLoadingUser }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, isLoadingUser, error }}>
       {children}
     </AuthContext.Provider>
   );
