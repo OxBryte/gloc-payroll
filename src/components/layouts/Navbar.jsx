@@ -46,7 +46,7 @@ export default function Navbar() {
             <GiHamburgerMenu size={24} />
           </div>
           <div
-            className="hidden md:flex items-center gap-3"
+            className="hidden md:flex items-center gap-3 relative cursor-pointer"
             onClick={handleKebabClick}
           >
             <div className="w-12 h-12 rounded-full bg-c-color overflow-hidden">
@@ -59,30 +59,30 @@ export default function Navbar() {
               <p className="text-xs text-gray-500 capitalize">{user?.role}</p>
             </div>
             <CgChevronDown />
+            {showOption && (
+              <div
+                ref={optionsRef}
+                className="absolute top-17 right-0 z-100 w-[200px] min-h-20 bg-white shadow-md overflow-hidden"
+              >
+                <Link to="settings">
+                  <div
+                    className="p-3 w-full hover:bg-black/10 cursor-pointer"
+                    onClick={() => setShowOption(false)}
+                  >
+                    Settings
+                  </div>
+                </Link>
+                <div
+                  className="p-3 text-red-500 w-full hover:bg-black/10 cursor-pointer"
+                  onClick={logoutFn}
+                >
+                  Logout
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      {showOption && (
-        <div
-          ref={optionsRef}
-          className="absolute top-22 right-5 w-[190px] min-h-20 bg-white shadow-md overflow-hidden"
-        >
-          <Link to="settings">
-            <div
-              className="p-3 w-full hover:bg-black/10 cursor-pointer"
-              onClick={() => setShowOption(false)}
-            >
-              Settings
-            </div>
-          </Link>
-          <div
-            className="p-3 text-red-500 w-full hover:bg-black/10 cursor-pointer"
-            onClick={logoutFn}
-          >
-            Logout
-          </div>
-        </div>
-      )}
     </>
   );
 }
