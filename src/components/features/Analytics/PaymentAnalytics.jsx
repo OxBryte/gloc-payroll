@@ -6,7 +6,7 @@ export default function PaymentAnalytics() {
 
   if (isLoadingWorkspace) {
     return (
-      <div className="w-full flex bg-white border border-gray-200 rounded-lg items-center justify-center p-3">
+      <div className="w-full flex bg-white min-h-[180px] border border-gray-200 rounded-lg items-center justify-center p-3">
         <div className="w-8 h-8 border-4 border-c-color border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
