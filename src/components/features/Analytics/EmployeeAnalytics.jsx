@@ -29,8 +29,8 @@ export default function EmployeeAnalytics() {
 
   if (isLoadingWorkspace) {
     return (
-      <div className="w-full flex items-center justify-center p-3">
-        <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+      <div className="w-full flex bg-white border border-gray-200 rounded-lg items-center justify-center p-3">
+        <div className="w-8 h-8 border-4 border-c-color border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -69,17 +69,17 @@ export default function EmployeeAnalytics() {
 
                   {/* Progress Bar Container */}
                   <div className="w-full relative">
-                    <div className="w-full h-4 bg-gray-100 rounded-sm relative overflow-hidden">
+                    <div className="w-full h-4 bg-c-color/20 rounded-sm relative overflow-hidden">
                       {/* Blue Bar */}
                       <div
-                        className="h-full bg-blue-500 rounded-sm transition-all duration-300 ease-out"
+                        className="h-full bg-c-color rounded-sm transition-all duration-300 ease-out"
                         style={{ width: `${percentage}%` }}
                       />
                     </div>
                   </div>
 
                   {/* Employee Count */}
-                  <div className="text-sm font-medium text-gray-800 min-w-[40px] text-right">
+                  <div className="text-sm font-medium text-gray-800 min-w-[30px] text-right">
                     {ws?.employees?.length}
                   </div>
                 </div>

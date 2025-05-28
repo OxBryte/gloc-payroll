@@ -60,7 +60,7 @@ export default function WorkspaceCard({ space }) {
         <div className="w-full h-[320px] bg-white rounded-lg flex flex-col gap-5 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
           <div className="flex w-full items-center justify-between gap-5">
             <div className="w-12 h-12 rounded-lg bg-gray-200 overflow-hidden object-cover object-center">
-              <img src={space?.logo} alt="" className="" />
+              <img src={space?.logo} alt="" className="object-cover object-center" />
             </div>
             <div className="relative">
               <button
