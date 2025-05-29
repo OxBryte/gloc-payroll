@@ -69,7 +69,7 @@ export default function SingleWorkspace() {
   return (
     <div className="w-full space-y-5">
       <div className="space-y-6 w-full">
-        <div className="w-full flex items-center justify-between gap-6">
+        <div className="w-full flex flex-col gap-3">
           <div className="flex items-center gap-3">
             <img
               src={singleWorkspace?.logo}
@@ -77,6 +77,20 @@ export default function SingleWorkspace() {
               className="rounded-lg w-10"
             />
             <h1 className="text-2xl font-semibold">{singleWorkspace?.name}</h1>
+          </div>
+          <p>{singleWorkspace?.description}</p>
+          <div className="space-y-2">
+            <p className="text-xs text-gray-700">Created by</p>
+            <div className="flex items-center gap-2">
+              <img
+                src={singleWorkspace?.userId?.avatar}
+                alt=""
+                className="w-8 h-8 rounded-full"
+              />
+              <span className="text-sm font-medium">
+                {singleWorkspace?.userId?.fullName}
+              </span>
+            </div>
           </div>
         </div>
         <Tabbar slug={slug} data={data} />

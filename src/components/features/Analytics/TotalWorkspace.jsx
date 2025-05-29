@@ -90,7 +90,7 @@ export default function TotalWorkspace() {
                     onClick={() => handleRoleChange(option.value)}
                     className={`w-full text-left px-3 py-2 text-xs hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg flex items-center justify-between ${
                       selectedRole === option.value
-                        ? "bg-blue-50 text-blue-700"
+                        ? "bg-c-color/20 text-c-color"
                         : "text-gray-700"
                     }`}
                   >
