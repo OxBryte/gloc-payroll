@@ -33,9 +33,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId }) => {
       {/* Drawer */}
       <div className="w-full max-w-md bg-white h-screen overflow-y-auto shadow-2xl">
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">
-            Add new employee
-          </h2>
+          <h2 className="text-xl font-semibold text-gray-900">New Payroll</h2>
           <button
             onClick={() => setIsOpen(false)}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
@@ -50,83 +48,37 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId }) => {
               <div className="space-y-3">
                 <div className="space-y-2 w-full">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Employee name
+                    Payroll Name/Title
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter workspace name"
+                    placeholder="Enter payroll name"
                     {...register("name", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
                 <div className="space-y-2 w-full">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Employee email
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="Enter employee email"
-                    {...register("email", { required: true })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
-                  />
-                </div>
-                <div className="space-y-2 w-full">
-                  <label className="text-sm font-medium text-gray-700 block">
-                    Employee role
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter employee role"
-                    {...register("role", { required: true })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
-                  />
-                </div>
-
-                <div className="space-y-2 w-full">
-                  <label className="text-sm font-medium text-gray-700 block">
-                    Employment date
-                  </label>
-                  <input
-                    type="date"
-                    placeholder="Enter employee salary (USD)"
-                    {...register("employmentDate", { required: true })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
-                  />
-                </div>
-                <div className="space-y-2 w-full">
-                  <label className="text-sm font-medium text-gray-700 block">
-                    Salary (Monthly)
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="Enter employee salary (USD)"
-                    {...register("salary", { required: true })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
-                  />
-                </div>
-                <div className="space-y-2 w-full">
-                  <label className="text-sm font-medium text-gray-700 block">
-                    Employment type
+                    Payroll Category
                   </label>
                   <select
-                    {...register("employmentType", { required: true })}
+                    defaultValue={""}
+                    {...register("name", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   >
-                    <option value="" disabled selected>
-                      Select employment type
+                    <option value="" disabled>
+                      Select payroll name
                     </option>
-                    <option value="full-time">Full-time</option>
-                    <option value="part-time">Part-time</option>
-                    <option value="contract">Contract</option>
-                    <option value="intern">Internship</option>
+                    <option value="monthly">Monthly Payroll</option>
+                    <option value="bi-weekly">Bi-Weekly Payroll</option>
+                    <option value="weekly">Weekly Payroll</option>
                   </select>
                 </div>
+
+               
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="border-t border-gray-200 p-6 bg-gray-50">
           <div className="flex space-x-3">
             <button
               className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"

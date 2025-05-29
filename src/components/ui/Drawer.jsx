@@ -219,9 +219,6 @@ const Drawer = ({ setIsOpen }) => {
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="border-t border-gray-200 p-6 bg-gray-50">
           <div className="flex space-x-3">
             <button
               className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"

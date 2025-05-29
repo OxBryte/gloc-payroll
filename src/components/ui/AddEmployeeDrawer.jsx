@@ -109,10 +109,11 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
                     Employment type
                   </label>
                   <select
+                    defaultValue={""}
                     {...register("employmentType", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   >
-                    <option value="" disabled selected>
+                    <option value="" disabled>
                       Select employment type
                     </option>
                     <option value="full-time">Full-time</option>
@@ -124,9 +125,6 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="border-t border-gray-200 p-6 bg-gray-50">
           <div className="flex space-x-3">
             <button
               className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"

@@ -18,7 +18,10 @@ export default function Payroll() {
         <div className="flex items-center justify-between w-full gap-2">
           <h1 className="text-xl font-bold text-gray-800">Payroll</h1>
           {user?._id === singleWorkspace?.userId?._id && (
-            <button className="bg-c-color text-white text-sm px-6 py-2.5 rounded-lg cursor-pointer hover:bg-c-bg transition-colors duration-200">
+            <button
+              className="bg-c-color text-white text-sm px-6 py-2.5 rounded-lg cursor-pointer hover:bg-c-bg transition-colors duration-200"
+              onClick={() => setIsOpen(true)}
+            >
               New Payroll
             </button>
           )}
@@ -37,6 +40,7 @@ export default function Payroll() {
             </span>
           </div>
         )}
+        <PayrollTable />
       </div>
       {isOpen && (
         <AddNewPayrollDrawer
