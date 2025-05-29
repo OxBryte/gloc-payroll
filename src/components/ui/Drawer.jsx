@@ -202,10 +202,11 @@ const Drawer = ({ setIsOpen }) => {
                   <select
                     name=""
                     id=""
+                    defaultValue=""
                     {...register("employeeCount", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   >
-                    <option value="" disabled selected>
+                    <option value="" disabled>
                       Select number of employees
                     </option>
                     <option value="1-10">1-10</option>

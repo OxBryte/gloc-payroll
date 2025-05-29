@@ -46,6 +46,7 @@ export default function Payroll() {
         <AddNewPayrollDrawer
           setIsOpen={setIsOpen}
           workspaceId={singleWorkspace?.id}
+          slug={slug}
         />
       )}
     </>

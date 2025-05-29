@@ -54,7 +54,7 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter workspace name"
+                    placeholder="Enter employee name"
                     {...register("name", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
@@ -101,6 +101,17 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
                     type="number"
                     placeholder="Enter employee salary (USD)"
                     {...register("salary", { required: true })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
+                  />
+                </div>
+                <div className="space-y-2 w-full">
+                  <label className="text-sm font-medium text-gray-700 block">
+                    Employee address
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter employee address"
+                    {...register("address", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>

@@ -17,7 +17,7 @@ export async function createEmployee(body) {
   } catch (error) {
     console.error("Error during while adding an employee", error);
     throw new Error(
-      error.response?.data?.message ||
+      error.response?.data?.error ||
         "An error occurred while adding the employee."
     );
   }

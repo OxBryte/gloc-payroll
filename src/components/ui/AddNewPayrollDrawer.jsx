@@ -1,25 +1,50 @@
-import React from "react";
-import { X } from "lucide-react";
-
+import React, { useMemo, useState } from "react";
+import { Check, X } from "lucide-react";
 import { useForm } from "react-hook-form";
-
 import { useCreateEmployee } from "../hooks/useEmployee";
+import { useGetSingleWorkspace } from "../hooks/useWorkspace";
 
-const AddNewPayrollDrawer = ({ setIsOpen, workspaceId }) => {
+const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
+  const [selectedEmployees, setSelectedEmployees] = useState([]);
+
   const { register, handleSubmit } = useForm();
   const { createEmployeeFn, isPending: isCreatingEmployee } =
     useCreateEmployee();
+  const { singleWorkspace } = useGetSingleWorkspace(slug);
+  const employees = singleWorkspace?.employees || [];
+
+  // Toggle employee selection
+  const toggleEmployeeSelection = (employee) => {
+    setSelectedEmployees((prev) => {
+      const isSelected = prev.some((emp) => emp.id === employee.id);
+      if (isSelected) {
+        return prev.filter((emp) => emp.id !== employee.id);
+      } else {
+        return [...prev, employee];
+      }
+    });
+  };
+
+  const totalSalary = useMemo(() => {
+    return selectedEmployees.reduce((total, employee) => {
+      return total + (employee.salary || 0);
+    }, 0);
+  }, [selectedEmployees]);
+
+  const taxRate = 0.3; // Example tax rate of 10%
+  const totalTax = useMemo(() => {
+    return totalSalary * taxRate;
+  }, [totalSalary, taxRate]);
 
   const onSubmit = (data) => {
     const updatedData = {
       ...data,
       workspaceId: workspaceId,
+      employees: selectedEmployees,
+      totalSalary: totalSalary,
+      totalTax: totalTax,
     };
-    createEmployeeFn(updatedData, {
-      onSuccess: () => {
-        setIsOpen(false);
-      },
-    });
+    console.log("Form submitted with data:", updatedData);
   };
 
   return (
@@ -31,7 +56,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId }) => {
       />
 
       {/* Drawer */}
-      <div className="w-full max-w-md bg-white h-screen overflow-y-auto shadow-2xl">
+      <div className="w-full max-w-lg bg-white h-screen overflow-y-auto shadow-2xl">
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">New Payroll</h2>
           <button
@@ -63,7 +88,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId }) => {
                   </label>
                   <select
                     defaultValue={""}
-                    {...register("name", { required: true })}
+                    {...register("category", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   >
                     <option value="" disabled>
@@ -74,8 +99,126 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId }) => {
                     <option value="weekly">Weekly Payroll</option>
                   </select>
                 </div>
+                <div className="space-y-2 w-full">
+                  <label className="text-sm font-medium text-gray-700 block">
+                    Currency
+                  </label>
+                  <select
+                    defaultValue={""}
+                    {...register("currency", { required: true })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
+                  >
+                    <option value="" disabled>
+                      Select currency
+                    </option>
+                    <option value="usdc">USDC</option>
+                    <option value="usdt">USDT</option>
+                  </select>
+                </div>
 
-               
+                {/* List of employees where they can be able to selct and delect fromt ethe array */}
+                <div className="space-y-3 w-full pt-2">
+                  <div className="flex w-full items-center gap-5 justify-between">
+                    <label className="text-sm font-medium text-gray-700 block">
+                      Select Employees ({selectedEmployees.length} selected)
+                    </label>
+                    <div
+                      onClick={() => {
+                        if (selectedEmployees.length === employees.length) {
+                          setSelectedEmployees([]);
+                        } else {
+                          setSelectedEmployees([...employees]);
+                        }
+                      }}
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
+                      <div
+                        className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
+                          selectedEmployees.length === employees.length &&
+                          employees.length > 0
+                            ? "bg-blue-500 border-blue-500"
+                            : "border-gray-300"
+                        }`}
+                      >
+                        {selectedEmployees.length === employees.length &&
+                          employees.length > 0 && (
+                            <Check className="w-3 h-3 text-white" />
+                          )}
+                      </div>
+                      <span className="text-xs text-gray-600">Select All</span>
+                    </div>
+                  </div>
+
+                  {employees.length === 0 ? (
+                    <div className="text-sm text-gray-500 py-4 text-center border border-gray-200 rounded-lg">
+                      No employees found in this workspace
+                    </div>
+                  ) : (
+                    <div className="border border-gray-200 rounded-lg max-h-70 overflow-y-auto">
+                      {employees.map((employee) => {
+                        const isSelected = selectedEmployees.some(
+                          (emp) => emp.id === employee.id
+                        );
+                        return (
+                          <div
+                            key={employee.id}
+                            onClick={() => toggleEmployeeSelection(employee)}
+                            className={`flex items-center justify-between p-3 cursor-pointer hover:bg-gray-50 border-b border-gray-100 last:border-b-0 ${
+                              isSelected ? "bg-blue-50 border-blue-200" : ""
+                            }`}
+                          >
+                            <div className="flex-1">
+                              <div className="text-sm font-medium text-gray-900">
+                                {employee.name}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                Salary: $
+                                {(employee.salary || 0).toLocaleString()}
+                              </div>
+                              <div className="text-sm font-medium truncate w-40 text-gray-900">
+                                {employee?.address}
+                              </div>
+                            </div>
+                            <div
+                              className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
+                                isSelected
+                                  ? "bg-blue-500 border-blue-500"
+                                  : "border-gray-300"
+                              }`}
+                            >
+                              {isSelected && (
+                                <Check className="w-3 h-3 text-white" />
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+                {selectedEmployees.length > 0 && (
+                  <div className="space-y-2 w-full">
+                    <label className="text-sm font-medium text-gray-700 block">
+                      Selected Employees Summary
+                    </label>
+                    <div className="border border-gray-200 rounded-lg p-3 bg-gray-50 space-y-2">
+                      <div className="border-b border-gray-300 py-2 flex justify-between font-semibold text-gray-900">
+                        <span>Total Salary:</span>
+                        <span>${totalSalary.toLocaleString()}</span>
+                      </div>
+                      <div className="border-b border-gray-300 py-2 flex justify-between font-semibold text-gray-900">
+                        <span>Rate charge(3%):</span>
+                        <span>${totalTax.toLocaleString()}</span>
+                      </div>
+                      <div className="py-2 flex justify-between font-semibold text-gray-900">
+                        <span>Total:</span>
+                        <span>
+                          ${(totalTax + totalSalary).toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -83,8 +226,9 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId }) => {
             <button
               className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
               onClick={handleSubmit(onSubmit)}
+              disabled={selectedEmployees.length === 0}
             >
-              {isCreatingEmployee ? "Adding..." : "Add Employee"}
+              {isCreatingEmployee ? "Sending..." : "Send Payment"}
             </button>
           </div>
         </div>
