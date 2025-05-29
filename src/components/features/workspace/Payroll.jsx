@@ -1,11 +1,13 @@
 import { Calculator, Search } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { useUser } from "../../hooks/useUser";
 import { useGetSingleWorkspace } from "../../hooks/useWorkspace";
 import { useParams } from "react-router-dom";
 import PayrollTable from "./PayrollTable";
+import AddNewPayrollDrawer from "../../ui/AddNewPayrollDrawer";
 
 export default function Payroll() {
+  const [isOpen, setIsOpen] = useState(false);
   const { slug } = useParams();
   const { singleWorkspace } = useGetSingleWorkspace(slug);
   const { user } = useUser();
@@ -16,8 +18,7 @@ export default function Payroll() {
         <div className="flex items-center justify-between w-full gap-2">
           <h1 className="text-xl font-bold text-gray-800">Payroll</h1>
           {user?._id === singleWorkspace?.userId?._id && (
-            <button className="bg-c-color text-white px-6 py-2.5 rounded-lg cursor-pointer flex gap-2 items-center hover:bg-c-bg transition-colors duration-200">
-              <Calculator />
+            <button className="bg-c-color text-white text-sm px-6 py-2.5 rounded-lg cursor-pointer hover:bg-c-bg transition-colors duration-200">
               New Payroll
             </button>
           )}
@@ -37,6 +38,12 @@ export default function Payroll() {
           </div>
         )}
       </div>
+      {isOpen && (
+        <AddNewPayrollDrawer
+          setIsOpen={setIsOpen}
+          workspaceId={singleWorkspace?.id}
+        />
+      )}
     </>
   );
 }

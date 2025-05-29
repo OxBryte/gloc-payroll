@@ -14,12 +14,24 @@ export default function Employees() {
     <div className="w-full space-y-6">
       <div className="flex items-center justify-between w-full gap-2">
         <h1 className="text-xl font-bold text-gray-800">Employee</h1>
-        <button
-          className="bg-c-color text-white px-6 py-2.5 rounded-lg cursor-pointer hover:bg-c-bg transition-colors duration-200"
-          onClick={() => setIsOpen(true)}
-        >
-          Add new employee
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            className="bg-c-color text-white px-6 py-2.5 text-sm rounded-lg cursor-pointer hover:bg-c-bg transition-colors duration-200"
+            onClick={() => setIsOpen(true)}
+          >
+            Add new employee
+          </button>
+          <button
+            className="bg-c-bg text-white px-6 py-2.5 text-sm rounded-lg cursor-pointer hover:bg-c-color transition-colors duration-200"
+            disabled
+            onClick={() => {
+              // Handle export to CSV logic here
+              console.log("Export to CSV clicked");
+            }}
+          >
+            Export to CSV
+          </button>
+        </div>
       </div>
       <div className="w-full">
         {isLoadingSingleWorkspace ? (
