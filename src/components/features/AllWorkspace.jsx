@@ -20,7 +20,7 @@ export default function AllWorkspace() {
         <div className="flex items-center justify-between gap-3">
           <p className="font-semibold text-[16px] md:text-[24px]">Workspace</p>
           <button
-            className="bg-c-bg-2 px-5 py-3 rounded-lg text-xs md:text-sm font-medium bg-c-color transition-colors cursor-pointer"
+            className="bg-c-bg-2 px-5 py-3 rounded-lg text-xs text-white md:text-sm font-medium bg-c-color hover:bg-c-bg transition-colors cursor-pointer"
             onClick={() => setIsOpen(true)}
           >
             Create New Workspace

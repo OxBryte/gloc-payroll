@@ -34,17 +34,17 @@ export default function Settings() {
 
   return (
     <div className="w-full space-y-5">
-      <p className="text-white font-bold text-xl">Settings</p>
+      <p className="font-bold text-xl">Settings</p>
       <div className="flex gap-5 w-full items-top">
-        <div className="flex flex-col w-[15rem] p-4 bg-c-bg rounded-lg">
+        <div className="flex flex-col w-[15rem] p-4 bg-white rounded-lg">
           {settingsData.map((item) => {
             const isActive = item.id === activeTabId;
             return (
               <div key={item.id} className="flex">
                 <button
                   onClick={() => setActiveTabId(item.id)}
-                  className={`flex items-center w-full h-[50px] px-3 ml-2 text-sm font-light rounded-lg hover:opacity-70 cursor-pointer transition ${
-                    isActive ? "bg-c-bg-2 text-white" : "text-gray-300"
+                  className={`flex items-center w-full h-[50px] px-3 ml-2 text-sm font-medium rounded-lg hover:opacity-70 cursor-pointer transition ${
+                    isActive ? "bg-c-color text-white" : ""
                   }`}
                 >
                   <span className="ml-2">{item.name}</span>
@@ -53,7 +53,7 @@ export default function Settings() {
             );
           })}
         </div>
-        <div className="flex-1 p-4 bg-c-bg rounded-lg">
+        <div className="flex-1 p-4 bg-white rounded-lg">
           {activeTab?.component}
         </div>
       </div>

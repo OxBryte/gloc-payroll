@@ -12,8 +12,8 @@ export default function Home() {
         <TotalWorkspace />
         <EmployeeAnalytics />
       </div>
+      <div className="bg-white border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"></div>
       <AllWorkspace />
-      <div className="space-y-3 w-full"></div>
     </div>
   );
 }

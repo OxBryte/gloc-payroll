@@ -2,15 +2,15 @@ import React from "react";
 import { GoRocket } from "react-icons/go";
 import { IoDiceOutline } from "react-icons/io5";
 import { LuHandshake } from "react-icons/lu";
-import { PiHeadphones, PiPokerChip, PiVolleyballLight } from "react-icons/pi";
-import { RiHome5Line, RiSettingsLine } from "react-icons/ri";
+import { PiHeadphones } from "react-icons/pi";
+import { RiDashboardLine, RiSettingsLine } from "react-icons/ri";
 import { Link, matchPath, useLocation } from "react-router-dom";
 
 const data = [
   {
     id: 1,
     name: "Dashboard",
-    icon: <RiHome5Line size={22} />,
+    icon: <RiDashboardLine size={22} />,
     link: "/",
   },
   {
@@ -19,20 +19,20 @@ const data = [
     icon: <GoRocket size={22} />,
     link: "workspace",
   },
-  {
-    id: 3,
-    name: "Payroll",
-    icon: <IoDiceOutline size={22} />,
-    link: "/payroll",
-  },
+  // {
+  //   id: 3,
+  //   name: "Payroll",
+  //   icon: <IoDiceOutline size={22} />,
+  //   link: "/payroll",
+  // },
 ];
 
 const data2 = [
   {
     id: 1,
-    name: "Affiliate ",
+    name: "Subscription ",
     icon: <LuHandshake size={22} />,
-    link: "/affiliate",
+    link: "/subscription",
   },
   {
     id: 2,
@@ -74,11 +74,11 @@ export default function Sidebar() {
 
           <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
             {data.map((item) => {
-                const match = matchPath(
-                  { path: item.link, end: item.link === "/" },
-                  pathname
-                );
-                const isActive = Boolean(match);
+              const match = matchPath(
+                { path: item.link, end: item.link === "/" },
+                pathname
+              );
+              const isActive = Boolean(match);
               return (
                 <Link to={item.link} key={item.id} className="flex">
                   {/* left indicator only if active */}
