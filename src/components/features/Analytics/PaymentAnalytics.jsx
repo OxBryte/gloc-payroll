@@ -1,8 +1,22 @@
 import React from "react";
 import { useGetWorkspace } from "../../hooks/useWorkspace";
+import { useGetAllPayroll } from "../../hooks/usePayroll";
+import { formatNumberWithCommas } from "../../lib/utils";
+import Spinner from "../../ui/Spinner";
 
 export default function PaymentAnalytics() {
   const { isLoadingWorkspace } = useGetWorkspace();
+  const { allPayrolls, isLoadingAllPayroll } = useGetAllPayroll();
+  // console.log("allPayrolls", allPayrolls);
+
+  // total monthly revenue calculation
+  const totalMonthlyRevenue = allPayrolls?.reduce((acc, payroll) => {
+    return acc + (payroll?.totalSalary || 0);
+  }, 0);
+  // total tax calculation
+  const totalTax = allPayrolls?.reduce((acc, payroll) => {
+    return acc + (payroll?.tax || 0);
+  }, 0);
 
   if (isLoadingWorkspace) {
     return (
@@ -14,13 +28,21 @@ export default function PaymentAnalytics() {
 
   return (
     <div>
-      <div className="w-full min-h-[180px] h-auto rounded-lg bg-gradient-to-bl from-c-color to-black flex flex-col items-left gap-3 p-5">
-        <p className="text-sm font-medium text-white/80">Payment</p>
+      <div className="w-full min-h-[180px] h-auto rounded-lg bg-gradient-to-bl from-c-color to-black flex flex-col items-left justify-between gap-3 p-5">
+        <div className="flex w-full items-center justify-between gap-6">
+          <p className="text-sm font-medium text-white/80">All Payroll</p>
+        </div>
         <div className="w-full flex items-center justify-between">
           <div className="space-y-2">
-            <p className="font-bold text-[46px] text-white">$0.00</p>
+            {isLoadingAllPayroll ? (
+              <Spinner />
+            ) : (
+              <p className="font-bold text-[46px] text-white">
+                ${formatNumberWithCommas(totalMonthlyRevenue)}
+              </p>
+            )}
             <span className="text-white/80 text-xs">
-              Mothly revenue (Transactions)
+              Excluding tax - ${formatNumberWithCommas(totalTax)}
             </span>
           </div>
         </div>

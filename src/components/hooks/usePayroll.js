@@ -1,6 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { createPayroll, getPayroll } from "../services/payrollApi";
+import {
+  createPayroll,
+  getAllPayroll,
+  getPayroll,
+} from "../services/payrollApi";
 
 export function useGetPayroll(workspaceId) {
   const {
@@ -55,4 +59,21 @@ export const useCreatePayroll = () => {
     },
   });
   return { createPayrollFn, isPending };
+};
+
+export const useGetAllPayroll = () => {
+  const {
+    isPending: isLoadingAllPayroll,
+    data: payroll,
+    error,
+  } = useQuery({
+    queryKey: ["allPayroll"],
+    queryFn: () => getAllPayroll(),
+  });
+
+  return {
+    isLoadingAllPayroll,
+    allPayrolls: payroll?.data,
+    error,
+  };
 };

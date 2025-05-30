@@ -15,10 +15,30 @@ export async function getPayroll(workspaceId) {
     });
     return data;
   } catch (error) {
-    console.error("Error during while fetching payroll", error);
+    console.error("Error during while fetching payroll data", error);
     throw new Error(
       error.response?.data?.message ||
-        "An error occurred while fetching user data"
+        "An error occurred while fetching payroll data"
+    );
+  }
+}
+
+export async function getAllPayroll() {
+  try {
+    // Get token from cookies
+    const token = getCookie("token"); // or whatever your cookie name is
+
+    const { data } = await axios.get(`${apiURL}payroll/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error during while fetching payroll data", error);
+    throw new Error(
+      error.response?.data?.message ||
+        "An error occurred while fetching payroll data"
     );
   }
 }

@@ -132,7 +132,7 @@ export default function Overview() {
     <>
       <div className="w-full space-y-6">
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="w-full min-h-[180px] h-auto rounded-lg bg-gradient-to-bl from-c-color to-black border border-gray-200 flex flex-col items-left gap-3 p-5">
+          <div className="w-full min-h-[180px] h-auto rounded-lg bg-gradient-to-bl from-c-color to-black border border-gray-200 flex flex-col items-left justify-between gap-3 p-5">
             <div className="flex items-center justify-between w-full">
               <p className="text-sm font-medium text-white/50">Total Payroll</p>
               <div className="relative">
@@ -179,7 +179,7 @@ export default function Overview() {
                 ${formatNumberWithCommas(currentStats.totalSalary)}
               </p>
             )}
-            <p className="text-xs text-white/50">
+            <p className="text-xs text-white/80">
               Excluding tax - ${formatNumberWithCommas(currentStats.totalTax)}
             </p>
           </div>
