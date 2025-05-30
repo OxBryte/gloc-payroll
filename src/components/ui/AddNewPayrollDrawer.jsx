@@ -6,6 +6,8 @@ import { useGetSingleWorkspace } from "../hooks/useWorkspace";
 
 const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
+  const [chain, setChain] = useState("");
+  const [currency, setCurrency] = useState("");
 
   const { register, handleSubmit } = useForm();
   const { createEmployeeFn, isPending: isCreatingEmployee } =
@@ -40,7 +42,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
     const updatedData = {
       ...data,
       workspaceId: workspaceId,
-      employees: selectedEmployees,
+      employees: selectedEmployees?.length,
       totalSalary: totalSalary,
       totalTax: totalTax,
     };
@@ -103,17 +105,70 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
                   <label className="text-sm font-medium text-gray-700 block">
                     Currency
                   </label>
-                  <select
-                    defaultValue={""}
-                    {...register("currency", { required: true })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
-                  >
-                    <option value="" disabled>
-                      Select currency
-                    </option>
-                    <option value="usdc">USDC</option>
-                    <option value="usdt">USDT</option>
-                  </select>
+                  <div className="flex gap-3 items-center">
+                    <div
+                      className={`border ${
+                        currency === "USDC"
+                          ? "border-c-color bg-c-color/20"
+                          : "border-gray-200"
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      onClick={() => setCurrency("USDC")}
+                    >
+                      <img src="/usdc.svg" alt="" className="w-6" />
+                      <p className="text-sm font-medium">USDC</p>
+                    </div>
+                    <div
+                      className={`border ${
+                        currency === "USDT"
+                          ? "border-c-color bg-c-color/20"
+                          : "border-gray-200"
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      onClick={() => setCurrency("USDT")}
+                    >
+                      <img src="/usdt.svg" alt="" className="w-6" />
+                      <p className="text-sm font-medium">USDT</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-2 w-full">
+                  <label className="text-sm font-medium text-gray-700 block">
+                    Chain
+                  </label>
+                  <div className="flex gap-3 items-center">
+                    <div
+                      className={`border ${
+                        chain === "optimism"
+                          ? "border-c-color bg-c-color/20"
+                          : "border-gray-200"
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      onClick={() => setChain("optimism")}
+                    >
+                      <img src="/op.svg" alt="" className="w-6" />
+                      <p className="text-sm font-medium">Optimism</p>
+                    </div>
+                    <div
+                      className={`border ${
+                        chain === "arbitrum"
+                          ? "border-c-color bg-c-color/20"
+                          : "border-gray-200"
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      onClick={() => setChain("arbitrum")}
+                    >
+                      <img src="/arb.svg" alt="" className="w-6" />
+                      <p className="text-sm font-medium">Arbitrum</p>
+                    </div>
+                    <div
+                      className={`border ${
+                        chain === "base"
+                          ? "border-c-color bg-c-color/20"
+                          : "border-gray-200"
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      onClick={() => setChain("base")}
+                    >
+                      <img src="/base.svg" alt="" className="w-6" />
+                      <p className="text-sm font-medium">Base</p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* List of employees where they can be able to selct and delect fromt ethe array */}
