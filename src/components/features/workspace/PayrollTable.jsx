@@ -70,6 +70,7 @@ export default function PayrollTable({ payrolls }) {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   TX Hash
                 </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"></th>
               </tr>
             </thead>
             <tbody>
@@ -131,6 +132,11 @@ export default function PayrollTable({ payrolls }) {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-700 truncate w-40">
                       {payroll?.tx}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm bg-c-color rounded-lg px-4 py-2.5 font-medium text-white cursor-pointer hover:bg-c-bg transition-colors duration-200">
+                      View reciept
                     </div>
                   </td>
                 </tr>
