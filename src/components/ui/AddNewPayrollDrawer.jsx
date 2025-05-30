@@ -79,7 +79,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter payroll name"
+                    placeholder="Enter payroll title"
                     {...register("name", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />

@@ -18,7 +18,7 @@ export default function PaymentAnalytics() {
         <p className="text-sm font-medium text-white/80">Payment</p>
         <div className="w-full flex items-center justify-between">
           <div className="space-y-2">
-            <p className="font-bold text-[46px] text-white">$10,000</p>
+            <p className="font-bold text-[46px] text-white">$0.00</p>
             <span className="text-white/80 text-xs">
               Mothly revenue (Transactions)
             </span>

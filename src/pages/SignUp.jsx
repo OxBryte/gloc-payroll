@@ -46,6 +46,38 @@ export default function SignUp() {
     const file = e.target.files[0];
     if (!file) return;
 
+    // Check file type - reject SVG and only allow JPG, JPEG, PNG, GIF
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+    const fileType = file.type.toLowerCase();
+
+    if (!allowedTypes.includes(fileType)) {
+      setError(
+        "Only JPG, JPEG, PNG, and GIF files are allowed. SVG files are not supported."
+      );
+      // Clear the file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      return;
+    }
+
+    // Additional check using file extension as backup
+    const fileName = file.name.toLowerCase();
+    const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif"];
+    const hasValidExtension = allowedExtensions.some((ext) =>
+      fileName.endsWith(ext)
+    );
+
+    if (!hasValidExtension) {
+      setError(
+        "Invalid file format. Please upload JPG, JPEG, PNG, or GIF files only."
+      );
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      return;
+    }
+
     const fileSizeInMB = file.size / (1024 * 1024);
 
     if (fileSizeInMB > MAX_SIZE_MB) {
