@@ -97,9 +97,15 @@ export default function Admins() {
             ))}
           </div>
         ) : (
-          <div className="w-full h-[320px] bg-white rounded-lg flex flex-col items-center justify-center gap-4 p-6">
+          <div className="w-full h-[320px] bg-white rounded-lg flex flex-col items-center justify-center gap-2 p-6">
             <img src="/empty.svg" alt="No admins" className="w-20" />
             <p className="text-gray-500">No admins found.</p>
+            <p className="text-gray-400 text-center text-sm">
+              You can add admins to your workspace.
+            </p>
+            <span className="text-c-color text-sm font-semibold">
+              Click on "Add Admin" to get started.
+            </span>
           </div>
         )}
       </div>

@@ -21,7 +21,7 @@ export default function Employees() {
             className="bg-c-color text-white px-6 py-2.5 text-sm rounded-lg cursor-pointer hover:bg-c-bg transition-colors duration-200"
             onClick={() => setIsOpen(true)}
           >
-            Add new employee
+            Add New Employee
           </button>
           <button
             className="bg-c-bg text-white px-6 py-2.5 text-sm rounded-lg cursor-pointer hover:bg-c-color transition-colors duration-200"
@@ -48,7 +48,7 @@ export default function Employees() {
               <div className="w-full min-h-[320px]  bg-white rounded-lg flex flex-col items-center justify-center gap-2 p-6">
                 <img src="/empty.svg" alt="No admins" className="w-20" />
                 <p className="text-gray-500">No employee found.</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-400 text-center text-sm">
                   You can add employees to your workspace to manage payroll.
                 </p>
                 <span className="text-c-color text-sm font-semibold">

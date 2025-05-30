@@ -42,7 +42,7 @@ export default function Payroll() {
               <div className="w-full min-h-[320px]  bg-white rounded-lg flex flex-col items-center justify-center gap-2 p-6">
                 <img src="/empty.svg" alt="No admins" className="w-20" />
                 <p className="text-gray-500">No payroll found.</p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-gray-400 text-center text-sm">
                   You can add payroll to your workspace to manage employee
                   payments.
                 </p>
