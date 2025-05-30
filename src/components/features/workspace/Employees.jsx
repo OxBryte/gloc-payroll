@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../../hooks/useWorkspace";
 import EmployeeTable from "./EmployeeTable";
 import AddEmployeeDrawer from "../../ui/AddEmployeeDrawer";
+import { exportEmployeesToCSV } from "../../lib/utils";
 
 export default function Employees() {
   const [isOpen, setIsOpen] = useState(false);
   const { slug } = useParams();
   const { singleWorkspace, isLoadingSingleWorkspace } =
     useGetSingleWorkspace(slug);
+  const employees = singleWorkspace?.employees || [];
 
   return (
     <div className="w-full space-y-6">
@@ -23,11 +25,10 @@ export default function Employees() {
           </button>
           <button
             className="bg-c-bg text-white px-6 py-2.5 text-sm rounded-lg cursor-pointer hover:bg-c-color transition-colors duration-200"
-            disabled
-            onClick={() => {
-              // Handle export to CSV logic here
-              console.log("Export to CSV clicked");
-            }}
+            disabled={employees.length === 0}
+            onClick={() =>
+              exportEmployeesToCSV(employees, singleWorkspace?.name)
+            }
           >
             Export to CSV
           </button>
