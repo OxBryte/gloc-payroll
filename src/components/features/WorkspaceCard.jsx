@@ -60,7 +60,11 @@ export default function WorkspaceCard({ space }) {
         <div className="w-full h-[320px] bg-white rounded-lg flex flex-col gap-5 p-6 cursor-pointer hover:shadow-lg transition-shadow duration-200 ease-in-out">
           <div className="flex w-full items-center justify-between gap-5">
             <div className="w-12 h-12 rounded-lg bg-gray-200 overflow-hidden object-cover object-center">
-              <img src={space?.logo} alt="" className="object-cover object-center" />
+              <img
+                src={space?.logo}
+                alt=""
+                className="object-cover object-center"
+              />
             </div>
             <div className="relative">
               <button
@@ -72,22 +76,22 @@ export default function WorkspaceCard({ space }) {
               {showOption && (
                 <div
                   ref={optionsRef}
-                  className="absolute top-8 left-2 w-30 min-h-20 bg-gray-100 overflow-hidden rounded-xl"
+                  className="absolute top-8 right-0 w-30 min-h-20 bg-gray-50 overflow-hidden rounded-lg"
                 >
                   <div
-                    className="p-3 w-full hover:bg-black/20 cursor-pointer"
+                    className="p-3 w-full text-sm hover:bg-black/20 cursor-pointer"
                     onClick={(e) => handleOptionClick(e, "edit")}
                   >
                     Edit
                   </div>
                   <div
-                    className="p-3 w-full hover:bg-black/20 cursor-pointer"
+                    className="p-3 w-full text-sm hover:bg-black/20 cursor-pointer"
                     onClick={(e) => handleOptionClick(e, "delete")}
                   >
                     Delete
                   </div>
                   <div
-                    className="p-3 w-full hover:bg-black/20 cursor-pointer"
+                    className="p-3 w-full text-sm hover:bg-black/20 cursor-pointer"
                     onClick={(e) => handleOptionClick(e, "share")}
                   >
                     Share
