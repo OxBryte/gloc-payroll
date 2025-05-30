@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../../hooks/useWorkspace";
-import { useInviteAdmin } from "../../hooks/useAcceptAdmin";
+import { useInviteAdmin, useRemoveAdmin } from "../../hooks/useAcceptAdmin";
 import InviteAdminModal from "../../ui/InviteAdminModal";
 import { useUser } from "../../hooks/useUser";
+import { Trash2 } from "lucide-react";
+import Spinner from "../../ui/Spinner";
 
 export default function Admins() {
   const [showInviteModal, setShowInviteModal] = useState(false);
@@ -12,6 +14,7 @@ export default function Admins() {
   const { user } = useUser();
 
   const { inviteFn, isPending: isInvitingAdmin } = useInviteAdmin();
+  const { removeFn, isPending: isRemovingAdmin } = useRemoveAdmin();
 
   const handleInviteAdmin = async (email) => {
     try {
@@ -21,6 +24,18 @@ export default function Admins() {
       setShowInviteModal(false);
     } catch (error) {
       console.error("Error inviting admin:", error);
+      // Handle error, e.g., show an error message
+    }
+  };
+
+  const handleRemoveAdmin = async (adminId) => {
+    try {
+      await removeFn({
+        workspaceId: singleWorkspace?.id,
+        adminId: adminId,
+      });
+    } catch (error) {
+      console.error("Error removing admin:", error);
       // Handle error, e.g., show an error message
     }
   };
@@ -52,7 +67,12 @@ export default function Admins() {
                   <img
                     src={admin?.avatar || "/default-avatar.png"}
                     alt={admin?.name}
-                    className="w-12 h-12 rounded-full object-cover"
+                    className={
+                      "w-12 h-12 rounded-full object-cover" +
+                      (user?._id === admin?._id
+                        ? " border-4 border-c-color"
+                        : "")
+                    }
                   />
                   <div>
                     <h2 className="text-sm md:text-lg font-semibold">
@@ -63,10 +83,15 @@ export default function Admins() {
                     </p>
                   </div>
                 </div>
-                {user?._id === admin?.userId?._id && (
-                  <span className="justify-self-right text-xs bg-c-color px-2.5 py-1 rounded-lg text-white/70">
-                    You
-                  </span>
+                {user?._id === singleWorkspace?.userId?._id && (
+                  <>
+                    <span
+                      className="text-xs bg-c-color px-2 py-2 rounded-lg text-white"
+                      onClick={() => handleRemoveAdmin(admin?.id)}
+                    >
+                      {isRemovingAdmin ? <Spinner /> : <Trash2 size={16} />}
+                    </span>
+                  </>
                 )}
               </div>
             ))}

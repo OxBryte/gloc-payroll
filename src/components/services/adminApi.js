@@ -49,3 +49,25 @@ export async function acceptAdmin(body) {
     );
   }
 }
+
+export async function removeAdmin(workspaceId, adminId) {
+  try {
+    // Get token from cookies
+    const token = getCookie("token"); // or whatever your cookie name is
+
+    const response = await axios.delete(
+      `${apiURL}workspace/${workspaceId}/admins/${adminId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error while deleting admin", error);
+    throw new Error(
+      error.response?.data?.message || "An error occurred while deleting admin"
+    );
+  }
+}

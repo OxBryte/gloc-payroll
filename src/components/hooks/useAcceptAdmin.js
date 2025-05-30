@@ -1,7 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { acceptAdmin, inviteAdmin } from "../services/adminApi";
+import { acceptAdmin, inviteAdmin, removeAdmin } from "../services/adminApi";
 
 export const useAcceptAdmin = () => {
   const navigate = useNavigate();
@@ -42,4 +42,25 @@ export const useInviteAdmin = () => {
     },
   });
   return { inviteFn, isPending };
+};
+
+export const useRemoveAdmin = () => {
+  const queryClient = useQueryClient();
+  const { mutateAsync: removeFn, isPending } = useMutation({
+    mutationKey: ["removeAdmin"],
+    mutationFn: async ({ workspaceId, adminId }) => {
+      return await removeAdmin(workspaceId, adminId);
+    },
+    onSuccess(data) {
+      toast.success(data.message);
+      queryClient.refetchQueries({
+        queryKey: ["SingleWorkspace"],
+      });
+    },
+    onError(error) {
+      console.error(error);
+      toast.error(error.message);
+    },
+  });
+  return { removeFn, isPending };
 };
