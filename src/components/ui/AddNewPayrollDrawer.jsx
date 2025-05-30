@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { Check, X } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useCreateEmployee } from "../hooks/useEmployee";
 import { useGetSingleWorkspace } from "../hooks/useWorkspace";
+import { useCreatePayroll } from "../hooks/usePayroll";
 
 const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
@@ -10,8 +10,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   const [currency, setCurrency] = useState("");
 
   const { register, handleSubmit } = useForm();
-  const { createEmployeeFn, isPending: isCreatingEmployee } =
-    useCreateEmployee();
+  const { createPayrollFn, isPending } = useCreatePayroll();
   const { singleWorkspace } = useGetSingleWorkspace(slug);
   const employees = singleWorkspace?.employees || [];
 
@@ -42,11 +41,25 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
     const updatedData = {
       ...data,
       workspaceId: workspaceId,
-      employees: selectedEmployees?.length,
+      employeeCount: selectedEmployees?.length,
       totalSalary: totalSalary,
-      totalTax: totalTax,
+      tax: totalTax,
+      status: "pending",
+      tx: "0x8403176115a49b2081a8220b9535672b13936844818b091791929b4585119f6b",
+      chain: chain,
+      currency: currency,
     };
-    console.log("Form submitted with data:", updatedData);
+    // console.log("Form submitted with data:", updatedData);
+    createPayrollFn(updatedData)
+      .then(() => {
+        setIsOpen(false);
+        setSelectedEmployees([]);
+        setChain("");
+        setCurrency("");
+      })
+      .catch((error) => {
+        console.error("Error creating payroll:", error);
+      });
   };
 
   return (
@@ -80,7 +93,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
                   <input
                     type="text"
                     placeholder="Enter payroll title"
-                    {...register("name", { required: true })}
+                    {...register("title", { required: true })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -283,7 +296,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
               onClick={handleSubmit(onSubmit)}
               disabled={selectedEmployees.length === 0}
             >
-              {isCreatingEmployee ? "Sending..." : "Send Payment"}
+              {isPending ? "Sending..." : "Send Payment"}
             </button>
           </div>
         </div>

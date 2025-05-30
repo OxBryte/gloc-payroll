@@ -15,10 +15,10 @@ export async function getWorkspace() {
     });
     return data;
   } catch (error) {
-    console.error("Error during while fetching user data", error);
+    console.error("Error during while fetching workspace data", error);
     throw new Error(
       error.response?.data?.message ||
-        "An error occurred while fetching user data"
+        "An error occurred while fetching workspace data"
     );
   }
 }
@@ -35,10 +35,10 @@ export async function getSingleWorkspace(slug) {
     });
     return data;
   } catch (error) {
-    console.error("Error during while fetching user data", error);
+    console.error("Error during while fetching workspace data", error);
     throw new Error(
       error.response?.data?.message ||
-        "An error occurred while fetching user data"
+        "An error occurred while fetching workspace data"
     );
   }
 }

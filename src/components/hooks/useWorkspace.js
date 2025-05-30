@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createWorkspace,
   getSingleWorkspace,
@@ -41,7 +41,7 @@ export function useGetSingleWorkspace(slug) {
 }
 
 export const useCreateWorkspace = () => {
-  const queryClient = useQuery();
+  const queryClient = useQueryClient();
   const { mutateAsync: createWorkspaceFn, isPending } = useMutation({
     mutationKey: ["createWorkspace"],
     mutationFn: async (body) => {
@@ -50,7 +50,8 @@ export const useCreateWorkspace = () => {
     onSuccess(data) {
       // console.log(data);
       toast.success(`${data.message}`);
-      queryClient.refetch(["workspace"]);
+      queryClient.refetchQueries({ queryKey: ["workspace"] });
+      queryClient.refetchQueries({ queryKey: ["singleWorkspace"] });
     },
     onError(error) {
       console.log(error);
