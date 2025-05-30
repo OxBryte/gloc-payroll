@@ -32,7 +32,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
     }, 0);
   }, [selectedEmployees]);
 
-  const taxRate = 0.3; // Example tax rate of 10%
+  const taxRate = 0.03; // Example tax rate of 3%
   const totalTax = useMemo(() => {
     return totalSalary * taxRate;
   }, [totalSalary, taxRate]);
@@ -44,7 +44,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
       employeeCount: selectedEmployees?.length,
       totalSalary: totalSalary,
       tax: totalTax,
-      status: "pending",
+      status: "completed",
       tx: "0x8403176115a49b2081a8220b9535672b13936844818b091791929b4585119f6b",
       chain: chain,
       currency: currency,
