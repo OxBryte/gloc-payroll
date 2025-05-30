@@ -41,6 +41,7 @@ export function useGetSingleWorkspace(slug) {
 }
 
 export const useCreateWorkspace = () => {
+  const queryClient = useQuery();
   const { mutateAsync: createWorkspaceFn, isPending } = useMutation({
     mutationKey: ["createWorkspace"],
     mutationFn: async (body) => {
@@ -49,6 +50,7 @@ export const useCreateWorkspace = () => {
     onSuccess(data) {
       // console.log(data);
       toast.success(`${data.message}`);
+      queryClient.refetch(["workspace"]);
     },
     onError(error) {
       console.log(error);
