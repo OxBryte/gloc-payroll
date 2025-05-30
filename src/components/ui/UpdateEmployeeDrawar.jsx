@@ -1,23 +1,27 @@
 import React from "react";
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useCreateEmployee } from "../hooks/useEmployee";
+import { useUpdateEmployee } from "../hooks/useEmployee";
 
-const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
+const UpdateEmployeeDrawer = ({ setIsOpen, employeeId }) => {
   const { register, handleSubmit } = useForm();
-  const { createEmployeeFn, isPending: isCreatingEmployee } =
-    useCreateEmployee();
+  const { updateEmployeeFn, isPending: isUpdatingEmployee } =
+    useUpdateEmployee();
 
   const onSubmit = (data) => {
-    const updatedData = {
-      ...data,
-      workspaceId: workspaceId,
-    };
-    createEmployeeFn(updatedData, {
-      onSuccess: () => {
-        setIsOpen(false);
-      },
-    });
+    // Remove empty fields from the data object
+    const filteredData = Object.fromEntries(
+      Object.entries(data).filter(([, value]) => value !== "" && value !== null)
+    );
+    const id = employeeId;
+    updateEmployeeFn(
+      { body: filteredData, id },
+      {
+        onSuccess: () => {
+          setIsOpen(false);
+        },
+      }
+    );
   };
 
   return (
@@ -32,7 +36,7 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
       <div className="w-full max-w-md bg-white h-screen overflow-y-auto shadow-2xl">
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">
-            Add new employee
+            Update employee
           </h2>
           <button
             onClick={() => setIsOpen(false)}
@@ -53,7 +57,7 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
                   <input
                     type="text"
                     placeholder="Enter employee name"
-                    {...register("name", { required: true })}
+                    {...register("name")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -64,7 +68,7 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
                   <input
                     type="email"
                     placeholder="Enter employee email"
-                    {...register("email", { required: true })}
+                    {...register("email")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -75,7 +79,7 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
                   <input
                     type="text"
                     placeholder="Enter employee role"
-                    {...register("role", { required: true })}
+                    {...register("role")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -87,7 +91,7 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
                   <input
                     type="date"
                     placeholder="Enter employee salary (USD)"
-                    {...register("employmentDate", { required: true })}
+                    {...register("employmentDate")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -98,7 +102,7 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
                   <input
                     type="number"
                     placeholder="Enter employee salary (USD)"
-                    {...register("salary", { required: true })}
+                    {...register("salary")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -109,7 +113,7 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
                   <input
                     type="text"
                     placeholder="Enter employee address"
-                    {...register("address", { required: true })}
+                    {...register("address")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
                 </div>
@@ -119,7 +123,7 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
                   </label>
                   <select
                     defaultValue={""}
-                    {...register("employmentType", { required: true })}
+                    {...register("employmentType")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   >
                     <option value="" disabled>
@@ -139,7 +143,7 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
               className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
               onClick={handleSubmit(onSubmit)}
             >
-              {isCreatingEmployee ? "Adding..." : "Add Employee"}
+              {isUpdatingEmployee ? "Updating..." : "Update Employee"}
             </button>
           </div>
         </div>
@@ -148,4 +152,4 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
   );
 };
 
-export default AddEmployeeDrawer;
+export default UpdateEmployeeDrawer;

@@ -1,6 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { createEmployee, deleteEmployee } from "../services/employeeApi";
+import {
+  createEmployee,
+  deleteEmployee,
+  updateEmployee,
+} from "../services/employeeApi";
 
 export const useCreateEmployee = () => {
   const queryClient = useQueryClient();
@@ -45,4 +49,27 @@ export const useDeleteEmployee = () => {
     },
   });
   return { deleteEmployeeFn, isPending };
+};
+
+export const useUpdateEmployee = () => {
+  const queryClient = useQueryClient();
+  const { mutateAsync: updateEmployeeFn, isPending } = useMutation({
+    mutationKey: ["updateEmployee"],
+    mutationFn: async ({ body, id }) => {
+      console.log("Updating employee with body:", body, "and id:", id);
+      return await updateEmployee(body, id);
+    },
+    onSuccess(data) {
+      // console.log(data);
+      toast.success(`${data.message}`);
+      queryClient.refetchQueries({
+        queryKey: ["singleWorkspace"],
+      });
+    },
+    onError(error) {
+      console.log(error);
+      toast.error(`${error.message}`);
+    },
+  });
+  return { updateEmployeeFn, isPending };
 };

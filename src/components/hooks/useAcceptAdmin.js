@@ -31,7 +31,6 @@ export const useInviteAdmin = () => {
   const { mutateAsync: inviteFn, isPending } = useMutation({
     mutationKey: ["inviteAdmin"],
     mutationFn: async ({ body, id }) => {
-      console.log("Inviting admin with body:", body, "and workspace ID:", id);
       return await inviteAdmin(body, id);
     },
     onSuccess(data) {

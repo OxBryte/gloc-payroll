@@ -40,7 +40,6 @@ export default function Payroll() {
             </span>
           </div>
         )}
-        <PayrollTable />
       </div>
       {isOpen && (
         <AddNewPayrollDrawer

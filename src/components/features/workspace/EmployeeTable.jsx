@@ -3,13 +3,22 @@ import { Search, Filter, MoreVertical, Edit, Trash2 } from "lucide-react";
 import moment from "moment/moment";
 import { formatNumberWithCommas } from "../../lib/utils";
 import { useDeleteEmployee } from "../../hooks/useEmployee";
+import UpdateEmployeeDrawer from "../../ui/UpdateEmployeeDrawar";
 
 export default function EmployeeTable({ employees }) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [filterDepartment, setFilterDepartment] = useState("all");
 
   // console.log("Employees:", employees);
   const { deleteEmployeeFn, isPending } = useDeleteEmployee();
+
+  const handleEditClick = (employeeId) => {
+    setSelectedEmployee(employeeId);
+    setIsOpen(true);
+  };
+
   const handleDelete = async (employeeId) => {
     if (window.confirm("Are you sure you want to delete this employee?")) {
       try {
@@ -92,6 +101,9 @@ export default function EmployeeTable({ employees }) {
                     Type
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                    Wallet Address
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                     Salary (Monthly)
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
@@ -134,6 +146,11 @@ export default function EmployeeTable({ employees }) {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-700  capitalize">
+                        {employee?.address || "N/A"}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-700">
                         ${formatNumberWithCommas(employee?.salary)}
                       </div>
@@ -143,7 +160,10 @@ export default function EmployeeTable({ employees }) {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex items-center space-x-2">
-                        <button className="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-50 transition-colors">
+                        <button
+                          className="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-50 transition-colors"
+                          onClick={() => handleEditClick(employee.id)}
+                        >
                           <Edit className="w-4 h-4" />
                         </button>
                         <button
@@ -180,6 +200,12 @@ export default function EmployeeTable({ employees }) {
           Showing {filteredEmployees.length} of {employees.length} employees
         </div>
       </div>
+      {isOpen && (
+        <UpdateEmployeeDrawer
+          setIsOpen={setIsOpen}
+          employeeId={selectedEmployee}
+        />
+      )}
     </>
   );
 }
