@@ -13,7 +13,7 @@ export default function Payroll() {
   const { singleWorkspace } = useGetSingleWorkspace(slug);
   const { user } = useUser();
   const { payrolls, isLoadingPayroll } = useGetPayroll(singleWorkspace?.id);
-  console.log("Payroll Data:", payrolls);
+  // console.log("Payroll Data:", payrolls);
 
   return (
     <>

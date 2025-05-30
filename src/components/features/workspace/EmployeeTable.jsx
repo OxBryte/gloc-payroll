@@ -185,7 +185,7 @@ export default function EmployeeTable({ employees }) {
           </div>
 
           {filteredEmployees.length === 0 && (
-            <div className="text-center flex flex-col items-center w-full justify-center gap-2 py-12">
+            <div className="text-center flex flex-col items-center w-full justify-center gap-1 py-12">
               <img src="/empty.svg" alt="" className="w-20" />
               <div className="text-gray-500 text-lg">No employees found</div>
               <div className="text-gray-400">

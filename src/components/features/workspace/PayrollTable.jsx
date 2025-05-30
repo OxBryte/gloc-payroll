@@ -1,8 +1,21 @@
 import { Search } from "lucide-react";
 import React, { useState } from "react";
+import { formatNumberWithCommas } from "../../lib/utils";
+import moment from "moment";
 
-export default function PayrollTable() {
+export default function PayrollTable({ payrolls }) {
   const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredPayroll = payrolls.filter((payroll) => {
+    const matchesSearch =
+      payroll.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      payroll.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      payroll.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      payroll.chain?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      payroll.currency?.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesSearch;
+  });
 
   return (
     <div className="w-full space-y-6">
@@ -25,7 +38,19 @@ export default function PayrollTable() {
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                  Transaction ID
+                  ID
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  Title
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  Category
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  Chain
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  Currency
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Status
@@ -43,13 +68,89 @@ export default function PayrollTable() {
                   Date (Month)
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                  Actions
+                  TX Hash
                 </th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              {filteredPayroll.map((payroll, index) => (
+                <tr
+                  key={index}
+                  className="hover:bg-gray-50 transition-colors duration-150"
+                >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-400">
+                      {index + 1}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-700 capitalize">
+                      {payroll?.title}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-700 capitalize">
+                      {payroll?.category}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-700 capitalize">
+                      {payroll?.chain}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-700 capitalize">
+                      {payroll?.currency}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-700 capitalize">
+                      {payroll?.status}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-700 capitalize">
+                      ${formatNumberWithCommas(payroll?.totalSalary)}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-700 capitalize">
+                      ${formatNumberWithCommas(payroll?.tax)}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-700  capitalize">
+                      {payroll?.employeeCount}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                    <div className="text-sm font-medium text-gray-700">
+                      {moment(payroll?.createdAt).format("LL")}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-700 truncate w-40">
+                      {payroll?.tx}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
+        {filteredPayroll.length === 0 && (
+          <div className="text-center flex flex-col items-center w-full justify-center gap-1 py-12">
+            <img src="/empty.svg" alt="" className="w-20" />
+            <div className="text-gray-500 text-lg">No employees found</div>
+            <div className="text-gray-400">
+              Try adjusting your search or filter criteria
+            </div>
+          </div>
+        )}
+      </div>
+      {/* Summary */}
+      <div className="mt-6 text-sm text-gray-600">
+        Showing {filteredPayroll.length} of {payrolls?.length} payrolls
       </div>
     </div>
   );
