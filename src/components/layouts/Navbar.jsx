@@ -4,9 +4,11 @@ import { useUser } from "../hooks/useUser";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { useLogout } from "../hooks/useAuth";
+import MobileSidebar from "./MobileSidebar";
 
 export default function Navbar() {
   const [showOption, setShowOption] = useState(false);
+  const [open, setOpen] = useState(false);
   const optionsRef = useRef(null);
   const { user } = useUser();
   const { logoutFn } = useLogout();
@@ -36,13 +38,15 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="w-full mx-auto py-5 bg-white sticky top-0 z-10 border-b border-black/10 h-[63px] md:h-[85.12px]">
+      <div className="w-full mx-auto py-5 bg-white sticky top-0 z-10 border-b border-black/10 h-fit md:h-[85.12px]">
         <div className="mx-auto px-4 md:px-6 flex items-center h-full justify-between max-w-[1280px]">
-          <p className="font-semibold text-[16px] md:text-[20px]">
-            Welcome,{" "}
-            <span className="text-c-color capitalize">{user?.username}</span>
-          </p>
-          <div className="block md:hidden">
+          <Link to="/">
+            <p className="font-semibold text-[16px] md:text-[20px]">
+              Welcome,{" "}
+              <span className="text-c-color capitalize">{user?.username}</span>
+            </p>
+          </Link>
+          <div className="block md:hidden" onClick={() => setOpen(!open)}>
             <GiHamburgerMenu size={24} />
           </div>
           <div
@@ -83,6 +87,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+      {open && <MobileSidebar setOpen={setOpen} />}
     </>
   );
 }

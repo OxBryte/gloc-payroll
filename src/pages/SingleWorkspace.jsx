@@ -9,6 +9,7 @@ import Payroll from "../components/features/workspace/Payroll";
 import Employees from "../components/features/workspace/Employees";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 import Admins from "../components/features/workspace/Admins";
+import { ChevronLeft } from "lucide-react";
 
 const data = [
   {
@@ -71,6 +72,12 @@ export default function SingleWorkspace() {
       <div className="space-y-6 w-full">
         <div className="w-full flex flex-col gap-3">
           <div className="flex items-center gap-3">
+            <div
+              className="w-fit border border-gray-200 p-3 rounded-lg hover:bg-white cursor-pointer"
+              onClick={() => window.history.back()}
+            >
+              <ChevronLeft size={20} />
+            </div>
             <img
               src={singleWorkspace?.logo}
               alt=""
