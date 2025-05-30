@@ -14,7 +14,7 @@ export default function Employees() {
 
   return (
     <div className="w-full space-y-6">
-      <div className="flex items-center justify-between w-full gap-2">
+      <div className="flex flex-col md:flex-row md:items-center justify-between w-full gap-2">
         <h1 className="text-xl font-bold text-gray-800">Employee</h1>
         <div className="flex items-center gap-3">
           <button

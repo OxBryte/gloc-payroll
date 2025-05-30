@@ -29,15 +29,7 @@ export default function EmployeeTable({ employees }) {
     }
   };
 
-  const departments = [
-    "all",
-    "Engineering",
-    "Product",
-    "Design",
-    "Analytics",
-    "Human Resources",
-    "Sales",
-  ];
+  const types = ["all", "contract", "full-time", "intern", "part-time"];
 
   const filteredEmployees = employees.filter((employee) => {
     const matchesSearch =
@@ -45,7 +37,8 @@ export default function EmployeeTable({ employees }) {
       employee.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.role?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesDepartment =
-      filterDepartment === "all" || employee.department === filterDepartment;
+      filterDepartment === "all" ||
+      employee?.employmentType === filterDepartment;
     return matchesSearch && matchesDepartment;
   });
 
@@ -68,13 +61,13 @@ export default function EmployeeTable({ employees }) {
           <div className="relative">
             <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <select
-              className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white min-w-[150px]"
+              className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent capitalize appearance-none bg-white min-w-[150px]"
               value={filterDepartment}
               onChange={(e) => setFilterDepartment(e.target.value)}
             >
-              {departments.map((dept) => (
-                <option key={dept} value={dept}>
-                  {dept === "all" ? "All Departments" : dept}
+              {types.map((type) => (
+                <option key={type} value={type} className="!capitalize">
+                  {type === "all" ? "All Types" : type}
                 </option>
               ))}
             </select>
