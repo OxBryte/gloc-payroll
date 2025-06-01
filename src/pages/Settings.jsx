@@ -21,11 +21,6 @@ const settingsData = [
     name: "Preferences",
     component: "",
   },
-  {
-    id: 5,
-    name: "Wallets",
-    component: "",
-  },
 ];
 
 export default function Settings() {
@@ -35,27 +30,25 @@ export default function Settings() {
   return (
     <div className="w-full space-y-5">
       <p className="font-bold text-xl">Settings</p>
-      <div className="flex gap-5 w-full items-top">
-        <div className="flex flex-col w-[15rem] p-4 bg-white rounded-lg">
-          {settingsData.map((item) => {
-            const isActive = item.id === activeTabId;
-            return (
-              <div key={item.id} className="flex">
-                <button
-                  onClick={() => setActiveTabId(item.id)}
-                  className={`flex items-center w-full h-[50px] px-3 ml-2 text-sm font-medium rounded-lg hover:opacity-70 cursor-pointer transition ${
-                    isActive ? "bg-c-color text-white" : ""
-                  }`}
-                >
-                  <span className="ml-2">{item.name}</span>
-                </button>
-              </div>
-            );
-          })}
-        </div>
-        <div className="flex-1 p-4 bg-white rounded-lg">
-          {activeTab?.component}
-        </div>
+      <div className="flex gap-4 items-center overflow-x-auto w-full p-4 bg-white rounded-lg">
+        {settingsData.map((item) => {
+          const isActive = item.id === activeTabId;
+          return (
+            <div key={item.id} className="">
+              <button
+                onClick={() => setActiveTabId(item.id)}
+                className={`flex items-center w-full px-3 py-2 text-sm font-medium rounded-lg hover:opacity-70 cursor-pointer transition ${
+                  isActive ? "bg-c-color text-white" : ""
+                }`}
+              >
+                <span className="">{item.name}</span>
+              </button>
+            </div>
+          );
+        })}
+      </div>
+      <div className="space-y-6 p-4 rounded-lg min-h-[360px] bg-white gap-5 w-full">
+        <div className="">{activeTab?.component}</div>
       </div>
     </div>
   );
