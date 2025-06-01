@@ -50,7 +50,7 @@ export const useVerify = () => {
 
       //save token in local storage
       localStorage.setItem("token", data.data.token);
-      document.cookie = `token=${data.data.token}; path=/; max-age=604800; Secure; SameSite=Strict;`;
+      document.cookie = `token=${data.data.token}; path=/; max-age=172800; Secure; SameSite=Strict;`;
 
       //redirect to dashboard
       navigate("/");
@@ -82,7 +82,7 @@ export const useLogin = () => {
 
       //save token in local storage
       localStorage.setItem("token", data.data.token);
-      document.cookie = `token=${data?.data?.token}; path=/; max-age=604800; Secure; SameSite=Strict;`;
+      document.cookie = `token=${data?.data?.token}; path=/; max-age=172800; Secure; SameSite=Strict;`;
       navigate("/");
     },
     onError(error) {
