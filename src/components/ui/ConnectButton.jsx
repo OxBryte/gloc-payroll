@@ -1,16 +1,15 @@
 import React from "react";
 import { client } from "../services/client"; // Adjust the import path as necessary
 import { ConnectButton } from "thirdweb/react";
-import { baseSepolia } from "thirdweb/chains";
 
-export default function Connect() {
+export default function Connect({chain}) {
   return (
     <>
       {/* <div className="px-5 w-full py-3 flex justify-center rounded-md cursor-pointer transition-colors text-white bg-c-color hover:bg-c-bg">
     </div> */}
       <ConnectButton
         client={client}
-        chain={baseSepolia}
+        chain={chain}
         connectButton={{
           label: "Connect Wallet",
           style: {

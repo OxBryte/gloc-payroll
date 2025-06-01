@@ -345,7 +345,7 @@ export default function SignUp() {
             )}
           </div>
 
-          <Connect />
+          {/* <Connect /> */}
 
           <button
             type="submit"

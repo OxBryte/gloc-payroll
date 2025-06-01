@@ -3,6 +3,8 @@ import { Check, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useGetSingleWorkspace } from "../hooks/useWorkspace";
 import { useCreatePayroll } from "../hooks/usePayroll";
+import Connect from "./ConnectButton";
+import { contractABI, contractAddress } from "../constants/contractABI";
 
 const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
@@ -288,15 +290,19 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
                   </div>
                 )}
               </div>
+              <div className="w-full">
+                <Connect />
+              </div>
             </div>
           </div>
           <div className="flex space-x-3">
             <button
               className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
-              onClick={handleSubmit(onSubmit)}
+              // onClick={handleSubmit(onSubmit)}
               disabled={selectedEmployees.length === 0}
             >
-              {isPending ? "Sending..." : "Send Payment"}
+              Send payment
+              {/* {isPending ? "Sending..." : "Send Payment"} */}
             </button>
           </div>
         </div>
