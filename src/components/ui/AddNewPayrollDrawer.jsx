@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useGetSingleWorkspace } from "../hooks/useWorkspace";
 import { useCreatePayroll } from "../hooks/usePayroll";
 import Connect from "./ConnectButton";
+import { sepolia } from "thirdweb/chains";
 import { contractABI, contractAddress } from "../constants/contractABI";
 
 const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
@@ -291,7 +292,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
                 )}
               </div>
               <div className="w-full">
-                <Connect />
+                <Connect chain={sepolia} />
               </div>
             </div>
           </div>
