@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createWorkspace,
+  deleteWorkspace,
   getSingleWorkspace,
   getWorkspace,
 } from "../services/workspaceApi";
@@ -60,4 +61,25 @@ export const useCreateWorkspace = () => {
     },
   });
   return { createWorkspaceFn, isPending };
+};
+
+// delete workspace
+export const useDeleteWorkspace = () => {
+  const queryClient = useQueryClient();
+  const { mutateAsync: deleteWorkspaceFn, isPending } = useMutation({
+    mutationKey: ["deleteWorkspace"],
+    mutationFn: async (workspaceId) => {
+      return await deleteWorkspace(workspaceId);
+    },
+    onSuccess(data) {
+      toast.success(`${data.message}`);
+      queryClient.refetchQueries({ queryKey: ["workspace"] });
+      queryClient.refetchQueries({ queryKey: ["singleWorkspace"] });
+    },
+    onError(error) {
+      console.log(error);
+      toast.error(`${error.message}`);
+    },
+  });
+  return { deleteWorkspaceFn, isDeleting: isPending };
 };

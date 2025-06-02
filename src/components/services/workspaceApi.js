@@ -62,3 +62,23 @@ export async function createWorkspace(body) {
     );
   }
 }
+
+export async function deleteWorkspace(workspaceId) {
+  try {
+    // Get token from cookies
+    const token = getCookie("token"); // or whatever your cookie name is
+
+    const response = await axios.delete(`${apiURL}workspace/${workspaceId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error during while deleting workspace", error);
+    throw new Error(
+      error.response?.data?.error ||
+        "An error occurred while deleting workspace"
+    );
+  }
+}

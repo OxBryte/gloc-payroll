@@ -3,10 +3,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { GoKebabHorizontal } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { truncate } from "../lib/utils";
+import { useDeleteWorkspace } from "../hooks/useWorkspace";
 
 export default function WorkspaceCard({ space }) {
   const [showOption, setShowOption] = useState(false);
   const optionsRef = useRef(null);
+
+  const { deleteWorkspaceFn } = useDeleteWorkspace();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -41,8 +44,8 @@ export default function WorkspaceCard({ space }) {
         console.log("Edit clicked");
         break;
       case "delete":
+        deleteWorkspaceFn(space?._id);
         console.log("Delete clicked");
-        // handleDelete();
         break;
       case "share":
         console.log("Share clicked");
