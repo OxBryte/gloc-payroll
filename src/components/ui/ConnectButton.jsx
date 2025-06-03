@@ -1,13 +1,11 @@
 import React from "react";
-import { client } from "../services/client"; // Adjust the import path as necessary
-import { ConnectButton } from "thirdweb/react";
 
-export default function Connect({chain}) {
+export default function Connect() {
   return (
     <>
       {/* <div className="px-5 w-full py-3 flex justify-center rounded-md cursor-pointer transition-colors text-white bg-c-color hover:bg-c-bg">
     </div> */}
-      <ConnectButton
+      {/* <ConnectButton
         client={client}
         chain={chain}
         connectButton={{
@@ -19,8 +17,8 @@ export default function Connect({chain}) {
             padding: "10px 20px",
             fontSize: "16px",
           },
-        }}
-      />
+        }} */}
+      {/* /> */}
     </>
   );
 }

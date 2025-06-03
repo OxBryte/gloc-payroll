@@ -127,7 +127,7 @@ export default function SignUp() {
     formData.append("fullName", data.fullName);
     formData.append("username", data.username);
     formData.append("password", password);
-    // formData.append("walletAddress", walletAddress);
+    formData.append("walletAddress", '0x');
 
     // Append file if exists
     if (imageFile) {

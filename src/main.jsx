@@ -8,14 +8,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./components/context/AuthContext.jsx";
-import { ThirdwebProvider } from "thirdweb/react";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThirdwebProvider>
+      {/* <ThirdwebProvider> */}
         <AuthProvider>
           <ReactQueryDevtools
             initialIsOpen={false}
@@ -24,7 +23,7 @@ createRoot(document.getElementById("root")).render(
           <App />
           <Toaster position="bottom-center" />
         </AuthProvider>
-      </ThirdwebProvider>
+      {/* </ThirdwebProvider> */}
     </QueryClientProvider>
   </StrictMode>
 );
