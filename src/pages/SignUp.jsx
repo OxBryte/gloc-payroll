@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSignup } from "../components/hooks/useAuth";
 import { getCookie } from "../components/lib/utils";
 import Connect from "../components/ui/ConnectButton";
-import { useActiveAccount } from "thirdweb/react";
 
 export default function SignUp() {
   const [imageSrc, setImageSrc] = useState(null);
@@ -16,8 +15,6 @@ export default function SignUp() {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
-  const activeAccount = useActiveAccount();
-  const walletAddress = activeAccount?.address;
 
   useEffect(() => {
     const token = getCookie("token");
@@ -130,7 +127,7 @@ export default function SignUp() {
     formData.append("fullName", data.fullName);
     formData.append("username", data.username);
     formData.append("password", password);
-    formData.append("walletAddress", walletAddress);
+    // formData.append("walletAddress", walletAddress);
 
     // Append file if exists
     if (imageFile) {
