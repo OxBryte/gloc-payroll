@@ -8,7 +8,6 @@ const Drawer = ({ setIsOpen }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null);
-  const [monthlyRevenue, setMonthlyRevenue] = useState(10);
   const fileInputRef = useRef(null);
 
   const { register, handleSubmit } = useForm();
@@ -222,18 +221,11 @@ const Drawer = ({ setIsOpen }) => {
                     Monthly revenue
                   </label>
                   <input
-                    type="range"
-                    min="1"
-                    max="200000"
-                    step="1"
-                    value={monthlyRevenue}
-                    onChange={(e) => setMonthlyRevenue(e.target.value)}
-                    // {...register("monthlyRevenue", { required: true })}
-                    className="w-full"
+                    type="text"
+                    placeholder="Enter monthly revenue (USD)"
+                    {...register("monthlyRevenue", { required: true })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
-                  <div className="text-sm text-gray-500">
-                    Current value: ${monthlyRevenue.toLocaleString()}
-                  </div>
                 </div>
                 <div className="space-y-2 w-full">
                   <label className="text-sm font-medium text-gray-700 block">
