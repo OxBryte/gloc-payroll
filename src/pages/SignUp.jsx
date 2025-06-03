@@ -156,7 +156,7 @@ export default function SignUp() {
     <div className="w-full max-w-[36rem] space-y-6 overflow-y-auto p-6 md:p-20">
       <div className="space-y-2 place-items-center">
         <div className="">
-          <p>Logo</p>
+          {/* <p>Logo</p> */}
         </div>
         <p className="font-semibold text-2xl ">Create a free account</p>
         <p className="font-light text-sm">

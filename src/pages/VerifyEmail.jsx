@@ -51,7 +51,7 @@ export default function VerifyEmail() {
       <div className="w-full max-w-[36rem] space-y-6 p-6 md:p-20">
         <div className="space-y-2 place-items-center">
           <div className="">
-            <p>Logo</p>
+            {/* <p>Logo</p> */}
           </div>
           <p className="font-semibold text-2xl ">Verify your email</p>
           <p className="font-light text-sm">
