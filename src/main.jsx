@@ -10,11 +10,12 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./components/context/AuthContext.jsx";
 import { PrivyProvider } from "@privy-io/react-auth";
 import { sepolia } from "viem/chains";
-import { http } from "wagmi";
+import { http, injected } from "wagmi";
 import { createConfig, WagmiProvider } from "@privy-io/wagmi";
 
 const config = createConfig({
   chains: [sepolia],
+  connectors: [injected()],
   transports: {
     [sepolia.id]: http(),
     // For each of your required chains, add an entry to `transports` with

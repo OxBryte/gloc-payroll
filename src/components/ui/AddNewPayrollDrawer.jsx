@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Check, X } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { useGetSingleWorkspace } from "../hooks/useWorkspace";
 import { useCreatePayroll } from "../hooks/usePayroll";
-import Connect from "./ConnectButton";
-import { contractABI, contractAddress } from "../constants/contractABI";
-import { useLogin, usePrivy, useUser } from "@privy-io/react-auth";
+import { useLogin, usePrivy, useWallets } from "@privy-io/react-auth";
 import ConnectButton from "./ConnectButton";
-
-import { usePayrollContract } from "../hooks/usePayrollContract";
+import { erc20Abi, getContract } from "viem";
+import { useAccount, usePublicClient, useWriteContract } from "wagmi";
+import { contractABI, contractAddress } from "../constants/contractABI";
+import toast from "react-hot-toast";
 
 const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
@@ -19,6 +19,33 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   const { createPayrollFn, isPending } = useCreatePayroll();
   const { singleWorkspace } = useGetSingleWorkspace(slug);
   const employees = singleWorkspace?.employees || [];
+
+  // implemnting the payroll contract
+  const usdcAddress = "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238"; // your deployed USDT token address
+
+  // const { login } = useLogin();
+  const { ready, authenticated, login } = usePrivy();
+
+  const [isApproving, setIsApproving] = useState(false);
+  const [isDistributing, setIsDistributing] = useState(false);
+  const [allowed, setAllowed] = useState(false);
+
+  // const { address } = useAccount();
+  const { wallets } = useWallets();
+  const address = wallets?.[0]?.address || ""; // Use the first wallet's address or an empty string if no wallets are connected
+  
+  // const address = wallets[0]; 
+  const publicClient = usePublicClient();
+  const usdcContract = useusdcContract(publicClient);
+  const { writeContract } = useWriteContract();
+
+  function useusdcContract(publicClient) {
+    return getContract({
+      address: usdcAddress,
+      abi: erc20Abi,
+      client: publicClient,
+    });
+  }
 
   // Toggle employee selection
   const toggleEmployeeSelection = (employee) => {
@@ -68,46 +95,79 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
       });
   };
 
-  const { login } = useLogin();
-  const { ready, authenticated } = usePrivy();
-  const { user } = useUser();
-  const { readContract, writeContract } = usePayrollContract();
+  async function handleApprove() {
+    if (!writeContract || !address) return toast.error("Wallet not connected");
+    if (selectedEmployees <= 0) return toast.error("Provide employees");
 
-  const [tax, setTax] = useState("0");
-  const [loading, setLoading] = useState(false);
+    setIsApproving(true);
+    const salaries = selectedEmployees.map((emp) => (emp.salary || 0) * 1e6);
+    const taxPercentage = 300;
 
-  async function getTaxCollected() {
-    const result = await readContract.read.getCollectedTax();
-    setTax(result.toString());
+    const totalSalaries = salaries.reduce((sum, salary) => sum + salary, 0);
+    const taxAmount = Math.floor((totalSalaries * taxPercentage) / 10000);
+    const totalNeeded = totalSalaries + taxAmount;
+
+    // ✅ Get user USDT balance
+    const balance = await usdcContract.read.balanceOf([address]);
+
+    if (balance < totalNeeded) {
+      return toast.error("Insufficient USDC balance.");
+    }
+    const amountToApprove =
+      balance < totalNeeded ? totalNeeded - balance : totalNeeded;
+
+    // ✅ Approve USDC spending
+    // Approve USDC spending using wagmi's writeContract
+    try {
+      const approveTx = await writeContract({
+        address: usdcAddress, // USDC contract address
+        abi: erc20Abi, // Your USDC ABI
+        functionName: "approve",
+        args: [contractAddress, amountToApprove], // [spender, amount]
+      });
+      console.log("Approve transaction:", approveTx);
+      setIsApproving(false);
+      setAllowed(true);
+      toast.success("USDC spending approved successfully!");
+    } catch (error) {
+      console.error("Approval transaction failed:", error);
+      alert("Failed to approve USDC spending. Please try again.");
+      setIsApproving(false);
+      return;
+    }
   }
 
   async function distributeSimplePayroll() {
-    if (!writeContract) return alert("Wallet not connected");
+    if (!writeContract || !address) return toast.error("Wallet not connected");
+    if (selectedEmployees <= 0) return toast.error("Provide employees");
 
-    setLoading(true);
+    setIsDistributing(true);
+    setAllowed(true);
 
-    const recipients = selectedEmployees.map((emp) => emp.address);
+    const employees = selectedEmployees.map((emp) => emp.address);
     const salaries = selectedEmployees.map((emp) => (emp.salary || 0) * 1e6);
-    // const salaries = selectedEmployees.map((emp) => emp.salary || 0);
-    const taxRate = BigInt(totalTax * 100);
+    const taxPercentage = 300;
 
-    console.log(
-      "Distributing payroll with data:",
-      recipients,
-      salaries,
-      taxRate
-    );
+    try {
+      // Distribute payroll
+      const payrollTx = await writeContract({
+        address: contractAddress, // Your payroll contract address
+        abi: contractABI, // Your payroll contract ABI
+        functionName: "distributePayroll",
+        args: [employees, salaries, taxPercentage],
+      });
 
-    await writeContract.write.distributePayrollSimple([
-      taxRate,
-      recipients,
-      salaries,
-    ]);
+      console.log("Payroll transaction:", payrollTx);
+      setIsDistributing(false);
+      toast.success("Payroll distributed successfully!");
+      setAllowed(false);
+    } catch (error) {
+      console.error("Transaction failed:", error);
+      alert("Failed to distribute payroll. Please try again.");
+      setIsDistributing(false);
+      return;
+    }
   }
-
-  useEffect(() => {
-    if (ready && authenticated) getTaxCollected();
-  }, [ready, authenticated]);
 
   return (
     <div className="fixed inset-0 z-50 flex h-screen">
@@ -337,7 +397,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
               </div>
               <div className="w-full">
                 {authenticated ? (
-                  <p>{user?.wallet?.address}</p>
+                  <p>{address}</p>
                 ) : (
                   <ConnectButton login={login} />
                 )}
@@ -345,13 +405,21 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
             </div>
           </div>
           <div className="flex space-x-3">
-            <div
-              className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
-              onClick={distributeSimplePayroll}
-              disabled={selectedEmployees.length === 0 || !chain || !currency}
-            >
-              {loading ? "Sending..." : "Send Payment"}
-            </div>
+            {!allowed ? (
+              <button
+                className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
+                onClick={handleApprove}
+              >
+                {isApproving ? "Approving..." : "Approve USDC Spending"}
+              </button>
+            ) : (
+              <button
+                className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
+                onClick={distributeSimplePayroll}
+              >
+                {isDistributing ? "Distributing..." : "Distribute Payroll"}
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -360,3 +428,16 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
 };
 
 export default AddNewPayrollDrawer;
+
+// This code is commented out because it was not used in the current implementation.
+// It does the get collected tax from the contract, but it is not needed for the current functionality.
+
+// const { readContract } = usePayrollContract();
+// const [tax, setTax] = useState("0");
+// async function getTaxCollected() {
+//   const result = await readContract.read.totalTaxCollected();
+//   setTax(result.toString());
+// }
+// useEffect(() => {
+//   if (ready && authenticated) getTaxCollected();
+// }, [ready, authenticated]);
