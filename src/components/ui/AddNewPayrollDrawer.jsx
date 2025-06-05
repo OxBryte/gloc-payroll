@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from "react";
 import { Check, X } from "lucide-react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useGetSingleWorkspace } from "../hooks/useWorkspace";
 import { useCreatePayroll } from "../hooks/usePayroll";
 import { useLogin, usePrivy, useWallets } from "@privy-io/react-auth";
 import ConnectButton from "./ConnectButton";
 import { erc20Abi, getContract } from "viem";
-import { useAccount, usePublicClient, useWriteContract } from "wagmi";
+import { usePublicClient, useWriteContract } from "wagmi";
 import { contractABI, contractAddress } from "../constants/contractABI";
 import toast from "react-hot-toast";
 
@@ -15,26 +15,24 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   const [chain, setChain] = useState("");
   const [currency, setCurrency] = useState("");
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, getValues } = useForm();
   const { createPayrollFn, isPending } = useCreatePayroll();
   const { singleWorkspace } = useGetSingleWorkspace(slug);
   const employees = singleWorkspace?.employees || [];
 
   // implemnting the payroll contract
-  const usdcAddress = "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238"; // your deployed USDT token address
+  const usdcAddress = "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238";
 
-  // const { login } = useLogin();
-  const { ready, authenticated, login } = usePrivy();
+  const { login } = useLogin();
+  const { ready, authenticated } = usePrivy();
 
   const [isApproving, setIsApproving] = useState(false);
   const [isDistributing, setIsDistributing] = useState(false);
   const [allowed, setAllowed] = useState(false);
 
-  // const { address } = useAccount();
   const { wallets } = useWallets();
-  const address = wallets?.[0]?.address || ""; // Use the first wallet's address or an empty string if no wallets are connected
-  
-  // const address = wallets[0]; 
+  const address = wallets?.[0]?.address || "";
+
   const publicClient = usePublicClient();
   const usdcContract = useusdcContract(publicClient);
   const { writeContract } = useWriteContract();
@@ -95,54 +93,117 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
       });
   };
 
+  // Updated onSubmit function to accept transaction hash
+  const createPayrollRecord = async (transactionHash) => {
+    const formData = getValues(); // Get current form values
+
+    // Validate required fields
+    if (!formData.title || !formData.category || !chain || !currency) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    if (selectedEmployees.length === 0) {
+      toast.error("Please select at least one employee");
+      return;
+    }
+
+    const updatedData = {
+      ...formData,
+      workspaceId: workspaceId,
+      employeeCount: selectedEmployees?.length,
+      totalSalary: totalSalary,
+      tax: totalTax,
+      status: "completed",
+      tx: transactionHash, // Use the actual transaction hash
+      chain: chain,
+      currency: currency,
+    };
+
+    try {
+      await createPayrollFn(updatedData);
+      toast.success("Payroll record created successfully!");
+      // Reset form and close drawer
+      setIsOpen(false);
+      setSelectedEmployees([]);
+      setChain("");
+      setCurrency("");
+      setAllowed(false);
+    } catch (error) {
+      console.error("Error creating payroll:", error);
+      toast.error("Failed to create payroll record");
+    }
+  };
+
+  // Validation function to check if user can proceed
+  const canProceedToApprove = () => {
+    const formData = getValues();
+    return (
+      authenticated &&
+      address &&
+      formData.title &&
+      formData.category &&
+      chain &&
+      currency &&
+      selectedEmployees.length > 0
+    );
+  };
+
   async function handleApprove() {
     if (!writeContract || !address) return toast.error("Wallet not connected");
-    if (selectedEmployees <= 0) return toast.error("Provide employees");
+    if (selectedEmployees.length <= 0)
+      return toast.error("Please select employees");
+
+    if (!canProceedToApprove()) {
+      toast.error("Please fill in all required fields first");
+      return;
+    }
 
     setIsApproving(true);
-    const salaries = selectedEmployees.map((emp) => (emp.salary || 0) * 1e6);
-    const taxPercentage = 300;
-
-    const totalSalaries = salaries.reduce((sum, salary) => sum + salary, 0);
-    const taxAmount = Math.floor((totalSalaries * taxPercentage) / 10000);
-    const totalNeeded = totalSalaries + taxAmount;
-
-    // ✅ Get user USDT balance
-    const balance = await usdcContract.read.balanceOf([address]);
-
-    if (balance < totalNeeded) {
-      return toast.error("Insufficient USDC balance.");
-    }
-    const amountToApprove =
-      balance < totalNeeded ? totalNeeded - balance : totalNeeded;
-
-    // ✅ Approve USDC spending
-    // Approve USDC spending using wagmi's writeContract
     try {
+      const salaries = selectedEmployees.map((emp) => (emp.salary || 0) * 1e6);
+      const taxPercentage = 300;
+
+      const totalSalaries = salaries.reduce((sum, salary) => sum + salary, 0);
+      const taxAmount = Math.floor((totalSalaries * taxPercentage) / 10000);
+      const totalNeeded = totalSalaries + taxAmount;
+
+      // ✅ Get user USDT balance
+      const balance = await usdcContract.read.balanceOf([address]);
+
+      if (balance < totalNeeded) {
+        toast.error("Insufficient USDC balance.");
+        setIsApproving(false);
+        return;
+      }
+
+      const amountToApprove = totalNeeded;
+
+      // ✅ Approve USDC spending using wagmi's writeContract
       const approveTx = await writeContract({
         address: usdcAddress, // USDC contract address
         abi: erc20Abi, // Your USDC ABI
         functionName: "approve",
         args: [contractAddress, amountToApprove], // [spender, amount]
       });
+
       console.log("Approve transaction:", approveTx);
       setIsApproving(false);
       setAllowed(true);
       toast.success("USDC spending approved successfully!");
     } catch (error) {
       console.error("Approval transaction failed:", error);
-      alert("Failed to approve USDC spending. Please try again.");
+      toast.error("Failed to approve USDC spending. Please try again.");
       setIsApproving(false);
-      return;
     }
   }
 
   async function distributeSimplePayroll() {
     if (!writeContract || !address) return toast.error("Wallet not connected");
-    if (selectedEmployees <= 0) return toast.error("Provide employees");
+    if (selectedEmployees.length <= 0)
+      return toast.error("Please select employees");
 
     setIsDistributing(true);
-    setAllowed(true);
 
     const employees = selectedEmployees.map((emp) => emp.address);
     const salaries = selectedEmployees.map((emp) => (emp.salary || 0) * 1e6);
@@ -160,24 +221,22 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
       console.log("Payroll transaction:", payrollTx);
       setIsDistributing(false);
       toast.success("Payroll distributed successfully!");
-      setAllowed(false);
+
+      // ✅ Now create the payroll record with the actual transaction hash
+      // await createPayrollRecord(payrollTx);
     } catch (error) {
       console.error("Transaction failed:", error);
-      alert("Failed to distribute payroll. Please try again.");
+      toast.error("Failed to distribute payroll. Please try again.");
       setIsDistributing(false);
-      return;
     }
   }
 
   return (
     <div className="fixed inset-0 z-50 flex h-screen">
-      {/* Backdrop */}
       <div
         className="flex-1 bg-c-bg/20 backdrop-blur-xs bg-opacity-50"
         onClick={() => setIsOpen(false)}
       />
-
-      {/* Drawer */}
       <div className="w-full max-w-lg bg-white h-screen overflow-y-auto shadow-2xl">
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">New Payroll</h2>
@@ -397,7 +456,12 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
               </div>
               <div className="w-full">
                 {authenticated ? (
-                  <p>{address}</p>
+                  <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                    <p className="text-sm text-green-700">
+                      Wallet Connected: {address.slice(0, 6)}...
+                      {address.slice(-4)}
+                    </p>
+                  </div>
                 ) : (
                   <ConnectButton login={login} />
                 )}
@@ -405,19 +469,33 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
             </div>
           </div>
           <div className="flex space-x-3">
-            {!allowed ? (
+            {!authenticated ? (
+              <div className="flex-1 py-4 px-6 bg-gray-300 text-gray-500 rounded-lg text-sm font-medium text-center">
+                Connect Wallet First
+              </div>
+            ) : !canProceedToApprove() ? (
+              <div className="flex-1 py-4 px-6 bg-gray-300 text-gray-500 rounded-lg text-sm font-medium text-center">
+                Fill Required Fields
+              </div>
+            ) : !allowed ? (
               <button
-                className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
+                className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
                 onClick={handleApprove}
+                disabled={isApproving}
               >
                 {isApproving ? "Approving..." : "Approve USDC Spending"}
               </button>
             ) : (
               <button
-                className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
+                className="flex-1 py-4 px-6 bg-green-600 text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
                 onClick={distributeSimplePayroll}
+                disabled={isDistributing || isPending}
               >
-                {isDistributing ? "Distributing..." : "Distribute Payroll"}
+                {isDistributing
+                  ? "Distributing..."
+                  : isPending
+                  ? "Creating Record..."
+                  : "Distribute Payroll"}
               </button>
             )}
           </div>
