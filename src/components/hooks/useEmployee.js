@@ -56,7 +56,6 @@ export const useUpdateEmployee = () => {
   const { mutateAsync: updateEmployeeFn, isPending } = useMutation({
     mutationKey: ["updateEmployee"],
     mutationFn: async ({ body, id }) => {
-      console.log("Updating employee with body:", body, "and id:", id);
       return await updateEmployee(body, id);
     },
     onSuccess(data) {

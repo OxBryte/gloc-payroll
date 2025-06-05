@@ -1,24 +1,14 @@
 import React from "react";
 
-export default function Connect() {
+export default function ConnectButton({ login }) {
   return (
     <>
-      {/* <div className="px-5 w-full py-3 flex justify-center rounded-md cursor-pointer transition-colors text-white bg-c-color hover:bg-c-bg">
-    </div> */}
-      {/* <ConnectButton
-        client={client}
-        chain={chain}
-        connectButton={{
-          label: "Connect Wallet",
-          style: {
-            backgroundColor: "#94C294",
-            color: "#ffffff",
-            borderRadius: "6px",
-            padding: "10px 20px",
-            fontSize: "16px",
-          },
-        }} */}
-      {/* /> */}
+      <div
+        className="px-5 w-full py-3 flex justify-center rounded-md cursor-pointer transition-colors text-white bg-c-color hover:bg-c-bg"
+        onClick={() => login()}
+      >
+        <span className="text-lg font-semibold">Connect Wallet</span>
+      </div>
     </>
   );
 }

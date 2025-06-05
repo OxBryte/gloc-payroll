@@ -1,10 +1,14 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Check, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useGetSingleWorkspace } from "../hooks/useWorkspace";
 import { useCreatePayroll } from "../hooks/usePayroll";
 import Connect from "./ConnectButton";
 import { contractABI, contractAddress } from "../constants/contractABI";
+import { useLogin, usePrivy, useUser } from "@privy-io/react-auth";
+import ConnectButton from "./ConnectButton";
+
+import { usePayrollContract } from "../hooks/usePayrollContract";
 
 const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
@@ -63,6 +67,47 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
         console.error("Error creating payroll:", error);
       });
   };
+
+  const { login } = useLogin();
+  const { ready, authenticated } = usePrivy();
+  const { user } = useUser();
+  const { readContract, writeContract } = usePayrollContract();
+
+  const [tax, setTax] = useState("0");
+  const [loading, setLoading] = useState(false);
+
+  async function getTaxCollected() {
+    const result = await readContract.read.getCollectedTax();
+    setTax(result.toString());
+  }
+
+  async function distributeSimplePayroll() {
+    if (!writeContract) return alert("Wallet not connected");
+
+    setLoading(true);
+
+    const recipients = selectedEmployees.map((emp) => emp.address);
+    const salaries = selectedEmployees.map((emp) => (emp.salary || 0) * 1e6);
+    // const salaries = selectedEmployees.map((emp) => emp.salary || 0);
+    const taxRate = BigInt(totalTax * 100);
+
+    console.log(
+      "Distributing payroll with data:",
+      recipients,
+      salaries,
+      taxRate
+    );
+
+    await writeContract.write.distributePayrollSimple([
+      taxRate,
+      recipients,
+      salaries,
+    ]);
+  }
+
+  useEffect(() => {
+    if (ready && authenticated) getTaxCollected();
+  }, [ready, authenticated]);
 
   return (
     <div className="fixed inset-0 z-50 flex h-screen">
@@ -291,19 +336,22 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
                 )}
               </div>
               <div className="w-full">
-
+                {authenticated ? (
+                  <p>{user?.wallet?.address}</p>
+                ) : (
+                  <ConnectButton login={login} />
+                )}
               </div>
             </div>
           </div>
           <div className="flex space-x-3">
-            <button
+            <div
               className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors"
-              // onClick={handleSubmit(onSubmit)}
-              disabled={selectedEmployees.length === 0}
+              onClick={distributeSimplePayroll}
+              disabled={selectedEmployees.length === 0 || !chain || !currency}
             >
-              Send payment
-              {/* {isPending ? "Sending..." : "Send Payment"} */}
-            </button>
+              {loading ? "Sending..." : "Send Payment"}
+            </div>
           </div>
         </div>
       </div>
