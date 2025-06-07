@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Account from "../components/features/settings/Account";
+import Security from "../components/features/settings/Security";
 
 const settingsData = [
   {
@@ -7,15 +8,15 @@ const settingsData = [
     name: "Account",
     component: <Account />,
   },
-  {
-    id: 2,
-    name: "Verify",
-    component: "",
-  },
+  // {
+  //   id: 2,
+  //   name: "Verify",
+  //   component: "",
+  // },
   {
     id: 3,
     name: "Security",
-    component: "",
+    component: <Security />,
   },
   {
     id: 4,

@@ -2,9 +2,7 @@ import React from "react";
 import { useUser } from "../../hooks/useUser";
 
 export default function Account() {
-  const { user, isLoadingUser } = useUser();
-
-  console.log("user", user);
+  const { user } = useUser();
 
   return (
     <div className="w-full space-y-6">
