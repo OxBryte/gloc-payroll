@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import Account from "../components/features/settings/Account";
 
 const settingsData = [
   {
     id: 1,
     name: "Account",
-    component: "",
+    component: <Account />,
   },
   {
     id: 2,
@@ -47,7 +48,7 @@ export default function Settings() {
           );
         })}
       </div>
-      <div className="space-y-6 p-4 rounded-lg min-h-[360px] bg-white gap-5 w-full">
+      <div className="space-y-6 p-6 rounded-lg min-h-[360px] bg-white gap-5 w-full">
         <div className="">{activeTab?.component}</div>
       </div>
     </div>
