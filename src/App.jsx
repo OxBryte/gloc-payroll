@@ -14,6 +14,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import AcceptAdmin from "./pages/AcceptAdmin";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Subscriptions from "./pages/Subscriptions";
 
 function App() {
   const NavigationLoader = () => {
@@ -60,6 +61,7 @@ function App() {
                 element={<SingleWorkspace />}
               />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/subscription" element={<Subscriptions />} />
               <Route path="/:id" element={<h1>Dynamic Route</h1>} />
             </Route>
           </Route>
