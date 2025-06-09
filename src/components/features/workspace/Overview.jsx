@@ -192,9 +192,9 @@ export default function Overview() {
               <IoPeopleOutline size={30} className="text-gray-500" />
             </div>
           </div>
-          <div className="w-full min-h-[180px] h-auto rounded-lg bg-c-color-2 border border-gray-200 flex flex-col items-left gap-3 p-5">
+          {/* <div className="w-full min-h-[180px] h-auto rounded-lg bg-c-color-2 border border-gray-200 flex flex-col items-left gap-3 p-5">
             <p className="text-sm font-medium text-black/50">Total Employees</p>
-          </div>
+          </div> */}
         </div>
         <div className="bg-c-color-2 border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"></div>
         <div className="bg-c-color-2 border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"></div>
