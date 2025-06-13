@@ -42,7 +42,7 @@ export default function PaymentAnalytics() {
               </p>
             )}
             <span className="text-white/80 text-xs">
-              Excluding tax - ${formatNumberWithCommas(totalTax)}
+              Excluding tax - ${totalTax.toFixed(2)}
             </span>
           </div>
         </div>
