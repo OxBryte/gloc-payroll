@@ -50,6 +50,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route path="/forget-password" element={<ForgetPassword />} />
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<AppLayout />}>
@@ -66,7 +67,6 @@ function App() {
             </Route>
           </Route>
           <Route path="*" element={<h1>404 Not Found</h1>} />
-          <Route path="/forget-password" element={<ForgetPassword />} />
           <Route path="/reset-password/" element={<ResetPassword />} />
           <Route path="/accept-admin" element={<AcceptAdmin />} />
         </Routes>

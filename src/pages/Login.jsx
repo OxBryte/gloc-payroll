@@ -33,9 +33,7 @@ export default function Login() {
   return (
     <div className="w-full max-w-[36rem] space-y-6 p-6 md:p-20">
       <div className="space-y-2 place-items-center">
-        <div className="">
-          {/* <p>Logo</p> */}
-        </div>
+        <div className="">{/* <p>Logo</p> */}</div>
         <p className="font-semibold text-2xl ">Welcome back!</p>
         <p className="font-light text-sm">Provide your username and password</p>
       </div>
@@ -45,18 +43,18 @@ export default function Login() {
           className="flex flex-col gap-4 w-full"
         >
           <div className="space-y-2 w-full">
-            <p className="text-sm">Username*</p>
+            <p className="text-sm">Email*</p>
             <input
-              type="text"
-              name="username"
-              placeholder="Enter your username"
+              type="email"
+              name="email"
+              placeholder="Enter your email address"
               className="p-3 w-full rounded-md border border-black/10 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               required
-              {...register("username", {
-                required: "Username is required",
+              {...register("email", {
+                required: "Email address is required",
                 minLength: {
                   value: 3,
-                  message: "Username must be at least 3 characters long",
+                  message: "Must be a valid email address",
                 },
               })}
             />

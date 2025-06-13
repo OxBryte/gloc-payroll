@@ -3,6 +3,7 @@ import { useResendVerification, useVerify } from "../components/hooks/useAuth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../components/lib/utils";
+import toast from "react-hot-toast";
 
 export default function VerifyEmail() {
   const [otp, setOtp] = useState(new Array(4).fill(""));
@@ -38,7 +39,7 @@ export default function VerifyEmail() {
     if (otpInput) {
       verifyFn({ email: userEmail, code: otpInput });
     } else {
-      alert("Invalid OTP");
+      toast.error("Please enter the OTP code.");
     }
   };
 
