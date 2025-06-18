@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSignup } from "../components/hooks/useAuth";
 import { getCookie } from "../components/lib/utils";
 import Connect from "../components/ui/ConnectButton";
+import { usePrivy } from "@privy-io/react-auth";
 
 export default function SignUp() {
   const [imageSrc, setImageSrc] = useState(null);
@@ -15,7 +16,11 @@ export default function SignUp() {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const { login, authenticated, getAccessToken } = usePrivy();
 
+  const accessToken = getAccessToken();
+  console.log("Access Token:", accessToken);
+  
   useEffect(() => {
     const token = getCookie("token");
     if (token) {
@@ -127,7 +132,6 @@ export default function SignUp() {
     formData.append("fullName", data.fullName);
     formData.append("username", data.username);
     formData.append("password", password);
-    formData.append("walletAddress", '0x');
 
     // Append file if exists
     if (imageFile) {
@@ -152,9 +156,7 @@ export default function SignUp() {
   return (
     <div className="w-full max-w-[36rem] space-y-6 overflow-y-auto p-6 md:p-20">
       <div className="space-y-2 place-items-center">
-        <div className="">
-          {/* <p>Logo</p> */}
-        </div>
+        <div className="">{/* <p>Logo</p> */}</div>
         <p className="font-semibold text-2xl ">Create a free account</p>
         <p className="font-light text-sm">
           Provide your details and choose a password
@@ -341,9 +343,6 @@ export default function SignUp() {
               </div>
             )}
           </div>
-
-          {/* <Connect /> */}
-
           <button
             type="submit"
             className={`px-5 py-3 rounded-md text-white cursor-pointer transition-colors ${
@@ -355,6 +354,21 @@ export default function SignUp() {
           >
             {isSigningUp ? "Signing Up..." : "Sign Up"}
           </button>
+
+          <div className="w-full flex gap-3 my-3 items-center justify-between">
+            <hr className="border-gray-200 w-full" />
+            <p className="text-sm text-gray-500">OR</p>
+            <hr className="border-gray-200 w-full" />
+          </div>
+
+          <div
+            className="px-5 py-3 rounded-md flex justify-center text-white cursor-pointer transition-colors bg-c-color hover:bg-c-bg"
+            onClick={() => login()}
+          >
+            Signup with Privy
+          </div>
+
+          {/* <Connect /> */}
         </form>
 
         <div className="text-center w-full">

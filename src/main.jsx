@@ -32,10 +32,7 @@ createRoot(document.getElementById("root")).render(
       config={{
         appearance: {
           theme: "light",
-        },
-        embeddedWallets: {
-          createOnLogin: "users-without-wallets",
-        },
+        }
       }}
     >
       <QueryClientProvider client={queryClient}>

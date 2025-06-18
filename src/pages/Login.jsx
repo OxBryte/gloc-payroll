@@ -4,11 +4,12 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../components/hooks/useAuth";
 import { getCookie } from "../components/lib/utils";
+import { usePrivy } from "@privy-io/react-auth";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-
   const navigate = useNavigate();
+  const { login, getAccessToken } = usePrivy();
 
   useEffect(() => {
     const token = getCookie("token");
@@ -107,6 +108,19 @@ export default function Login() {
           >
             {isLoginingIn ? "Logging in..." : "Login"}
           </button>
+
+          <div className="w-full flex gap-3 my-3 items-center justify-between">
+            <hr className="border-gray-200 w-full" />
+            <p className="text-sm text-gray-500">OR</p>
+            <hr className="border-gray-200 w-full" />
+          </div>
+
+          <div
+            className="px-5 py-3 rounded-md flex justify-center text-white cursor-pointer transition-colors bg-c-color hover:bg-c-bg"
+            onClick={() => login()}
+          >
+            Login with Privy
+          </div>
         </form>
         <div className="space-y-2">
           <div className="w-full flex justify-center">
