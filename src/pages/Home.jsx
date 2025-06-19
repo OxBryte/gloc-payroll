@@ -14,7 +14,7 @@ export default function Home() {
         <EmployeeAnalytics />
       </div>
       {/* <div className="bg-white border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"> */}
-        <HomeChart />
+        {/* <HomeChart /> */}
       {/* </div> */}
       <AllWorkspace />
     </div>
