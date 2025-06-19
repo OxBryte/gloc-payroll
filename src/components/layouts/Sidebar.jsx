@@ -53,13 +53,13 @@ export default function Sidebar() {
 
   return (
     <div className="hidden md:block text-white">
-      <div className="bg-c-bg w-[16rem] sticky top-0 border-r border-r-white/10 h-screen">
+      <div className="bg-c-bg w-[14rem] sticky top-0 border-r border-r-white/10 h-screen">
         <div className="w-full space-y-2">
           <div className="py-5 px-3 flex items-center gap-2 border-b border-b-white/10 h-[85.12px]">
             <div
-              className={`w-full h-full gap-2 rounded-lg px-3 py-3 font-light`}
+              className={`w-full h-full px-3 py-3 flex items-center justify-left`}
             >
-              Look up
+             <img src="valourpay.svg" alt="" className="w-30" />
             </div>
             {/* <div
               onClick={() => setSelectTab("Sport")}

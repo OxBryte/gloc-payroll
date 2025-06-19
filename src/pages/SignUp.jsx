@@ -20,7 +20,7 @@ export default function SignUp() {
 
   const accessToken = getAccessToken();
   console.log("Access Token:", accessToken);
-  
+
   useEffect(() => {
     const token = getCookie("token");
     if (token) {
@@ -156,7 +156,9 @@ export default function SignUp() {
   return (
     <div className="w-full max-w-[36rem] space-y-6 overflow-y-auto p-6 md:p-20">
       <div className="space-y-2 place-items-center">
-        <div className="">{/* <p>Logo</p> */}</div>
+        <div className="">
+          <img src="/valourpay_icon.svg" alt="logo" className="w-16 mb-2" />
+        </div>
         <p className="font-semibold text-2xl ">Create a free account</p>
         <p className="font-light text-sm">
           Provide your details and choose a password

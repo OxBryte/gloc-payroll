@@ -34,7 +34,9 @@ export default function Login() {
   return (
     <div className="w-full max-w-[36rem] space-y-6 p-6 md:p-20">
       <div className="space-y-2 place-items-center">
-        <div className="">{/* <p>Logo</p> */}</div>
+        <div className="">
+          <img src="/valourpay_icon.svg" alt="logo" className="w-16 mb-2" />
+        </div>
         <p className="font-semibold text-2xl ">Welcome back!</p>
         <p className="font-light text-sm">Provide your username and password</p>
       </div>
