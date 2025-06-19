@@ -3,6 +3,7 @@ import AllWorkspace from "../components/features/AllWorkspace";
 import EmployeeAnalytics from "../components/features/Analytics/EmployeeAnalytics";
 import PaymentAnalytics from "../components/features/Analytics/PaymentAnalytics";
 import TotalWorkspace from "../components/features/Analytics/TotalWorkspace";
+import HomeChart from "../components/features/HomeChart";
 
 export default function Home() {
   return (
@@ -12,7 +13,9 @@ export default function Home() {
         <TotalWorkspace />
         <EmployeeAnalytics />
       </div>
-      <div className="bg-white border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"></div>
+      {/* <div className="bg-white border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"> */}
+        <HomeChart />
+      {/* </div> */}
       <AllWorkspace />
     </div>
   );

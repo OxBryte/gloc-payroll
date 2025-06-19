@@ -6,6 +6,7 @@ import { IoPeopleOutline } from "react-icons/io5";
 import { useGetPayroll } from "../../hooks/usePayroll";
 import Spinner from "../../ui/Spinner";
 import { ChevronDown } from "lucide-react";
+import HomeChart from "../HomeChart";
 
 export default function Overview() {
   const [selectedMonth, setSelectedMonth] = useState("all");
@@ -197,6 +198,7 @@ export default function Overview() {
           </div> */}
         </div>
         <div className="bg-c-color-2 border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"></div>
+        <HomeChart/>
         <div className="bg-c-color-2 border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"></div>
       </div>
     </>
