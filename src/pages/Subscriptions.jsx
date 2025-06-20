@@ -7,13 +7,76 @@ export default function Subscriptions() {
     <div className="w-full bg-white p-6 rounded-lg">
       <div className="flex flex-col items-center justify-center w-full">
         <h1 className="text-2xl font-semibold mb-4">Subscriptions</h1>
-        <div className="grid grid-cols 1 md:grid-cols-3 gap-6 w-full">
-          <div className="space-y-0">
+        <div className="flex flex-col md:flex-row justify-center gap-6 w-full">
+          <div className="space-y-0 w-sm">
             <div className="border border-black/5 p-4 rounded-2xl relative z-10 bg-white">
               <div className="w-full space-y-5">
                 <div className="flex items-top justify-between gap-5">
                   <div className="flex flex-col gap-1">
-                    <h2 className="font-semibold">Free Plan</h2>
+                    <h2 className="font-semibold">Startup Plan</h2>
+                    <p className="text-gray-400 text-sm font-light">
+                      Essential payroll features for small teams
+                    </p>
+                  </div>
+                  <div className="flex items-center">
+                    <GoStarFill className="w-5 h-5 text-c-color" />
+                  </div>
+                </div>
+                <hr className="border-black/5" />
+                <div className="space-y-2">
+                  <p className="font-semibold">Includes</p>
+                  <div className="flex gap-3 items-center">
+                    <div className="text-c-color">
+                      <GoCheckCircleFill size={20} />
+                    </div>
+                    <p className="text-gray-600 text-sm">Payroll Management</p>
+                  </div>
+                  <div className="flex gap-3 items-center">
+                    <div className="text-c-color">
+                      <GoCheckCircleFill size={20} />
+                    </div>
+                    <p className="text-gray-600 text-sm">
+                      Tax calculations and filings
+                    </p>
+                  </div>
+                  <div className="flex gap-3 items-center">
+                    <div className="text-c-color">
+                      <GoCheckCircleFill size={20} />
+                    </div>
+                    <p className="text-gray-600 text-sm">
+                      Employee self-service portal
+                    </p>
+                  </div>
+                  <div className="flex gap-3 items-center">
+                    <div className="text-c-color">
+                      <GoCheckCircleFill size={20} />
+                    </div>
+                    <p className="text-gray-600 text-sm">
+                      Add up to 20 employees
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-0">
+                  <p className="font-bold text-[32px]">$89</p>
+                  <p className="text-gray-400 -mt-1 text-xs font-light">
+                    per month
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="w-full px-4 pt-14 pb-4 rounded-b-3xl -mt-10 bg-c-color">
+              <button className="w-full px-3 py-2 rounded-lg cursor-pointer text-white font-medium text-sm hover:text-white/70 flex items-center justify-between">
+                Subscribe here
+                <ChevronRight />
+              </button>
+            </div>
+          </div>
+          <div className="space-y-0 w-sm">
+            <div className="border border-black/5 p-4 rounded-2xl relative z-10 bg-white">
+              <div className="w-full space-y-5">
+                <div className="flex items-top justify-between gap-5">
+                  <div className="flex flex-col gap-1">
+                    <h2 className="font-semibold">Enterprise Plan</h2>
                     <p className="text-gray-400 text-sm font-light">
                       Basic features
                     </p>
@@ -29,8 +92,14 @@ export default function Subscriptions() {
                     <div className="text-c-color">
                       <GoCheckCircleFill size={20} />
                     </div>
+                    <p className="text-gray-600 text-sm">Payroll Management</p>
+                  </div>
+                  <div className="flex gap-3 items-center">
+                    <div className="text-c-color">
+                      <GoCheckCircleFill size={20} />
+                    </div>
                     <p className="text-gray-600 text-sm">
-                      Real time market data
+                      Multi-state tax compliance
                     </p>
                   </div>
                   <div className="flex gap-3 items-center">
@@ -38,27 +107,23 @@ export default function Subscriptions() {
                       <GoCheckCircleFill size={20} />
                     </div>
                     <p className="text-gray-600 text-sm">
-                      Advanced Charting Tools
+                      Dedicated account manager
                     </p>
                   </div>
                   <div className="flex gap-3 items-center">
                     <div className="text-c-color">
                       <GoCheckCircleFill size={20} />
                     </div>
-                    <p className="text-gray-600 text-sm">On-Chain Analysis</p>
-                  </div>
-                  <div className="flex gap-3 items-center">
-                    <div className="text-c-color">
-                      <GoCheckCircleFill size={20} />
-                    </div>
                     <p className="text-gray-600 text-sm">
-                      Add up to 50+ employees
+                      Add unlimited employees
                     </p>
                   </div>
                 </div>
                 <div className="flex flex-col gap-0">
-                  <p className="font-bold text-lg">$69</p>
-                  <p className="text-gray-400 -mt-1 text-sm">per month</p>
+                  <p className="font-bold text-[32px]">$449</p>
+                  <p className="text-gray-400 -mt-1 text-xs font-light">
+                    per month
+                  </p>
                 </div>
               </div>
             </div>
