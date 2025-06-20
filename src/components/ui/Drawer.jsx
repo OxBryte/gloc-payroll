@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { X, Trash2 } from "lucide-react";
-
 import { useForm } from "react-hook-form";
 import { useCreateWorkspace } from "../hooks/useWorkspace";
 
@@ -10,11 +9,17 @@ const Drawer = ({ setIsOpen }) => {
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, watch } = useForm();
   const { createWorkspaceFn, isPending: isCreatingWorkspace } =
     useCreateWorkspace();
 
   const MAX_SIZE_MB = 3;
+  const value = watch("monthlyRevenue");
+
+  // compute the percent along the track
+  const min = 0,
+    max = 1000000;
+  const percent = ((value - min) / (max - min)) * 100;
 
   const handleUploadClick = () => {
     setError("");
@@ -216,16 +221,42 @@ const Drawer = ({ setIsOpen }) => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   ></textarea>
                 </div>
-                <div className="space-y-2 w-full">
+                <div className="space-y-2 relative w-full">
                   <label className="text-sm font-medium text-gray-700 block">
                     Monthly revenue
                   </label>
                   <input
-                    type="text"
-                    placeholder="Enter monthly revenue (USD)"
-                    {...register("monthlyRevenue", { required: true })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
+                    type="range"
+                    min={min}
+                    max={max}
+                    step={1000}
+                    {...register("monthlyRevenue", { valueAsNumber: true })}
+                    className="
+            w-full
+            h-2
+            bg-gray-200
+            rounded
+            appearance-none
+            focus:outline-none
+            focus:ring-2 focus:ring-c-color
+            /* thumb */
+            [&::-webkit-slider-thumb]:appearance-none
+            [&::-webkit-slider-thumb]:w-4
+            [&::-webkit-slider-thumb]:h-4
+            [&::-webkit-slider-thumb]:bg-c-color
+            [&::-webkit-slider-thumb]:rounded-full
+            [&::-moz-range-thumb]:w-4
+            [&::-moz-range-thumb]:h-4
+            [&::-moz-range-thumb]:bg-c-color
+            [&::-moz-range-thumb]:rounded-full
+          "
                   />
+                  <div
+                    style={{ left: `${percent}%` }}
+                    className="w-fit bg-white border border-gray-300 rounded px-2 py-1 text-sm shadow"
+                  >
+                    ${value}
+                  </div>
                 </div>
                 <div className="space-y-2 w-full">
                   <label className="text-sm font-medium text-gray-700 block">
