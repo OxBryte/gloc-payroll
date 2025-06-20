@@ -4,9 +4,12 @@ import { GoCheckCircleFill, GoStarFill } from "react-icons/go";
 
 export default function Subscriptions() {
   return (
-    <div className="w-full bg-white p-6 rounded-lg">
-      <div className="flex flex-col items-center justify-center w-full">
+    <div className="w-full bg-white p-3 md:p-8 rounded-lg">
+      <div className="flex flex-col gap-4 items-center justify-center w-full">
         <h1 className="text-2xl font-semibold mb-4">Subscriptions</h1>
+        <div className="px-5 py-2 border border-gray-200 bg-gray-50 rounded-md text-xs font-medium">
+          Yearly
+        </div>
         <div className="flex flex-col md:flex-row justify-center gap-6 w-full">
           <div className="space-y-0 w-sm">
             <div className="border border-black/5 p-4 rounded-2xl relative z-10 bg-white">
@@ -57,9 +60,9 @@ export default function Subscriptions() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-0">
-                  <p className="font-bold text-[32px]">$89</p>
+                  <p className="font-bold text-[32px]">$179</p>
                   <p className="text-gray-400 -mt-1 text-xs font-light">
-                    per month
+                    per year
                   </p>
                 </div>
               </div>
@@ -120,9 +123,9 @@ export default function Subscriptions() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-0">
-                  <p className="font-bold text-[32px]">$449</p>
+                  <p className="font-bold text-[32px]">$1,049</p>
                   <p className="text-gray-400 -mt-1 text-xs font-light">
-                    per month
+                    per year
                   </p>
                 </div>
               </div>
