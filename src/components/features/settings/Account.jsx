@@ -1,11 +1,29 @@
 import React from "react";
-import { useUser } from "../../hooks/useUser";
+import { useUpdateUser, useUser } from "../../hooks/useUser";
 
 export default function Account() {
   const { user } = useUser();
 
-  const [username, setUsername] = React.useState(user?.username || "");
-  const [fullName, setFullName] = React.useState(user?.fullName || "");
+  const [username, setUsername] = React.useState(user?.username);
+  const [fullName, setFullName] = React.useState(user?.fullName);
+
+  const { updateUserFn, isPending } = useUpdateUser();
+
+  const handleUpdateUser = async () => {
+    try {
+      const payload = { username, fullName };
+      if (fullName?.trim()) {
+        payload.fullName = fullName;
+      }
+      if (username?.trim()) {
+        payload.username = username;
+      }
+      await updateUserFn(payload);
+      console.log("User updated successfully");
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
 
   return (
     <div className="w-full space-y-6">
@@ -45,12 +63,11 @@ export default function Account() {
         <div className="flex justify-end mt-4">
           <button
             onClick={() => {
-              // Handle save logic here
-              console.log("Saved:", { username, fullName });
+              handleUpdateUser();
             }}
             className="px-4 py-2 bg-c-color text-white rounded-lg hover:bg-c-color-dark transition"
           >
-            Save Changes
+            {isPending ? "Saving..." : "Save Changes"}
           </button>
         </div>
       </div>

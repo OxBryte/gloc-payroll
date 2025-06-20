@@ -40,12 +40,12 @@ const data2 = [
     icon: <RiSettingsLine size={22} />,
     link: "/settings",
   },
-  {
-    id: 3,
-    name: "live Support",
-    icon: <PiHeadphones size={22} />,
-    link: "/live-support",
-  },
+  // {
+  //   id: 3,
+  //   name: "live Support",
+  //   icon: <PiHeadphones size={22} />,
+  //   link: "/live-support",
+  // },
 ];
 
 export default function Sidebar() {

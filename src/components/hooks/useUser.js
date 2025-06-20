@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { getCurrentUser } from "../services/authApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getCurrentUser, updateUser } from "../services/authApi";
+import toast from "react-hot-toast";
 
 export function useUser() {
   const token = document.cookie.includes("token=")
@@ -22,4 +23,27 @@ export function useUser() {
     error,
     isAuthenticated: token !== null,
   };
+}
+
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
+  const { mutateAsync: updateUserFn, isPending } = useMutation({
+    mutationKey: ["updateUser"],
+    mutationFn: async (body) => {
+      return await updateUser(body);
+    },
+    onSuccess(data) {
+      console.log(data);
+      toast.success(data?.success === true && "Profile updated successfully");
+      queryClient.refetchQueries({
+        queryKey: ["user"],
+      });
+    },
+    onError(error) {
+      console.log(error);
+
+      toast.error(`${error.message}`);
+    },
+  });
+  return { updateUserFn, isPending };
 }

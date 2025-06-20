@@ -99,3 +99,22 @@ export async function resendVerification(body) {
     );
   }
 }
+
+export async function updateUser(body) {
+  try {
+    // Get token from cookies
+    const token = getCookie("token"); // or whatever your cookie name is
+
+    const { data } = await axios.put(`${apiURL}auth/profile`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error during update user:", error);
+    throw new Error(
+      error.response?.data?.message || "An error occurred during update user"
+    );
+  }
+}
