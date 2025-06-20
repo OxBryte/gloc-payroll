@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../../hooks/useWorkspace";
 import { formatNumberWithCommas } from "../../lib/utils";
-import { IoPeopleOutline } from "react-icons/io5";
+import { IoPeopleOutline, IoWalletOutline } from "react-icons/io5";
 import { useGetPayroll } from "../../hooks/usePayroll";
 import Spinner from "../../ui/Spinner";
 import { ChevronDown } from "lucide-react";
@@ -192,11 +192,21 @@ export default function Overview() {
               <IoPeopleOutline size={30} className="text-gray-500" />
             </div>
           </div>
+          <div className="w-full min-h-[180px] h-auto rounded-lg bg-c-color-2 border border-gray-200 flex flex-col items-left gap-3 p-5">
+            <p className="text-sm font-medium text-black/50">Total Payrolls</p>
+            <div className="flex w-full items-center justify-between">
+              {isLoadingPayroll ? (
+                <Spinner />
+              ) : (
+                <p className="font-bold text-[46px]">{payrolls?.length || 0}</p>
+              )}
+              <IoWalletOutline size={30} className="text-gray-500" />
+            </div>
+          </div>
           {/* <div className="w-full min-h-[180px] h-auto rounded-lg bg-c-color-2 border border-gray-200 flex flex-col items-left gap-3 p-5">
             <p className="text-sm font-medium text-black/50">Total Employees</p>
           </div> */}
         </div>
-        <div className="bg-c-color-2 border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"></div>
         <div className="bg-c-color-2 border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"></div>
       </div>
     </>
