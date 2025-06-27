@@ -59,7 +59,7 @@ export default function Sidebar() {
             <div
               className={`w-full h-full px-3 py-3 flex items-center justify-left`}
             >
-             <img src="valourpay.svg" alt="" className="w-30" />
+             <img src="glok-logo-3.svg" alt="" className="w-18" />
             </div>
             {/* <div
               onClick={() => setSelectTab("Sport")}

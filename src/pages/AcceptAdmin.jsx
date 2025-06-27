@@ -25,7 +25,7 @@ export default function AcceptAdmin() {
   return (
     <div className="w-full h-screen flex items-center justify-center p-6 md:p-10">
       <div className="flex flex-col items-center gap-4 bg-white w-[26rem] p-8 rounded-lg">
-        <img src="/valourpay_icon.svg" alt="logo" className="w-16 mb-2" />
+        <img src="/glok-logo.svg" alt="logo" className="w-13 mb-2" />
         <h1 className="text-2xl font-bold text-gray-800">
           Accept Admin Invite
         </h1>

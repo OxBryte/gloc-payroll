@@ -52,7 +52,7 @@ export default function VerifyEmail() {
       <div className="w-full max-w-[36rem] space-y-6 p-6 md:p-20">
         <div className="space-y-2 place-items-center">
           <div className="">
-            <img src="/valourpay_icon.svg" alt="logo" className="w-16 mb-2" />
+            <img src="/glok-logo.svg" alt="logo" className="w-13 mb-2" />
           </div>
           <p className="font-semibold text-2xl ">Verify your email</p>
           <p className="font-light text-sm">
