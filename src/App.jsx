@@ -15,6 +15,7 @@ import AcceptAdmin from "./pages/AcceptAdmin";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Subscriptions from "./pages/Subscriptions";
+import Jobs from "./pages/Jobs";
 
 function App() {
   const NavigationLoader = () => {
@@ -63,6 +64,7 @@ function App() {
               />
               <Route path="/settings" element={<Settings />} />
               <Route path="/subscription" element={<Subscriptions />} />
+              <Route path="/jobs" element={<Jobs />} />
               <Route path="/:id" element={<h1>Dynamic Route</h1>} />
             </Route>
           </Route>
