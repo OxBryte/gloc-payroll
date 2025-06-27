@@ -1,10 +1,9 @@
 import React from "react";
 import { GoRocket } from "react-icons/go";
-import { IoDiceOutline } from "react-icons/io5";
 import { LuHandshake } from "react-icons/lu";
-import { PiHeadphones } from "react-icons/pi";
 import { RiDashboardLine, RiSettingsLine } from "react-icons/ri";
 import { Link, matchPath, useLocation } from "react-router-dom";
+import { RxCaretSort } from "react-icons/rx";
 
 const data = [
   {
@@ -59,18 +58,18 @@ export default function Sidebar() {
             <div
               className={`w-full h-full px-3 py-3 flex items-center justify-left`}
             >
-             <img src="glok-logo-3.svg" alt="" className="w-18" />
+              <img src="glok-logo-3.svg" alt="" className="w-18" />
             </div>
-            {/* <div
-              onClick={() => setSelectTab("Sport")}
-              className={`w-full h-full gap-2 rounded-lg px-3 py-3 flex items-center justify-center text-sm font-light cursor-pointer ${
-                selectTab === "Sport" ? "bg-c-color" : "bg-c-bg-2"
-              }`}
-            >
-              <PiVolleyballLight size={22} />
-              Sport
-            </div> */}
           </div>
+          {/* <div className="px-3">
+            <div className="w-full p-2 border border-white/10 flex items-center justify-between gap-4 rounded-lg">
+              <div className="flex gap-2 items-center">
+                <div className="w-8 h-8 rounded-lg bg-white/20"></div>
+              <p className="text-sm font-light">Workspace</p>
+              </div>
+              <RxCaretSort />
+            </div>
+          </div> */}
 
           <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
             {data.map((item) => {
