@@ -4,6 +4,7 @@ import { LuHandshake } from "react-icons/lu";
 import { RiDashboardLine, RiSettingsLine } from "react-icons/ri";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { RxCaretSort } from "react-icons/rx";
+import { Briefcase } from "lucide-react";
 
 const data = [
   {
@@ -18,12 +19,12 @@ const data = [
     icon: <GoRocket size={22} />,
     link: "workspace",
   },
-  // {
-  //   id: 3,
-  //   name: "Payroll",
-  //   icon: <IoDiceOutline size={22} />,
-  //   link: "/payroll",
-  // },
+  {
+    id: 3,
+    name: "Jobs (coming soon)",
+    icon: <Briefcase size={22} />,
+    link: "/jobs",
+  },
 ];
 
 const data2 = [

@@ -316,17 +316,6 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
                   <div className="flex gap-3 items-center">
                     <div
                       className={`border ${
-                        chain === "optimism"
-                          ? "border-c-color bg-c-color/20"
-                          : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
-                      onClick={() => setChain("optimism")}
-                    >
-                      <img src="/op.svg" alt="" className="w-6" />
-                      <p className="text-sm font-medium">Optimism</p>
-                    </div>
-                    <div
-                      className={`border ${
                         chain === "arbitrum"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
@@ -346,6 +335,28 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
                     >
                       <img src="/base.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Base</p>
+                    </div>
+                    <div
+                      className={`border ${
+                        chain === "optimism"
+                          ? "border-c-color bg-c-color/20"
+                          : "border-gray-200"
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      onClick={() => setChain("optimism")}
+                    >
+                      <img src="/op.svg" alt="" className="w-6" />
+                      <p className="text-sm font-medium">Optimism</p>
+                    </div>
+                    <div
+                      className={`border ${
+                        chain === "starknet"
+                          ? "border-c-color bg-c-color/20"
+                          : "border-gray-200"
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      onClick={() => setChain("starknet")}
+                    >
+                      <img src="/starknet.svg" alt="" className="w-6" />
+                      <p className="text-sm font-medium">Starknet</p>
                     </div>
                   </div>
                 </div>
