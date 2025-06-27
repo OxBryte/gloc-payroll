@@ -313,7 +313,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
                   <label className="text-sm font-medium text-gray-700 block">
                     Chain
                   </label>
-                  <div className="flex gap-3 items-center">
+                  <div className="flex flex-wrap gap-3 items-center">
                     <div
                       className={`border ${
                         chain === "arbitrum"
@@ -346,6 +346,17 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
                     >
                       <img src="/op.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Optimism</p>
+                    </div>
+                    <div
+                      className={`border ${
+                        chain === "celo"
+                          ? "border-c-color bg-c-color/20"
+                          : "border-gray-200"
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      onClick={() => setChain("celo")}
+                    >
+                      <img src="/celo.svg" alt="" className="w-6" />
+                      <p className="text-sm font-medium">Celo</p>
                     </div>
                     <div
                       className={`border ${

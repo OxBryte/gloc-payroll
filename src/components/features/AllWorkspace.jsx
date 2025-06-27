@@ -7,8 +7,20 @@ import WorkspaceCard from "./WorkspaceCard";
 
 export default function AllWorkspace() {
   const [isOpen, setIsOpen] = useState(false);
-  const { workspace, isLoadingWorkspace } = useGetWorkspace();
+  const { workspace, isLoadingWorkspace, error } = useGetWorkspace();
   // console.log(workspace);
+
+   if (error) {
+     return (
+       <div className="w-full h-full min-h-[70dvh] flex flex-col gap-3 items-center justify-center">
+         <img src="/error.svg" alt="" className="w-36" />
+         <p className="text-gray-500 text-center max-w-[230px]">
+           {error?.message}
+         </p>
+       </div>
+     );
+   }
+
 
   const sortedWorkspace = workspace
     ?.slice()

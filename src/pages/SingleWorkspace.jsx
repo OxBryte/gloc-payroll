@@ -52,7 +52,7 @@ const data = [
 export default function SingleWorkspace() {
   const { slug, id: activeLink } = useParams();
 
-  const { singleWorkspace, isLoadingSingleWorkspace } =
+  const { singleWorkspace, isLoadingSingleWorkspace, error } =
     useGetSingleWorkspace(slug);
 
   if (isLoadingSingleWorkspace) {
@@ -60,6 +60,17 @@ export default function SingleWorkspace() {
       <div className="w-full h-full min-h-[70dvh] flex flex-col gap-3 items-center justify-center">
         <img src="/loading.svg" alt="" className="w-30" />
         <p className="text-gray-500">Loading workspace...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full h-full min-h-[70dvh] flex flex-col gap-3 items-center justify-center">
+        <img src="/error.svg" alt="" className="w-36" />
+        <p className="text-gray-500 text-center max-w-[230px]">
+          {error?.message}
+        </p>
       </div>
     );
   }
