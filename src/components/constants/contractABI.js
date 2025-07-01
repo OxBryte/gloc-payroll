@@ -1,29 +1,13 @@
-export const contractAddress = "0x3b5e168A8e8601f075B09F75B8D09CdcE08C2554"; // Replace with actual contract address
+export const contractAddress = "0xE1DA6fa9d1B1feC1a6b5104d8830A2DF6D1a84d8"; // Replace with actual contract address
 
 export const contractABI = [
   {
-    inputs: [{ internalType: "address", name: "_usdcToken", type: "address" }],
+    inputs: [
+      { internalType: "address", name: "usdcAddress", type: "address" },
+      { internalType: "address", name: "usdtAddress", type: "address" },
+    ],
     stateMutability: "nonpayable",
     type: "constructor",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "token",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "EmergencyWithdraw",
-    type: "event",
   },
   {
     anonymous: false,
@@ -63,25 +47,31 @@ export const contractABI = [
       {
         indexed: true,
         internalType: "address",
+        name: "token",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
         name: "payer",
         type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "totalAmount",
+        name: "totalPaid",
         type: "uint256",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "taxAmount",
+        name: "totalTax",
         type: "uint256",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "employeeCount",
+        name: "recipientCount",
         type: "uint256",
       },
     ],
@@ -94,7 +84,7 @@ export const contractABI = [
       {
         indexed: true,
         internalType: "address",
-        name: "owner",
+        name: "token",
         type: "address",
       },
       {
@@ -121,71 +111,60 @@ export const contractABI = [
     type: "event",
   },
   {
-    inputs: [{ internalType: "address", name: "payer", type: "address" }],
-    name: "addAuthorizedPayer",
-    outputs: [],
-    stateMutability: "nonpayable",
+    inputs: [],
+    name: "USDC",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "USDT",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
     type: "function",
   },
   {
     inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "authorizedPayers",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address[]", name: "employees", type: "address[]" },
-      { internalType: "uint256[]", name: "salaries", type: "uint256[]" },
-      { internalType: "uint256", name: "taxPercentage", type: "uint256" },
-    ],
-    name: "distributePayroll",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "token", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    name: "emergencyWithdraw",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getAvailableUSDCBalance",
+    name: "collectedTax",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [],
-    name: "getContractUSDCBalance",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "index", type: "uint256" }],
-    name: "getPayrollBatch",
-    outputs: [
-      { internalType: "address[]", name: "employees", type: "address[]" },
-      { internalType: "uint256[]", name: "salaries", type: "uint256[]" },
+    inputs: [
+      {
+        components: [
+          { internalType: "address", name: "recipient", type: "address" },
+          { internalType: "uint256", name: "amount", type: "uint256" },
+        ],
+        internalType: "struct PayrollSystem.Payment[]",
+        name: "payments",
+        type: "tuple[]",
+      },
       { internalType: "uint256", name: "taxAmount", type: "uint256" },
-      { internalType: "uint256", name: "timestamp", type: "uint256" },
     ],
-    stateMutability: "view",
+    name: "distributePayrollUSDC",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [],
-    name: "getPayrollHistoryCount",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
+    inputs: [
+      {
+        components: [
+          { internalType: "address", name: "recipient", type: "address" },
+          { internalType: "uint256", name: "amount", type: "uint256" },
+        ],
+        internalType: "struct PayrollSystem.Payment[]",
+        name: "payments",
+        type: "tuple[]",
+      },
+      { internalType: "uint256", name: "taxAmount", type: "uint256" },
+    ],
+    name: "distributePayrollUSDT",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -210,34 +189,10 @@ export const contractABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "payrollHistory",
-    outputs: [
-      { internalType: "uint256", name: "taxAmount", type: "uint256" },
-      { internalType: "uint256", name: "timestamp", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "payer", type: "address" }],
-    name: "removeAuthorizedPayer",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "renounceOwnership",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "totalTaxCollected",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -255,18 +210,10 @@ export const contractABI = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "usdcToken",
-    outputs: [{ internalType: "contract IERC20", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    inputs: [{ internalType: "address", name: "token", type: "address" }],
     name: "withdrawTax",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
-  { stateMutability: "payable", type: "receive" },
 ];

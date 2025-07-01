@@ -1,16 +1,77 @@
 # Payroll Project
 
-## Overview
-
-The Payroll Project is a comprehensive system designed to manage employee payroll efficiently. It automates salary calculations, tax deductions, and generates detailed reports, ensuring accuracy and compliance with payroll regulations.
+A decentralized payroll management system built with React and Thirdweb for wallet integration.
 
 ## Features
 
-- **Employee Management**: Add, update, and manage employee details.
-- **Payroll Processing**: Automate salary calculations, including taxes and deductions.
-- **Reports**: Generate payroll summaries and detailed reports.
-- **Compliance**: Ensure adherence to local tax and labor laws.
-- **Customizable**: Tailor the system to fit your organization's needs.
+- **Wallet Connection**: Connect your wallet using Thirdweb
+- **Payroll Management**: Create and manage payroll records
+- **Employee Management**: Add and manage employees
+- **Multi-chain Support**: Support for multiple blockchain networks
+- **USDC Integration**: Pay employees using USDC tokens
+
+## Wallet Integration
+
+This project uses **Thirdweb** for wallet connection instead of traditional email/password authentication. Users can:
+
+1. Connect their wallet (MetaMask, WalletConnect, etc.)
+2. View their connected address
+3. Disconnect their wallet when needed
+
+## Setup
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Get your Thirdweb Client ID:
+
+   - Go to [Thirdweb Dashboard](https://thirdweb.com/dashboard)
+   - Create a new project
+   - Copy your Client ID
+   - Replace `"your-thirdweb-client-id"` in `src/main.jsx` with your actual Client ID
+
+3. Start the development server:
+
+```bash
+npm run dev
+```
+
+## Key Components
+
+- **ConnectButton**: Handles wallet connection using Thirdweb
+- **useAuth Hook**: Provides authentication state and methods
+- **ProtectedRoute**: Protects routes that require wallet connection
+
+## Authentication Flow
+
+1. User visits the app
+2. If not connected, they're redirected to the login page
+3. User clicks "Connect Wallet" button
+4. Thirdweb modal opens for wallet selection
+5. User connects their wallet
+6. User is redirected to the main application
+
+## Environment Variables
+
+Make sure to set up your Thirdweb Client ID in the main.jsx file:
+
+```javascript
+<ThirdwebProvider
+  activeChain={Sepolia}
+  clientId="your-actual-thirdweb-client-id"
+>
+```
+
+## Supported Networks
+
+Currently configured for Sepolia testnet, but can be easily changed to other networks supported by Thirdweb.
+
+## Overview
+
+The Payroll Project is a comprehensive system designed to manage employee payroll efficiently. It automates salary calculations, tax deductions, and generates detailed reports, ensuring accuracy and compliance with payroll regulations.
 
 ## Installation
 

@@ -8,45 +8,28 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./components/context/AuthContext.jsx";
-import { PrivyProvider } from "@privy-io/react-auth";
-import { sepolia } from "viem/chains";
-import { http, injected } from "wagmi";
-import { createConfig, WagmiProvider } from "@privy-io/wagmi";
-
-const config = createConfig({
-  chains: [sepolia],
-  connectors: [injected()],
-  transports: {
-    [sepolia.id]: http(),
-    // For each of your required chains, add an entry to `transports` with
-    // a key of the chain's `id` and a value of `http()`
-  },
-});
+import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { baseSepolia } from "wagmi/chains";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <PrivyProvider
-      appId="cmbinutss00nol20mlj1b33bp" // Get this from Privy dashboard
-      config={{
-        appearance: {
-          theme: "light",
-        }
-      }}
+    <ThirdwebProvider
+      activeChain={baseSepolia}
+      clientId="a4c881491718c955361b7b67fdb590aa" // Replace with your Thirdweb client ID
+      // supportedChains={[baseSepolia]}
     >
       <QueryClientProvider client={queryClient}>
-        <WagmiProvider config={config}>
-          <AuthProvider>
-            <ReactQueryDevtools
-              initialIsOpen={false}
-              buttonPosition="bottom-left"
-            />
-            <App />
-            <Toaster position="bottom-center" />
-          </AuthProvider>
-        </WagmiProvider>
+        <AuthProvider>
+          <ReactQueryDevtools
+            initialIsOpen={false}
+            buttonPosition="bottom-left"
+          />
+          <App />
+          <Toaster position="bottom-center" />
+        </AuthProvider>
       </QueryClientProvider>
-    </PrivyProvider>
+    </ThirdwebProvider>
   </StrictMode>
 );
