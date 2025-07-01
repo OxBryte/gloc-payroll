@@ -8,28 +8,31 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./components/context/AuthContext.jsx";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
-import { baseSepolia } from "wagmi/chains";
+import { Base, BaseSepoliaTestnet } from "@thirdweb-dev/chains";
+import { ThirdwebProvider } from "thirdweb/react";
+import { WagmiProvider } from "wagmi";
+import { config } from "./components/lib/wagmi.js";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThirdwebProvider
-      activeChain={baseSepolia}
-      clientId="a4c881491718c955361b7b67fdb590aa" // Replace with your Thirdweb client ID
-      // supportedChains={[baseSepolia]}
+      activeChain={BaseSepoliaTestnet}
+      // clientId="a4c881491718c955361b7b67fdb590aa"
     >
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <ReactQueryDevtools
-            initialIsOpen={false}
-            buttonPosition="bottom-left"
-          />
-          <App />
-          <Toaster position="bottom-center" />
-        </AuthProvider>
-      </QueryClientProvider>
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <ReactQueryDevtools
+              initialIsOpen={false}
+              buttonPosition="bottom-left"
+            />
+            <App />
+            <Toaster position="bottom-center" />
+          </AuthProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
     </ThirdwebProvider>
   </StrictMode>
 );

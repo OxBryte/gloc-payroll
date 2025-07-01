@@ -1,47 +1,30 @@
 import React from "react";
-import { useConnect, useDisconnect, useAddress } from "@thirdweb-dev/react";
+import {
+  AutoConnect,
+  ConnectButton,
+  useActiveAccount,
+  useActiveWallet,
+  useDisconnect,
+} from "thirdweb/react";
+import { client } from "../../client";
+import { BaseSepoliaTestnet } from "@thirdweb-dev/chains";
 
-export default function ConnectButton() {
-  // const connect = useConnect();
-  // const disconnect = useDisconnect();
-  // const address = useAddress();
+export default function ConnectButtons() {
+  const activeAccount = useActiveAccount();
+  const address = activeAccount?.address;
 
-  const handleConnect = async () => {
-    try {
-      // await connect();
-    } catch (error) {
-      console.error("Failed to connect wallet:", error);
-    }
-  };
+  const { disconnect } = useDisconnect();
+  const wallet = useActiveWallet();
 
-  const handleDisconnect = () => {
-    // disconnect();
-  };
-
-  if (address) {
-    return (
-      <div className="space-y-2">
-        <div className="px-5 py-3 flex justify-center rounded-md cursor-pointer transition-colors text-white bg-green-600 hover:bg-green-700">
-          <span className="text-lg font-semibold">
-            {/* Connected: {address.slice(0, 6)}...{address.slice(-4)} */}
-          </span>
-        </div>
-        <button
-          className="px-5 w-full py-2 flex justify-center rounded-md cursor-pointer transition-colors text-white bg-red-600 hover:bg-red-700"
-          onClick={handleDisconnect}
-        >
-          <span className="text-sm font-semibold">Disconnect Wallet</span>
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <div
-      className="px-5 w-full py-3 flex justify-center rounded-md cursor-pointer transition-colors text-white bg-c-color hover:bg-c-bg"
-      onClick={handleConnect}
-    >
-      <span className="text-lg font-semibold">Connect Wallet</span>
+  return address ? (
+    <div className="space-y-1">
+      <p className="w-full px-5 py-3 rounded-xl bg-c-color text-white">
+        Connected address: <br /> {address}
+      </p>
+      <button onClick={() => disconnect(wallet)}>Disconnect</button>
     </div>
+  ) : (
+    <ConnectButton client={client} chain={BaseSepoliaTestnet} />
+    // <AutoConnect client={client} />
   );
 }

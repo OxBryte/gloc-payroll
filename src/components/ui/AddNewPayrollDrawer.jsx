@@ -3,16 +3,12 @@ import { Check, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useGetSingleWorkspace } from "../hooks/useWorkspace";
 import { useCreatePayroll } from "../hooks/usePayroll";
-import ConnectButton from "./ConnectButton";
+import ConnectButtons from "./ConnectButton";
 import { contractAddress } from "../constants/contractABI";
 import toast from "react-hot-toast";
 import { USDC_ABI } from "../constants/USDCAbi";
-import {
-  useAddress,
-  useContract,
-  useContractWrite,
-  useContractRead,
-} from "@thirdweb-dev/react";
+import { useAccount } from "wagmi";
+import { useActiveAccount } from "thirdweb/react";
 
 const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
@@ -28,7 +24,10 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   // const usdcAddress = "0x036CbD53842c5426634e7929541eC2318f3dCF7e";
 
   // Use Thirdweb address instead of Privy
-  // const address = useAddress();
+  const activeAccount = useActiveAccount();
+  const { address } = useAccount();
+  console.log(activeAccount?.address);
+
   // const authenticated = !!address;
 
   // Use Thirdweb contract hooks
@@ -44,7 +43,6 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   //   "balanceOf",
   //   [address]
   // );
-
 
   // Toggle employee selection
   const toggleEmployeeSelection = (employee) => {
@@ -68,7 +66,6 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
   const totalTax = useMemo(() => {
     return totalSalary * taxRate;
   }, [totalSalary, taxRate]);
-
 
   return (
     <div className="fixed inset-0 z-50 flex h-screen">
@@ -320,6 +317,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
               </div>
             </div>
           </div>
+          <ConnectButtons />
           <div className="flex space-x-3">
             <button className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed">
               Distribute
