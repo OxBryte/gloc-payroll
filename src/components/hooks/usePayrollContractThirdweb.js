@@ -9,8 +9,10 @@ import { contractAddress } from "../constants/contractABI.js";
 import { baseSepolia } from "thirdweb/chains";
 import { client } from "../../client.js";
 import toast from "react-hot-toast";
+import { useCreatePayroll } from "./usePayroll.js";
 
-export function usePayrollContractThirdweb() {
+export function usePayrollContractThirdweb(payrollData = {}) {
+  const { createPayrollFn } = useCreatePayroll();
   const activeAccount = useActiveAccount();
 
   // Get contract instance
@@ -82,7 +84,7 @@ export function usePayrollContractThirdweb() {
 
       // Send transaction
       sendTransaction(transaction, {
-        onSuccess: (result) => {
+        onSuccess: async (result) => {
           setTxHash(result.transactionHash);
           setIsPending(false);
           setIsConfirming(true);
@@ -91,6 +93,30 @@ export function usePayrollContractThirdweb() {
             hash: result.transactionHash,
           });
           toast.success("Payroll Distribution successful ");
+
+          // Create payroll record in the database
+          try {
+            const payrollBody = {
+              title: payrollData.title,
+              category: payrollData.category,
+              chain: payrollData.chain,
+              currency: payrollData.currency,
+              totalSalary: payrollData.totalAmount,
+              tax: payrollData.totalTax,
+              tx: result.transactionHash,
+              workspaceId: payrollData.workspaceId,
+              employeeCount: payrollData.selectedEmployees?.length || 0,
+            };
+
+            await createPayrollFn(payrollBody);
+            console.log("Payroll record created successfully");
+            toast.success("Payroll record created successfully");
+          } catch (error) {
+            console.error("Error creating payroll record:", error);
+            toast.error(
+              "Transaction successful but failed to save payroll record"
+            );
+          }
 
           setIsConfirming(false);
           setIsSuccess(true);
@@ -136,7 +162,7 @@ export function usePayrollContractThirdweb() {
 
       // Send transaction
       sendTransaction(transaction, {
-        onSuccess: (result) => {
+        onSuccess: async (result) => {
           setTxHash(result.transactionHash);
           setIsPending(false);
           setIsConfirming(true);
@@ -144,6 +170,34 @@ export function usePayrollContractThirdweb() {
           console.log("USDT payroll transaction successful:", {
             hash: result.transactionHash,
           });
+
+          // Create payroll record in the database
+          try {
+            const payrollBody = {
+              title: payrollData.title,
+              category: payrollData.category,
+              chain: payrollData.chain,
+              currency: payrollData.currency,
+              totalAmount: payrollData.totalAmount,
+              transactionHash: result.transactionHash,
+              workspaceId: payrollData.workspaceId,
+              employees:
+                payrollData.selectedEmployees?.map((emp) => ({
+                  id: emp.id,
+                  address: emp.address,
+                  name: emp.name,
+                  salary: emp.salary,
+                })) || [],
+            };
+
+            await createPayrollFn(payrollBody);
+            console.log("Payroll record created successfully");
+          } catch (error) {
+            console.error("Error creating payroll record:", error);
+            toast.error(
+              "Transaction successful but failed to save payroll record"
+            );
+          }
 
           setIsConfirming(false);
           setIsSuccess(true);

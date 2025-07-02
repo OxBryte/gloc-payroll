@@ -6,12 +6,23 @@ import ConnectButtonThirdweb from "./ConnectButtonThirdweb";
 
 const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
-  const [chain, setChain] = useState("");
-  const [currency, setCurrency] = useState("");
+  const [chain, setChain] = useState("base");
+  const [currency, setCurrency] = useState("USDC");
 
-  const { register } = useForm();
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useForm();
   const { singleWorkspace } = useGetSingleWorkspace(slug);
   const employees = singleWorkspace?.employees || [];
+
+  // Watch form values
+  const title = watch("title");
+  const category = watch("category");
+
+  // Validation check
+  const isFormValid = title && category && selectedEmployees.length > 0;
 
   // Toggle employee selection
   const toggleEmployeeSelection = (employee) => {
@@ -42,7 +53,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
         className="flex-1 bg-c-bg/20 backdrop-blur-xs bg-opacity-50"
         onClick={() => setIsOpen(false)}
       />
-      <div className="w-full max-w-lg bg-white h-screen overflow-y-auto shadow-2xl">
+      <div className="w-full max-w-xl bg-white h-screen overflow-y-auto shadow-2xl">
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">New Payroll</h2>
           <button
@@ -64,9 +75,14 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                   <input
                     type="text"
                     placeholder="Enter payroll title"
-                    {...register("title", { required: true })}
+                    {...register("title", { required: "Title is required" })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   />
+                  {errors.title && (
+                    <p className="text-red-500 text-sm">
+                      {errors.title.message}
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-2 w-full">
                   <label className="text-sm font-medium text-gray-700 block">
@@ -74,7 +90,9 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                   </label>
                   <select
                     defaultValue={""}
-                    {...register("category", { required: true })}
+                    {...register("category", {
+                      required: "Category is required",
+                    })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   >
                     <option value="" disabled>
@@ -84,6 +102,11 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                     <option value="bi-weekly">Bi-Weekly Payroll</option>
                     <option value="weekly">Weekly Payroll</option>
                   </select>
+                  {errors.category && (
+                    <p className="text-red-500 text-sm">
+                      {errors.category.message}
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-2 w-full">
                   <label className="text-sm font-medium text-gray-700 block">
@@ -176,7 +199,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* List of employees where they can be able to selct and delect fromt ethe array */}
                 <div className="space-y-3 w-full pt-2">
                   <div className="flex w-full items-center gap-5 justify-between">
@@ -289,6 +312,13 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
           <ConnectButtonThirdweb
             selectedEmployees={selectedEmployees}
             totalTax={totalTax}
+            title={title}
+            category={category}
+            chain={chain}
+            currency={currency}
+            totalAmount={totalTax + totalSalary}
+            workspaceId={singleWorkspace?.id}
+            isFormValid={isFormValid}
           />
         </div>
       </div>

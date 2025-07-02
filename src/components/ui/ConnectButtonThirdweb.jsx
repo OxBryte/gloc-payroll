@@ -17,6 +17,13 @@ import Spinner from "./Spinner";
 export default function ConnectButtonThirdweb({
   selectedEmployees = [],
   totalTax = 0,
+  title = "",
+  category = "",
+  chain = "base",
+  currency = "USDC",
+  totalAmount = 0,
+  workspaceId = null,
+  isFormValid = false,
 }) {
   // Thirdweb wallet connection
   const activeAccount = useActiveAccount();
@@ -44,7 +51,16 @@ export default function ConnectButtonThirdweb({
     isLoadingOwner,
     isLoadingPaused,
     validateContract,
-  } = usePayrollContractThirdweb();
+  } = usePayrollContractThirdweb({
+    title,
+    category,
+    chain,
+    totalTax,
+    currency,
+    totalAmount,
+    workspaceId,
+    selectedEmployees,
+  });
 
   // USDC approval functionality (Thirdweb)
   const {
@@ -186,7 +202,7 @@ export default function ConnectButtonThirdweb({
           </div> */}
 
           {/* Payroll Distribution */}
-          {selectedEmployees.length > 0 && (
+          {selectedEmployees.length > 0 && isFormValid && (
             <div className="space-y-2">
               {isApprovalSuccess ? (
                 <button
@@ -227,6 +243,17 @@ export default function ConnectButtonThirdweb({
                   )}
                 </button>
               )}
+            </div>
+          )}
+
+          {/* Show message when form is not valid */}
+          {(!isFormValid || selectedEmployees.length === 0) && (
+            <div className="text-sm text-gray-500 text-center py-2">
+              {!isFormValid &&
+                "Please fill in all required fields and select employees"}
+              {isFormValid &&
+                selectedEmployees.length === 0 &&
+                "Please select at least one employee"}
             </div>
           )}
 
