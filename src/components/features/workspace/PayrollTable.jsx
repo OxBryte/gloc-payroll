@@ -105,7 +105,15 @@ export default function PayrollTable({ payrolls }) {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-700 capitalize">
+                    <div
+                      className={`text-sm font-medium text-gray-700 capitalize px-3 py-1 rounded-lg ${
+                        payroll?.status === "pending"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : payroll?.status === "completed"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
                       {payroll?.status}
                     </div>
                   </td>
