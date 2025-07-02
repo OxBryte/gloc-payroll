@@ -8,6 +8,7 @@ import { getContract, prepareContractCall } from "thirdweb";
 import { contractAddress } from "../constants/contractABI.js";
 import { baseSepolia } from "thirdweb/chains";
 import { client } from "../../client.js";
+import toast from "react-hot-toast";
 
 export function usePayrollContractThirdweb() {
   const activeAccount = useActiveAccount();
@@ -63,10 +64,10 @@ export function usePayrollContractThirdweb() {
       setError(null);
 
       // Format payments array to match contract structure
-     const formattedPayments = payments.map((payment) => [
-       payment.recipient,
-       payment.amount,
-     ]);
+      const formattedPayments = payments.map((payment) => [
+        payment.recipient,
+        payment.amount,
+      ]);
 
       console.log("Distributing payroll with Thirdweb:");
       console.log("Formatted payments:", formattedPayments);
@@ -89,6 +90,7 @@ export function usePayrollContractThirdweb() {
           console.log("Transaction successful:", {
             hash: result.transactionHash,
           });
+          toast.success("Payroll Distribution successful ");
 
           setIsConfirming(false);
           setIsSuccess(true);

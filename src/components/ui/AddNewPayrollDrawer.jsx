@@ -87,35 +87,6 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                 </div>
                 <div className="space-y-2 w-full">
                   <label className="text-sm font-medium text-gray-700 block">
-                    Currency
-                  </label>
-                  <div className="flex gap-3 items-center">
-                    <div
-                      className={`border ${
-                        currency === "USDC"
-                          ? "border-c-color bg-c-color/20"
-                          : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
-                      onClick={() => setCurrency("USDC")}
-                    >
-                      <img src="/usdc.svg" alt="" className="w-6" />
-                      <p className="text-sm font-medium">USDC</p>
-                    </div>
-                    <div
-                      className={`border ${
-                        currency === "USDT"
-                          ? "border-c-color bg-c-color/20"
-                          : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
-                      onClick={() => setCurrency("USDT")}
-                    >
-                      <img src="/usdt.svg" alt="" className="w-6" />
-                      <p className="text-sm font-medium">USDT</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-2 w-full">
-                  <label className="text-sm font-medium text-gray-700 block">
                     Chain
                   </label>
                   <div className="flex flex-wrap gap-3 items-center">
@@ -176,7 +147,36 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                     </div>
                   </div>
                 </div>
-
+                <div className="space-y-2 w-full">
+                  <label className="text-sm font-medium text-gray-700 block">
+                    Currency
+                  </label>
+                  <div className="flex gap-3 items-center">
+                    <div
+                      className={`border ${
+                        currency === "USDC"
+                          ? "border-c-color bg-c-color/20"
+                          : "border-gray-200"
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      onClick={() => setCurrency("USDC")}
+                    >
+                      <img src="/usdc.svg" alt="" className="w-6" />
+                      <p className="text-sm font-medium">USDC</p>
+                    </div>
+                    <div
+                      className={`border ${
+                        currency === "USDT"
+                          ? "border-c-color bg-c-color/20"
+                          : "border-gray-200"
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      onClick={() => setCurrency("USDT")}
+                    >
+                      <img src="/usdt.svg" alt="" className="w-6" />
+                      <p className="text-sm font-medium">USDT</p>
+                    </div>
+                  </div>
+                </div>
+                
                 {/* List of employees where they can be able to selct and delect fromt ethe array */}
                 <div className="space-y-3 w-full pt-2">
                   <div className="flex w-full items-center gap-5 justify-between">
@@ -290,11 +290,6 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
             selectedEmployees={selectedEmployees}
             totalTax={totalTax}
           />
-          {/* <div className="flex space-x-3">
-            <button className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed">
-              Distribute
-            </button>
-          </div> */}
         </div>
       </div>
     </div>
@@ -302,16 +297,3 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
 };
 
 export default AddNewPayrollDrawer;
-
-// This code is commented out because it was not used in the current implementation.
-// It does the get collected tax from the contract, but it is not needed for the current functionality.
-
-// const { readContract } = usePayrollContract();
-// const [tax, setTax] = useState("0");
-// async function getTaxCollected() {
-//   const result = await readContract.read.totalTaxCollected();
-//   setTax(result.toString());
-// }
-// useEffect(() => {
-//   if (ready && authenticated) getTaxCollected();
-// }, [ready, authenticated]);

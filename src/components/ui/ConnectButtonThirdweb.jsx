@@ -1,6 +1,7 @@
 import React from "react";
 import {
   ConnectButton,
+  darkTheme,
   useActiveAccount,
   useActiveWallet,
   useDisconnect,
@@ -9,7 +10,9 @@ import { client } from "../../client";
 import { baseSepolia } from "thirdweb/chains";
 import { usePayrollContractThirdweb } from "../hooks/usePayrollContractThirdweb";
 import { useUSDCApprovalThirdweb } from "../hooks/useUSDCApprovalThirdweb";
-import { createPaymentArray, convertTaxToUSDC } from "../lib/utils";
+import { createPaymentArray, convertTaxToUSDC, truncate } from "../lib/utils";
+import toast from "react-hot-toast";
+import Spinner from "./Spinner";
 
 export default function ConnectButtonThirdweb({
   selectedEmployees = [],
@@ -78,13 +81,6 @@ export default function ConnectButtonThirdweb({
       );
       const totalAmountNeeded = totalSalaryUSDC + taxAmountUSDC;
 
-      // console.log("Selected Employees:", selectedEmployees);
-      // console.log("Payment Array:", paymentArray);
-      // console.log("Tax Amount (USDC):", taxAmountUSDC.toString());
-      // console.log("Total Amount Needed:", totalAmountNeeded.toString());
-      // console.log("Current Allowance:", currentAllowance?.toString() || "0");
-      // console.log("USDC Balance:", usdcBalance?.toString() || "0");
-
       // Check if approval is needed
       if (needsApproval(totalAmountNeeded)) {
         console.log(
@@ -98,59 +94,58 @@ export default function ConnectButtonThirdweb({
 
       // Check if user has enough USDC balance
       if (usdcBalance && usdcBalance < totalAmountNeeded) {
-        alert(
-          `Insufficient USDC balance. You have ${usdcBalance.toString()} wei, but need ${totalAmountNeeded.toString()} wei.`
+        toast.error(
+          `Insufficient USDC balance. You have $${(
+            Number(usdcBalance.toString()) / 1e6
+          ).toFixed(2)}, but need $${(
+            Number(totalAmountNeeded.toString()) / 1e6
+          ).toFixed(2)}.`
         );
         return;
       }
-      
-      // Format for contract (array of arrays)
-      // const formattedPayments = paymentArray.map((payment) => [
-      //   payment.recipient,
-      //   payment.amount,
-      // ]);
-      // console.log("Formatted for Contract:", formattedPayments);
-      console.log("Payment Array", paymentArray)
-
       // Call the smart contract function
       await distributePayrollUSDC(paymentArray, taxAmountUSDC);
     } catch (error) {
       console.error("Error distributing payroll:", error);
-      alert("Error distributing payroll. Please try again.");
+      // alert("Error distributing payroll. Please try again.");
+      toast.error(`${error}`);
     }
   };
 
+  const paymentArray = createPaymentArray(selectedEmployees);
+  const totalSalaryUSDC = paymentArray.reduce(
+    (sum, payment) => sum + payment.amount,
+    0n
+  );
+  const totalAmountNeeded = totalSalaryUSDC + convertTaxToUSDC(totalTax);
+
   if (address) {
     return (
-      <div className="space-y-4 p-4 border rounded-lg">
+      <div className="space-y-4">
         {/* Connection Status */}
-        <div className="space-y-2">
-          <p className="w-full px-5 py-3 rounded-xl bg-c-color text-white">
-            Connected address: <br /> {address}
-          </p>
+        <div className="flex gap-3 px-3 py-1.5 bg-gray-100 rounded-lg items-center justify-between">
+          <p className="w-full">{truncate(address, 16)}</p>
           <button
             onClick={() => disconnect(wallet)}
-            className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+            className="w-fit px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 cursor-pointer"
           >
             Disconnect
           </button>
         </div>
-
-        {/* Error Display */}
-        {(contractError || approvalError) && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-sm text-red-800">
-              Error: {contractError || approvalError}
-            </p>
-          </div>
-        )}
+        <div className="flex justify-between w-full items-center gap-4">
+          <p>Your USDC Balance</p>
+          <p>
+            $
+            {usdcBalance
+              ? (Number(usdcBalance.toString()) / 1e6).toFixed(2)
+              : "0.00"}
+          </p>
+        </div>
 
         {/* Contract Information */}
         <div className="space-y-2">
-          <h3 className="text-lg font-semibold">Smart Contract Info</h3>
-
           {/* Debug Information */}
-          <div className="p-3 bg-gray-50 rounded-lg">
+          {/* <div className="p-3 bg-gray-50 rounded-lg">
             <h4 className="text-sm font-medium mb-2">Debug Info:</h4>
             <div className="text-xs space-y-1">
               <p>
@@ -188,234 +183,164 @@ export default function ConnectButtonThirdweb({
             >
               Test Contract
             </button>
-          </div>
-
-          <div className="text-sm space-y-1">
-            <p>
-              <strong>Contract Owner:</strong>{" "}
-              {owner
-                ? `${owner.slice(0, 6)}...${owner.slice(-4)}`
-                : "Loading..."}
-            </p>
-            <p>
-              <strong>USDC Address:</strong>{" "}
-              {usdcAddress
-                ? `${usdcAddress.slice(0, 6)}...${usdcAddress.slice(-4)}`
-                : "Loading..."}
-            </p>
-            <p>
-              <strong>USDT Address:</strong>{" "}
-              {usdtAddress
-                ? `${usdtAddress.slice(0, 6)}...${usdtAddress.slice(-4)}`
-                : "Loading..."}
-            </p>
-            <p>
-              <strong>Contract Status:</strong>
-              <span
-                className={`ml-2 px-2 py-1 rounded text-xs ${
-                  isPaused
-                    ? "bg-red-100 text-red-800"
-                    : "bg-green-100 text-green-800"
-                }`}
-              >
-                {isPaused ? "Paused" : "Active"}
-              </span>
-            </p>
-          </div>
+          </div> */}
 
           {/* Payroll Distribution */}
           {selectedEmployees.length > 0 && (
-            <div className="space-y-2 pt-2">
-              <h4 className="font-medium">Payroll Distribution</h4>
-
-              <div className="text-sm space-y-1">
-                <p>
-                  <strong>Selected Employees:</strong>{" "}
-                  {selectedEmployees.length}
-                </p>
-                <p>
-                  <strong>Total Tax:</strong> ${totalTax.toLocaleString()}
-                </p>
-                <p>
-                  <strong>Tax (USDC):</strong>{" "}
-                  {convertTaxToUSDC(totalTax).toString()} wei
-                </p>
-
-                {/* USDC Balance and Allowance Info */}
-                <div className="mt-3 p-3 bg-blue-50 rounded-lg">
-                  <h5 className="text-sm font-medium mb-2">USDC Status:</h5>
-                  <div className="text-xs space-y-1">
-                    <p>
-                      <strong>Balance:</strong>{" "}
-                      {usdcBalance
-                        ? `${usdcBalance?.toString()} wei`
-                        : "Loading..."}
-                    </p>
-                    <p>
-                      <strong>Allowance:</strong>{" "}
-                      {currentAllowance
-                        ? `${currentAllowance.toString()} wei`
-                        : "Loading..."}
-                    </p>
-                    {selectedEmployees.length > 0 && (
-                      <p>
-                        <strong>Required:</strong>{" "}
-                        {(() => {
-                          const paymentArray =
-                            createPaymentArray(selectedEmployees);
-                          const totalSalaryUSDC = paymentArray.reduce(
-                            (sum, payment) => sum + payment.amount,
-                            0n
-                          );
-                          const totalAmountNeeded =
-                            totalSalaryUSDC + convertTaxToUSDC(totalTax);
-                          return `${totalAmountNeeded.toString()} wei`;
-                        })()}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex space-x-3">
+            <div className="space-y-2">
+              {isApprovalSuccess ? (
                 <button
-                  className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                  className="w-full flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-c-bg transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
                   onClick={handleDistributePayroll}
-                  disabled={
-                    isPending ||
-                    isConfirming ||
-                    isPaused ||
-                    isApproving ||
-                    isApprovalConfirming
-                  }
+                  disabled={isPending || isConfirming || isPaused}
                 >
-                  {isApproving || isApprovalConfirming
-                    ? "Approving..."
-                    : isPending || isConfirming
-                    ? "Processing..."
-                    : "Distribute Payroll"}
+                  {isPending || isConfirming ? (
+                    <Spinner />
+                  ) : (
+                    "Distribute Payroll"
+                  )}
                 </button>
-
-                {/* Manual Approval Button */}
-                {selectedEmployees.length > 0 && (
-                  <button
-                    onClick={async () => {
-                      const paymentArray =
-                        createPaymentArray(selectedEmployees);
-                      const totalSalaryUSDC = paymentArray.reduce(
-                        (sum, payment) => sum + payment.amount,
-                        0n
-                      );
-                      const totalAmountNeeded =
-                        totalSalaryUSDC + convertTaxToUSDC(totalTax);
-                      await approveUSDCSpending(totalAmountNeeded);
-                    }}
-                    disabled={
-                      isApproving ||
-                      isApprovalConfirming ||
-                      isPending ||
-                      isConfirming
-                    }
-                    className="px-4 py-4 bg-blue-600 text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
-                  >
-                    Approve USDC
-                  </button>
-                )}
-              </div>
+              ) : (
+                <button
+                  onClick={async () => {
+                    const paymentArray = createPaymentArray(selectedEmployees);
+                    const totalSalaryUSDC = paymentArray.reduce(
+                      (sum, payment) => sum + payment.amount,
+                      0n
+                    );
+                    const totalAmountNeeded =
+                      totalSalaryUSDC + convertTaxToUSDC(totalTax);
+                    await approveUSDCSpending(totalAmountNeeded);
+                  }}
+                  disabled={
+                    isApproving ||
+                    isApprovalConfirming ||
+                    isPending ||
+                    isConfirming
+                  }
+                  className="w-full px-4 py-4 bg-c-bg text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-gray-500 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  {isApproving || isApprovalConfirming ? (
+                    <Spinner />
+                  ) : (
+                    "Approve USDC"
+                  )}
+                </button>
+              )}
             </div>
           )}
 
           {/* Contract Actions (only for owner) */}
-          {owner &&
-            address &&
-            owner.toLowerCase() === address.toLowerCase() && (
-              <div className="space-y-2 pt-2">
-                <h4 className="font-medium">Owner Actions</h4>
-                <div className="flex gap-2">
-                  <button
-                    onClick={isPaused ? unpause : pause}
-                    disabled={isPending || isConfirming}
-                    className={`px-3 py-1 rounded text-sm ${
-                      isPaused
-                        ? "bg-green-600 hover:bg-green-700 text-white"
-                        : "bg-red-600 hover:bg-red-700 text-white"
-                    } disabled:opacity-50`}
-                  >
-                    {isPending || isConfirming
-                      ? "Processing..."
-                      : isPaused
-                      ? "Unpause"
-                      : "Pause"}
-                  </button>
-
-                  {usdcAddress && (
+          {/* <div className="">
+            {owner &&
+              address &&
+              owner.toLowerCase() === address.toLowerCase() && (
+                <div className="space-y-2 pt-2">
+                  <h4 className="font-medium">Owner Actions</h4>
+                  <div className="flex gap-2">
                     <button
-                      onClick={() => withdrawTax(usdcAddress)}
+                      onClick={isPaused ? unpause : pause}
                       disabled={isPending || isConfirming}
-                      className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm disabled:opacity-50"
+                      className={`px-3 py-1 rounded text-sm ${
+                        isPaused
+                          ? "bg-green-600 hover:bg-green-700 text-white"
+                          : "bg-red-600 hover:bg-red-700 text-white"
+                      } disabled:opacity-50`}
                     >
-                      Withdraw USDC Tax
+                      {isPending || isConfirming
+                        ? "Processing..."
+                        : isPaused
+                        ? "Unpause"
+                        : "Pause"}
                     </button>
-                  )}
 
-                  {usdtAddress && (
-                    <button
-                      onClick={() => withdrawTax(usdtAddress)}
-                      disabled={isPending || isConfirming}
-                      className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm disabled:opacity-50"
-                    >
-                      Withdraw USDT Tax
-                    </button>
-                  )}
+                    {usdcAddress && (
+                      <button
+                        onClick={() => withdrawTax(usdcAddress)}
+                        disabled={isPending || isConfirming}
+                        className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm disabled:opacity-50"
+                      >
+                        Withdraw USDC Tax
+                      </button>
+                    )}
+
+                    {usdtAddress && (
+                      <button
+                        onClick={() => withdrawTax(usdtAddress)}
+                        disabled={isPending || isConfirming}
+                        className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm disabled:opacity-50"
+                      >
+                        Withdraw USDT Tax
+                      </button>
+                    )}
+                  </div>
                 </div>
+              )}
+
+
+            {(isPending ||
+              isConfirming ||
+              isSuccess ||
+              isApproving ||
+              isApprovalConfirming ||
+              isApprovalSuccess) && (
+              <div className="mt-2 p-2 bg-gray-100 rounded">
+                {isApproving && (
+                  <p className="text-sm text-blue-600">
+                    Approving USDC spending...
+                  </p>
+                )}
+                {isApprovalConfirming && (
+                  <p className="text-sm text-yellow-600">
+                    Confirming USDC approval...
+                  </p>
+                )}
+                {isApprovalSuccess && (
+                  <p className="text-sm text-green-600">
+                    USDC approval successful!
+                  </p>
+                )}
+                {isPending && (
+                  <p className="text-sm text-blue-600">
+                    Transaction pending...
+                  </p>
+                )}
+                {isConfirming && (
+                  <p className="text-sm text-yellow-600">
+                    Confirming transaction...
+                  </p>
+                )}
+                {isSuccess && (
+                  <p className="text-sm text-green-600">
+                    Transaction successful!
+                  </p>
+                )}
+                {txHash && (
+                  <p className="text-xs text-gray-600">Tx Hash: {txHash}</p>
+                )}
               </div>
             )}
-
-          {/* Transaction Status */}
-          {(isPending ||
-            isConfirming ||
-            isSuccess ||
-            isApproving ||
-            isApprovalConfirming ||
-            isApprovalSuccess) && (
-            <div className="mt-2 p-2 bg-gray-100 rounded">
-              {isApproving && (
-                <p className="text-sm text-blue-600">
-                  Approving USDC spending...
-                </p>
-              )}
-              {isApprovalConfirming && (
-                <p className="text-sm text-yellow-600">
-                  Confirming USDC approval...
-                </p>
-              )}
-              {isApprovalSuccess && (
-                <p className="text-sm text-green-600">
-                  USDC approval successful!
-                </p>
-              )}
-              {isPending && (
-                <p className="text-sm text-blue-600">Transaction pending...</p>
-              )}
-              {isConfirming && (
-                <p className="text-sm text-yellow-600">
-                  Confirming transaction...
-                </p>
-              )}
-              {isSuccess && (
-                <p className="text-sm text-green-600">
-                  Transaction successful!
-                </p>
-              )}
-              {txHash && (
-                <p className="text-xs text-gray-600">Tx Hash: {txHash}</p>
-              )}
-            </div>
-          )}
+          </div> */}
         </div>
       </div>
     );
   }
 
-  return <ConnectButton client={client} chain={baseSepolia} />;
+  return (
+    <div className="!w-full">
+      <ConnectButton
+        client={client}
+        chain={baseSepolia}
+        connectButton={{
+          label: "Connect Wallet",
+        }}
+        theme={darkTheme({
+          colors: {
+            primaryButtonBg: "#94C294",
+            primaryButtonText: "white",
+          },
+        })}
+      />
+    </div>
+  );
 }

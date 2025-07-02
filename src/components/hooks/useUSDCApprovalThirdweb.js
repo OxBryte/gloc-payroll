@@ -8,6 +8,7 @@ import { getContract, prepareContractCall } from "thirdweb";
 import { contractAddress } from "../constants/contractABI.js";
 import { client } from "../../client.js";
 import { baseSepolia } from "thirdweb/chains";
+import toast from "react-hot-toast";
 
 export function useUSDCApprovalThirdweb() {
   const activeAccount = useActiveAccount();
@@ -56,12 +57,7 @@ export function useUSDCApprovalThirdweb() {
 
     try {
       setError(null);
-
-      console.log("Approving USDC spending with Thirdweb...");
-      console.log("Amount to approve:", amount.toString());
-      console.log("Contract address:", contractAddress);
-      console.log("User address:", activeAccount.address);
-
+      setIsApprovalConfirming(true);
       // Prepare contract call
       const transaction = prepareContractCall({
         contract: usdcContract,
@@ -75,7 +71,7 @@ export function useUSDCApprovalThirdweb() {
         onSuccess: (result) => {
           setApprovalTxHash(result.transactionHash);
           setIsApprovalConfirming(true);
-
+          toast.success("USDC approval successful");
           console.log("USDC approval successful:", result);
 
           setIsApprovalConfirming(false);
@@ -88,11 +84,13 @@ export function useUSDCApprovalThirdweb() {
           console.error("Failed to approve USDC spending:", error);
           setIsApprovalConfirming(false);
           setError(error.message || "Approval failed");
+          toast.error(error?.message);
         },
       });
     } catch (error) {
       console.error("Error preparing approval transaction:", error);
       setError(error.message || "Failed to prepare approval transaction");
+      toast.error(error?.message);
     }
   };
 
