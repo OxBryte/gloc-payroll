@@ -78,3 +78,24 @@ export const exportEmployeesToCSV = (
   link.click();
   document.body.removeChild(link);
 };
+
+// utility function to convert USD salary to USDC BigNumber (6 decimals)
+export const convertSalaryToUSDC = (salaryUSD) => {
+  // USDC has 6 decimals, so multiply by 10^6
+  const usdcAmount = Math.floor(salaryUSD * 1000000);
+  return BigInt(usdcAmount);
+};
+
+// utility function to create payment array for smart contract
+export const createPaymentArray = (selectedEmployees) => {
+  return selectedEmployees.map((employee) => ({
+    recipient: employee.address,
+    amount: convertSalaryToUSDC(employee.salary || 0),
+  }));
+};
+
+// utility function to convert tax amount to USDC BigNumber
+export const convertTaxToUSDC = (taxAmount) => {
+  const usdcTaxAmount = Math.floor(taxAmount * 1000000);
+  return BigInt(usdcTaxAmount);
+};

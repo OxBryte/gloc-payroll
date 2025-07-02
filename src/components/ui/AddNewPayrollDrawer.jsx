@@ -2,47 +2,16 @@ import React, { useMemo, useState } from "react";
 import { Check, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useGetSingleWorkspace } from "../hooks/useWorkspace";
-import { useCreatePayroll } from "../hooks/usePayroll";
 import ConnectButtons from "./ConnectButton";
-import { contractAddress } from "../constants/contractABI";
-import toast from "react-hot-toast";
-import { USDC_ABI } from "../constants/USDCAbi";
-import { useAccount } from "wagmi";
-import { useActiveAccount } from "thirdweb/react";
 
-const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
+const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [chain, setChain] = useState("");
   const [currency, setCurrency] = useState("");
 
-  const { register, getValues } = useForm();
-  const { createPayrollFn, isPending } = useCreatePayroll();
+  const { register } = useForm();
   const { singleWorkspace } = useGetSingleWorkspace(slug);
   const employees = singleWorkspace?.employees || [];
-
-  // USDC contract address - make sure this is correct for your network
-  // const usdcAddress = "0x036CbD53842c5426634e7929541eC2318f3dCF7e";
-
-  // Use Thirdweb address instead of Privy
-  const activeAccount = useActiveAccount();
-  const { address } = useAccount();
-  console.log(activeAccount?.address);
-
-  // const authenticated = !!address;
-
-  // Use Thirdweb contract hooks
-  // const { contract: usdcContract } = useContract(usdcAddress, USDC_ABI);
-  // const { mutateAsync: writeContract } = useContractWrite(
-  //   usdcContract,
-  //   "approve"
-  // );
-
-  // Use Thirdweb's useContractRead for USDC balance
-  // const { data: usdcBalance, refetch: refetchBalance } = useContractRead(
-  //   usdcContract,
-  //   "balanceOf",
-  //   [address]
-  // );
 
   // Toggle employee selection
   const toggleEmployeeSelection = (employee) => {
@@ -317,12 +286,15 @@ const AddNewPayrollDrawer = ({ setIsOpen, workspaceId, slug }) => {
               </div>
             </div>
           </div>
-          <ConnectButtons />
-          <div className="flex space-x-3">
+          <ConnectButtons
+            selectedEmployees={selectedEmployees}
+            totalTax={totalTax}
+          />
+          {/* <div className="flex space-x-3">
             <button className="flex-1 py-4 px-6 bg-c-color text-white cursor-pointer rounded-lg text-sm font-medium hover:bg-green-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed">
               Distribute
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
