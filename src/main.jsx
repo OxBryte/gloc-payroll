@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./components/context/AuthContext.jsx";
-import { baseSepolia } from "wagmi/chains";
+import { baseSepolia } from "thirdweb/chains";
 import { ThirdwebProvider } from "thirdweb/react";
 import { WagmiProvider } from "wagmi";
 import { config } from "./components/lib/wagmi.js";

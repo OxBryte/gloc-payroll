@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Check, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useGetSingleWorkspace } from "../hooks/useWorkspace";
-import ConnectButtons from "./ConnectButton";
+import ConnectButtonThirdweb from "./ConnectButtonThirdweb";
 
 const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
@@ -286,7 +286,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
               </div>
             </div>
           </div>
-          <ConnectButtons
+          <ConnectButtonThirdweb
             selectedEmployees={selectedEmployees}
             totalTax={totalTax}
           />
