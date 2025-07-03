@@ -4,6 +4,7 @@ import EmployeeAnalytics from "../components/features/Analytics/EmployeeAnalytic
 import PaymentAnalytics from "../components/features/Analytics/PaymentAnalytics";
 import TotalWorkspace from "../components/features/Analytics/TotalWorkspace";
 import HomeChart from "../components/features/HomeChart";
+import EmployeeDonutChart from "../components/features/EmployeeDonutChart";
 
 export default function Home() {
   return (
@@ -13,9 +14,10 @@ export default function Home() {
         <TotalWorkspace />
         <EmployeeAnalytics />
       </div>
-      {/* <div className="bg-white border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"> */}
-        <HomeChart />
-      {/* </div> */}
+      <HomeChart />
+      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <EmployeeDonutChart />
+      </div>
       <AllWorkspace />
     </div>
   );

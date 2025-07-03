@@ -1,17 +1,5 @@
 import React, { useMemo } from "react";
-import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Legend,
-  Rectangle,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import ReactApexChart from "react-apexcharts";
 import { useGetWorkspace } from "../hooks/useWorkspace";
 import { useQueries } from "@tanstack/react-query";
 import { getCookie } from "../lib/utils";
@@ -45,9 +33,10 @@ export default function HomeChart() {
   });
 
   const chartData = useMemo(() => {
-    if (!workspace || workspace.length === 0) return [];
+    if (!workspace || workspace.length === 0)
+      return { categories: [], series: [] };
 
-    return workspace.map((ws, idx) => {
+    const workspaceData = workspace.map((ws, idx) => {
       const query = payrollQueries[idx];
       const payrollArray = query?.data?.data || [];
 
@@ -72,99 +61,227 @@ export default function HomeChart() {
         payrollCount: Array.isArray(payrollArray) ? payrollArray.length : 0,
       };
     });
+
+    const categories = workspaceData.map((item) => item.name);
+    const totalSalaryData = workspaceData.map((item) => item.total);
+    const totalEmployeesData = workspaceData.map((item) => item.totalEmployees);
+
+    return {
+      categories,
+      series: [
+        {
+          name: "Total Salary",
+          data: totalSalaryData,
+        },
+        {
+          name: "Total Employees",
+          data: totalEmployeesData,
+        },
+      ],
+    };
   }, [workspace, payrollQueries]);
 
-  const customTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      return (
-        <div className="bg-white p-3 border border-gray-300 rounded shadow-lg">
-          <p className="font-medium">{label}</p>
-          <p className="text-blue-600">
-            Total Salary: ${data.total.toLocaleString()}
-          </p>
-          <p className="text-green-600">
-            Total Employees: {data.totalEmployees}
-          </p>
-          <p className="text-gray-500 text-sm">
-            Payroll Records: {data.payrollCount}
-          </p>
-        </div>
-      );
-    }
-    return null;
+  const options = {
+    chart: {
+      type: "area",
+      height: 350,
+      toolbar: {
+        show: false,
+      },
+      animations: {
+        enabled: true,
+        easing: "easeinout",
+        speed: 800,
+        animateGradually: {
+          enabled: true,
+          delay: 150,
+        },
+        dynamicAnimation: {
+          enabled: true,
+          speed: 350,
+        },
+      },
+    },
+    colors: ["#3b82f6", "#10b981"],
+    stroke: {
+      curve: "smooth",
+      width: [3, 2],
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shadeIntensity: 1,
+        opacityFrom: 0.7,
+        opacityTo: 0.1,
+        stops: [0, 100],
+      },
+    },
+    grid: {
+      borderColor: "#f1f5f9",
+      strokeDashArray: 5,
+      xaxis: {
+        lines: {
+          show: true,
+        },
+      },
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
+    markers: {
+      size: 6,
+      strokeWidth: 2,
+      strokeColors: "#ffffff",
+      fillColors: ["#3b82f6", "#10b981"],
+      hover: {
+        size: 8,
+      },
+    },
+    xaxis: {
+      categories: chartData.categories,
+      labels: {
+        style: {
+          colors: "#64748b",
+          fontSize: "12px",
+          fontFamily: "Inter, sans-serif",
+        },
+      },
+      axisBorder: {
+        color: "#e2e8f0",
+      },
+      axisTicks: {
+        color: "#e2e8f0",
+      },
+    },
+    yaxis: [
+      {
+        labels: {
+          formatter: function (value) {
+            if (value >= 1000000) {
+              return `$${(value / 1000000).toFixed(1)}M`;
+            } else if (value >= 1000) {
+              return `$${(value / 1000).toFixed(0)}K`;
+            }
+            return `$${value}`;
+          },
+          style: {
+            colors: "#64748b",
+            fontSize: "12px",
+            fontFamily: "Inter, sans-serif",
+          },
+        },
+        title: {
+          text: "Salary Amount ($)",
+          style: {
+            color: "#64748b",
+            fontSize: "14px",
+            fontFamily: "Inter, sans-serif",
+          },
+        },
+      },
+      {
+        opposite: true,
+        labels: {
+          formatter: function (value) {
+            return value.toString();
+          },
+          style: {
+            colors: "#64748b",
+            fontSize: "12px",
+            fontFamily: "Inter, sans-serif",
+          },
+        },
+        title: {
+          text: "Employee Count",
+          style: {
+            color: "#64748b",
+            fontSize: "14px",
+            fontFamily: "Inter, sans-serif",
+          },
+        },
+      },
+    ],
+    tooltip: {
+      theme: "light",
+      x: {
+        show: true,
+      },
+      y: [
+        {
+          formatter: function (value) {
+            return `$${value.toLocaleString()}`;
+          },
+        },
+        {
+          formatter: function (value) {
+            return `${value} employees`;
+          },
+        },
+      ],
+      style: {
+        fontSize: "12px",
+        fontFamily: "Inter, sans-serif",
+      },
+    },
+    legend: {
+      position: "top",
+      horizontalAlign: "right",
+      fontSize: "12px",
+      fontFamily: "Inter, sans-serif",
+      markers: {
+        radius: 12,
+      },
+      itemMargin: {
+        horizontal: 10,
+        vertical: 5,
+      },
+    },
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          chart: {
+            height: 300,
+          },
+          legend: {
+            position: "bottom",
+            horizontalAlign: "center",
+          },
+        },
+      },
+    ],
   };
 
-  // Format Y-axis values
-  const formatYAxis = (value) => {
-    if (value >= 1000000) {
-      return `$${(value / 1000000).toFixed(1)}M`;
-    } else if (value >= 1000) {
-      return `$${(value / 1000).toFixed(0)}K`;
-    }
-    return `$${value}`;
-  };
-  // Format Y-axis values for employee count
-  const formatYAxisRight = (value) => {
-    return value.toString();
-  };
+  if (chartData.categories.length === 0) {
+    return (
+      <div className="w-full h-[450px] bg-white border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center">
+        <img src="/empty.svg" alt="No data" className="w-16 h-16 mb-4" />
+        <p className="text-gray-500 text-lg">No workspace data available</p>
+        <p className="text-gray-400 text-sm">Create workspaces to see trends</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full h-96 bg-white border border-gray-200 rounded-lg p-4">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={chartData}
-          margin={{
-            top: 10,
-            right: 30,
-            left: 20,
-            bottom: 0,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-          <XAxis
-            dataKey="name"
-            tick={{ fontSize: 12 }}
-            tickLine={{ stroke: "#e0e0e0" }}
-          />
-          <YAxis
-            yAxisId="left"
-            orientation="left"
-            tickFormatter={formatYAxis}
-            tick={{ fontSize: 12 }}
-            tickLine={{ stroke: "#e0e0e0" }}
-          />
-          <YAxis
-            yAxisId="right"
-            orientation="right"
-            tickFormatter={formatYAxisRight}
-            tick={{ fontSize: 12 }}
-            tickLine={{ stroke: "#e0e0e0" }}
-          />
-          <Tooltip content={customTooltip} />
-          <Legend />
-                  <Bar
-            yAxisId="left"
-            type="monotone"
-            dataKey="total"
-            stroke="#3b82f6"
-            fill="#3b82f6"
-            fillOpacity={0.6}
-            strokeWidth={2}
-            activeBar={<Rectangle fill="pink" stroke="blue" />}
-          />
-                  <Bar
-            yAxisId="right"
-            type="monotone"
-            dataKey="totalEmployees"
-            stroke="#3b82f6"
-            fill="#3b82f6"
-            fillOpacity={0.6}
-            strokeWidth={2}
-            activeBar={<Rectangle fill="gold" stroke="purple" />}
-          />
-        </BarChart>
-      </ResponsiveContainer>
+    <div className="w-full h-[450px] bg-white border border-gray-200 rounded-lg p-4">
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold text-gray-800">
+          Workspace Overview
+        </h3>
+        <p className="text-sm text-gray-500">
+          Total salary and employee count across workspaces
+        </p>
+      </div>
+      <div className="h-[350px]">
+        <ReactApexChart
+          options={options}
+          series={chartData.series}
+          type="area"
+          height="100%"
+        />
+      </div>
     </div>
   );
 }

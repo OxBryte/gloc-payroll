@@ -6,6 +6,7 @@ import { IoPeopleOutline, IoWalletOutline } from "react-icons/io5";
 import { useGetPayroll } from "../../hooks/usePayroll";
 import Spinner from "../../ui/Spinner";
 import { ChevronDown } from "lucide-react";
+import MonthlyPayrollChartApex from "../MonthlyPayrollChartApex";
 
 export default function Overview() {
   const [selectedMonth, setSelectedMonth] = useState("all");
@@ -207,7 +208,10 @@ export default function Overview() {
             <p className="text-sm font-medium text-black/50">Total Employees</p>
           </div> */}
         </div>
-        <div className="bg-c-color-2 border border-gray-200 rounded-lg h-[350px] space-y-3 w-full"></div>
+        <MonthlyPayrollChartApex
+          payrolls={payrolls}
+          isLoading={isLoadingPayroll}
+        />
       </div>
     </>
   );
