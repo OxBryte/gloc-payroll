@@ -52,9 +52,7 @@ export default function PayrollTable({ payrolls }) {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Currency
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                  Status
-                </th>
+
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Gross Amount
                 </th>
@@ -66,6 +64,9 @@ export default function PayrollTable({ payrolls }) {
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Date (Month)
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  Status
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   TX Hash
@@ -104,19 +105,7 @@ export default function PayrollTable({ payrolls }) {
                       {payroll?.currency}
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div
-                      className={`text-sm font-medium text-gray-700 capitalize px-3 py-1 rounded-lg ${
-                        payroll?.status === "pending"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : payroll?.status === "completed"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {payroll?.status}
-                    </div>
-                  </td>
+
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-700 capitalize">
                       ${formatNumberWithCommas(payroll?.totalSalary)}
@@ -135,6 +124,19 @@ export default function PayrollTable({ payrolls }) {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                     <div className="text-sm font-medium text-gray-700">
                       {moment(payroll?.createdAt).format("LL")}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div
+                      className={`text-sm font-medium text-gray-700 capitalize px-3 py-1 rounded-lg ${
+                        payroll?.status === "pending"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : payroll?.status === "completed"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      {payroll?.status}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
