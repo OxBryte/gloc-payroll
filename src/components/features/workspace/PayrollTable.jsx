@@ -1,10 +1,13 @@
 import { Search } from "lucide-react";
 import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { formatNumberWithCommas } from "../../lib/utils";
 import moment from "moment";
 
 export default function PayrollTable({ payrolls }) {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+  const { slug } = useParams();
 
   const filteredPayroll = payrolls.filter((payroll) => {
     const matchesSearch =
@@ -145,9 +148,16 @@ export default function PayrollTable({ payrolls }) {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm bg-c-color rounded-lg px-4 py-2.5 font-medium text-white cursor-pointer hover:bg-c-bg transition-colors duration-200">
-                      View reciept
-                    </div>
+                    <button
+                      onClick={() =>
+                        navigate(
+                          `/workspace/${slug}/payroll/invoice?tx=${payroll?.tx}`
+                        )
+                      }
+                      className="text-sm bg-c-color rounded-lg px-4 py-2.5 font-medium text-white cursor-pointer hover:bg-c-bg transition-colors duration-200"
+                    >
+                      View Invoice
+                    </button>
                   </td>
                 </tr>
               ))}

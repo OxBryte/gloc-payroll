@@ -16,6 +16,7 @@ import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Subscriptions from "./pages/Subscriptions";
 import Jobs from "./pages/Jobs";
+import InvoicePage from "./pages/InvoicePage";
 
 function App() {
   const NavigationLoader = () => {
@@ -51,7 +52,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
-              <Route path="/forget-password" element={<ForgetPassword />} />
+            <Route path="/forget-password" element={<ForgetPassword />} />
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<AppLayout />}>
@@ -61,6 +62,10 @@ function App() {
               <Route
                 path="/workspace/:slug/:id"
                 element={<SingleWorkspace />}
+              />
+              <Route
+                path="/workspace/:slug/:id/invoice"
+                element={<InvoicePage />}
               />
               <Route path="/settings" element={<Settings />} />
               <Route path="/subscription" element={<Subscriptions />} />

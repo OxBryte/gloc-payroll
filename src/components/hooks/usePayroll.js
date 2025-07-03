@@ -4,6 +4,7 @@ import {
   createPayroll,
   getAllPayroll,
   getPayroll,
+  getPayrollByTx,
 } from "../services/payrollApi";
 
 export function useGetPayroll(workspaceId) {
@@ -75,5 +76,16 @@ export const useGetAllPayroll = () => {
     isLoadingAllPayroll,
     allPayrolls: payroll?.data,
     error,
+  };
+};
+
+export const usePayroll = () => {
+  const fetchPayrollByTx = async (txHash) => {
+    const response = await getPayrollByTx(txHash);
+    return response.data;
+  };
+
+  return {
+    getPayrollByTx: fetchPayrollByTx,
   };
 };

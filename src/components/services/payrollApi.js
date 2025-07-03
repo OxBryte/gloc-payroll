@@ -81,3 +81,23 @@ export async function createPayroll(body) {
     );
   }
 }
+
+export async function getPayrollByTx(txHash) {
+  try {
+    // Get token from cookies
+    const token = getCookie("token"); // or whatever your cookie name is
+
+    const { data } = await axios.get(`${apiURL}payroll/tx/${txHash}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error while fetching payroll by transaction hash", error);
+    throw new Error(
+      error.response?.data?.message ||
+        "An error occurred while fetching payroll data"
+    );
+  }
+}
