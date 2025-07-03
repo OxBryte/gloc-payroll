@@ -178,11 +178,11 @@ export default function Overview() {
               <Spinner />
             ) : (
               <p className="font-bold text-white text-[46px]">
-                ${formatNumberWithCommas(currentStats.totalSalary)}
+                ${formatNumberWithCommas(currentStats?.totalSalary)}
               </p>
             )}
             <p className="text-xs text-white/80">
-              Excluding tax - ${formatNumberWithCommas(currentStats.totalTax)}
+              Excluding tax - ${currentStats?.totalTax?.toFixed(2)}
             </p>
           </div>
           <div className="w-full min-h-[180px] h-auto rounded-lg bg-c-color-2 border border-gray-200 flex flex-col items-left gap-3 p-5">
@@ -214,7 +214,6 @@ export default function Overview() {
           payrolls={payrolls}
           isLoading={isLoadingPayroll}
         />
-        
       </div>
     </>
   );
