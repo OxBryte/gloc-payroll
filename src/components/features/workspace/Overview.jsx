@@ -7,6 +7,7 @@ import { useGetPayroll } from "../../hooks/usePayroll";
 import Spinner from "../../ui/Spinner";
 import { ChevronDown } from "lucide-react";
 import MonthlyPayrollChartApex from "../MonthlyPayrollChartApex";
+import MonthlyPayrollColumnChart from "../MonthlyPayrollColumnChart";
 
 export default function Overview() {
   const [selectedMonth, setSelectedMonth] = useState("all");
@@ -208,10 +209,15 @@ export default function Overview() {
             <p className="text-sm font-medium text-black/50">Total Employees</p>
           </div> */}
         </div>
-        <MonthlyPayrollChartApex
+        {/* <MonthlyPayrollChartApex
+          payrolls={payrolls}
+          isLoading={isLoadingPayroll}
+        /> */}
+        <MonthlyPayrollColumnChart
           payrolls={payrolls}
           isLoading={isLoadingPayroll}
         />
+        
       </div>
     </>
   );
