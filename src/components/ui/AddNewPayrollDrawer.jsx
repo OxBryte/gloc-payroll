@@ -113,7 +113,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                     Chain
                   </label>
                   <div className="flex flex-wrap gap-3 items-center">
-                    <button
+                    <div
                       className={`border ${
                         chain === "arbitrum"
                           ? "border-c-color bg-c-color/20"
@@ -125,8 +125,8 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                     >
                       <img src="/arb.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Arbitrum</p>
-                    </button>
-                    <button
+                    </div>
+                    <div
                       className={`border ${
                         chain === "base"
                           ? "border-c-color bg-c-color/20"
@@ -136,8 +136,8 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                     >
                       <img src="/base.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Base</p>
-                    </button>
-                    <button
+                    </div>
+                    <div
                       className={`border ${
                         chain === "optimism"
                           ? "border-c-color bg-c-color/20"
@@ -149,8 +149,8 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                     >
                       <img src="/op.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Optimism</p>
-                    </button>
-                    <button
+                    </div>
+                    <div
                       className={`border ${
                         chain === "celo"
                           ? "border-c-color bg-c-color/20"
@@ -162,8 +162,8 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                     >
                       <img src="/celo.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Celo</p>
-                    </button>
-                    <button
+                    </div>
+                    <div
                       className={`border ${
                         chain === "starknet"
                           ? "border-c-color bg-c-color/20"
@@ -175,7 +175,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                     >
                       <img src="/starknet.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Starknet</p>
-                    </button>
+                    </div>
                   </div>
                 </div>
                 <div className="space-y-2 w-full">
