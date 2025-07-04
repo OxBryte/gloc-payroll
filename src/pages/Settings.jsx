@@ -18,11 +18,11 @@ const settingsData = [
     name: "Security",
     component: <Security />,
   },
-  {
-    id: 4,
-    name: "Preferences",
-    component: "",
-  },
+  // {
+  //   id: 4,
+  //   name: "Preferences",
+  //   component: "",
+  // },
 ];
 
 export default function Settings() {
