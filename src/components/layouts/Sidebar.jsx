@@ -53,7 +53,7 @@ export default function Sidebar() {
 
   return (
     <div className="hidden md:block text-white">
-      <div className="bg-c-bg w-[16rem] sticky top-0 border-r border-r-white/10 h-screen">
+      <div className="bg-c-bg w-[16rem] sticky top-0 border-r border-r-white/10 h-screen flex flex-col justify-between">
         <div className="w-full space-y-2">
           <div className="py-5 px-3 flex items-center gap-2 border-b border-b-white/10 h-[85.12px]">
             <div
@@ -123,6 +123,17 @@ export default function Sidebar() {
             })}
           </div>
         </div>
+        {/* <div className="p-3">
+          <div className="flex flex-col gap-3 w-full bg-c-color p-4 items-center rounded-lg cursor-pointer">
+            <p className="font-bold font-bricolage text-2xl">Gloc AI</p>
+            <p className="text-sm font-light text-center">
+              Your AI-powered workspace assistant
+            </p>
+            <div className="flex justify-center items-center text-c-bg w-full px-3 py-3 text-sm font-light cursor-pointer rounded-lg hover:opacity-60 bg-white">
+              <p className="text-sm font-medium">Get Started</p>
+            </div>
+          </div>
+        </div> */}
       </div>
     </div>
   );
