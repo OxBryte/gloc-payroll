@@ -118,8 +118,9 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                         chain === "arbitrum"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
-                      onClick={() => setChain("arbitrum")}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50"`}
+                      title="Coming soon"
+                      style={{ pointerEvents: "none" }}
                     >
                       <img src="/arb.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Arbitrum</p>
@@ -129,7 +130,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                         chain === "base"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer"`}
                       onClick={() => setChain("base")}
                     >
                       <img src="/base.svg" alt="" className="w-6" />
@@ -140,8 +141,9 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                         chain === "optimism"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
-                      onClick={() => setChain("optimism")}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50"`}
+                      title="Coming soon"
+                      style={{ pointerEvents: "none" }}
                     >
                       <img src="/op.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Optimism</p>
@@ -151,8 +153,9 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                         chain === "celo"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
-                      onClick={() => setChain("celo")}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50"`}
+                      title="Coming soon"
+                      style={{ pointerEvents: "none" }}
                     >
                       <img src="/celo.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Celo</p>
@@ -162,8 +165,9 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                         chain === "starknet"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
-                      onClick={() => setChain("starknet")}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50"`}
+                      title="Coming soon"
+                      style={{ pointerEvents: "none" }}
                     >
                       <img src="/starknet.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Starknet</p>
@@ -180,7 +184,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                         currency === "USDC"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer"`}
                       onClick={() => setCurrency("USDC")}
                     >
                       <img src="/usdc.svg" alt="" className="w-6" />
@@ -191,8 +195,9 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                         currency === "USDT"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
-                      onClick={() => setCurrency("USDT")}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50"`}
+                      title="Coming soon"
+                      style={{ pointerEvents: "none" }}
                     >
                       <img src="/usdt.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">USDT</p>
