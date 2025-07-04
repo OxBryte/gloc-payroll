@@ -8,19 +8,17 @@ import WorkspaceCard from "./WorkspaceCard";
 export default function AllWorkspace() {
   const [isOpen, setIsOpen] = useState(false);
   const { workspace, isLoadingWorkspace, error } = useGetWorkspace();
-  // console.log(workspace);
 
-   if (error) {
-     return (
-       <div className="w-full h-full min-h-[70dvh] flex flex-col gap-3 items-center justify-center">
-         <img src="/error.svg" alt="" className="w-36" />
-         <p className="text-gray-500 text-center max-w-[230px]">
-           {error?.message}
-         </p>
-       </div>
-     );
-   }
-
+  if (error) {
+    return (
+      <div className="w-full h-full min-h-[70dvh] flex flex-col gap-3 items-center justify-center">
+        <img src="/error.svg" alt="" className="w-36" />
+        <p className="text-gray-500 text-center max-w-[230px]">
+          {error?.message}
+        </p>
+      </div>
+    );
+  }
 
   const sortedWorkspace = workspace
     ?.slice()
@@ -50,7 +48,9 @@ export default function AllWorkspace() {
                 <img src="empty.svg" alt="" className="w-20" />
                 <p className="text-gray-500 text-sm font-light">
                   No workspace yet!
-                </p>
+                  </p>
+                  <Link to="/workspace">
+                  </Link>
                 <button
                   className="bg-c-color hover:bg-c-bg px-6 py-2.5 text-white rounded-lg cursor-pointer"
                   onClick={() => setIsOpen(true)}
