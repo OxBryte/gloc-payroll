@@ -114,13 +114,16 @@ export const useLogout = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const logoutFn = () => {
+  const logoutFn = async () => {
     //remove token from local storage
     localStorage.removeItem("token");
     document.cookie = "token=; path=/; max-age=0; Secure; SameSite=Strict;";
 
     //clear user data from global state
     queryClient.setQueryData(["user"], null);
+
+    // Invalidate all queries
+    await queryClient.invalidateQueries();
 
     //redirect to login page
     navigate("/login");
