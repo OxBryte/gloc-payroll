@@ -113,65 +113,69 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                     Chain
                   </label>
                   <div className="flex flex-wrap gap-3 items-center">
-                    <div
+                    <button
                       className={`border ${
                         chain === "arbitrum"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50"`}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50`}
                       title="Coming soon"
                       style={{ pointerEvents: "none" }}
+                      disabled
                     >
                       <img src="/arb.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Arbitrum</p>
-                    </div>
-                    <div
+                    </button>
+                    <button
                       className={`border ${
                         chain === "base"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer"`}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
                       onClick={() => setChain("base")}
                     >
                       <img src="/base.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Base</p>
-                    </div>
-                    <div
+                    </button>
+                    <button
                       className={`border ${
                         chain === "optimism"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50"`}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50`}
                       title="Coming soon"
                       style={{ pointerEvents: "none" }}
+                      disabled
                     >
                       <img src="/op.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Optimism</p>
-                    </div>
-                    <div
+                    </button>
+                    <button
                       className={`border ${
                         chain === "celo"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50"`}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50`}
                       title="Coming soon"
                       style={{ pointerEvents: "none" }}
+                      disabled
                     >
                       <img src="/celo.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Celo</p>
-                    </div>
-                    <div
+                    </button>
+                    <button
                       className={`border ${
                         chain === "starknet"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50"`}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50`}
                       title="Coming soon"
                       style={{ pointerEvents: "none" }}
+                      disabled
                     >
                       <img src="/starknet.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">Starknet</p>
-                    </div>
+                    </button>
                   </div>
                 </div>
                 <div className="space-y-2 w-full">
@@ -184,7 +188,7 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                         currency === "USDC"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer"`}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-pointer`}
                       onClick={() => setCurrency("USDC")}
                     >
                       <img src="/usdc.svg" alt="" className="w-6" />
@@ -195,9 +199,10 @@ const AddNewPayrollDrawer = ({ setIsOpen, slug }) => {
                         currency === "USDT"
                           ? "border-c-color bg-c-color/20"
                           : "border-gray-200"
-                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50"`}
+                      } p-3 rounded-lg flex items-center gap-2 cursor-not-allowed opacity-50`}
                       title="Coming soon"
                       style={{ pointerEvents: "none" }}
+                      disabled
                     >
                       <img src="/usdt.svg" alt="" className="w-6" />
                       <p className="text-sm font-medium">USDT</p>
