@@ -4,12 +4,10 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../components/hooks/useAuth";
 import { getCookie } from "../components/lib/utils";
-import { usePrivy } from "@privy-io/react-auth";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { login, getAccessToken } = usePrivy();
 
   useEffect(() => {
     const token = getCookie("token");

@@ -4,8 +4,6 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignup } from "../components/hooks/useAuth";
 import { getCookie } from "../components/lib/utils";
-import Connect from "../components/ui/ConnectButton";
-import { usePrivy } from "@privy-io/react-auth";
 
 export default function SignUp() {
   const [imageSrc, setImageSrc] = useState(null);
@@ -16,10 +14,6 @@ export default function SignUp() {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
-  const { login, authenticated, getAccessToken } = usePrivy();
-
-  const accessToken = getAccessToken();
-  console.log("Access Token:", accessToken);
 
   useEffect(() => {
     const token = getCookie("token");
