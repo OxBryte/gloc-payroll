@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
@@ -51,15 +51,15 @@ const CreatePayroll = () => {
   }, [totalSalary, taxRate]);
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-full mx-auto">
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
-        <button
+        <div
+          className="w-fit border border-gray-200 p-3 rounded-lg hover:bg-white cursor-pointer"
           onClick={() => navigate(`/workspace/${slug}/payroll`)}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
         >
-          <ArrowLeft className="w-5 h-5" />
-        </button>
+          <ChevronLeft size={20} />
+        </div>
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
             Create New Payroll
