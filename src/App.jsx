@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Settings from "./pages/Settings";
 import Workspace from "./pages/Workspace";
 import SingleWorkspace from "./pages/SingleWorkspace";
+import CreatePayroll from "./pages/CreatePayroll";
 import { useEffect, useState } from "react";
 import AuthLayout from "./components/layouts/AuthLayout";
 import SignUp from "./pages/SignUp";
@@ -66,6 +67,10 @@ function App() {
               <Route
                 path="/workspace/:slug/:id/invoice"
                 element={<InvoicePage />}
+              />
+              <Route
+                path="/workspace/:slug/payroll/create"
+                element={<CreatePayroll />}
               />
               <Route path="/settings" element={<Settings />} />
               <Route path="/subscription" element={<Subscriptions />} />
