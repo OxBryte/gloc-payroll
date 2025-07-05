@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { GoKebabHorizontal } from "react-icons/go";
-import { Link } from "react-router-dom";
 import Drawer from "../ui/Drawer";
 import { useGetWorkspace } from "../hooks/useWorkspace";
 import WorkspaceCard from "./WorkspaceCard";
@@ -48,9 +46,7 @@ export default function AllWorkspace() {
                 <img src="empty.svg" alt="" className="w-20" />
                 <p className="text-gray-500 text-sm font-light">
                   No workspace yet!
-                  </p>
-                  <Link to="/workspace">
-                  </Link>
+                </p>
                 <button
                   className="bg-c-color hover:bg-c-bg px-6 py-2.5 text-white rounded-lg cursor-pointer"
                   onClick={() => setIsOpen(true)}
