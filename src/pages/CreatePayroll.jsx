@@ -301,7 +301,7 @@ const CreatePayroll = () => {
         </div>
 
         {/* Right Column - Summary & Payment */}
-        <div className="space-y-6 sticky top-[100px] max-w-[400px] w-full h-full">
+        <div className="space-y-6 md:sticky top-[100px] max-w-[400px] w-full h-full">
           {/* Summary Card */}
           <div className="bg-white rounded-lg border border-gray-200 p-6">
             <h2 className="text-lg font-semibold mb-4">Payroll Summary</h2>
