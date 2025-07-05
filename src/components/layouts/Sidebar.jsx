@@ -2,10 +2,9 @@ import React from "react";
 import { GoRocket } from "react-icons/go";
 import { LuHandshake } from "react-icons/lu";
 import { RiDashboardLine, RiSettingsLine } from "react-icons/ri";
-import { Link, matchPath, useLocation } from "react-router-dom";
-import { RxCaretSort } from "react-icons/rx";
+import { Link, useLocation } from "react-router-dom";
 import { Briefcase } from "lucide-react";
-import { useGetWorkspace } from "../hooks/useWorkspace";
+import WorkspaceSelector from "../ui/WorkspaceSelector";
 
 const data = [
   {
@@ -51,8 +50,6 @@ const data2 = [
 
 export default function Sidebar() {
   const { pathname } = useLocation();
-  const { workspace } = useGetWorkspace();
-  console.log(workspace);
 
   return (
     <div className="hidden md:block text-white">
@@ -65,80 +62,43 @@ export default function Sidebar() {
               <img src="/gloc-logo-3.svg" alt="" className="w-18" />
             </div>
           </div>
-          <div className="px-3">
-            <div className="w-full p-2 border border-white/10 flex items-center justify-between gap-4 rounded-lg">
-              <div className="flex gap-2 items-center">
-                <div className="w-8 h-8 rounded-lg bg-white/20"></div>
-                <p className="text-sm font-light">
-                  {workspace?.name || "Workspace"}
-                </p>
-              </div>
-              <RxCaretSort />
-            </div>
-          </div>
 
-          <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
+          {/* Workspace Selector */}
+          <WorkspaceSelector />
+
+          <div className="py-3 px-3 flex flex-col gap-3 w-full border-b border-b-white/10">
             {data.map((item) => {
-              const match = matchPath(
-                { path: item.link, end: item.link === "/" },
-                pathname
-              );
-              const isActive = Boolean(match);
+              const isActive = pathname === item.link;
               return (
                 <Link to={item.link} key={item.id} className="flex">
-                  {/* left indicator only if active */}
                   <div
-                    className={`w-[5px] h-[50px] ${
-                      isActive && "bg-c-color"
-                    } rounded-r-lg`}
-                  ></div>
-
-                  <div
-                    className={`flex items-center w-full h-[50px] px-3 ml-2 text-sm font-light cursor-pointer rounded-lg hover:opacity-60
+                    className={`flex flex-col gap-2 items-center w-full py-2 px-3 text-sm font-light cursor-pointer rounded-lg hover:opacity-60
                       ${isActive ? "bg-c-color text-white" : ""}`}
                   >
                     {item.icon}
-                    <span className="ml-2">{item.name}</span>
+                    <span className="">{item.name}</span>
                   </div>
                 </Link>
               );
             })}
           </div>
-          <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
+          <div className="py-3 px-3 flex flex-col gap-3 w-full border-b border-b-white/10">
             {data2.map((item) => {
               const isActive = pathname === item.link;
               return (
                 <Link to={item.link} key={item.id} className="flex">
-                  {/* left indicator only if active */}
                   <div
-                    className={`w-[5px] h-[50px] ${
-                      isActive && "bg-c-color"
-                    } rounded-r-lg`}
-                  ></div>
-
-                  <div
-                    className={`flex items-center w-full h-[50px] px-3 ml-2 text-sm font-light cursor-pointer rounded-lg hover:opacity-60
+                    className={`flex flex-col gap-2 items-center w-full py-2 px-3 text-sm font-light cursor-pointer rounded-lg hover:opacity-60
                       ${isActive ? "bg-c-color" : ""}`}
                   >
                     {item.icon}
-                    <span className="ml-2">{item.name}</span>
+                    <span className="">{item.name}</span>
                   </div>
                 </Link>
               );
             })}
           </div>
         </div>
-        {/* <div className="p-3">
-          <div className="flex flex-col gap-3 w-full bg-c-color p-4 items-center rounded-lg cursor-pointer">
-            <p className="font-bold font-bricolage text-2xl">Gloc AI</p>
-            <p className="text-sm font-light text-center">
-              Your AI-powered workspace assistant
-            </p>
-            <div className="flex justify-center items-center text-c-bg w-full px-3 py-3 text-sm font-light cursor-pointer rounded-lg hover:opacity-60 bg-white">
-              <p className="text-sm font-medium">Get Started</p>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );

@@ -165,7 +165,7 @@ export default function ResetPassword() {
           onClick={() => onSubmit()}
           disabled={isPending}
         >
-          {isPending ? "Sending..." : " Send Reset Link"}
+          {isPending ? "Sending..." : "Reset Password"}
         </button>
       </div>
     </div>
