@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from "react";
-import { ArrowLeft, ChevronLeft } from "lucide-react";
+import { ArrowLeft, ChevronLeft, Check } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 import ConnectButtonThirdweb from "../components/ui/ConnectButtonThirdweb";
+import { truncate } from "../components/lib/utils";
 
 const CreatePayroll = () => {
   const navigate = useNavigate();
@@ -224,7 +225,37 @@ const CreatePayroll = () => {
 
           {/* Employee Selection */}
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h2 className="text-lg font-semibold mb-4">Select Employees</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold">Select Employees</h2>
+              <div
+                onClick={() => {
+                  if (
+                    selectedEmployees?.length === employees?.length &&
+                    employees?.length > 0
+                  ) {
+                    setSelectedEmployees([]);
+                  } else {
+                    setSelectedEmployees(employees ? [...employees] : []);
+                  }
+                }}
+                className="flex items-center gap-2 cursor-pointer text-sm text-gray-600 hover:text-gray-800"
+              >
+                <div
+                  className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
+                    selectedEmployees?.length === employees?.length &&
+                    employees?.length > 0
+                      ? "bg-blue-500 border-blue-500"
+                      : "border-gray-300"
+                  }`}
+                >
+                  {selectedEmployees?.length === employees?.length &&
+                    employees?.length > 0 && (
+                      <Check className="w-3 h-3 text-white" />
+                    )}
+                </div>
+                <span className="text-sm">Select All</span>
+              </div>
+            </div>
             <div className="space-y-3">
               {employees.length === 0 ? (
                 <p className="text-gray-500 text-center py-8">
@@ -243,17 +274,13 @@ const CreatePayroll = () => {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
-                          <img
-                            src={employee.avatar || "/default-avatar.png"}
-                            alt={employee.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
                         <div>
                           <p className="font-medium">{employee.name}</p>
                           <p className="text-sm text-gray-600">
                             {employee.role}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            {truncate(employee.address, 24)}
                           </p>
                         </div>
                       </div>
