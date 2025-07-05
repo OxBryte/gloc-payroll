@@ -66,9 +66,9 @@ export default function Sidebar() {
               <img src="/gloc-logo-3.svg" alt="" className="w-18" />
             </div>
           </div>
-          <div className="">
+          {/* <div className="">
             <WorkspaceSelector />
-          </div>
+          </div> */}
 
           <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
             {data.map((item) => {
