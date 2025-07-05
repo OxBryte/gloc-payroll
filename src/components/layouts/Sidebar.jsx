@@ -5,6 +5,7 @@ import { RiDashboardLine, RiSettingsLine } from "react-icons/ri";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { RxCaretSort } from "react-icons/rx";
 import { Briefcase } from "lucide-react";
+import { useGetWorkspace } from "../hooks/useWorkspace";
 
 const data = [
   {
@@ -50,6 +51,8 @@ const data2 = [
 
 export default function Sidebar() {
   const { pathname } = useLocation();
+  const { workspace } = useGetWorkspace();
+  console.log(workspace);
 
   return (
     <div className="hidden md:block text-white">
@@ -62,15 +65,17 @@ export default function Sidebar() {
               <img src="/gloc-logo-3.svg" alt="" className="w-18" />
             </div>
           </div>
-          {/* <div className="px-3">
+          <div className="px-3">
             <div className="w-full p-2 border border-white/10 flex items-center justify-between gap-4 rounded-lg">
               <div className="flex gap-2 items-center">
                 <div className="w-8 h-8 rounded-lg bg-white/20"></div>
-              <p className="text-sm font-light">Workspace</p>
+                <p className="text-sm font-light">
+                  {workspace?.name || "Workspace"}
+                </p>
               </div>
               <RxCaretSort />
             </div>
-          </div> */}
+          </div>
 
           <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
             {data.map((item) => {
