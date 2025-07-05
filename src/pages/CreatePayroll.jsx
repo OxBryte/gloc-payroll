@@ -71,7 +71,7 @@ const CreatePayroll = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative">
         {/* Left Column - Form */}
         <div className="space-y-6">
           <div className="bg-white rounded-lg border border-gray-200 p-6">
@@ -301,7 +301,7 @@ const CreatePayroll = () => {
         </div>
 
         {/* Right Column - Summary & Payment */}
-        <div className="space-y-6">
+        <div className="space-y-6 sticky top-40">
           {/* Summary Card */}
           <div className="bg-white rounded-lg border border-gray-200 p-6">
             <h2 className="text-lg font-semibold mb-4">Payroll Summary</h2>
