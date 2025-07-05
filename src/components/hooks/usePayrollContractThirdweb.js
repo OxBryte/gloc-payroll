@@ -32,8 +32,6 @@ export function usePayrollContractThirdweb(payrollData = {}) {
     method: "function USDC() view returns (address)",
   });
 
-  console.log(usdcAddress);
-
   const { data: usdtAddress, isLoading: isLoadingUSDT } = useReadContract({
     contract,
     method: "function USDT() view returns (address)",
