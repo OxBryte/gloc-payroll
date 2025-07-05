@@ -71,9 +71,9 @@ const CreatePayroll = () => {
         </div>
       </div>
 
-      <div className="flex gap-8 relative h-full">
+      <div className="flex flex-col md:flex-row gap-8 relative h-full">
         {/* Left Column - Form */}
-        <div className="space-y-6">
+        <div className="space-y-6 w-full">
           <div className="bg-white rounded-lg border border-gray-200 p-6">
             <h2 className="text-lg font-semibold mb-4">Payroll Details</h2>
 
@@ -301,7 +301,7 @@ const CreatePayroll = () => {
         </div>
 
         {/* Right Column - Summary & Payment */}
-        <div className="space-y-6 sticky top-[200px] h-full">
+        <div className="space-y-6 sticky top-[100px] max-w-[400px] w-full h-full">
           {/* Summary Card */}
           <div className="bg-white rounded-lg border border-gray-200 p-6">
             <h2 className="text-lg font-semibold mb-4">Payroll Summary</h2>
@@ -322,7 +322,7 @@ const CreatePayroll = () => {
                   ${totalTax.toLocaleString()}
                 </span>
               </div>
-              <hr className="my-3" />
+              <hr className="my-3 border-gray-200" />
               <div className="flex justify-between text-lg font-semibold">
                 <span>Total Amount:</span>
                 <span>${(totalSalary + totalTax).toLocaleString()}</span>
