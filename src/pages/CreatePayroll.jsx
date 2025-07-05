@@ -275,7 +275,9 @@ const CreatePayroll = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div>
-                          <p className="font-medium">{employee.name}</p>
+                          <p className="font-medium capitalize">
+                            {employee.name}
+                          </p>
                           <p className="text-sm text-gray-600">
                             {employee.role}
                           </p>

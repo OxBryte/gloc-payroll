@@ -6,6 +6,7 @@ import {
   getPayroll,
   getPayrollByTx,
 } from "../services/payrollApi";
+import { useNavigate } from "react-router-dom";
 
 export function useGetPayroll(workspaceId) {
   const {
@@ -43,6 +44,7 @@ export function useGetPayroll(workspaceId) {
 
 export const useCreatePayroll = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { mutateAsync: createPayrollFn, isPending } = useMutation({
     mutationKey: ["createPayroll"],
     mutationFn: async (body) => {
@@ -52,6 +54,7 @@ export const useCreatePayroll = () => {
       // console.log(data);
       toast.success(`${data.message}`);
       queryClient.refetchQueries({ queryKey: ["payroll"] });
+      navigate(`/workspace`);
     },
     onError(error) {
       console.log(error);
