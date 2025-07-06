@@ -10,7 +10,7 @@ export default function Jobs() {
         No jobs available yet. This section is under development (Coming Soon).
       </p>
     </div> */}
-      <div className="w-full h-[70dvh] gap-4 bg-white p-4 rounded-lg">
+      <div className="w-full h-[70dvh] gap-4 rounded-lg">
         <JobCard />
       </div>
     </>
