@@ -4,7 +4,7 @@ import { Dot } from "lucide-react";
 
 export default function JobCard() {
   return (
-    <div className="w-full max-w-[380px] bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-c-color">
+    <div className="w-full bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-c-color">
       <div className="flex w-full gap-3 items-center">
         <div className="min-w-24 h-24 rounded-lg bg-[#e9e9e9]"></div>
         <div className="space-y-2">
