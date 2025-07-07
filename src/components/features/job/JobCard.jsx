@@ -4,23 +4,23 @@ import { Dot } from "lucide-react";
 
 export default function JobCard() {
   return (
-    <div className="w-full max-w-[360px] bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-gray-200">
+    <div className="w-full max-w-[380px] bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-c-color">
       <div className="flex w-full gap-3 items-center">
-        <div className="w-24 h-24 rounded-lg bg-[#e9e9e9]"></div>
+        <div className="min-w-24 h-24 rounded-lg bg-[#e9e9e9]"></div>
         <div className="space-y-2">
-          <p className="font-semibold text-">Senior Front-end Developer</p>
+          <p className="font-bold text-lg">Senior Front-end Developer</p>
           <div className="flex gap-1 items-center text-black/70">
-            <p className="font-semibold">Figma</p>
+            <p className="font-medium text-sm">Figma</p>
             <Dot />
-            <p className="font-light text-xs">Singapore</p>
+            <p className="font-medium text-sm">Singapore</p>
           </div>
         </div>
       </div>
-      <div className="space-y-1">
+      <div className="space-y-1 w-full">
         <div className="flex items-center gap-2">
           <div className="bg-gray-50 text-sm font-light w-fit flex items-center gap-1 px-2 py-1 rounded-full">
             <PiMapPin />
-            On-Site
+            Remote
           </div>
           <div className="bg-green-50 text-green-600 text-sm font-light w-fit flex items-center gap-1 px-2 py-1 rounded-full">
             <PiBriefcase />

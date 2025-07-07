@@ -11,6 +11,7 @@ export default function Jobs() {
       </p>
     </div> */}
       <div className="w-full h-[70dvh] gap-4 rounded-lg">
+        .grid.grid-cols-1.md:grid-cols-3.grid-cols-4
         <JobCard />
       </div>
     </>
