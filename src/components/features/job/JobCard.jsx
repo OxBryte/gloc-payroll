@@ -1,4 +1,4 @@
-import { PiMapPin } from "react-icons/pi";
+import { PiBriefcase, PiMapPin } from "react-icons/pi";
 import React from "react";
 
 export default function JobCard() {
@@ -11,15 +11,21 @@ export default function JobCard() {
           <p className="font-light text-xs">Company Location</p>
         </div>
       </div>
-      <p className="font-semibold text-lg">Front-end Developer</p>
-      <div className="flex items-center gap-2">
-        <div className="bg-gray-50 text-xs font-light w-fit flex items-center gap-1 px-2 py-1 rounded-full">
-          <PiMapPin />
-          On-Site
+      <div className="space-y-1">
+        <p className="font-semibold text-lg">Front-end Developer</p>
+        <div className="flex items-center gap-2">
+          <div className="bg-gray-50 text-sm font-light w-fit flex items-center gap-1 px-2 py-1 rounded-full">
+            <PiMapPin />
+            On-Site
+          </div>
+          <div className="bg-green-50 text-green-600 text-sm font-light w-fit flex items-center gap-1 px-2 py-1 rounded-full">
+            <PiBriefcase />
+            Full-time
+          </div>
         </div>
-        <div className="bg-green-50 text-green-600 text-xs font-light w-fit px-2 py-1 rounded-full">
-          Full-time
-        </div>
+      </div>
+      <div className="text-gray-500">
+        Javascript, Bootstrap, Tailwind CSS, Typescript, Thirdweb
       </div>
     </div>
   );
