@@ -4,7 +4,7 @@ import React from "react";
 export default function JobCard() {
   return (
     <div className="w-full max-w-[360px] bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3">
-      <div className="flex w-full gap-2 items-center">
+      <div className="flex w-full gap-3 items-center">
         <div className="w-12 h-12 rounded-lg bg-[#e9e9e9]"></div>
         <div className="space-y-1">
           <p className="font-semibold">Company name</p>
@@ -24,8 +24,15 @@ export default function JobCard() {
           </div>
         </div>
       </div>
-      <div className="text-gray-500">
+      <div className="text-gray-500 font-light text-sm">
         Javascript, Bootstrap, Tailwind CSS, Typescript, Thirdweb
+      </div>
+      <div className="flex items-center gap-3 justify-between w-full">
+        <p className="font-bold text-xl">
+          $5,000{" "}
+          <span className="font-light text-sm text-gray-400">/monthly</span>
+        </p>
+        <button className="w-fit px-5 py-2 text-white">Apply Now</button>
       </div>
     </div>
   );
