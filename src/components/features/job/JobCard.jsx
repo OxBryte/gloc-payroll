@@ -3,7 +3,7 @@ import React from "react";
 
 export default function JobCard() {
   return (
-    <div className="w-full max-w-[360px] bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3">
+    <div className="w-full max-w-[360px] bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-gray-200">
       <div className="flex w-full gap-3 items-center">
         <div className="w-12 h-12 rounded-lg bg-[#e9e9e9]"></div>
         <div className="space-y-1">
@@ -32,7 +32,9 @@ export default function JobCard() {
           $5,000{" "}
           <span className="font-light text-sm text-gray-400">/monthly</span>
         </p>
-        <button className="w-fit px-5 py-2 text-white">Apply Now</button>
+        <button className="w-fit px-5 py-2 text-white bg-c-color text-sm cursor-pointer hover:bg-c-bg rounded-lg">
+          View Details
+        </button>
       </div>
     </div>
   );
