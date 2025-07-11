@@ -5,7 +5,7 @@ import { useAuth } from "./components/hooks/auth";
 import Spinner from "./components/ui/Spinner";
 
 const ProtectedRoute = ({ redirectTo = "/login" }) => {
-  const { isAuthenticated, isLoadingUser, error } = useAuth();
+  const { isAuthenticated, error } = useAuth();
   const location = useLocation();
 
   // Show loading spinner while checking auth status
