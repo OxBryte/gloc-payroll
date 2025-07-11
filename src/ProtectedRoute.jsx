@@ -2,7 +2,6 @@
 
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "./components/hooks/auth";
-import Spinner from "./components/ui/Spinner";
 
 const ProtectedRoute = ({ redirectTo = "/login" }) => {
   const { isAuthenticated, error } = useAuth();
