@@ -15,8 +15,8 @@ export default function Jobs() {
         <button className="bg-c-color text-white px-6 py-2.5 text-sm rounded-lg cursor-pointer hover:bg-c-bg transition-colors duration-200">
           Create a Job
               </button>
-              <div className="absolute -bottom-10 opacity-[60%] right-0 ">
-                  <img src="/gloc-logo-white.svg" alt="" className="w-60" />
+              <div className="absolute -bottom-10 opacity-[10%] right-0 ">
+                  <img src="/gloc-border.svg" alt="" className="w-60" />
               </div>
       </div>
 
