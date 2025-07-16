@@ -12,45 +12,45 @@ import Admins from "../components/features/workspace/Admins";
 import Jobs from "../components/features/workspace/Jobs";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 
-const data = [
-  {
-    id: 1,
-    name: "Overview",
-    icon: <RiHome5Line size={22} />,
-    link: "overview",
-    content: <Overview />,
-  },
-  {
-    id: 2,
-    name: "Payroll",
-    icon: <PiReceipt size={22} />,
-    link: "payroll",
-    content: <Payroll />,
-  },
-  {
-    id: 3,
-    name: "Employees",
-    icon: <PiUsersThreeLight size={22} />,
-    link: "employees",
-    content: <Employees />,
-  },
-  {
-    id: 4,
-    name: "Jobs",
-    icon: <HiOutlineBriefcase size={22} />,
-    link: "jobs",
-    content: <Jobs />,
-  },
-  {
-    id: 5,
-    name: "Admins",
-    icon: <RiAdminLine size={22} />,
-    link: "admins",
-    content: <Admins />,
-  },
-];
 
 export default function SingleWorkspace() {
+  const data = [
+    {
+      id: 1,
+      name: "Overview",
+      icon: <RiHome5Line size={22} />,
+      link: "overview",
+      content: <Overview />,
+    },
+    {
+      id: 2,
+      name: "Payroll",
+      icon: <PiReceipt size={22} />,
+      link: "payroll",
+      content: <Payroll />,
+    },
+    {
+      id: 3,
+      name: "Employees",
+      icon: <PiUsersThreeLight size={22} />,
+      link: "employees",
+      content: <Employees />,
+    },
+    {
+      id: 4,
+      name: "Jobs",
+      icon: <HiOutlineBriefcase size={22} />,
+      link: "jobs",
+      content: <Jobs />,
+    },
+    {
+      id: 5,
+      name: "Admins",
+      icon: <RiAdminLine size={22} />,
+      link: "admins",
+      content: <Admins />,
+    },
+  ];
   const { slug, id: activeLink } = useParams();
 
   const { singleWorkspace, isLoadingSingleWorkspace, error } =
