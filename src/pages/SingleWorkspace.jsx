@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { HiOutlineBriefcase } from "react-icons/hi2";
 import { PiReceipt, PiUsersThreeLight } from "react-icons/pi";
 import { RiAdminLine, RiHome5Line } from "react-icons/ri";
@@ -17,11 +17,10 @@ export default function SingleWorkspace() {
   const [searchParams] = useSearchParams();
 
   // Get specific search parameters
-  const location = useNavigate()
-  const queryParam = searchParams.get(location.search); // for ?query=value
-  const filterParam = searchParams.get("filter"); // for ?filter=value
+  const location = useLocation()
+  const urlSearchParams = new URLSearchParams(location.search);
 
-  console.log("Search Params:", { queryParam, filterParam });
+  console.log("Search Params:", { urlSearchParams });
 
   const data = [
     {
