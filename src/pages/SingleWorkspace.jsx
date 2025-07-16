@@ -19,14 +19,9 @@ import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 
 export default function SingleWorkspace() {
   const { slug, id: activeLink } = useParams();
-  const [searchParams] = useSearchParams();
   const location = useLocation();
-  const navigate = useNavigate();
 
-  // Get the 'create' parameter from the URL
-  const createParam = searchParams.get("create");
-
-  console.log("Full location:", location);
+  console.log(location.search);
 
   const data = [
     {
