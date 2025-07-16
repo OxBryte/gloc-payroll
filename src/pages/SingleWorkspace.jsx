@@ -26,8 +26,6 @@ export default function SingleWorkspace() {
   // Get the 'create' parameter from the URL
   const createParam = searchParams.get("create");
 
-  console.log("URL Params:", { slug, activeLink });
-  console.log("Create param:", createParam);
   console.log("Full location:", location);
 
   const data = [
