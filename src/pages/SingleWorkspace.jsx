@@ -14,6 +14,10 @@ import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 
 
 export default function SingleWorkspace() {
+  const { slug, id: activeLink } = useParams();
+  
+  
+
   const data = [
     {
       id: 1,
@@ -51,7 +55,6 @@ export default function SingleWorkspace() {
       content: <Admins />,
     },
   ];
-  const { slug, id: activeLink } = useParams();
 
   const { singleWorkspace, isLoadingSingleWorkspace, error } =
     useGetSingleWorkspace(slug);
