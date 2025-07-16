@@ -1,15 +1,16 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { HiOutlineBriefcase } from "react-icons/hi2";
 import { PiReceipt, PiUsersThreeLight } from "react-icons/pi";
 import { RiAdminLine, RiHome5Line } from "react-icons/ri";
+import { ChevronLeft } from "lucide-react";
 import Tabbar from "../components/layouts/Tabbar";
-import { useParams } from "react-router-dom";
 import Overview from "../components/features/workspace/Overview";
 import Payroll from "../components/features/workspace/Payroll";
 import Employees from "../components/features/workspace/Employees";
-import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 import Admins from "../components/features/workspace/Admins";
-import { ChevronLeft } from "lucide-react";
+import Jobs from "../components/features/workspace/Jobs";
+import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 
 const data = [
   {
@@ -38,7 +39,7 @@ const data = [
     name: "Jobs",
     icon: <HiOutlineBriefcase size={22} />,
     link: "jobs",
-    content: <Overview />,
+    content: <Jobs />,
   },
   {
     id: 5,
