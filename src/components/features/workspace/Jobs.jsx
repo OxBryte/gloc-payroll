@@ -8,11 +8,15 @@ export default function Jobs() {
           {" "}
           Here is a Job Board for your Project
         </h1>
-        <p className="text-white text-sm font-light">Connect your software with the curring-edge technology.</p>
+        <p className="text-white text-sm font-light">
+          Connect your software with the curring-edge technology.
+        </p>
         <button className="bg-c-color text-white px-6 py-2.5 text-sm rounded-lg cursor-pointer hover:bg-c-bg transition-colors duration-200">
-          Create Job
+          Create a Job
         </button>
-      </div>
+          </div>
+          
+          
     </div>
   );
 }
