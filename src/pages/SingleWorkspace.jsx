@@ -16,11 +16,12 @@ import Employees from "../components/features/workspace/Employees";
 import Admins from "../components/features/workspace/Admins";
 import Jobs from "../components/features/workspace/Jobs";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
+import CreateJob from "../components/features/workspace/CreateJob";
 
 export default function SingleWorkspace() {
   const { slug, id: activeLink } = useParams();
   const location = useLocation();
-  const createIt = location.search
+  const createIt = location.search;
 
   const data = [
     {
@@ -49,7 +50,7 @@ export default function SingleWorkspace() {
       name: "Jobs",
       icon: <HiOutlineBriefcase size={22} />,
       link: "jobs",
-      content: createIt ?  <Jobs />,
+      content: createIt ? <CreateJob /> : <Jobs />,
     },
     {
       id: 5,

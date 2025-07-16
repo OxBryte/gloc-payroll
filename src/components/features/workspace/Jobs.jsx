@@ -11,7 +11,8 @@ export default function Jobs() {
         </h1>
         <p className="text-white text-sm font-light">
           Connect your software with the curring-edge technology.
-        </p>
+              </p>
+              <Link to='?create'></Link>
         <button className="bg-c-color text-white px-6 py-2.5 text-sm rounded-lg cursor-pointer hover:bg-c-bg transition-colors duration-200">
           Create a Job
         </button>
