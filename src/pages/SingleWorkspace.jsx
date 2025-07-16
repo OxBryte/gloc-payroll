@@ -20,8 +20,7 @@ import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 export default function SingleWorkspace() {
   const { slug, id: activeLink } = useParams();
   const location = useLocation();
-
-  console.log(location.search);
+  const createIt = location.search
 
   const data = [
     {
@@ -50,7 +49,7 @@ export default function SingleWorkspace() {
       name: "Jobs",
       icon: <HiOutlineBriefcase size={22} />,
       link: "jobs",
-      content: <Jobs />,
+      content: createIt ?  <Jobs />,
     },
     {
       id: 5,
