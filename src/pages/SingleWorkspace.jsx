@@ -1,5 +1,10 @@
 import React from "react";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { HiOutlineBriefcase } from "react-icons/hi2";
 import { PiReceipt, PiUsersThreeLight } from "react-icons/pi";
 import { RiAdminLine, RiHome5Line } from "react-icons/ri";
@@ -15,12 +20,15 @@ import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 export default function SingleWorkspace() {
   const { slug, id: activeLink } = useParams();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // Get specific search parameters
-  const location = useLocation()
-  const urlSearchParams = new URLSearchParams(location.search);
+  // Get the 'create' parameter from the URL
+  const createParam = searchParams.get("create");
 
-  console.log("Search Params:", { urlSearchParams });
+  console.log("URL Params:", { slug, activeLink });
+  console.log("Create param:", createParam);
+  console.log("Full location:", location);
 
   const data = [
     {
