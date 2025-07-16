@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { HiOutlineBriefcase } from "react-icons/hi2";
 import { PiReceipt, PiUsersThreeLight } from "react-icons/pi";
 import { RiAdminLine, RiHome5Line } from "react-icons/ri";
@@ -12,11 +12,11 @@ import Admins from "../components/features/workspace/Admins";
 import Jobs from "../components/features/workspace/Jobs";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 
-
 export default function SingleWorkspace() {
   const { slug, id: activeLink } = useParams();
-  
-  
+  const params = useSearchParams();
+
+  console.log(params);
 
   const data = [
     {
