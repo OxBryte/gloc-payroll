@@ -14,9 +14,13 @@ import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 
 export default function SingleWorkspace() {
   const { slug, id: activeLink } = useParams();
-  const params = useSearchParams();
+  const [searchParams] = useSearchParams();
 
-  console.log(params);
+  // Get specific search parameters
+  const queryParam = searchParams.get("query"); // for ?query=value
+  const filterParam = searchParams.get("filter"); // for ?filter=value
+
+  console.log("Search Params:", { queryParam, filterParam });
 
   const data = [
     {
