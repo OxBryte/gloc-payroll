@@ -19,6 +19,7 @@ import Subscriptions from "./pages/Subscriptions";
 import Jobs from "./pages/Jobs";
 import InvoicePage from "./pages/InvoicePage";
 import PixelPrintingAnimation from "./pages/PixelPrintingAnimation";
+import Map from "./pages/Map";
 
 function App() {
   const NavigationLoader = () => {
@@ -83,7 +84,7 @@ function App() {
           <Route path="/reset-password/" element={<ResetPassword />} />
           <Route path="/accept-admin" element={<AcceptAdmin />} />
           <Route path="/animate" element={<PixelPrintingAnimation />} />
-          <Route path="/map" element={<PixelPrintingAnimation />} />
+          <Route path="/map" element={<Map />} />
         </Routes>
       </BrowserRouter>
     </>
