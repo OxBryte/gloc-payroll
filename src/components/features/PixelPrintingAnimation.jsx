@@ -4,15 +4,17 @@ import gsap from "gsap";
 
 const PixelPrintingAnimation = ({
   svgPath = "/West-Africa.svg",
-  dotSize = 1,
+  dotSize = 2,
   dotSpacing = 4,
   dotColor = 0x00ff88,
-  dotHighlightColor = 0xfffff,
+  dotHighlightColor = 0xffe066,
   bgColor = 0x181c20,
   stagger = 0.005,
-  // Optionally allow width/height for the SVG render
-  imageWidth = 160,
-  imageHeight = 100,
+  // Always sample at 120x120, but render at 300x300 units
+  imageWidth = 120,
+  imageHeight = 120,
+  renderWidth = 300,
+  renderHeight = 300,
 }) => {
   const mountRef = useRef();
 
@@ -61,8 +63,11 @@ const PixelPrintingAnimation = ({
       scene = new THREE.Scene();
       scene.background = new THREE.Color(bgColor);
 
-      const totalWidth = imageWidth;
-      const totalHeight = imageHeight;
+      // Map sampled image coordinates to render area
+      const scaleX = renderWidth / imageWidth;
+      const scaleY = renderHeight / imageHeight;
+      const totalWidth = renderWidth;
+      const totalHeight = renderHeight;
       const offsetX = -totalWidth / 2;
       const offsetY = totalHeight / 2;
 
@@ -99,9 +104,12 @@ const PixelPrintingAnimation = ({
           transparent: true,
           opacity: 0,
         });
+        // Map sampled (x, y) to render area
+        const mappedX = pos.x * scaleX;
+        const mappedY = pos.y * scaleY;
         // Store the final position
-        const finalX = pos.x + offsetX;
-        const finalY = -pos.y + offsetY;
+        const finalX = mappedX + offsetX;
+        const finalY = -mappedY + offsetY;
         const finalZ = 0;
         // Set initial position (randomized, e.g., from outside the view)
         const angle = Math.random() * Math.PI * 2;
@@ -134,8 +142,8 @@ const PixelPrintingAnimation = ({
           stagger: {
             each: stagger,
             grid: [
-              Math.ceil(imageHeight / dotSpacing),
-              Math.ceil(imageWidth / dotSpacing),
+              Math.ceil(renderHeight / dotSpacing),
+              Math.ceil(renderWidth / dotSpacing),
             ],
             from: "start",
           },
@@ -152,8 +160,8 @@ const PixelPrintingAnimation = ({
           stagger: {
             each: stagger,
             grid: [
-              Math.ceil(imageHeight / dotSpacing),
-              Math.ceil(imageWidth / dotSpacing),
+              Math.ceil(renderHeight / dotSpacing),
+              Math.ceil(renderWidth / dotSpacing),
             ],
             from: "start",
           },
@@ -232,6 +240,8 @@ const PixelPrintingAnimation = ({
     stagger,
     imageWidth,
     imageHeight,
+    renderWidth,
+    renderHeight,
   ]);
 
   return (
