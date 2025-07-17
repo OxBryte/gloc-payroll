@@ -4,36 +4,41 @@ import gsap from "gsap";
 
 const PixelPrintingAnimation = ({
   text = "Hello Base West Africa",
-  dotSize = 8,
-  dotSpacing = 12,
+  dotSize = 2,
+  dotSpacing = 4,
   dotColor = 0x00ff88,
-  dotHighlightColor = 0xffffff,
+  dotHighlightColor = 0xffe066,
   bgColor = 0x181c20,
-  font = "bold 48px Arial",
-  stagger = 0.015,
+  font = "bold 64px Arial",
+  stagger = 0.005,
 }) => {
   const mountRef = useRef();
 
   useEffect(() => {
-    // --- 1. Draw text to hidden canvas and extract pixel data ---
-    const DOT_COLOR = dotColor;
-    const DOT_HIGHLIGHT_COLOR = dotHighlightColor;
-    const DOT_SPACING = dotSpacing;
+    // --- CONFIG ---
+    const TEXT = text;
     const DOT_SIZE = dotSize;
+    const DOT_SPACING = dotSpacing;
+    const DOT_COLOR = dotColor;
+    const BG_COLOR = bgColor;
+    const DOT_HIGHLIGHT_COLOR = dotHighlightColor;
+    const FONT = font;
     const STAGGER = stagger;
-    const DOT_GEOMETRY = new THREE.SphereGeometry(DOT_SIZE / 2, 12, 12);
+    const DOT_GEOMETRY = new THREE.BoxGeometry(DOT_SIZE, DOT_SIZE, DOT_SIZE);
+
+    // --- 1. Draw text to hidden canvas and extract pixel data ---
     const canvas2d = document.createElement("canvas");
     const ctx = canvas2d.getContext("2d");
-    ctx.font = font;
-    const textMetrics = ctx.measureText(text);
+    ctx.font = FONT;
+    const textMetrics = ctx.measureText(TEXT);
     const textWidth = Math.ceil(textMetrics.width);
     const textHeight = 60;
     canvas2d.width = textWidth;
     canvas2d.height = textHeight;
-    ctx.font = font;
+    ctx.font = FONT;
     ctx.fillStyle = "#fff";
     ctx.textBaseline = "top";
-    ctx.fillText(text, 0, 0);
+    ctx.fillText(TEXT, 0, 0);
     const imageData = ctx.getImageData(0, 0, textWidth, textHeight).data;
 
     // --- 2. Find pixel positions for dots ---
@@ -55,9 +60,9 @@ const PixelPrintingAnimation = ({
       }
     }
 
-    // --- 3. Setup Three.js scene ---
+    // ---3. Setup Three.js scene ---
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(bgColor);
+    scene.background = new THREE.Color(BG_COLOR);
 
     const totalWidth = textWidth;
     const totalHeight = textHeight;
@@ -77,19 +82,18 @@ const PixelPrintingAnimation = ({
     camera.position.z = 100;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setClearColor(bgColor);
+    renderer.setClearColor(BG_COLOR);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.domElement.style.display = "block";
     renderer.domElement.style.margin = "0 auto";
     renderer.domElement.style.background = "#181c20";
 
-    // Clear and append renderer
     if (mountRef.current) {
       mountRef.current.innerHTML = "";
       mountRef.current.appendChild(renderer.domElement);
     }
 
-    // --- 4. Create dot meshes and animate to final position ---
+    // ---4. Create dot meshes ---
     const dots = [];
     dotPositions.forEach((pos, i) => {
       const material = new THREE.MeshBasicMaterial({
@@ -98,24 +102,30 @@ const PixelPrintingAnimation = ({
         opacity: 0,
       });
       const dot = new THREE.Mesh(DOT_GEOMETRY, material);
-      // Start at center
-      dot.position.x = 0;
-      dot.position.y = 0;
-      dot.position.z = 0;
-      dot.scale.set(0.2, 0.2, 0.2); // Start small for pop-in effect
+
+      // Store the final position
+      const finalX = pos.x + offsetX;
+      const finalY = -pos.y + offsetY;
+      const finalZ = 0;
+      // Set initial position (randomized, e.g., from outside the view)
+      const angle = Math.random() * Math.PI * 2;
+      const radius =
+        Math.max(totalWidth, totalHeight) * 0.8 + Math.random() * 100;
+      dot.position.x = Math.cos(angle) * radius;
+      dot.position.y = Math.sin(angle) * radius;
+      dot.position.z = -10 + Math.random() * 200; // depth randomness
+
+      dot.scale.set(0.2, 0.2, 0.2);
       scene.add(dot);
       dots.push(dot);
 
       // Animate to final position
-      const finalX = pos.x + offsetX;
-      const finalY = -pos.y + offsetY;
-      const finalZ = 0;
       gsap.to(dot.position, {
         x: finalX,
         y: finalY,
         z: finalZ,
         delay: i * STAGGER,
-        duration: 1.2,
+        duration: 0.4,
         ease: "expo.out",
       });
     });
@@ -156,7 +166,7 @@ const PixelPrintingAnimation = ({
       }
     );
 
-    // --- 6. Render loop with mouse interaction and color interpolation ---
+    // --- 6. Render loop ---
     let mouse = { x: 0, y: 0 };
     let mouse3D = { x: 0, y: 0 };
     renderer.domElement.addEventListener("mousemove", (event) => {
@@ -180,6 +190,7 @@ const PixelPrintingAnimation = ({
         dot.scale.x += (targetScale - dot.scale.x) * 0.2;
         dot.scale.y += (targetScale - dot.scale.y) * 0.2;
         dot.scale.z += (targetScale - dot.scale.z) * 0.2;
+
         // Color interpolation
         const baseColor = new THREE.Color(DOT_COLOR);
         const highlightColor = new THREE.Color(DOT_HIGHLIGHT_COLOR);
