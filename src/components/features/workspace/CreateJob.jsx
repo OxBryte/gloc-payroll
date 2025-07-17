@@ -1,13 +1,23 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 
-export default function CreateJob({ theme }) {
-  const [angle, setAngle] = useState(0);
-  const [position, setPosition] = useState({ top: 0, left: 0 });
-  const [mousePosition, setMousePosition] = useState({ top: 0, left: 0 });
-  const elRef = useRef(null);
+type RotatingCircleProps = {
+  theme: number,
+};
 
-  const getColor2 = (t) => {
+type Position = {
+  top: number,
+  left: number,
+};
+
+export default function CreateJob({ theme }: RotatingCircleProps) {
+  const [angle, setAngle] = useState(0);
+  const [position, setPosition] = useState < Position > { top: 0, left: 0 };
+  const [mousePosition, setMousePosition] =
+    useState < Position > { top: 0, left: 0 };
+  const elRef = useRef < HTMLDivElement > null;
+
+  const getColor2 = (t: number): string => {
     switch (t) {
       case 0:
         return "#FF00FF";
@@ -26,7 +36,7 @@ export default function CreateJob({ theme }) {
     }
   };
 
-  const updateRotation = (clientX, clientY) => {
+  const updateRotation = (clientX: number, clientY: number) => {
     if (!elRef.current) return;
     const rect = elRef.current.getBoundingClientRect();
     const boxCenterX = rect.left + rect.width / 2;
@@ -43,13 +53,13 @@ export default function CreateJob({ theme }) {
   };
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ top: e.clientY, left: e.clientX });
       updateRotation(e.clientX, e.clientY);
       updatePosition();
     };
 
-    const handleTouchMove = (e) => {
+    const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
         setMousePosition({ top: touch.clientY, left: touch.clientX });
