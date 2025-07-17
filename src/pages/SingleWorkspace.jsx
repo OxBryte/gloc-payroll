@@ -1,56 +1,60 @@
 import React from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { HiOutlineBriefcase } from "react-icons/hi2";
 import { PiReceipt, PiUsersThreeLight } from "react-icons/pi";
 import { RiAdminLine, RiHome5Line } from "react-icons/ri";
+import { ChevronLeft } from "lucide-react";
 import Tabbar from "../components/layouts/Tabbar";
-import { useParams } from "react-router-dom";
 import Overview from "../components/features/workspace/Overview";
 import Payroll from "../components/features/workspace/Payroll";
 import Employees from "../components/features/workspace/Employees";
-import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 import Admins from "../components/features/workspace/Admins";
-import { ChevronLeft } from "lucide-react";
-
-const data = [
-  {
-    id: 1,
-    name: "Overview",
-    icon: <RiHome5Line size={22} />,
-    link: "overview",
-    content: <Overview />,
-  },
-  {
-    id: 2,
-    name: "Payroll",
-    icon: <PiReceipt size={22} />,
-    link: "payroll",
-    content: <Payroll />,
-  },
-  {
-    id: 3,
-    name: "Employees",
-    icon: <PiUsersThreeLight size={22} />,
-    link: "employees",
-    content: <Employees />,
-  },
-  {
-    id: 4,
-    name: "Jobs",
-    icon: <HiOutlineBriefcase size={22} />,
-    link: "jobs",
-    content: <Overview />,
-  },
-  {
-    id: 5,
-    name: "Admins",
-    icon: <RiAdminLine size={22} />,
-    link: "admins",
-    content: <Admins />,
-  },
-];
+import Jobs from "../components/features/workspace/Jobs";
+import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
+import CreateJob from "../components/features/workspace/CreateJob";
 
 export default function SingleWorkspace() {
   const { slug, id: activeLink } = useParams();
+  const location = useLocation();
+  const createIt = location.search;
+
+  const data = [
+    {
+      id: 1,
+      name: "Overview",
+      icon: <RiHome5Line size={22} />,
+      link: "overview",
+      content: <Overview />,
+    },
+    {
+      id: 2,
+      name: "Payroll",
+      icon: <PiReceipt size={22} />,
+      link: "payroll",
+      content: <Payroll />,
+    },
+    {
+      id: 3,
+      name: "Employees",
+      icon: <PiUsersThreeLight size={22} />,
+      link: "employees",
+      content: <Employees />,
+    },
+    {
+      id: 4,
+      name: "Jobs",
+      icon: <HiOutlineBriefcase size={22} />,
+      link: "jobs",
+      content: createIt ? <CreateJob /> : <Jobs />,
+    },
+    {
+      id: 5,
+      name: "Admins",
+      icon: <RiAdminLine size={22} />,
+      link: "admins",
+      content: <Admins />,
+    },
+  ];
 
   const { singleWorkspace, isLoadingSingleWorkspace, error } =
     useGetSingleWorkspace(slug);
