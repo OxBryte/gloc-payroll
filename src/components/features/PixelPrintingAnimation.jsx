@@ -3,7 +3,7 @@ import * as THREE from "three";
 import gsap from "gsap";
 
 const PixelPrintingAnimation = ({
-  svgPath = "/gloc-logo.svg",
+  svgPath = "/west-africa.svg",
   dotSize = 2,
   dotSpacing = 4,
   dotColor = 0x00ff88,
