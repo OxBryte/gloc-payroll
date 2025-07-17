@@ -11,7 +11,7 @@ const PixelPrintingAnimation = ({
   bgColor = 0x181c20,
   stagger = 0.005,
   // Optionally allow width/height for the SVG render
-  imageWidth = 140,
+  imageWidth = 160,
   imageHeight = 120,
 }) => {
   const mountRef = useRef();
