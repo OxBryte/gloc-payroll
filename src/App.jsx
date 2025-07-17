@@ -18,7 +18,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Subscriptions from "./pages/Subscriptions";
 import Jobs from "./pages/Jobs";
 import InvoicePage from "./pages/InvoicePage";
-import PixelPrintingAnimation from "./components/features/PixelPrintingAnimation";
+import PixelPrintingAnimation from "./pages/PixelPrintingAnimation";
 
 function App() {
   const NavigationLoader = () => {
