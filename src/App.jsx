@@ -82,9 +82,8 @@ function App() {
           <Route path="*" element={<h1>404 Not Found</h1>} />
           <Route path="/reset-password/" element={<ResetPassword />} />
           <Route path="/accept-admin" element={<AcceptAdmin />} />
-
-        </Routes>
           <Route path="/animate" element={<PixelPrintingAnimation />} />
+        </Routes>
       </BrowserRouter>
     </>
   );
