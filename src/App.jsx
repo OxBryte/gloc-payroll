@@ -83,6 +83,7 @@ function App() {
           <Route path="/reset-password/" element={<ResetPassword />} />
           <Route path="/accept-admin" element={<AcceptAdmin />} />
           <Route path="/animate" element={<PixelPrintingAnimation />} />
+          <Route path="/map" element={<PixelPrintingAnimation />} />
         </Routes>
       </BrowserRouter>
     </>

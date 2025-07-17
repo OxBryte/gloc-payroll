@@ -23,6 +23,7 @@
     "@thirdweb-dev/sdk": "^4.0.99",
     "apexcharts": "^4.7.0",
     "axios": "^1.9.0",
+    "dotted-map": "^2.2.3",
     "ethers": "^5.8.0",
     "gsap": "^3.13.0",
     "lucide-react": "^0.511.0",
