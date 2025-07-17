@@ -224,8 +224,8 @@ const PixelPrintingAnimation = ({
     <div
       ref={mountRef}
       style={{
-        width: "100vw",
-        height: "100vh",
+        width: "100%",
+        height: "100%",
         background: "#181c20",
         overflow: "hidden",
       }}
