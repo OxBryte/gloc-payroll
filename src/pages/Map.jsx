@@ -6,7 +6,7 @@ export default function Map() {
   const map = new DottedMap({
     height: 40, // number of dots vertically
     grid: "diagonal", // or 'vertical', 'horizontal'
-    dotSize: 1.5,
+    dotSize: 0.5,
   });
 
   // Add some highlighted locations (optional)
@@ -21,7 +21,7 @@ export default function Map() {
     background: "#181c20",
     pins: {
       color: "#ffe066",
-      radius: 1.5,
+      radius: 1,
     },
   });
 
