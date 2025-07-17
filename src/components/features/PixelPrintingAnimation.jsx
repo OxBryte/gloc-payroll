@@ -4,15 +4,15 @@ import gsap from "gsap";
 
 const PixelPrintingAnimation = ({
   svgPath = "/West-Africa.svg",
-  dotSize = 2,
+  dotSize = 1,
   dotSpacing = 4,
   dotColor = 0x00ff88,
-  dotHighlightColor = 0xffe066,
+  dotHighlightColor = white,
   bgColor = 0x181c20,
   stagger = 0.005,
   // Optionally allow width/height for the SVG render
   imageWidth = 160,
-  imageHeight = 120,
+  imageHeight = 100,
 }) => {
   const mountRef = useRef();
 
