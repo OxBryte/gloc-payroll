@@ -7,7 +7,7 @@ const PixelPrintingAnimation = ({
   dotSize = 1,
   dotSpacing = 4,
   dotColor = 0x00ff88,
-  dotHighlightColor = white,
+  dotHighlightColor = 0xfffff,
   bgColor = 0x181c20,
   stagger = 0.005,
   // Optionally allow width/height for the SVG render
