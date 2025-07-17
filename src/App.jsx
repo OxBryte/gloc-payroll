@@ -18,6 +18,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Subscriptions from "./pages/Subscriptions";
 import Jobs from "./pages/Jobs";
 import InvoicePage from "./pages/InvoicePage";
+import PixelPrintingAnimation from "./components/features/PixelPrintingAnimation";
 
 function App() {
   const NavigationLoader = () => {
@@ -81,7 +82,9 @@ function App() {
           <Route path="*" element={<h1>404 Not Found</h1>} />
           <Route path="/reset-password/" element={<ResetPassword />} />
           <Route path="/accept-admin" element={<AcceptAdmin />} />
+
         </Routes>
+          <Route path="/animate" element={<PixelPrintingAnimation />} />
       </BrowserRouter>
     </>
   );
