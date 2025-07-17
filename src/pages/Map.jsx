@@ -1,5 +1,5 @@
-import React from 'react'
-
+import React from "react";
+import DottedMap from "dotted-map";
 
 export default function Map() {
   // Create a map instance
