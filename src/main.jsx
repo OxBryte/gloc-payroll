@@ -1,4 +1,7 @@
-import { StrictMode } from "react";
+// Import polyfills first
+import "./polyfills.js";
+
+import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";

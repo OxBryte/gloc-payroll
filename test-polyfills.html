@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Polyfill Test</title>
+  </head>
+  <body>
+    <h1>Polyfill Test</h1>
+    <div id="results"></div>
+
+    <script>
+      // Test Buffer
+      console.log("Testing Buffer...");
+      if (typeof Buffer !== "undefined") {
+        const buf = Buffer.from("test");
+        document.getElementById("results").innerHTML +=
+          "<p>✅ Buffer: " + buf.toString() + "</p>";
+      } else {
+        document.getElementById("results").innerHTML +=
+          "<p>❌ Buffer: Not available</p>";
+      }
+
+      // Test process
+      console.log("Testing process...");
+      if (typeof process !== "undefined") {
+        document.getElementById("results").innerHTML +=
+          "<p>✅ Process: " + process.platform + "</p>";
+      } else {
+        document.getElementById("results").innerHTML +=
+          "<p>❌ Process: Not available</p>";
+      }
+
+      // Test global
+      console.log("Testing global...");
+      if (typeof global !== "undefined") {
+        document.getElementById("results").innerHTML +=
+          "<p>✅ Global: Available</p>";
+      } else {
+        document.getElementById("results").innerHTML +=
+          "<p>❌ Global: Not available</p>";
+      }
+    </script>
+  </body>
+</html>
+
+
+

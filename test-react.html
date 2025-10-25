@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Test</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      // Test React import
+      try {
+        const React = await import("react");
+        const ReactDOM = await import("react-dom/client");
+
+        console.log("✅ React imported successfully");
+        console.log("React version:", React.version);
+
+        // Test createElement
+        const element = React.createElement("div", null, "Hello React!");
+        console.log("✅ createElement works");
+
+        // Test rendering
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(element);
+        console.log("✅ React rendering works");
+      } catch (error) {
+        console.error("❌ React import failed:", error);
+        document.getElementById("root").innerHTML =
+          "<p style='color: red;'>React import failed: " +
+          error.message +
+          "</p>";
+      }
+    </script>
+  </body>
+</html>
+
+
+

@@ -20,6 +20,7 @@ import Jobs from "./pages/Jobs";
 import InvoicePage from "./pages/InvoicePage";
 import PixelPrintingAnimation from "./pages/PixelPrintingAnimation";
 import Map from "./pages/Map";
+import AIAgentPage from "./pages/AIAgent";
 
 function App() {
   const NavigationLoader = () => {
@@ -77,6 +78,7 @@ function App() {
               <Route path="/settings" element={<Settings />} />
               <Route path="/subscription" element={<Subscriptions />} />
               <Route path="/jobs" element={<Jobs />} />
+              <Route path="/ai-agent" element={<AIAgentPage />} />
               <Route path="/:id" element={<h1>Dynamic Route</h1>} />
             </Route>
           </Route>
