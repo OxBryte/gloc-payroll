@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 import ConnectButtonThirdweb from "../components/ui/ConnectButtonThirdweb";
 import { truncate } from "../components/lib/utils";
+import { useAppKit } from "@reown/appkit/react";
 
 const CreatePayroll = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const CreatePayroll = () => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [chain, setChain] = useState("base");
   const [currency, setCurrency] = useState("USDC");
+  const { open, close } = useAppKit();
 
   const {
     register,
@@ -333,7 +335,7 @@ const CreatePayroll = () => {
           {/* Payment Section */}
           <div className="bg-white rounded-lg border border-gray-200 p-6">
             <h2 className="text-lg font-semibold mb-4">Payment</h2>
-            <ConnectButtonThirdweb
+            {/* <ConnectButtonThirdweb
               selectedEmployees={selectedEmployees}
               totalTax={totalTax}
               title={title}
@@ -343,7 +345,14 @@ const CreatePayroll = () => {
               totalAmount={totalSalary + totalTax}
               workspaceId={singleWorkspace?.id}
               isFormValid={isFormValid}
-            />
+            /> */}
+
+            <div
+              className="w-fit bg-c-color text-white px-4 py-2 rounded-lg cursor-pointer"
+              onClick={() => open()}
+            >
+              Connect Wallet
+            </div>
           </div>
         </div>
       </div>
