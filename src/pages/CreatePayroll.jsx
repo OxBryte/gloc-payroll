@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 import ConnectButtonThirdweb from "../components/ui/ConnectButtonThirdweb";
-import { truncate } from "../components/lib/utils";
-import { useAppKit } from "@reown/appkit/react";
+import { truncate, truncateAddress } from "../components/lib/utils";
+import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
+// import { useWalletSignature } from "../components/hooks/useWalletSignature";
 
 const CreatePayroll = () => {
   const navigate = useNavigate();
@@ -13,7 +14,12 @@ const CreatePayroll = () => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [chain, setChain] = useState("base");
   const [currency, setCurrency] = useState("USDC");
-  const { open, close } = useAppKit();
+
+  const { address, isConnected } = useAppKitAccount();
+  const { open } = useAppKit();
+
+  // Wallet signature - automatically requests signature when wallet connects
+  // const { hasSignature, isSigning } = useWalletSignature(address, isConnected);
 
   const {
     register,
@@ -334,8 +340,9 @@ const CreatePayroll = () => {
 
           {/* Payment Section */}
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h2 className="text-lg font-semibold mb-4">Payment</h2>
-            {/* <ConnectButtonThirdweb
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold">Payment</h2>
+              {/* <ConnectButtonThirdweb
               selectedEmployees={selectedEmployees}
               totalTax={totalTax}
               title={title}
@@ -345,13 +352,26 @@ const CreatePayroll = () => {
               totalAmount={totalSalary + totalTax}
               workspaceId={singleWorkspace?.id}
               isFormValid={isFormValid}
-            /> */}
+              /> */}
 
-            <div
-              className="w-fit bg-c-color text-white px-4 py-2 rounded-lg cursor-pointer"
-              onClick={() => open()}
-            >
-              Connect Wallet
+              {isConnected ? (
+                <div className="flex items-center gap-2">
+                  <div
+                    className="w-fit bg-c-color/10 text-xs px-3 py-2 rounded-lg cursor-pointer"
+                    onClick={() => open({ view: "Account" })}
+                  >
+                    <div className="w-2 h-2 bg-c-color rounded-full inline-block mr-2"></div>
+                    {truncateAddress(address)}
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="w-fit bg-c-color text-white text-xs px-3 py-2 rounded-lg cursor-pointer"
+                  onClick={() => open()}
+                >
+                  Connect Wallet
+                </div>
+              )}
             </div>
           </div>
         </div>

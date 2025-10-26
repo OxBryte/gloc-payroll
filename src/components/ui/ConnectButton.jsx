@@ -10,7 +10,11 @@ import { client } from "../../client";
 import { baseSepolia } from "wagmi/chains";
 import { usePayrollContract } from "../hooks/usePayrollContract";
 import { useUSDCApproval } from "../hooks/useUSDCApproval";
-import { createPaymentArray, convertTaxToUSDC } from "../lib/utils";
+import {
+  createPaymentArray,
+  convertTaxToUSDC,
+  truncateAddress,
+} from "../lib/utils";
 import { useChainId, useSwitchChain } from "wagmi";
 
 export default function ConnectButtons({
@@ -140,7 +144,7 @@ export default function ConnectButtons({
         {/* Connection Status */}
         <div className="space-y-2">
           <p className="w-full px-5 py-3 rounded-xl bg-c-color text-white">
-            Connected address: <br /> {address}
+            Connected address: <br /> {truncateAddress(address)}
           </p>
           <button
             onClick={() => disconnect(wallet)}
