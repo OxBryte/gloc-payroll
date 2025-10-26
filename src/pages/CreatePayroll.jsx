@@ -342,17 +342,6 @@ const CreatePayroll = () => {
           <div className="bg-white rounded-lg border border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">Payment</h2>
-              {/* <ConnectButtonThirdweb
-              selectedEmployees={selectedEmployees}
-              totalTax={totalTax}
-              title={title}
-              category={category}
-              chain={chain}
-              currency={currency}
-              totalAmount={totalSalary + totalTax}
-              workspaceId={singleWorkspace?.id}
-              isFormValid={isFormValid}
-              /> */}
 
               {isConnected ? (
                 <div className="flex items-center gap-2">
@@ -373,6 +362,17 @@ const CreatePayroll = () => {
                 </div>
               )}
             </div>
+            <ConnectButtonThirdweb
+              selectedEmployees={selectedEmployees}
+              totalTax={totalTax}
+              title={title}
+              category={category}
+              chain={chain}
+              currency={currency}
+              totalAmount={totalSalary + totalTax}
+              workspaceId={singleWorkspace?.id}
+              isFormValid={isFormValid}
+            />
           </div>
         </div>
       </div>
