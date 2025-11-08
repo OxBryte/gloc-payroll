@@ -1,24 +1,22 @@
 # Payroll Project
 
-A decentralized payroll management system built with React and Reown (formerly WalletConnect) for seamless wallet integration.
+A decentralized payroll management system built with React and Thirdweb for wallet integration.
 
 ## Features
 
-- **Wallet Connection**: Connect your wallet using Reown AppKit
+- **Wallet Connection**: Connect your wallet using Thirdweb
 - **Payroll Management**: Create and manage payroll records
 - **Employee Management**: Add and manage employees
-- **Multi-chain Support**: Support for multiple blockchain networks (Base, Base Sepolia)
+- **Multi-chain Support**: Support for multiple blockchain networks
 - **USDC Integration**: Pay employees using USDC tokens
-- **Cross-Platform**: Works on desktop and mobile devices
 
 ## Wallet Integration
 
-This project uses **Reown AppKit** (formerly WalletConnect) for wallet connection instead of traditional email/password authentication. Users can:
+This project uses **Thirdweb** for wallet connection instead of traditional email/password authentication. Users can:
 
-1. Connect their wallet (MetaMask, WalletConnect, Coinbase Wallet, etc.)
+1. Connect their wallet (MetaMask, WalletConnect, etc.)
 2. View their connected address
-3. Switch between different networks
-4. Disconnect their wallet when needed
+3. Disconnect their wallet when needed
 
 ## Setup
 
@@ -28,12 +26,12 @@ This project uses **Reown AppKit** (formerly WalletConnect) for wallet connectio
 npm install
 ```
 
-2. Get your Reown Project ID:
+2. Get your Thirdweb Client ID:
 
-   - Go to [Reown Dashboard](https://dashboard.reown.com)
+   - Go to [Thirdweb Dashboard](https://thirdweb.com/dashboard)
    - Create a new project
-   - Copy your Project ID
-   - Replace the project ID in `src/Provider.js` with your actual Project ID
+   - Copy your Client ID
+   - Replace `"your-thirdweb-client-id"` in `src/main.jsx` with your actual Client ID
 
 3. Start the development server:
 
@@ -43,8 +41,7 @@ npm run dev
 
 ## Key Components
 
-- **AppKitProvider**: Handles wallet connection using Reown AppKit
-- **WagmiAdapter**: Provides wagmi integration for blockchain interactions
+- **ConnectButton**: Handles wallet connection using Thirdweb
 - **useAuth Hook**: Provides authentication state and methods
 - **ProtectedRoute**: Protects routes that require wallet connection
 
@@ -53,49 +50,24 @@ npm run dev
 1. User visits the app
 2. If not connected, they're redirected to the login page
 3. User clicks "Connect Wallet" button
-4. Reown modal opens with multiple wallet options
-5. User selects and connects their preferred wallet
+4. Thirdweb modal opens for wallet selection
+5. User connects their wallet
 6. User is redirected to the main application
 
-## Configuration
+## Environment Variables
 
-The wallet configuration is set up in `src/Provider.js`:
+Make sure to set up your Thirdweb Client ID in the main.jsx file:
 
 ```javascript
-// Project ID from Reown Dashboard
-const projectId = "your-project-id";
-
-// Supported networks
-const networks = [baseSepolia, base];
-
-// App metadata
-const metadata = {
-  name: "Gloc - Payroll",
-  description: "Streamline your crypto payroll with Glöc",
-  url: "https://gloc.pro",
-  icons: ["https://gloc.pro/gloc-logo.svg"],
-};
+<ThirdwebProvider
+  activeChain={Sepolia}
+  clientId="your-actual-thirdweb-client-id"
+>
 ```
 
 ## Supported Networks
 
-Currently configured for:
-
-- **Base Sepolia** (Testnet)
-- **Base** (Mainnet)
-
-Additional networks can be easily added by importing them from `@reown/appkit/networks`.
-
-## Key Dependencies
-
-- **@reown/appkit**: Modern wallet connection SDK (formerly WalletConnect)
-- **@reown/appkit-adapter-wagmi**: Wagmi adapter for Reown AppKit
-- **wagmi**: React hooks for Ethereum
-- **viem**: TypeScript interface for Ethereum
-- **@tanstack/react-query**: Data fetching and state management
-- **react-router-dom**: Client-side routing
-- **tailwindcss**: Utility-first CSS framework
-- **lucide-react**: Beautiful & consistent icon toolkit
+Currently configured for Sepolia testnet, but can be easily changed to other networks supported by Thirdweb.
 
 ## Overview
 
@@ -117,26 +89,21 @@ The Payroll Project is a comprehensive system designed to manage employee payrol
    ```
 4. Start the application:
    ```bash
-   npm run dev
+   npm start
    ```
 
 ## Usage
 
-1. Access the application at `http://localhost:5178` (Vite default port).
-2. Connect your wallet using the Reown AppKit interface.
-3. Add employees and configure payroll settings.
-4. Process payroll and generate reports.
+1. Access the application at `http://localhost:3000`.
+2. Add employees and configure payroll settings.
+3. Process payroll and generate reports.
 
 ## Technologies Used
 
-- **Frontend**: React.js, Vite
-- **Wallet Integration**: Reown AppKit (formerly WalletConnect), Wagmi
-- **Blockchain**: Ethereum, Base Network
+- **Frontend**: React.js
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
 - **Styling**: Tailwind CSS
-- **State Management**: TanStack Query (React Query)
-- **Routing**: React Router DOM
-- **UI Components**: Lucide React Icons
-- **Build Tool**: Vite
 
 ## Contributing
 
