@@ -13,6 +13,7 @@ import { ThirdwebProvider } from "thirdweb/react";
 import { WagmiProvider } from "wagmi";
 import { config } from "./components/lib/wagmi.js";
 import { AppKitProvider } from "./Provider.jsx";
+import { ThemeProvider } from "./components/context/ThemeContext.jsx";
 
 const queryClient = new QueryClient();
 
@@ -25,14 +26,31 @@ createRoot(document.getElementById("root")).render(
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
           <AppKitProvider>
-            <AuthProvider>
-              <ReactQueryDevtools
-                initialIsOpen={false}
-                buttonPosition="bottom-left"
-              />
-              <App />
-              <Toaster position="bottom-center" />
-            </AuthProvider>
+            <ThemeProvider>
+              <AuthProvider>
+                <ReactQueryDevtools
+                  initialIsOpen={false}
+                  buttonPosition="bottom-left"
+                />
+                <App />
+                <Toaster
+                  position="bottom-center"
+                  toastOptions={{
+                    style: {
+                      background: "var(--app-surface)",
+                      color: "var(--app-text)",
+                      border: "1px solid var(--app-border)",
+                    },
+                    success: {
+                      iconTheme: {
+                        primary: "#94c294",
+                        secondary: "var(--app-surface)",
+                      },
+                    },
+                  }}
+                />
+              </AuthProvider>
+            </ThemeProvider>
           </AppKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
