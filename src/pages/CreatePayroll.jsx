@@ -30,11 +30,11 @@ const CreatePayroll = () => {
   const employees = singleWorkspace?.employees || [];
 
   // Watch form values
-  const title = watch("title");
-  const category = watch("category");
+  // const title = watch("title");
+  // const category = watch("category");
 
   // Validation check
-  const isFormValid = title && category && selectedEmployees.length > 0;
+  // const isFormValid = title && category && selectedEmployees.length > 0;
 
   // Toggle employee selection
   const toggleEmployeeSelection = (employee) => {
@@ -362,7 +362,7 @@ const CreatePayroll = () => {
                 </div>
               )}
             </div>
-            <ConnectButtonThirdweb
+            {/* <ConnectButtonThirdweb
               selectedEmployees={selectedEmployees}
               totalTax={totalTax}
               title={title}
@@ -372,7 +372,7 @@ const CreatePayroll = () => {
               totalAmount={totalSalary + totalTax}
               workspaceId={singleWorkspace?.id}
               isFormValid={isFormValid}
-            />
+            /> */}
           </div>
         </div>
       </div>
