@@ -1,17 +1,56 @@
 @import "tailwindcss";
 
+:root {
+  color-scheme: light;
+  --app-background: #f9fafb;
+  --app-surface: #ffffff;
+  --app-surface-muted: #f3f4f6;
+  --app-text: #111827;
+  --app-text-muted: #6b7280;
+  --app-border: rgba(17, 24, 39, 0.08);
+  --app-sidebar-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --app-background: #090b13;
+  --app-surface: #111827;
+  --app-surface-muted: #1f2937;
+  --app-text: #f9fafb;
+  --app-text-muted: #cbd5f5;
+  --app-border: rgba(203, 213, 225, 0.16);
+  --app-sidebar-bg: #0f0f0f;
+}
+
 @theme {
-  --color-c-bg: #0f0f0f;
+  --color-c-bg: var(--app-sidebar-bg);
   /* --color-c-bg-2: #1d283a; */
   --color-c-color: #94c294;
   --color-c-color-sec: #74af74;
-  --color-c-color-2: #f9fafb;
+  --color-c-color-2: var(--app-text);
 }
 
 body {
   font-family: "Inter Variable", sans-serif;
-  background: #f9fafb;
-  color: #0f0f0f;
+  background: var(--app-background);
+  color: var(--app-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bg-surface {
+  background-color: var(--app-surface);
+}
+
+.bg-surface-muted {
+  background-color: var(--app-surface-muted);
+}
+
+.text-muted {
+  color: var(--app-text-muted);
+}
+
+.border-default {
+  border-color: var(--app-border) !important;
 }
 
 /* Custom animations for the gradient div */
@@ -98,4 +137,28 @@ body {
 
 .auth-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] .bg-white {
+  background-color: var(--app-surface) !important;
+}
+
+[data-theme="dark"] .bg-gray-100,
+[data-theme="dark"] .bg-gray-200,
+[data-theme="dark"] .bg-gray-50 {
+  background-color: var(--app-surface-muted) !important;
+}
+
+[data-theme="dark"] .text-gray-500,
+[data-theme="dark"] .text-gray-600,
+[data-theme="dark"] .text-gray-700 {
+  color: var(--app-text-muted) !important;
+}
+
+[data-theme="dark"] .border-black\/10,
+[data-theme="dark"] .border-black\/5,
+[data-theme="dark"] .border-gray-200,
+[data-theme="dark"] .border-gray-100,
+[data-theme="dark"] .border-gray-300 {
+  border-color: var(--app-border) !important;
 }

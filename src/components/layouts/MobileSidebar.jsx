@@ -8,6 +8,7 @@ import { RiDashboardLine, RiSettingsLine } from "react-icons/ri";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import { useLogout } from "../hooks/useAuth";
+import ThemeToggle from "../ui/ThemeToggle.jsx";
 
 const data = [
   {
@@ -61,13 +62,13 @@ export default function MobileSidebar({ setOpen }) {
     <div className="fixed inset-0 z-50 flex h-screen">
       {/* Backdrop */}
       <div
-        className="flex-1 bg-c-bg/20 backdrop-blur-xs bg-opacity-50"
+        className="flex-1 bg-black/30 backdrop-blur-xs"
         onClick={() => setOpen(false)}
       />
-      <div className="md:hidden block text-white">
-        <div className="bg-c-bg w-[16rem] sticky top-0 border-r border-r-white/10 h-screen">
+      <div className="md:hidden block text-[var(--app-text)]">
+        <div className="bg-c-bg w-[16rem] sticky top-0 border-r border-default h-screen transition-colors">
           <div className="w-full space-y-2">
-            <div className="py-4 px-3 flex items-center justify-between gap-2 border-b border-b-white/10 h-fit">
+            <div className="py-4 px-3 flex items-center justify-between gap-2 border-b border-default h-fit">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-c-color overflow-hidden">
                   <img src={user?.avatar} alt="" />
@@ -76,17 +77,20 @@ export default function MobileSidebar({ setOpen }) {
                   <p className="text-xs font-semibold capitalize">
                     {user?.fullName}
                   </p>
-                  <p className="text-[10px] text-gray-500 capitalize">
+                  <p className="text-[10px] text-muted capitalize">
                     {user?.role}
                   </p>
                 </div>
               </div>
-              <div className="cursor-pointer" onClick={() => setOpen(false)}>
-                <X />
+              <div className="flex items-center gap-2">
+                <ThemeToggle variant="compact" />
+                <div className="cursor-pointer" onClick={() => setOpen(false)}>
+                  <X />
+                </div>
               </div>
             </div>
 
-            <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
+            <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-default">
               {data.map((item) => {
                 const match = matchPath(
                   { path: item.link, end: item.link === "/" },
@@ -108,8 +112,8 @@ export default function MobileSidebar({ setOpen }) {
                     ></div>
 
                     <div
-                      className={`flex items-center w-full h-[50px] px-3 ml-2 text-sm font-light cursor-pointer rounded-lg hover:opacity-60
-                      ${isActive ? "bg-c-color text-white" : ""}`}
+                      className={`flex items-center w-full h-[50px] px-3 ml-2 text-sm font-light cursor-pointer rounded-lg transition-colors hover:opacity-80
+                      ${isActive ? "bg-c-color text-white" : "bg-surface"}`}
                     >
                       {item.icon}
                       <span className="ml-2">{item.name}</span>
@@ -118,7 +122,7 @@ export default function MobileSidebar({ setOpen }) {
                 );
               })}
             </div>
-            <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
+            <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-default">
               {data2.map((item) => {
                 const isActive = pathname === item.link;
                 return (
@@ -136,8 +140,8 @@ export default function MobileSidebar({ setOpen }) {
                     ></div>
 
                     <div
-                      className={`flex items-center w-full h-[50px] px-3 ml-2 text-sm font-light cursor-pointer rounded-lg hover:opacity-60
-                      ${isActive ? "bg-c-color" : ""}`}
+                      className={`flex items-center w-full h-[50px] px-3 ml-2 text-sm font-light cursor-pointer rounded-lg transition-colors hover:opacity-80
+                      ${isActive ? "bg-c-color text-white" : "bg-surface"}`}
                     >
                       {item.icon}
                       <span className="ml-2">{item.name}</span>
@@ -150,7 +154,7 @@ export default function MobileSidebar({ setOpen }) {
               className="px-5 py-2 flex flex-col gap-3 w-full"
               onClick={() => logoutFn()}
             >
-              <div className="text-sm font-light text-red-500 hover:opacity-60">
+              <div className="text-sm font-light text-red-500 hover:opacity-80 transition-colors">
                 Logout
               </div>
             </div>
