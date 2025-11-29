@@ -14,8 +14,8 @@ export default function EmployeeTable({ employees }) {
   // console.log("Employees:", employees);
   const { deleteEmployeeFn, isPending } = useDeleteEmployee();
 
-  const handleEditClick = (employeeId) => {
-    setSelectedEmployee(employeeId);
+  const handleEditClick = (employee) => {
+    setSelectedEmployee(employee);
     setIsOpen(true);
   };
 
@@ -155,7 +155,7 @@ export default function EmployeeTable({ employees }) {
                       <div className="flex items-center space-x-2">
                         <button
                           className="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-50 transition-colors"
-                          onClick={() => handleEditClick(employee.id)}
+                          onClick={() => handleEditClick(employee)}
                         >
                           <Edit className="w-4 h-4" />
                         </button>
@@ -193,10 +193,10 @@ export default function EmployeeTable({ employees }) {
           Showing {filteredEmployees.length} of {employees.length} employees
         </div>
       </div>
-      {isOpen && (
+      {isOpen && selectedEmployee && (
         <UpdateEmployeeDrawer
           setIsOpen={setIsOpen}
-          employeeId={selectedEmployee}
+          employee={selectedEmployee}
         />
       )}
     </>
