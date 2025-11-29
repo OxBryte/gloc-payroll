@@ -27,7 +27,7 @@ const metadata = {
 };
 
 // 3. Set the networks
-const networks = [baseSepolia, base, optimism, celo, arbitrum];
+const networks = [base, baseSepolia, optimism, celo, arbitrum];
 
 // 4. Create Wagmi Adapter
 const wagmiAdapter = new WagmiAdapter({
@@ -40,7 +40,7 @@ const wagmiAdapter = new WagmiAdapter({
 createAppKit({
   adapters: [wagmiAdapter],
   networks,
-  defaultNetwork: baseSepolia, // Set Base Sepolia as default network
+  defaultNetwork: base, // Set Base Sepolia as default network
   projectId,
   metadata,
   features: {
