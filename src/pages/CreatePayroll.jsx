@@ -511,7 +511,7 @@ const CreatePayroll = () => {
               <div className="flex justify-between text-sm bg-gray-50 p-3 rounded-lg">
                 <span className="text-gray-600">Your USDC Balance:</span>
                 <span className="font-medium">
-                  ${formatNumberWithCommas(Number(usdcBalance) / 1e6)}
+                  ${(Number(usdcBalance) / 1e6).toFixed(2)}
                 </span>
               </div>
             )}
