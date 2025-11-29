@@ -10,14 +10,14 @@ const ProtectedRoute = ({ redirectTo = "/login" }) => {
   // Show loading spinner while checking auth status
   if (isLoadingUser) {
     return (
-      <div className="w-full h-screen flex items-center justify-center bg-c-bg">
+      <div className="w-full h-screen flex items-center justify-center bg-c-bg2">
         <div className="flex flex-col items-center space-y-4">
           <img
             src="/loading.svg"
             alt="Loading"
             className="animate-pulse w-16"
           />
-          <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-6 h-6 border-2 border-c-color border-t-transparent rounded-full animate-spin"></div>
         </div>
       </div>
     );
