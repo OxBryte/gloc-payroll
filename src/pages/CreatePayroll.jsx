@@ -59,6 +59,10 @@ const CreatePayroll = () => {
     return totalSalary * taxRate;
   }, [totalSalary, taxRate]);
 
+  const handleDistributePayroll = () => {
+    console.log("Distribute payroll");
+  };
+
   return (
     <div className="max-w-full mx-auto">
       {/* Header */}
@@ -339,7 +343,7 @@ const CreatePayroll = () => {
           </div>
 
           {/* Payment Section */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">Payment</h2>
 
@@ -361,6 +365,13 @@ const CreatePayroll = () => {
                   Connect Wallet
                 </div>
               )}
+            </div>
+            <div
+              className="w-full bg-c-color text-white text-center font-medium px-2 py-3 rounded-lg hover:bg-c-color/80 transition-colors cursor-pointer"
+              onClick={() => handleDistributePayroll()}
+              disabled={!isConnected || !isFormValid}
+            >
+              Distribute Payroll
             </div>
           </div>
         </div>
