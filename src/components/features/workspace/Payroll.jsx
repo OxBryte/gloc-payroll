@@ -1,5 +1,4 @@
-import { Calculator, Search } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 import { useUser } from "../../hooks/useUser";
 import { useGetSingleWorkspace } from "../../hooks/useWorkspace";
 import { useParams, useNavigate } from "react-router-dom";
