@@ -362,17 +362,6 @@ const CreatePayroll = () => {
                 </div>
               )}
             </div>
-            <ConnectButtonThirdweb
-              selectedEmployees={selectedEmployees}
-              totalTax={totalTax}
-              title={title}
-              category={category}
-              chain={chain}
-              currency={currency}
-              totalAmount={totalSalary + totalTax}
-              workspaceId={singleWorkspace?.id}
-              isFormValid={isFormValid}
-            />
           </div>
         </div>
       </div>
