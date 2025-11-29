@@ -9,7 +9,8 @@ export function useUser() {
     : null;
 
   const {
-    isPending: isLoadingUser,
+    isPending,
+    isFetching,
     data: user,
     error,
     isSuccess,
@@ -30,10 +31,15 @@ export function useUser() {
     }
   }, [isError, token]);
 
+  // Only show loading when:
+  // 1. Token exists (query is enabled) AND
+  // 2. Query is actually fetching data
+  const isLoadingUser = token !== null && isPending && isFetching;
+
   // isAuthenticated should be true only if:
   // 1. Token exists AND
   // 2. Query succeeded (token is valid)
-  // During loading, we use token presence as a preliminary check
+  // During loading, we keep them as potentially authenticated
   const isAuthenticated = token !== null && (isLoadingUser || isSuccess);
 
   return {
