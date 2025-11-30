@@ -1,11 +1,9 @@
-import { useReadContract, useReadContracts } from "wagmi";
+import { useReadContract } from "wagmi";
 import { contractAddress, contractABI } from "../constants/contractABI";
-import { base } from "@reown/appkit/networks";
 
 const contractConfig = {
   address: contractAddress,
   abi: contractABI,
-  chainId: base.id,
 };
 
 /**
@@ -53,13 +51,11 @@ export function usePayrollRead() {
   });
 
   // Get max tax percentage
-  const {
-    data: maxTaxPercentage,
-    isLoading: isLoadingMaxTaxPercentage,
-  } = useReadContract({
-    ...contractConfig,
-    functionName: "MAX_TAX_PERCENTAGE",
-  });
+  const { data: maxTaxPercentage, isLoading: isLoadingMaxTaxPercentage } =
+    useReadContract({
+      ...contractConfig,
+      functionName: "MAX_TAX_PERCENTAGE",
+    });
 
   // Get paused status
   const {
@@ -199,11 +195,7 @@ export function usePayrollStats() {
  * Hook to calculate distribution for a single amount
  */
 export function useCalculateDistribution(grossAmount) {
-  const {
-    data,
-    isLoading,
-    refetch,
-  } = useReadContract({
+  const { data, isLoading, refetch } = useReadContract({
     ...contractConfig,
     functionName: "calculateDistribution",
     args: [grossAmount],
@@ -224,11 +216,7 @@ export function useCalculateDistribution(grossAmount) {
  * Hook to calculate bulk distribution for multiple amounts
  */
 export function useCalculateBulkDistribution(grossAmounts = []) {
-  const {
-    data,
-    isLoading,
-    refetch,
-  } = useReadContract({
+  const { data, isLoading, refetch } = useReadContract({
     ...contractConfig,
     functionName: "calculateBulkDistribution",
     args: [grossAmounts],
@@ -245,4 +233,3 @@ export function useCalculateBulkDistribution(grossAmounts = []) {
     refetch,
   };
 }
-

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { ChevronLeft, Check, Loader2 } from "lucide-react";
+import { ChevronLeft, Check, Loader2, LogOut } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
@@ -8,12 +8,14 @@ import {
   truncateAddress,
   formatNumberWithCommas,
 } from "../components/lib/utils";
-import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
 import {
-  useUSDCApproval,
-  useDistributeBulk,
-} from "../components/hooks/usePayrollWrite";
+  useAppKit,
+  useAppKitAccount,
+  useDisconnect,
+} from "@reown/appkit/react";
+import { useDistributeBulk } from "../components/hooks/usePayrollWrite";
 import toast from "react-hot-toast";
+import { useApproveUsdc } from "../components/hooks/useApproveUsdc";
 
 const CreatePayroll = () => {
   const navigate = useNavigate();
@@ -26,6 +28,12 @@ const CreatePayroll = () => {
 
   const { address, isConnected } = useAppKitAccount();
   const { open } = useAppKit();
+  const { disconnect } = useDisconnect();
+
+  const handleDisconnect = async () => {
+    await disconnect();
+    toast.success("Disconnected from wallet");
+  };
 
   const {
     register,
@@ -82,15 +90,21 @@ const CreatePayroll = () => {
     usdcBalance,
     isApproving,
     isWaitingApproval,
-    approveUSDC,
+    approveUsdc,
     needsApproval,
     hasSufficientBalance,
     refetchAllowance,
-  } = useUSDCApproval(address);
+  } = useApproveUsdc();
 
   // Distribution hook
-  const { distributeBulk, isDistributing, isConfirming, isSuccess, txHash } =
-    useDistributeBulk(payrollData);
+  const {
+    distributeBulk,
+    isDistributing,
+    isConfirming,
+    isCreatingRecord,
+    isSuccess,
+    txHash,
+  } = useDistributeBulk(payrollData);
 
   // Validation check
   const isFormValid = title && category && selectedEmployees.length > 0;
@@ -145,7 +159,7 @@ const CreatePayroll = () => {
         setCurrentStep("approving");
         toast.loading("Approving USDC...", { id: "approval" });
 
-        await approveUSDC(totalAmount);
+        await approveUsdc(totalAmount);
 
         // Wait for approval to be confirmed
         await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -185,7 +199,9 @@ const CreatePayroll = () => {
   const getButtonText = () => {
     if (!isConnected) return "Connect Wallet";
     if (isApproving || isWaitingApproval) return "Approving USDC...";
-    if (isDistributing || isConfirming) return "Distributing...";
+    if (isDistributing) return "Submitting Transaction...";
+    if (isConfirming) return "Confirming Transaction...";
+    if (isCreatingRecord) return "Saving Payroll Record...";
     if (isProcessing)
       return currentStep === "approving" ? "Approving..." : "Processing...";
     if (needsApproval(totalAmount) && totalAmount > 0)
@@ -200,7 +216,8 @@ const CreatePayroll = () => {
     isApproving ||
     isWaitingApproval ||
     isDistributing ||
-    isConfirming;
+    isConfirming ||
+    isCreatingRecord;
 
   return (
     <div className="max-w-full mx-auto">
@@ -495,6 +512,12 @@ const CreatePayroll = () => {
                     <div className="w-2 h-2 bg-c-color rounded-full inline-block mr-2"></div>
                     {truncateAddress(address)}
                   </div>
+                  <div
+                    className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer"
+                    onClick={handleDisconnect}
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </div>
                 </div>
               ) : (
                 <div
@@ -553,7 +576,10 @@ const CreatePayroll = () => {
               {(isProcessing ||
                 isApproving ||
                 isDistributing ||
-                isConfirming) && <Loader2 className="w-4 h-4 animate-spin" />}
+                isConfirming ||
+                isCreatingRecord) && (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              )}
               {getButtonText()}
             </button>
 

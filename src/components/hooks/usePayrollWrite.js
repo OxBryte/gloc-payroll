@@ -1,187 +1,71 @@
-import { useState, useCallback } from "react";
-import {
-  useWriteContract,
-  useWaitForTransactionReceipt,
-  useReadContract,
-} from "wagmi";
-import { parseUnits } from "viem";
+import React, { useState, useCallback } from "react";
+import { useSendTransaction } from "wagmi";
+import { encodeFunctionData, parseUnits } from "viem";
 import { contractAddress, contractABI } from "../constants/contractABI";
-import { USDC_ABI } from "../constants/USDCAbi";
 import { base } from "@reown/appkit/networks";
 import { useCreatePayroll } from "./usePayroll";
 import toast from "react-hot-toast";
 
-// USDC contract address on Base Mainnet
-const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
-
 // USDC decimals
 const USDC_DECIMALS = 6;
-
-const contractConfig = {
-  address: contractAddress,
-  abi: contractABI,
-  chainId: base.id,
-};
-
-/**
- * Hook for USDC approval
- */
-export function useUSDCApproval(userAddress) {
-  const [approvalHash, setApprovalHash] = useState(null);
-
-  // Check current allowance
-  const {
-    data: currentAllowance,
-    isLoading: isLoadingAllowance,
-    refetch: refetchAllowance,
-  } = useReadContract({
-    address: USDC_ADDRESS,
-    abi: USDC_ABI,
-    functionName: "allowance",
-    args: [userAddress, contractAddress],
-    chainId: base.id,
-    query: {
-      enabled: !!userAddress,
-    },
-  });
-
-  // Check USDC balance
-  const {
-    data: usdcBalance,
-    isLoading: isLoadingBalance,
-    refetch: refetchBalance,
-  } = useReadContract({
-    address: USDC_ADDRESS,
-    abi: USDC_ABI,
-    functionName: "balanceOf",
-    args: [userAddress],
-    chainId: base.id,
-    query: {
-      enabled: !!userAddress,
-    },
-  });
-
-  // Write contract hook for approval
-  const {
-    writeContractAsync: approveAsync,
-    isPending: isApproving,
-    error: approvalError,
-  } = useWriteContract();
-
-  // Wait for approval transaction
-  const { isLoading: isWaitingApproval, isSuccess: isApprovalSuccess } =
-    useWaitForTransactionReceipt({
-      hash: approvalHash,
-    });
-
-  // Approve USDC spending
-  const approveUSDC = useCallback(
-    async (amount) => {
-      try {
-        // Convert amount to USDC units (6 decimals)
-        const amountInUnits = parseUnits(amount.toString(), USDC_DECIMALS);
-
-        const hash = await approveAsync({
-          address: USDC_ADDRESS,
-          abi: USDC_ABI,
-          functionName: "approve",
-          args: [contractAddress, amountInUnits],
-          chainId: base.id,
-        });
-
-        setApprovalHash(hash);
-        toast.success("USDC approval submitted");
-        return hash;
-      } catch (error) {
-        console.error("Error approving USDC:", error);
-        toast.error(error?.shortMessage || "Failed to approve USDC");
-        throw error;
-      }
-    },
-    [approveAsync]
-  );
-
-  // Check if approval is needed
-  const needsApproval = useCallback(
-    (requiredAmount) => {
-      if (!currentAllowance) return true;
-      const requiredInUnits = parseUnits(
-        requiredAmount.toString(),
-        USDC_DECIMALS
-      );
-      return currentAllowance < requiredInUnits;
-    },
-    [currentAllowance]
-  );
-
-  // Check if user has sufficient balance
-  const hasSufficientBalance = useCallback(
-    (requiredAmount) => {
-      if (!usdcBalance) return false;
-      const requiredInUnits = parseUnits(
-        requiredAmount.toString(),
-        USDC_DECIMALS
-      );
-      return usdcBalance >= requiredInUnits;
-    },
-    [usdcBalance]
-  );
-
-  return {
-    currentAllowance,
-    usdcBalance,
-    isLoadingAllowance,
-    isLoadingBalance,
-    isApproving,
-    isWaitingApproval,
-    isApprovalSuccess,
-    approvalError,
-    approveUSDC,
-    needsApproval,
-    hasSufficientBalance,
-    refetchAllowance,
-    refetchBalance,
-  };
-}
-
 /**
  * Hook for payroll distribution (single recipient)
  */
 export function useDistribute() {
   const [txHash, setTxHash] = useState(null);
+  const [isDistributing, setIsDistributing] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [distributeError, setDistributeError] = useState(null);
 
-  const {
-    writeContractAsync,
-    isPending: isDistributing,
-    error: distributeError,
-  } = useWriteContract();
-
-  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
-    hash: txHash,
-  });
+  // AppKit send transaction hook
+  const { sendTransaction } = useSendTransaction();
 
   const distribute = useCallback(
     async (recipient, grossAmount) => {
       try {
+        setIsDistributing(true);
+        setDistributeError(null);
+
         // Convert amount to USDC units (6 decimals)
         const amountInUnits = parseUnits(grossAmount.toString(), USDC_DECIMALS);
 
-        const hash = await writeContractAsync({
-          ...contractConfig,
+        // Encode the distribute function call
+        const data = encodeFunctionData({
+          abi: contractABI,
           functionName: "distribute",
           args: [recipient, amountInUnits],
         });
 
-        setTxHash(hash);
-        toast.success("Distribution submitted");
-        return hash;
+        setIsConfirming(true);
+
+        const result = await sendTransaction({
+          to: contractAddress,
+          data,
+          chainId: base.id,
+        });
+
+        if (result?.hash) {
+          setTxHash(result.hash);
+          setIsSuccess(true);
+          toast.success("Distribution successful");
+          return result.hash;
+        }
+
+        throw new Error("No transaction hash returned");
       } catch (error) {
         console.error("Error distributing:", error);
-        toast.error(error?.shortMessage || "Failed to distribute");
+        setDistributeError(error);
+        toast.error(
+          error?.shortMessage || error?.message || "Failed to distribute"
+        );
         throw error;
+      } finally {
+        setIsDistributing(false);
+        setIsConfirming(false);
       }
     },
-    [writeContractAsync]
+    [sendTransaction]
   );
 
   return {
@@ -199,74 +83,106 @@ export function useDistribute() {
  */
 export function useDistributeBulk(payrollData = {}) {
   const [txHash, setTxHash] = useState(null);
+  const [isDistributing, setIsDistributing] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isCreatingRecord, setIsCreatingRecord] = useState(false);
+  const [distributeError, setDistributeError] = useState(null);
   const { createPayrollFn } = useCreatePayroll();
 
-  const {
-    writeContractAsync,
-    isPending: isDistributing,
-    error: distributeError,
-  } = useWriteContract();
-
-  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
-    hash: txHash,
-  });
+  // AppKit send transaction hook
+  const { sendTransaction } = useSendTransaction();
 
   const distributeBulk = useCallback(
     async (recipients, grossAmounts) => {
       try {
+        setIsDistributing(true);
+        setDistributeError(null);
+        setIsSuccess(false);
+
         // Convert amounts to USDC units (6 decimals)
         const amountsInUnits = grossAmounts.map((amount) =>
           parseUnits(amount.toString(), USDC_DECIMALS)
         );
 
-        const hash = await writeContractAsync({
-          ...contractConfig,
+        // Encode the distributeBulk function call
+        const data = encodeFunctionData({
+          abi: contractABI,
           functionName: "distributeBulk",
           args: [recipients, amountsInUnits],
         });
 
-        setTxHash(hash);
-        toast.success("Bulk distribution submitted");
+        setIsConfirming(true);
+        toast.loading("Waiting for transaction confirmation...", {
+          id: "tx-confirm",
+        });
 
-        // Create payroll record in database after successful transaction
-        if (payrollData.workspaceId) {
-          try {
-            const payrollBody = {
-              title: payrollData.title,
-              category: payrollData.category,
-              chain: payrollData.chain,
-              currency: payrollData.currency,
-              totalSalary: payrollData.totalAmount,
-              tax: payrollData.totalTax,
-              tx: hash,
-              workspaceId: payrollData.workspaceId,
-              employeeCount: payrollData.selectedEmployees?.length || 0,
-            };
+        const result = await sendTransaction({
+          to: contractAddress,
+          data,
+          chainId: base.id,
+        });
 
-            await createPayrollFn(payrollBody);
-            toast.success("Payroll record created successfully");
-          } catch (error) {
-            console.error("Error creating payroll record:", error);
-            toast.error(
-              "Transaction successful but failed to save payroll record"
-            );
+        if (result?.hash) {
+          setTxHash(result.hash);
+          setIsSuccess(true);
+          toast.success("Transaction confirmed!", { id: "tx-confirm" });
+
+          // Create payroll record in database after successful transaction
+          if (payrollData.workspaceId) {
+            setIsCreatingRecord(true);
+            try {
+              const payrollBody = {
+                title: payrollData.title,
+                category: payrollData.category,
+                chain: payrollData.chain,
+                currency: payrollData.currency,
+                totalSalary: payrollData.totalAmount,
+                tax: payrollData.totalTax,
+                tx: result.hash,
+                workspaceId: payrollData.workspaceId,
+                employeeCount: payrollData.selectedEmployees?.length || 0,
+              };
+
+              console.log("Creating payroll record:", payrollBody);
+              await createPayrollFn(payrollBody);
+            } catch (error) {
+              console.error("Error creating payroll record:", error);
+              toast.error(
+                "Transaction successful but failed to save payroll record"
+              );
+            } finally {
+              setIsCreatingRecord(false);
+            }
           }
+
+          return result.hash;
         }
 
-        return hash;
+        throw new Error("No transaction hash returned");
       } catch (error) {
         console.error("Error distributing bulk:", error);
-        toast.error(error?.shortMessage || "Failed to distribute payroll");
+        setDistributeError(error);
+        toast.error(
+          error?.shortMessage ||
+            error?.message ||
+            "Failed to distribute payroll",
+          { id: "tx-confirm" }
+        );
         throw error;
+      } finally {
+        setIsDistributing(false);
+        setIsConfirming(false);
       }
     },
-    [writeContractAsync, payrollData, createPayrollFn]
+    [sendTransaction, payrollData, createPayrollFn]
   );
 
   return {
     distributeBulk,
     isDistributing,
     isConfirming,
+    isCreatingRecord,
     isSuccess,
     txHash,
     error: distributeError,
@@ -278,130 +194,265 @@ export function useDistributeBulk(payrollData = {}) {
  */
 export function usePayrollAdmin() {
   const [txHash, setTxHash] = useState(null);
+  const [isPending, setIsPending] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
-  const {
-    writeContractAsync,
-    isPending,
-    error,
-  } = useWriteContract();
-
-  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
-    hash: txHash,
-  });
+  // AppKit send transaction hook
+  const { sendTransaction } = useSendTransaction();
 
   // Pause contract
   const pause = useCallback(async () => {
     try {
-      const hash = await writeContractAsync({
-        ...contractConfig,
+      setIsPending(true);
+      setError(null);
+
+      const data = encodeFunctionData({
+        abi: contractABI,
         functionName: "pause",
       });
-      setTxHash(hash);
-      toast.success("Pause transaction submitted");
-      return hash;
-    } catch (error) {
-      console.error("Error pausing contract:", error);
-      toast.error(error?.shortMessage || "Failed to pause contract");
-      throw error;
+
+      setIsConfirming(true);
+
+      const result = await sendTransaction({
+        to: contractAddress,
+        data,
+        chainId: base.id,
+      });
+
+      if (result?.hash) {
+        setTxHash(result.hash);
+        setIsSuccess(true);
+        toast.success("Contract paused successfully");
+        return result.hash;
+      }
+
+      throw new Error("No transaction hash returned");
+    } catch (err) {
+      console.error("Error pausing contract:", err);
+      setError(err);
+      toast.error(
+        err?.shortMessage || err?.message || "Failed to pause contract"
+      );
+      throw err;
+    } finally {
+      setIsPending(false);
+      setIsConfirming(false);
     }
-  }, [writeContractAsync]);
+  }, [sendTransaction]);
 
   // Unpause contract
   const unpause = useCallback(async () => {
     try {
-      const hash = await writeContractAsync({
-        ...contractConfig,
+      setIsPending(true);
+      setError(null);
+
+      const data = encodeFunctionData({
+        abi: contractABI,
         functionName: "unpause",
       });
-      setTxHash(hash);
-      toast.success("Unpause transaction submitted");
-      return hash;
-    } catch (error) {
-      console.error("Error unpausing contract:", error);
-      toast.error(error?.shortMessage || "Failed to unpause contract");
-      throw error;
+
+      setIsConfirming(true);
+
+      const result = await sendTransaction({
+        to: contractAddress,
+        data,
+        chainId: base.id,
+      });
+
+      if (result?.hash) {
+        setTxHash(result.hash);
+        setIsSuccess(true);
+        toast.success("Contract unpaused successfully");
+        return result.hash;
+      }
+
+      throw new Error("No transaction hash returned");
+    } catch (err) {
+      console.error("Error unpausing contract:", err);
+      setError(err);
+      toast.error(
+        err?.shortMessage || err?.message || "Failed to unpause contract"
+      );
+      throw err;
+    } finally {
+      setIsPending(false);
+      setIsConfirming(false);
     }
-  }, [writeContractAsync]);
+  }, [sendTransaction]);
 
   // Set tax percentage
   const setTaxPercentage = useCallback(
     async (newPercentage) => {
       try {
-        const hash = await writeContractAsync({
-          ...contractConfig,
+        setIsPending(true);
+        setError(null);
+
+        const data = encodeFunctionData({
+          abi: contractABI,
           functionName: "setTaxPercentage",
           args: [BigInt(newPercentage)],
         });
-        setTxHash(hash);
-        toast.success("Tax percentage update submitted");
-        return hash;
-      } catch (error) {
-        console.error("Error setting tax percentage:", error);
-        toast.error(error?.shortMessage || "Failed to set tax percentage");
-        throw error;
+
+        setIsConfirming(true);
+
+        const result = await sendTransaction({
+          to: contractAddress,
+          data,
+          chainId: base.id,
+        });
+
+        if (result?.hash) {
+          setTxHash(result.hash);
+          setIsSuccess(true);
+          toast.success("Tax percentage updated successfully");
+          return result.hash;
+        }
+
+        throw new Error("No transaction hash returned");
+      } catch (err) {
+        console.error("Error setting tax percentage:", err);
+        setError(err);
+        toast.error(
+          err?.shortMessage || err?.message || "Failed to set tax percentage"
+        );
+        throw err;
+      } finally {
+        setIsPending(false);
+        setIsConfirming(false);
       }
     },
-    [writeContractAsync]
+    [sendTransaction]
   );
 
   // Emergency withdraw
   const emergencyWithdraw = useCallback(
     async (tokenAddress) => {
       try {
-        const hash = await writeContractAsync({
-          ...contractConfig,
+        setIsPending(true);
+        setError(null);
+
+        const data = encodeFunctionData({
+          abi: contractABI,
           functionName: "emergencyWithdraw",
           args: [tokenAddress],
         });
-        setTxHash(hash);
-        toast.success("Emergency withdraw submitted");
-        return hash;
-      } catch (error) {
-        console.error("Error emergency withdraw:", error);
-        toast.error(error?.shortMessage || "Failed to emergency withdraw");
-        throw error;
+
+        setIsConfirming(true);
+
+        const result = await sendTransaction({
+          to: contractAddress,
+          data,
+          chainId: base.id,
+        });
+
+        if (result?.hash) {
+          setTxHash(result.hash);
+          setIsSuccess(true);
+          toast.success("Emergency withdraw successful");
+          return result.hash;
+        }
+
+        throw new Error("No transaction hash returned");
+      } catch (err) {
+        console.error("Error emergency withdraw:", err);
+        setError(err);
+        toast.error(
+          err?.shortMessage || err?.message || "Failed to emergency withdraw"
+        );
+        throw err;
+      } finally {
+        setIsPending(false);
+        setIsConfirming(false);
       }
     },
-    [writeContractAsync]
+    [sendTransaction]
   );
 
   // Transfer ownership
   const transferOwnership = useCallback(
     async (newOwner) => {
       try {
-        const hash = await writeContractAsync({
-          ...contractConfig,
+        setIsPending(true);
+        setError(null);
+
+        const data = encodeFunctionData({
+          abi: contractABI,
           functionName: "transferOwnership",
           args: [newOwner],
         });
-        setTxHash(hash);
-        toast.success("Ownership transfer submitted");
-        return hash;
-      } catch (error) {
-        console.error("Error transferring ownership:", error);
-        toast.error(error?.shortMessage || "Failed to transfer ownership");
-        throw error;
+
+        setIsConfirming(true);
+
+        const result = await sendTransaction({
+          to: contractAddress,
+          data,
+          chainId: base.id,
+        });
+
+        if (result?.hash) {
+          setTxHash(result.hash);
+          setIsSuccess(true);
+          toast.success("Ownership transferred successfully");
+          return result.hash;
+        }
+
+        throw new Error("No transaction hash returned");
+      } catch (err) {
+        console.error("Error transferring ownership:", err);
+        setError(err);
+        toast.error(
+          err?.shortMessage || err?.message || "Failed to transfer ownership"
+        );
+        throw err;
+      } finally {
+        setIsPending(false);
+        setIsConfirming(false);
       }
     },
-    [writeContractAsync]
+    [sendTransaction]
   );
 
   // Renounce ownership
   const renounceOwnership = useCallback(async () => {
     try {
-      const hash = await writeContractAsync({
-        ...contractConfig,
+      setIsPending(true);
+      setError(null);
+
+      const data = encodeFunctionData({
+        abi: contractABI,
         functionName: "renounceOwnership",
       });
-      setTxHash(hash);
-      toast.success("Renounce ownership submitted");
-      return hash;
-    } catch (error) {
-      console.error("Error renouncing ownership:", error);
-      toast.error(error?.shortMessage || "Failed to renounce ownership");
-      throw error;
+
+      setIsConfirming(true);
+
+      const result = await sendTransaction({
+        to: contractAddress,
+        data,
+        chainId: base.id,
+      });
+
+      if (result?.hash) {
+        setTxHash(result.hash);
+        setIsSuccess(true);
+        toast.success("Ownership renounced successfully");
+        return result.hash;
+      }
+
+      throw new Error("No transaction hash returned");
+    } catch (err) {
+      console.error("Error renouncing ownership:", err);
+      setError(err);
+      toast.error(
+        err?.shortMessage || err?.message || "Failed to renounce ownership"
+      );
+      throw err;
+    } finally {
+      setIsPending(false);
+      setIsConfirming(false);
     }
-  }, [writeContractAsync]);
+  }, [sendTransaction]);
 
   return {
     pause,
@@ -417,4 +468,3 @@ export function usePayrollAdmin() {
     error,
   };
 }
-
