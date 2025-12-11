@@ -87,14 +87,13 @@ const CreatePayroll = () => {
 
   // USDC Approval hook
   const {
-    usdcBalance,
+    usdcBalance, // This is now a formatted string
     isApproving,
-    isWaitingApproval,
     approveUsdc,
     needsApproval,
     hasSufficientBalance,
     refetchAllowance,
-  } = useApproveUsdc();
+  } = useApproveUsdc(address, isConnected);
 
   // Distribution hook
   const {
@@ -198,7 +197,7 @@ const CreatePayroll = () => {
   // Get button text based on state
   const getButtonText = () => {
     if (!isConnected) return "Connect Wallet";
-    if (isApproving || isWaitingApproval) return "Approving USDC...";
+    if (isApproving) return "Approving USDC...";
     if (isDistributing) return "Submitting Transaction...";
     if (isConfirming) return "Confirming Transaction...";
     if (isCreatingRecord) return "Saving Payroll Record...";
@@ -214,7 +213,6 @@ const CreatePayroll = () => {
     !isFormValid ||
     isProcessing ||
     isApproving ||
-    isWaitingApproval ||
     isDistributing ||
     isConfirming ||
     isCreatingRecord;
@@ -533,9 +531,7 @@ const CreatePayroll = () => {
             {isConnected && usdcBalance !== undefined && (
               <div className="flex justify-between text-sm bg-gray-50 p-3 rounded-lg">
                 <span className="text-gray-600">Your USDC Balance:</span>
-                <span className="font-medium">
-                  ${(Number(usdcBalance) / 1e6).toFixed(2)}
-                </span>
+                <span className="font-medium">${usdcBalance}</span>
               </div>
             )}
 
