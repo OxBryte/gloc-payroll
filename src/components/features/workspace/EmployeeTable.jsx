@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Search, Filter, MoreVertical, Edit, Trash2 } from "lucide-react";
 import moment from "moment/moment";
-import { formatNumberWithCommas } from "../../lib/utils";
+import { formatNumberWithCommas, truncateAddress } from "../../lib/utils";
 import { useDeleteEmployee } from "../../hooks/useEmployee";
 import UpdateEmployeeDrawer from "../../ui/UpdateEmployeeDrawar";
 
@@ -140,7 +140,7 @@ export default function EmployeeTable({ employees }) {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-700  capitalize">
-                        {employee?.address || "N/A"}
+                        {truncateAddress(employee?.address) || "N/A"}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

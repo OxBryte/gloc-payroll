@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
 import {
-  truncate,
   truncateAddress,
   formatNumberWithCommas,
 } from "../components/lib/utils";
@@ -448,7 +447,7 @@ const CreatePayroll = () => {
                             {employee.role}
                           </p>
                           <p className="text-sm text-gray-600">
-                            {truncate(employee.address, 24)}
+                            {truncateAddress(employee.address)}
                           </p>
                         </div>
                       </div>
