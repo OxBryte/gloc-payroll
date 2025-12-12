@@ -39,17 +39,17 @@ export function useDistribute() {
 
         setIsConfirming(true);
 
-        const result = await sendTransaction({
+        const hash = await sendTransaction({
           to: contractAddress,
           data,
           chainId: base.id,
         });
 
-        if (result?.hash) {
-          setTxHash(result.hash);
+        if (hash) {
+          setTxHash(hash);
           setIsSuccess(true);
           toast.success("Distribution successful");
-          return result.hash;
+          return hash;
         }
 
         throw new Error("No transaction hash returned");
@@ -117,14 +117,14 @@ export function useDistributeBulk(payrollData = {}) {
           id: "tx-confirm",
         });
 
-        const result = await sendTransaction({
+        const hash = await sendTransaction({
           to: contractAddress,
           data,
           chainId: base.id,
         });
 
-        if (result?.hash) {
-          setTxHash(result.hash);
+        if (hash) {
+          setTxHash(hash);
           setIsSuccess(true);
           toast.success("Transaction confirmed!", { id: "tx-confirm" });
 
@@ -139,13 +139,14 @@ export function useDistributeBulk(payrollData = {}) {
                 currency: payrollData.currency,
                 totalSalary: payrollData.totalAmount,
                 tax: payrollData.totalTax,
-                tx: result.hash,
+                tx: hash,
                 workspaceId: payrollData.workspaceId,
                 employeeCount: payrollData.selectedEmployees?.length || 0,
               };
 
               console.log("Creating payroll record:", payrollBody);
               await createPayrollFn(payrollBody);
+              toast.success("Payroll record saved successfully!");
             } catch (error) {
               console.error("Error creating payroll record:", error);
               toast.error(
@@ -156,7 +157,7 @@ export function useDistributeBulk(payrollData = {}) {
             }
           }
 
-          return result.hash;
+          return hash;
         }
 
         throw new Error("No transaction hash returned");
@@ -215,17 +216,17 @@ export function usePayrollAdmin() {
 
       setIsConfirming(true);
 
-      const result = await sendTransaction({
+      const hash = await sendTransaction({
         to: contractAddress,
         data,
         chainId: base.id,
       });
 
-      if (result?.hash) {
-        setTxHash(result.hash);
+      if (hash) {
+        setTxHash(hash);
         setIsSuccess(true);
         toast.success("Contract paused successfully");
-        return result.hash;
+        return hash;
       }
 
       throw new Error("No transaction hash returned");
@@ -255,17 +256,17 @@ export function usePayrollAdmin() {
 
       setIsConfirming(true);
 
-      const result = await sendTransaction({
+      const hash = await sendTransaction({
         to: contractAddress,
         data,
         chainId: base.id,
       });
 
-      if (result?.hash) {
-        setTxHash(result.hash);
+      if (hash) {
+        setTxHash(hash);
         setIsSuccess(true);
         toast.success("Contract unpaused successfully");
-        return result.hash;
+        return hash;
       }
 
       throw new Error("No transaction hash returned");
@@ -297,17 +298,17 @@ export function usePayrollAdmin() {
 
         setIsConfirming(true);
 
-        const result = await sendTransaction({
+        const hash = await sendTransaction({
           to: contractAddress,
           data,
           chainId: base.id,
         });
 
-        if (result?.hash) {
-          setTxHash(result.hash);
+        if (hash) {
+          setTxHash(hash);
           setIsSuccess(true);
           toast.success("Tax percentage updated successfully");
-          return result.hash;
+          return hash;
         }
 
         throw new Error("No transaction hash returned");
@@ -341,17 +342,17 @@ export function usePayrollAdmin() {
 
         setIsConfirming(true);
 
-        const result = await sendTransaction({
+        const hash = await sendTransaction({
           to: contractAddress,
           data,
           chainId: base.id,
         });
 
-        if (result?.hash) {
-          setTxHash(result.hash);
+        if (hash) {
+          setTxHash(hash);
           setIsSuccess(true);
           toast.success("Emergency withdraw successful");
-          return result.hash;
+          return hash;
         }
 
         throw new Error("No transaction hash returned");
@@ -385,17 +386,17 @@ export function usePayrollAdmin() {
 
         setIsConfirming(true);
 
-        const result = await sendTransaction({
+        const hash = await sendTransaction({
           to: contractAddress,
           data,
           chainId: base.id,
         });
 
-        if (result?.hash) {
-          setTxHash(result.hash);
+        if (hash) {
+          setTxHash(hash);
           setIsSuccess(true);
           toast.success("Ownership transferred successfully");
-          return result.hash;
+          return hash;
         }
 
         throw new Error("No transaction hash returned");
@@ -427,17 +428,17 @@ export function usePayrollAdmin() {
 
       setIsConfirming(true);
 
-      const result = await sendTransaction({
+      const hash = await sendTransaction({
         to: contractAddress,
         data,
         chainId: base.id,
       });
 
-      if (result?.hash) {
-        setTxHash(result.hash);
+      if (hash) {
+        setTxHash(hash);
         setIsSuccess(true);
         toast.success("Ownership renounced successfully");
-        return result.hash;
+        return hash;
       }
 
       throw new Error("No transaction hash returned");
