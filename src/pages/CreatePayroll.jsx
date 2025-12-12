@@ -184,7 +184,7 @@ const CreatePayroll = () => {
       }, 2000);
     } catch (error) {
       console.error("Error in payroll distribution:", error);
-      toast.error(error?.shortMessage || "Failed to process payroll", {
+      toast.error(error?.message, {
         id: currentStep === "approving" ? "approval" : "distribute",
       });
     } finally {

@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
-import { useSendTransaction } from "wagmi";
+import { useSendTransaction, useConfig } from "wagmi";
+import { waitForTransactionReceipt } from "@wagmi/core";
 import { encodeFunctionData, parseUnits } from "viem";
 import { contractAddress, contractABI } from "../constants/contractABI";
 import { base } from "@reown/appkit/networks";
@@ -19,7 +20,7 @@ export function useDistribute() {
   const [distributeError, setDistributeError] = useState(null);
 
   // AppKit send transaction hook
-  const { sendTransaction } = useSendTransaction();
+  const { sendTransactionAsync } = useSendTransaction();
 
   const distribute = useCallback(
     async (recipient, grossAmount) => {
@@ -39,7 +40,7 @@ export function useDistribute() {
 
         setIsConfirming(true);
 
-        const hash = await sendTransaction({
+        const hash = await sendTransactionAsync({
           to: contractAddress,
           data,
           chainId: base.id,
@@ -54,7 +55,6 @@ export function useDistribute() {
 
         throw new Error("No transaction hash returned");
       } catch (error) {
-        console.error("Error distributing:", error);
         setDistributeError(error);
         toast.error(
           error?.shortMessage || error?.message || "Failed to distribute"
@@ -65,7 +65,7 @@ export function useDistribute() {
         setIsConfirming(false);
       }
     },
-    [sendTransaction]
+    [sendTransactionAsync]
   );
 
   return {
@@ -90,8 +90,9 @@ export function useDistributeBulk(payrollData = {}) {
   const [distributeError, setDistributeError] = useState(null);
   const { createPayrollFn } = useCreatePayroll();
 
-  // AppKit send transaction hook
-  const { sendTransaction } = useSendTransaction();
+  // Wagmi hooks
+  const config = useConfig();
+  const { sendTransactionAsync } = useSendTransaction();
 
   const distributeBulk = useCallback(
     async (recipients, grossAmounts) => {
@@ -113,18 +114,39 @@ export function useDistributeBulk(payrollData = {}) {
         });
 
         setIsConfirming(true);
-        toast.loading("Waiting for transaction confirmation...", {
+        toast.loading("Waiting for wallet approval...", {
           id: "tx-confirm",
         });
 
-        const hash = await sendTransaction({
-          to: contractAddress,
-          data,
+        // Send transaction and get hash
+        let hash;
+        try {
+          hash = await sendTransactionAsync({
+            to: contractAddress,
+            data,
+            chainId: base.id,
+          });
+        } catch (txError) {
+          console.error("Error from sendTransactionAsync:", txError);
+          throw txError;
+        }
+
+        if (!hash) {
+          throw new Error("Transaction was rejected or failed");
+        }
+
+        setTxHash(hash);
+        toast.loading(`Transaction submitted! Waiting for confirmation...`, {
+          id: "tx-confirm",
+        });
+
+        // Wait for transaction confirmation
+        const receipt = await waitForTransactionReceipt(config, {
+          hash,
           chainId: base.id,
         });
 
-        if (hash) {
-          setTxHash(hash);
+        if (receipt && receipt.status === "success") {
           setIsSuccess(true);
           toast.success("Transaction confirmed!", { id: "tx-confirm" });
 
@@ -144,13 +166,13 @@ export function useDistributeBulk(payrollData = {}) {
                 employeeCount: payrollData.selectedEmployees?.length || 0,
               };
 
-              console.log("Creating payroll record:", payrollBody);
               await createPayrollFn(payrollBody);
               toast.success("Payroll record saved successfully!");
             } catch (error) {
-              console.error("Error creating payroll record:", error);
               toast.error(
-                "Transaction successful but failed to save payroll record"
+                error?.shortMessage ||
+                  error?.message ||
+                  "Transaction successful but failed to save payroll record"
               );
             } finally {
               setIsCreatingRecord(false);
@@ -158,25 +180,40 @@ export function useDistributeBulk(payrollData = {}) {
           }
 
           return hash;
+        } else if (receipt && receipt.status === "reverted") {
+          throw new Error("Transaction was reverted");
         }
 
-        throw new Error("No transaction hash returned");
+        throw new Error("Transaction failed");
       } catch (error) {
-        console.error("Error distributing bulk:", error);
         setDistributeError(error);
-        toast.error(
-          error?.shortMessage ||
-            error?.message ||
-            "Failed to distribute payroll",
-          { id: "tx-confirm" }
-        );
+
+        // Check if user rejected the transaction
+        const isUserRejection =
+          error?.message?.includes("User rejected") ||
+          error?.message?.includes("user rejected") ||
+          error?.message?.includes("User denied") ||
+          error?.message?.includes("rejected the request") ||
+          error?.code === 4001 ||
+          error?.code === "ACTION_REJECTED";
+
+        if (isUserRejection) {
+          toast.error("Transaction was rejected", { id: "tx-confirm" });
+        } else {
+          toast.error(
+            error?.shortMessage ||
+              error?.message ||
+              "Failed to distribute payroll",
+            { id: "tx-confirm" }
+          );
+        }
         throw error;
       } finally {
         setIsDistributing(false);
         setIsConfirming(false);
       }
     },
-    [sendTransaction, payrollData, createPayrollFn]
+    [config, sendTransactionAsync, payrollData, createPayrollFn]
   );
 
   return {
@@ -201,7 +238,7 @@ export function usePayrollAdmin() {
   const [error, setError] = useState(null);
 
   // AppKit send transaction hook
-  const { sendTransaction } = useSendTransaction();
+  const { sendTransactionAsync } = useSendTransaction();
 
   // Pause contract
   const pause = useCallback(async () => {
@@ -216,7 +253,7 @@ export function usePayrollAdmin() {
 
       setIsConfirming(true);
 
-      const hash = await sendTransaction({
+      const hash = await sendTransactionAsync({
         to: contractAddress,
         data,
         chainId: base.id,
@@ -231,7 +268,6 @@ export function usePayrollAdmin() {
 
       throw new Error("No transaction hash returned");
     } catch (err) {
-      console.error("Error pausing contract:", err);
       setError(err);
       toast.error(
         err?.shortMessage || err?.message || "Failed to pause contract"
@@ -241,7 +277,7 @@ export function usePayrollAdmin() {
       setIsPending(false);
       setIsConfirming(false);
     }
-  }, [sendTransaction]);
+  }, [sendTransactionAsync]);
 
   // Unpause contract
   const unpause = useCallback(async () => {
@@ -256,7 +292,7 @@ export function usePayrollAdmin() {
 
       setIsConfirming(true);
 
-      const hash = await sendTransaction({
+      const hash = await sendTransactionAsync({
         to: contractAddress,
         data,
         chainId: base.id,
@@ -271,7 +307,6 @@ export function usePayrollAdmin() {
 
       throw new Error("No transaction hash returned");
     } catch (err) {
-      console.error("Error unpausing contract:", err);
       setError(err);
       toast.error(
         err?.shortMessage || err?.message || "Failed to unpause contract"
@@ -281,7 +316,7 @@ export function usePayrollAdmin() {
       setIsPending(false);
       setIsConfirming(false);
     }
-  }, [sendTransaction]);
+  }, [sendTransactionAsync]);
 
   // Set tax percentage
   const setTaxPercentage = useCallback(
@@ -298,7 +333,7 @@ export function usePayrollAdmin() {
 
         setIsConfirming(true);
 
-        const hash = await sendTransaction({
+        const hash = await sendTransactionAsync({
           to: contractAddress,
           data,
           chainId: base.id,
@@ -313,7 +348,6 @@ export function usePayrollAdmin() {
 
         throw new Error("No transaction hash returned");
       } catch (err) {
-        console.error("Error setting tax percentage:", err);
         setError(err);
         toast.error(
           err?.shortMessage || err?.message || "Failed to set tax percentage"
@@ -324,7 +358,7 @@ export function usePayrollAdmin() {
         setIsConfirming(false);
       }
     },
-    [sendTransaction]
+    [sendTransactionAsync]
   );
 
   // Emergency withdraw
@@ -342,7 +376,7 @@ export function usePayrollAdmin() {
 
         setIsConfirming(true);
 
-        const hash = await sendTransaction({
+        const hash = await sendTransactionAsync({
           to: contractAddress,
           data,
           chainId: base.id,
@@ -357,7 +391,6 @@ export function usePayrollAdmin() {
 
         throw new Error("No transaction hash returned");
       } catch (err) {
-        console.error("Error emergency withdraw:", err);
         setError(err);
         toast.error(
           err?.shortMessage || err?.message || "Failed to emergency withdraw"
@@ -368,7 +401,7 @@ export function usePayrollAdmin() {
         setIsConfirming(false);
       }
     },
-    [sendTransaction]
+    [sendTransactionAsync]
   );
 
   // Transfer ownership
@@ -386,7 +419,7 @@ export function usePayrollAdmin() {
 
         setIsConfirming(true);
 
-        const hash = await sendTransaction({
+        const hash = await sendTransactionAsync({
           to: contractAddress,
           data,
           chainId: base.id,
@@ -401,7 +434,6 @@ export function usePayrollAdmin() {
 
         throw new Error("No transaction hash returned");
       } catch (err) {
-        console.error("Error transferring ownership:", err);
         setError(err);
         toast.error(
           err?.shortMessage || err?.message || "Failed to transfer ownership"
@@ -412,7 +444,7 @@ export function usePayrollAdmin() {
         setIsConfirming(false);
       }
     },
-    [sendTransaction]
+    [sendTransactionAsync]
   );
 
   // Renounce ownership
@@ -428,7 +460,7 @@ export function usePayrollAdmin() {
 
       setIsConfirming(true);
 
-      const hash = await sendTransaction({
+      const hash = await sendTransactionAsync({
         to: contractAddress,
         data,
         chainId: base.id,
@@ -443,7 +475,6 @@ export function usePayrollAdmin() {
 
       throw new Error("No transaction hash returned");
     } catch (err) {
-      console.error("Error renouncing ownership:", err);
       setError(err);
       toast.error(
         err?.shortMessage || err?.message || "Failed to renounce ownership"
@@ -453,7 +484,7 @@ export function usePayrollAdmin() {
       setIsPending(false);
       setIsConfirming(false);
     }
-  }, [sendTransaction]);
+  }, [sendTransactionAsync]);
 
   return {
     pause,

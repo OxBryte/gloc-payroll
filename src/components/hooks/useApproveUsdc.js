@@ -145,10 +145,7 @@ export function useApproveUsdc(appKitAddress, appKitIsConnected) {
         );
 
         // Send Approve Transaction
-        const tx = await usdcContract.approve(
-          contractAddress,
-          amountInUnits
-        );
+        const tx = await usdcContract.approve(contractAddress, amountInUnits);
 
         toast.loading(`Approval submitted! Waiting for confirmation...`, {
           id: "approval",
