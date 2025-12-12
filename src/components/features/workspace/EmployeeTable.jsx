@@ -11,7 +11,6 @@ export default function EmployeeTable({ employees }) {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [filterDepartment, setFilterDepartment] = useState("all");
 
-  // console.log("Employees:", employees);
   const { deleteEmployeeFn, isPending } = useDeleteEmployee();
 
   const handleEditClick = (employee) => {

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { ChevronDown, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useGetWorkspace } from "../hooks/useWorkspace";
-import { useCreateWorkspace } from "../hooks/useWorkspace";
 import Drawer from "./Drawer";
 
 const WorkspaceSelector = () => {
@@ -13,7 +12,6 @@ const WorkspaceSelector = () => {
   const navigate = useNavigate();
 
   const { workspace, isLoadingWorkspace } = useGetWorkspace();
-  const { createWorkspaceFn } = useCreateWorkspace();
 
   // Close dropdown when clicking outside
   useEffect(() => {
