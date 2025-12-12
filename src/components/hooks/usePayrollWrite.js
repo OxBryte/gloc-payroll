@@ -145,7 +145,6 @@ export function useDistributeBulk(payrollData = {}) {
           hash,
           chainId: base.id,
         });
-
         if (receipt && receipt.status === "success") {
           setIsSuccess(true);
           toast.success("Transaction confirmed!", { id: "tx-confirm" });
