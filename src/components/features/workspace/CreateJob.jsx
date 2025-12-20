@@ -162,7 +162,7 @@ export default function CreateJob() {
             {/* Salary */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700 block">
-                Salary Range (Monthly)
+                Salary Range
               </label>
               <div className="flex items-center gap-2">
                 <div className="relative w-full">

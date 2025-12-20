@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { createJob, getJobs, getAllJobs } from "../services/jobsApi";
+import { useNavigate } from "react-router-dom";
 
 export const useCreateJob = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { mutateAsync: createJobFn, isPending } = useMutation({
     mutationKey: ["createJob"],
     mutationFn: async (body) => {
@@ -16,6 +18,8 @@ export const useCreateJob = () => {
       // Adjust query key based on where jobs are fetched.
       queryClient.invalidateQueries({ queryKey: ["singleWorkspace"] });
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["allJobs"] });
+      navigate(-1);
     },
     onError(error) {
       console.log(error);
