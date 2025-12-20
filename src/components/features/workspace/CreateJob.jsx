@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import toast from "react-hot-toast";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useCreateJob } from "../../hooks/useJobs";
+import { useGetSingleWorkspace } from "../../hooks/useWorkspace";
 
 export default function CreateJob() {
   const location = useLocation();
+  const { slug } = useParams();
+  const { singleWorkspace } = useGetSingleWorkspace(slug);
+  const { createJobFn, isPending: isCreatingJob } = useCreateJob();
+
   const {
     register,
     handleSubmit,
@@ -15,7 +20,7 @@ export default function CreateJob() {
     watch,
     formState: { errors },
   } = useForm();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  // const [isSubmitting, setIsSubmitting] = useState(false); // Using react-query isPending instead
 
   // Watch description for manual validation if needed, or rely on React Hook Form's Controller
   // However, simpler to just use state for Quill if not using Controller,
@@ -35,18 +40,41 @@ export default function CreateJob() {
   const descriptionValue = watch("description");
 
   const onSubmit = async (data) => {
-    setIsSubmitting(true);
+   
+    // Parse skills
+    const skillsArray = data.skills
+      .split(",")
+      .map((skill) => skill.trim())
+      .filter((skill) => skill.length > 0);
+
+    // Format amount
+    const amountString = `$${data.minSalary} - $${data.maxSalary}`;
+
+    // Determine location type (simple logic for now)
+    const locationType = data.location.toLowerCase().includes("remote")
+      ? "remote"
+      : "onsite";
+
+    const payload = {
+      location: data.location,
+      locationType: locationType,
+      title: data.title,
+      type: data.type.toLowerCase(), // API example showed lowercase
+      skills: skillsArray,
+      amount: amountString,
+      duration: "Year", // Defaulting for now as requested schema doesn't match form exactly, or we can add a field
+      description: data.description,
+      workspaceId: singleWorkspace?.id,
+    };
+
     try {
-      // TODO: Connect to backend API
-      console.log("Job Data:", data);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
-      toast.success("Job created successfully! (Mock)");
-      // navigate back or clear form
+      await createJobFn(payload);
+      // toast handled in hook
+      // Optional: navigate back
+      // navigate(-1);
     } catch (error) {
+      // Error handled in hook mostly, but can log here
       console.error(error);
-      toast.error("Failed to create job");
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -100,8 +128,8 @@ export default function CreateJob() {
                 className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-c-color/20 focus:border-c-color transition-all outline-none bg-white"
               >
                 <option value="">Select type</option>
-                <option value="Full-time">Full-time</option>
-                <option value="Part-time">Part-time</option>
+                <option value="Fulltime">Full-time</option>
+                <option value="Parttime">Part-time</option>
                 <option value="Contract">Contract</option>
                 <option value="Freelance">Freelance</option>
                 <option value="Internship">Internship</option>
@@ -229,11 +257,11 @@ export default function CreateJob() {
           <div className="pt-4 flex justify-end">
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isCreatingJob}
               className="px-8 py-3 bg-c-color text-white text-sm font-medium rounded-lg hover:bg-c-bg transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
             >
-              {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
-              {isSubmitting ? "Creating Job..." : "Post Job"}
+              {isCreatingJob && <Loader2 className="w-4 h-4 animate-spin" />}
+              {isCreatingJob ? "Creating Job..." : "Post Job"}
             </button>
           </div>
         </form>
