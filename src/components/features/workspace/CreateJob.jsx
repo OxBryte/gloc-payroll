@@ -68,7 +68,7 @@ export default function CreateJob() {
       </div>
 
       <div className="bg-white rounded-lg border border-gray-100 p-6 md:p-8">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-3xl">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Job Title */}
             <div className="space-y-2">
@@ -136,20 +136,38 @@ export default function CreateJob() {
               <label className="text-sm font-medium text-gray-700 block">
                 Salary Range (Monthly)
               </label>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
-                  $
-                </span>
-                <input
-                  type="text"
-                  placeholder="e.g. 5000 - 8000"
-                  {...register("salary", { required: "Salary is required" })}
-                  className="w-full pl-8 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-c-color/20 focus:border-c-color transition-all outline-none"
-                />
+              <div className="flex items-center gap-2">
+                <div className="relative w-full">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                    $
+                  </span>
+                  <input
+                    type="number"
+                    placeholder="Min"
+                    {...register("minSalary", {
+                      required: "Min salary is required",
+                    })}
+                    className="w-full pl-8 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-c-color/20 focus:border-c-color transition-all outline-none"
+                  />
+                </div>
+                <span className="text-gray-400">-</span>
+                <div className="relative w-full">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                    $
+                  </span>
+                  <input
+                    type="number"
+                    placeholder="Max"
+                    {...register("maxSalary", {
+                      required: "Max salary is required",
+                    })}
+                    className="w-full pl-8 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-c-color/20 focus:border-c-color transition-all outline-none"
+                  />
+                </div>
               </div>
-              {errors.salary && (
+              {(errors.minSalary || errors.maxSalary) && (
                 <span className="text-xs text-red-500">
-                  {errors.salary.message}
+                  {errors.minSalary?.message || errors.maxSalary?.message}
                 </span>
               )}
             </div>
