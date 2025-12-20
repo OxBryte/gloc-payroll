@@ -6,7 +6,7 @@ export default function JobCard({ job }) {
   if (!job) return null;
 
   return (
-    <div className="w-full bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-c-color">
+    <div className="w-full bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-c-color/50">
       <div className="flex w-full gap-3 items-center">
         <div className="min-w-20 h-20 rounded-lg bg-[#e9e9e9] overflow-hidden">
           <img
