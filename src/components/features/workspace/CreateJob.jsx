@@ -3,15 +3,36 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export default function CreateJob() {
   const location = useLocation();
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Watch description for manual validation if needed, or rely on React Hook Form's Controller
+  // However, simpler to just use state for Quill if not using Controller,
+  // but to integrate with RHF properly we should register it.
+  // For simplicity here, we'll use local state and sync on submit or use setValue.
+
+  // Using setValue to sync Quill content to RHF
+  const onEditorChange = (content) => {
+    setValue("description", content);
+  };
+
+  // Register description field manually
+  React.useEffect(() => {
+    register("description", { required: "Description is required" });
+  }, [register]);
+
+  const descriptionValue = watch("description");
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -157,16 +178,30 @@ export default function CreateJob() {
             <label className="text-sm font-medium text-gray-700 block">
               Job Description
             </label>
-            <textarea
-              rows={6}
-              placeholder="Describe the role, responsibilities, and requirements..."
-              {...register("description", {
-                required: "Description is required",
-              })}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-c-color/20 focus:border-c-color transition-all outline-none resize-none"
-            />
+            <div className="h-[300px] mb-12">
+              <ReactQuill
+                theme="snow"
+                value={descriptionValue || ""}
+                onChange={onEditorChange}
+                className="h-full bg-white rounded-lg"
+                modules={{
+                  toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ["bold", "italic", "underline", "strike", "blockquote"],
+                    [
+                      { list: "ordered" },
+                      { list: "bullet" },
+                      { indent: "-1" },
+                      { indent: "+1" },
+                    ],
+                    ["link", "image"],
+                    ["clean"],
+                  ],
+                }}
+              />
+            </div>
             {errors.description && (
-              <span className="text-xs text-red-500">
+              <span className="text-xs text-red-500 block mt-2">
                 {errors.description.message}
               </span>
             )}

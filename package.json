@@ -11,6 +11,8 @@
     "auto-commit": "node auto-commit.cjs"
   },
   "dependencies": {
+    "@blocknote/core": "^0.45.0",
+    "@blocknote/react": "^0.45.0",
     "@coinbase/x402": "^0.4.0",
     "@fontsource-variable/inter": "^5.2.5",
     "@privy-io/react-auth": "^2.14.2",
@@ -38,6 +40,7 @@
     "react-hook-form": "^7.56.4",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^7.6.1",
     "recharts": "^2.15.3",
     "tailwindcss": "^4.1.7",
