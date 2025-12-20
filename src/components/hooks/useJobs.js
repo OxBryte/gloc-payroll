@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { createJob } from "../services/jobsApi";
+import { createJob, getJobs } from "../services/jobsApi";
 
 export const useCreateJob = () => {
   const queryClient = useQueryClient();
@@ -9,7 +9,7 @@ export const useCreateJob = () => {
     mutationFn: async (body) => {
       return await createJob(body);
     },
-    onSuccess(data) {
+    onSuccess() {
       toast.success("Job created successfully!");
       // Refetch workspace data to show new job in list if necessary,
       // assuming jobs are listed under workspace details or a jobs list.
@@ -25,3 +25,15 @@ export const useCreateJob = () => {
   return { createJobFn, isPending };
 };
 
+export const useGetJobs = () => {
+  const {
+    data: jobsData,
+    isLoading: isLoadingJobs,
+    error,
+  } = useQuery({
+    queryKey: ["jobs"],
+    queryFn: getJobs,
+  });
+
+  return { jobs: jobsData?.data || [], isLoadingJobs, error };
+};

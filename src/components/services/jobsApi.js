@@ -22,3 +22,22 @@ export async function createJob(body) {
   }
 }
 
+export async function getJobs(workspaceId) {
+  try {
+    // Get token from cookies
+    const token = getCookie("token");
+
+    const { data } = await axios.get(`${apiURL}jobs/my/jobs`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error during while fetching jobs data", error);
+    throw new Error(
+      error.response?.data?.message ||
+        "An error occurred while fetching jobs data"
+    );
+  }
+}
