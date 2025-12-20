@@ -8,13 +8,23 @@ export default function JobCard({ job }) {
   return (
     <div className="w-full bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-c-color">
       <div className="flex w-full gap-3 items-center">
-        <div className="min-w-24 h-24 rounded-lg bg-[#e9e9e9]"></div>
-        <div className="space-y-2">
+        <div className="min-w-20 h-20 rounded-lg bg-[#e9e9e9] overflow-hidden">
+          <img
+            src={job?.logo}
+            alt={job?.companyName}
+            className="w-full h-full object-cover object-center"
+          />
+        </div>
+        <div className="space-y-1">
           <p className="font-bold text-lg">{job.title}</p>
-          <div className="flex gap-1 items-center text-black/70">
+          <div className="flex gap-0 items-center text-black/70">
             {/* You might want to map these fields if available in job object */}
-            <p className="font-medium text-sm">Figma</p>
-            <Dot />
+            <p className="font-medium text-sm">{job?.companyName}</p>
+            <Dot
+              className={`${
+                job?.isActive === true ? "text-green-500" : ""
+              }`}
+            />
             <p className="font-medium text-sm">{job.location}</p>
           </div>
         </div>

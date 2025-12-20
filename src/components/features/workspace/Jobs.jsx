@@ -6,7 +6,6 @@ import { Loader2 } from "lucide-react";
 
 export default function Jobs() {
   const { jobs, isLoadingJobs } = useGetJobs();
-  console.log(jobs);
 
   if (isLoadingJobs) {
     return (
@@ -36,7 +35,7 @@ export default function Jobs() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2  gap-4 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
         {jobs?.length > 0 ? (
           jobs.map((job) => <JobCard key={job._id || job.id} job={job} />)
         ) : (
