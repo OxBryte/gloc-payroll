@@ -1,13 +1,83 @@
-export const contractAddress = "0xE1DA6fa9d1B1feC1a6b5104d8830A2DF6D1a84d8"; // Replace with actual contract address
+export const contractAddress = "0x69b04e89dF5B1dD7Bed665D3B1009F7AF563a171";
 
 export const contractABI = [
   {
     inputs: [
-      { internalType: "address", name: "usdcAddress", type: "address" },
-      { internalType: "address", name: "usdtAddress", type: "address" },
+      { internalType: "address", name: "_usdcAddress", type: "address" },
+      {
+        internalType: "uint256",
+        name: "_initialTaxPercentage",
+        type: "uint256",
+      },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
+  },
+  {
+    inputs: [{ internalType: "address", name: "owner", type: "address" }],
+    name: "OwnableInvalidOwner",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "OwnableUnauthorizedAccount",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "recipientCount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "totalGross",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "totalNet",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "totalTax",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    name: "BulkDistribution",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "EmergencyWithdraw",
+    type: "event",
   },
   {
     anonymous: false,
@@ -47,54 +117,73 @@ export const contractABI = [
       {
         indexed: true,
         internalType: "address",
-        name: "token",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "payer",
+        name: "recipient",
         type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "totalPaid",
+        name: "grossAmount",
         type: "uint256",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "totalTax",
+        name: "netAmount",
         type: "uint256",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "recipientCount",
+        name: "taxAmount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
         type: "uint256",
       },
     ],
-    name: "PayrollDistributed",
+    name: "PaymentDistributed",
     type: "event",
   },
   {
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: "address",
-        name: "token",
-        type: "address",
-      },
-      {
         indexed: false,
         internalType: "uint256",
         name: "amount",
         type: "uint256",
       },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
     ],
-    name: "TaxWithdrawn",
+    name: "TaxCollected",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "oldPercentage",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newPercentage",
+        type: "uint256",
+      },
+    ],
+    name: "TaxPercentageUpdated",
     type: "event",
   },
   {
@@ -112,59 +201,114 @@ export const contractABI = [
   },
   {
     inputs: [],
-    name: "USDC",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "USDT",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "collectedTax",
+    name: "MAX_TAX_PERCENTAGE",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        components: [
-          { internalType: "address", name: "recipient", type: "address" },
-          { internalType: "uint256", name: "amount", type: "uint256" },
-        ],
-        internalType: "struct PayrollSystem.Payment[]",
-        name: "payments",
-        type: "tuple[]",
-      },
+      { internalType: "uint256[]", name: "_grossAmounts", type: "uint256[]" },
+    ],
+    name: "calculateBulkDistribution",
+    outputs: [
+      { internalType: "uint256", name: "totalGross", type: "uint256" },
+      { internalType: "uint256", name: "totalNet", type: "uint256" },
+      { internalType: "uint256", name: "totalTax", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "_grossAmount", type: "uint256" },
+    ],
+    name: "calculateDistribution",
+    outputs: [
+      { internalType: "uint256", name: "netAmount", type: "uint256" },
       { internalType: "uint256", name: "taxAmount", type: "uint256" },
     ],
-    name: "distributePayrollUSDC",
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_recipient", type: "address" },
+      { internalType: "uint256", name: "_grossAmount", type: "uint256" },
+    ],
+    name: "distribute",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [
-      {
-        components: [
-          { internalType: "address", name: "recipient", type: "address" },
-          { internalType: "uint256", name: "amount", type: "uint256" },
-        ],
-        internalType: "struct PayrollSystem.Payment[]",
-        name: "payments",
-        type: "tuple[]",
-      },
-      { internalType: "uint256", name: "taxAmount", type: "uint256" },
+      { internalType: "address[]", name: "_recipients", type: "address[]" },
+      { internalType: "uint256[]", name: "_grossAmounts", type: "uint256[]" },
     ],
-    name: "distributePayrollUSDT",
+    name: "distributeBulk",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "distributionCount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_token", type: "address" }],
+    name: "emergencyWithdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getStats",
+    outputs: [
+      { internalType: "uint256", name: "_totalTaxCollected", type: "uint256" },
+      {
+        internalType: "uint256",
+        name: "_totalGrossDistributed",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_totalNetDistributed",
+        type: "uint256",
+      },
+      { internalType: "uint256", name: "_distributionCount", type: "uint256" },
+      {
+        internalType: "uint256",
+        name: "_currentTaxPercentage",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getTaxCollector",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getUSDCAddress",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "isPaused",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -196,6 +340,50 @@ export const contractABI = [
     type: "function",
   },
   {
+    inputs: [
+      { internalType: "uint256", name: "_newPercentage", type: "uint256" },
+    ],
+    name: "setTaxPercentage",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "taxCollector",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "taxPercentage",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalGrossDistributed",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalNetDistributed",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalTaxCollected",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
     name: "transferOwnership",
     outputs: [],
@@ -210,10 +398,10 @@ export const contractABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "token", type: "address" }],
-    name: "withdrawTax",
-    outputs: [],
-    stateMutability: "nonpayable",
+    inputs: [],
+    name: "usdcToken",
+    outputs: [{ internalType: "contract IERC20", name: "", type: "address" }],
+    stateMutability: "view",
     type: "function",
   },
 ];

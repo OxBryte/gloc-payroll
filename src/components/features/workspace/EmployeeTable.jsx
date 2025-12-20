@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Search, Filter, MoreVertical, Edit, Trash2 } from "lucide-react";
 import moment from "moment/moment";
-import { formatNumberWithCommas } from "../../lib/utils";
+import { formatNumberWithCommas, truncateAddress } from "../../lib/utils";
 import { useDeleteEmployee } from "../../hooks/useEmployee";
 import UpdateEmployeeDrawer from "../../ui/UpdateEmployeeDrawar";
 
@@ -11,11 +11,10 @@ export default function EmployeeTable({ employees }) {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [filterDepartment, setFilterDepartment] = useState("all");
 
-  // console.log("Employees:", employees);
   const { deleteEmployeeFn, isPending } = useDeleteEmployee();
 
-  const handleEditClick = (employeeId) => {
-    setSelectedEmployee(employeeId);
+  const handleEditClick = (employee) => {
+    setSelectedEmployee(employee);
     setIsOpen(true);
   };
 
@@ -140,7 +139,7 @@ export default function EmployeeTable({ employees }) {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-700  capitalize">
-                        {employee?.address || "N/A"}
+                        {truncateAddress(employee?.address) || "N/A"}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -155,7 +154,7 @@ export default function EmployeeTable({ employees }) {
                       <div className="flex items-center space-x-2">
                         <button
                           className="text-green-600 hover:text-green-900 p-1 rounded hover:bg-green-50 transition-colors"
-                          onClick={() => handleEditClick(employee.id)}
+                          onClick={() => handleEditClick(employee)}
                         >
                           <Edit className="w-4 h-4" />
                         </button>
@@ -193,10 +192,10 @@ export default function EmployeeTable({ employees }) {
           Showing {filteredEmployees.length} of {employees.length} employees
         </div>
       </div>
-      {isOpen && (
+      {isOpen && selectedEmployee && (
         <UpdateEmployeeDrawer
           setIsOpen={setIsOpen}
-          employeeId={selectedEmployee}
+          employee={selectedEmployee}
         />
       )}
     </>

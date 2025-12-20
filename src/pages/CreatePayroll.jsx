@@ -1,10 +1,20 @@
 import React, { useMemo, useState } from "react";
-import { ArrowLeft, ChevronLeft, Check } from "lucide-react";
+import { ChevronLeft, Check, Loader2, LogOut } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
-import ConnectButtonThirdweb from "../components/ui/ConnectButtonThirdweb";
-import { truncate } from "../components/lib/utils";
+import {
+  truncateAddress,
+  formatNumberWithCommas,
+} from "../components/lib/utils";
+import {
+  useAppKit,
+  useAppKitAccount,
+  useDisconnect,
+} from "@reown/appkit/react";
+import { useDistributeBulk } from "../components/hooks/usePayrollWrite";
+import toast from "react-hot-toast";
+import { useApproveUsdc } from "../components/hooks/useApproveUsdc";
 
 const CreatePayroll = () => {
   const navigate = useNavigate();
@@ -12,6 +22,17 @@ const CreatePayroll = () => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [chain, setChain] = useState("base");
   const [currency, setCurrency] = useState("USDC");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [currentStep, setCurrentStep] = useState(""); // "approving" | "distributing" | ""
+
+  const { address, isConnected } = useAppKitAccount();
+  const { open } = useAppKit();
+  const { disconnect } = useDisconnect();
+
+  const handleDisconnect = async () => {
+    await disconnect();
+    toast.success("Disconnected from wallet");
+  };
 
   const {
     register,
@@ -24,6 +45,64 @@ const CreatePayroll = () => {
   // Watch form values
   const title = watch("title");
   const category = watch("category");
+
+  // Calculate totals
+  const totalSalary = useMemo(() => {
+    return selectedEmployees.reduce((total, employee) => {
+      return total + (employee.salary || 0);
+    }, 0);
+  }, [selectedEmployees]);
+
+  const taxRate = 0.03; // 3% tax rate
+  const totalTax = useMemo(() => {
+    return totalSalary * taxRate;
+  }, [totalSalary, taxRate]);
+
+  const totalAmount = totalSalary + totalTax;
+
+  // Payroll data for the hook
+  const payrollData = useMemo(
+    () => ({
+      title,
+      category,
+      chain,
+      currency,
+      totalAmount,
+      totalTax,
+      workspaceId: singleWorkspace?.id,
+      selectedEmployees,
+    }),
+    [
+      title,
+      category,
+      chain,
+      currency,
+      totalAmount,
+      totalTax,
+      singleWorkspace?.id,
+      selectedEmployees,
+    ]
+  );
+
+  // USDC Approval hook
+  const {
+    usdcBalance, // This is now a formatted string
+    isApproving,
+    approveUsdc,
+    needsApproval,
+    hasSufficientBalance,
+    refetchAllowance,
+  } = useApproveUsdc(address, isConnected);
+
+  // Distribution hook
+  const {
+    distributeBulk,
+    isDistributing,
+    isConfirming,
+    isCreatingRecord,
+    isSuccess,
+    txHash,
+  } = useDistributeBulk(payrollData);
 
   // Validation check
   const isFormValid = title && category && selectedEmployees.length > 0;
@@ -40,16 +119,102 @@ const CreatePayroll = () => {
     });
   };
 
-  const totalSalary = useMemo(() => {
-    return selectedEmployees.reduce((total, employee) => {
-      return total + (employee.salary || 0);
-    }, 0);
-  }, [selectedEmployees]);
+  // Handle payroll distribution with approval flow
+  const handleDistributePayroll = async () => {
+    if (!isConnected) {
+      toast.error("Please connect your wallet first");
+      open();
+      return;
+    }
 
-  const taxRate = 0.03; // Example tax rate of 3%
-  const totalTax = useMemo(() => {
-    return totalSalary * taxRate;
-  }, [totalSalary, taxRate]);
+    if (!isFormValid) {
+      toast.error("Please fill in all required fields and select employees");
+      return;
+    }
+
+    // Check if all selected employees have wallet addresses
+    const employeesWithoutAddress = selectedEmployees.filter(
+      (emp) => !emp.address || emp.address === "N/A"
+    );
+    if (employeesWithoutAddress.length > 0) {
+      toast.error(
+        `${employeesWithoutAddress.length} employee(s) don't have wallet addresses`
+      );
+      return;
+    }
+
+    // Check sufficient balance
+    if (!hasSufficientBalance(totalAmount)) {
+      toast.error("Insufficient USDC balance");
+      return;
+    }
+
+    setIsProcessing(true);
+
+    try {
+      // Step 1: Check and approve USDC if needed
+      if (needsApproval(totalAmount)) {
+        setCurrentStep("approving");
+        toast.loading("Approving USDC...", { id: "approval" });
+
+        await approveUsdc(totalAmount);
+
+        // Wait for approval to be confirmed
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await refetchAllowance();
+
+        toast.success("USDC approved successfully", { id: "approval" });
+      }
+
+      // Step 2: Distribute payroll
+      setCurrentStep("distributing");
+      toast.loading("Processing payroll distribution...", { id: "distribute" });
+
+      // Prepare recipients and amounts
+      const recipients = selectedEmployees.map((emp) => emp.address);
+      const grossAmounts = selectedEmployees.map((emp) => emp.salary);
+
+      await distributeBulk(recipients, grossAmounts);
+
+      toast.success("Payroll distributed successfully!", { id: "distribute" });
+
+      // Reset and navigate back
+      setTimeout(() => {
+        navigate(`/workspace/${slug}/payroll`);
+      }, 2000);
+    } catch (error) {
+      console.error("Error in payroll distribution:", error);
+      toast.error(error?.message, {
+        id: currentStep === "approving" ? "approval" : "distribute",
+      });
+    } finally {
+      setIsProcessing(false);
+      setCurrentStep("");
+    }
+  };
+
+  // Get button text based on state
+  const getButtonText = () => {
+    if (!isConnected) return "Connect Wallet";
+    if (isApproving) return "Approving USDC...";
+    if (isDistributing) return "Submitting Transaction...";
+    if (isConfirming) return "Confirming Transaction...";
+    if (isCreatingRecord) return "Saving Payroll Record...";
+    if (isProcessing)
+      return currentStep === "approving" ? "Approving..." : "Processing...";
+    if (needsApproval(totalAmount) && totalAmount > 0)
+      return "Approve & Distribute";
+    return "Distribute Payroll";
+  };
+
+  const isButtonDisabled =
+    !isConnected ||
+    !isFormValid ||
+    isProcessing ||
+    isApproving ||
+    isDistributing ||
+    isConfirming ||
+    isCreatingRecord;
 
   return (
     <div className="max-w-full mx-auto">
@@ -282,7 +447,7 @@ const CreatePayroll = () => {
                             {employee.role}
                           </p>
                           <p className="text-sm text-gray-600">
-                            {truncate(employee.address, 24)}
+                            {truncateAddress(employee.address)}
                           </p>
                         </div>
                       </div>
@@ -331,19 +496,94 @@ const CreatePayroll = () => {
           </div>
 
           {/* Payment Section */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h2 className="text-lg font-semibold mb-4">Payment</h2>
-            <ConnectButtonThirdweb
-              selectedEmployees={selectedEmployees}
-              totalTax={totalTax}
-              title={title}
-              category={category}
-              chain={chain}
-              currency={currency}
-              totalAmount={totalSalary + totalTax}
-              workspaceId={singleWorkspace?.id}
-              isFormValid={isFormValid}
-            />
+          <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold">Payment</h2>
+
+              {isConnected ? (
+                <div className="flex items-center gap-2">
+                  <div
+                    className="w-fit bg-c-color/10 text-xs px-3 py-2 rounded-lg cursor-pointer"
+                    onClick={() => open({ view: "Account" })}
+                  >
+                    <div className="w-2 h-2 bg-c-color rounded-full inline-block mr-2"></div>
+                    {truncateAddress(address)}
+                  </div>
+                  <div
+                    className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer"
+                    onClick={handleDisconnect}
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="w-fit bg-c-color text-white text-xs px-3 py-2 rounded-lg cursor-pointer"
+                  onClick={() => open()}
+                >
+                  Connect Wallet
+                </div>
+              )}
+            </div>
+
+            {/* USDC Balance Display */}
+            {isConnected && usdcBalance !== undefined && (
+              <div className="flex justify-between text-sm bg-gray-50 p-3 rounded-lg">
+                <span className="text-gray-600">Your USDC Balance:</span>
+                <span className="font-medium">${usdcBalance}</span>
+              </div>
+            )}
+
+            {/* Insufficient Balance Warning */}
+            {isConnected &&
+              totalAmount > 0 &&
+              !hasSufficientBalance(totalAmount) && (
+                <div className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
+                  Insufficient USDC balance. You need $
+                  {formatNumberWithCommas(totalAmount)} USDC.
+                </div>
+              )}
+
+            {/* Transaction Success */}
+            {isSuccess && txHash && (
+              <div className="text-sm text-green-600 bg-green-50 p-3 rounded-lg">
+                <p className="font-medium">Transaction successful!</p>
+                <a
+                  href={`https://basescan.org/tx/${txHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline text-xs"
+                >
+                  View on BaseScan
+                </a>
+              </div>
+            )}
+
+            <button
+              className={`w-full text-white text-center font-medium px-2 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 ${
+                isButtonDisabled
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-c-color hover:bg-c-color/80 cursor-pointer"
+              }`}
+              onClick={handleDistributePayroll}
+              disabled={isButtonDisabled}
+            >
+              {(isProcessing ||
+                isApproving ||
+                isDistributing ||
+                isConfirming ||
+                isCreatingRecord) && (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              )}
+              {getButtonText()}
+            </button>
+
+            {/* Approval Status */}
+            {isConnected && needsApproval(totalAmount) && totalAmount > 0 && (
+              <p className="text-xs text-gray-500 text-center">
+                You'll need to approve USDC spending before distribution
+              </p>
+            )}
           </div>
         </div>
       </div>

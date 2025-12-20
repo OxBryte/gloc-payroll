@@ -12,6 +12,7 @@ import { baseSepolia } from "thirdweb/chains";
 import { ThirdwebProvider } from "thirdweb/react";
 import { WagmiProvider } from "wagmi";
 import { config } from "./components/lib/wagmi.js";
+import { AppKitProvider } from "./Provider.jsx";
 
 const queryClient = new QueryClient();
 
@@ -23,14 +24,16 @@ createRoot(document.getElementById("root")).render(
     >
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <ReactQueryDevtools
-              initialIsOpen={false}
-              buttonPosition="bottom-left"
-            />
-            <App />
-            <Toaster position="bottom-center" />
-          </AuthProvider>
+          <AppKitProvider>
+            <AuthProvider>
+              <ReactQueryDevtools
+                initialIsOpen={false}
+                buttonPosition="bottom-left"
+              />
+              <App />
+              <Toaster position="bottom-center" />
+            </AuthProvider>
+          </AppKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
     </ThirdwebProvider>

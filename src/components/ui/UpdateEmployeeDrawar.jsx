@@ -3,8 +3,20 @@ import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useUpdateEmployee } from "../hooks/useEmployee";
 
-const UpdateEmployeeDrawer = ({ setIsOpen, employeeId }) => {
-  const { register, handleSubmit } = useForm();
+const UpdateEmployeeDrawer = ({ setIsOpen, employee }) => {
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      name: employee?.name || "",
+      email: employee?.email || "",
+      role: employee?.role || "",
+      employmentDate: employee?.employmentDate
+        ? new Date(employee.employmentDate).toISOString().split("T")[0]
+        : "",
+      salary: employee?.salary || "",
+      address: employee?.address || "",
+      employmentType: employee?.employmentType || "",
+    },
+  });
   const { updateEmployeeFn, isPending: isUpdatingEmployee } =
     useUpdateEmployee();
 
@@ -13,7 +25,7 @@ const UpdateEmployeeDrawer = ({ setIsOpen, employeeId }) => {
     const filteredData = Object.fromEntries(
       Object.entries(data).filter(([, value]) => value !== "" && value !== null)
     );
-    const id = employeeId;
+    const id = employee?.id;
     updateEmployeeFn(
       { body: filteredData, id },
       {
@@ -122,7 +134,6 @@ const UpdateEmployeeDrawer = ({ setIsOpen, employeeId }) => {
                     Employment type
                   </label>
                   <select
-                    defaultValue={""}
                     {...register("employmentType")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                   >
