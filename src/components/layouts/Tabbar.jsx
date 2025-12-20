@@ -19,12 +19,12 @@ export default function Tabbar({ slug, data }) {
             >
               {/* left indicator only if active */}
               <div
-                aria-disabled={item.id === 4}
-                onClick={(e) => {
-                  if (item.id === 4) {
-                    e.preventDefault();
-                  }
-                }}
+                // aria-disabled={item.id === 4}
+                // onClick={(e) => {
+                //   if (item.id === 4) {
+                //     e.preventDefault();
+                //   }
+                // }}
                 className={`flex items-center w-full h-[44px] px-3 gap-2 text-sm font-light cursor-pointer rounded-lg hover:opacity-60
                       ${isActive ? "bg-c-color text-white" : ""}`}
               >

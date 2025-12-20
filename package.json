@@ -25,7 +25,9 @@
     "@thirdweb-dev/sdk": "^4.0.99",
     "apexcharts": "^4.7.0",
     "axios": "^1.9.0",
+    "dotted-map": "^2.2.3",
     "ethers": "^5.8.0",
+    "gsap": "^3.13.0",
     "lucide-react": "^0.511.0",
     "moment": "^2.30.1",
     "network-speed": "^2.1.1",
@@ -40,8 +42,9 @@
     "recharts": "^2.15.3",
     "tailwindcss": "^4.1.7",
     "thirdweb": "^5.105.4",
-    "viem": "^2.38.4",
-    "wagmi": "^2.18.2",
+    "three": "^0.182.0",
+    "viem": "^2.30.6",
+    "wagmi": "^2.15.5",
     "x402-next": "^0.4.0"
   },
   "devDependencies": {
