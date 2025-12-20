@@ -41,3 +41,23 @@ export async function getJobs(workspaceId) {
     );
   }
 }
+
+export async function getAllJobs(params) {
+  try {
+    // Get token from cookies
+    // const token = getCookie("token"); // Assuming public endpoint or auth optional, but if required:
+
+    const { data } = await axios.get(`${apiURL}jobs`, {
+      params, // Axios handles passing params object as query string: ?page=1&limit=10...
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error during while fetching all jobs", error);
+    throw new Error(
+      error.response?.data?.message || "An error occurred while fetching jobs"
+    );
+  }
+}

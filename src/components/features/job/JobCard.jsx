@@ -47,7 +47,7 @@ export default function JobCard({ job }) {
           {job.skills && job.skills.join(", ")}
         </div>
         <div className="flex items-center gap-3 justify-between w-full">
-          <p className="font-bold text-xl">
+          <p className="font-bold text-lg">
             {job.amount}{" "}
             <span className="font-light text-sm text-gray-400">/yearly</span>
           </p>

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { createJob, getJobs } from "../services/jobsApi";
+import { createJob, getJobs, getAllJobs } from "../services/jobsApi";
 
 export const useCreateJob = () => {
   const queryClient = useQueryClient();
@@ -36,4 +36,23 @@ export const useGetJobs = () => {
   });
 
   return { jobs: jobsData?.data || [], isLoadingJobs, error };
+};
+
+export const useGetAllJobs = (params) => {
+  const {
+    data: jobsData,
+    isLoading: isLoadingJobs,
+    error,
+  } = useQuery({
+    queryKey: ["allJobs", params],
+    queryFn: () => getAllJobs(params),
+    keepPreviousData: true, // Useful for pagination
+  });
+
+  return {
+    jobs: jobsData?.data || [],
+    pagination: jobsData?.pagination,
+    isLoadingJobs,
+    error,
+  };
 };
