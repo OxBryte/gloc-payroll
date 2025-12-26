@@ -10,9 +10,11 @@ A modern, decentralized payroll management system built with React, enabling sea
 | ---------------------- | ---------------------------------------------------------------------------------------- |
 | **Network**            | Base Mainnet                                                                             |
 | **Payroll Contract**   | `0x69b04e89dF5B1dD7Bed665D3B1009F7AF563a171`                                             |
+| **Pocket Contract**    | `0x451d13908B0C8bfA8492f4bf5f2b34fC2a82edF9`                                             |
 | **USDC Contract**      | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`                                             |
 | **Website**            | [https://gloc.pro](https://gloc.pro)                                                     |
 | **BaseScan (Payroll)** | [View Contract](https://basescan.org/address/0x69b04e89dF5B1dD7Bed665D3B1009F7AF563a171) |
+| **BaseScan (Pocket)**  | [View Contract](https://basescan.org/address/0x451d13908B0C8bfA8492f4bf5f2b34fC2a82edF9) |
 
 ## 🌟 Features
 
@@ -45,6 +47,9 @@ A modern, decentralized payroll management system built with React, enabling sea
 - **USDC Approval Flow**: Automated token approval before distribution
 - **Multi-recipient Batching**: Efficient gas usage with bulk payment processing
 - **Transaction Receipts**: On-chain verification of all payments
+- **Pocket Contract**: Category-based fund management with locking mechanisms
+- **Fund Allocation**: Organize funds into custom categories
+- **Time-locked Withdrawals**: Lock categories for specified durations
 
 ### 📊 Analytics & Reporting
 
@@ -52,6 +57,15 @@ A modern, decentralized payroll management system built with React, enabling sea
 - **Employee Statistics**: Track total employees and payment patterns
 - **Workspace Overview**: Comprehensive dashboard for each workspace
 - **Transaction History**: Detailed records with BaseScan integration
+
+### 💼 Job Board & Recruitment
+
+- **Job Posting**: Create and manage job listings with rich text descriptions
+- **Advanced Search**: Filter jobs by type, location, skills, and keywords
+- **Job Details Modal**: Comprehensive job information with company details
+- **Rich Text Editor**: Notion-like editor for creating detailed job descriptions
+- **Pagination Support**: Navigate through job listings efficiently
+- **URL-based Filtering**: Shareable job search URLs with query parameters
 
 ### 🔌 Wallet Connection
 
@@ -166,7 +180,9 @@ payroll-project/
 │   │   │   ├── usePayrollWrite.js    # Payroll distribution hooks
 │   │   │   ├── useApproveUsdc.js     # USDC approval hooks
 │   │   │   ├── useEmployee.js        # Employee management
-│   │   │   └── useWorkspace.js       # Workspace operations
+│   │   │   ├── useWorkspace.js       # Workspace operations
+│   │   │   ├── usePocketContract.js  # Pocket contract interactions
+│   │   │   └── useJobs.js            # Job board operations
 │   │   ├── layouts/           # Layout components
 │   │   ├── lib/               # Utility functions and configs
 │   │   ├── services/          # API service layer
@@ -225,6 +241,101 @@ const {
 } = useApproveUsdc(address, isConnected);
 ```
 
+#### `usePocketContract`
+
+Handles all interactions with the Pocket contract for category-based fund management.
+
+```javascript
+const {
+  // Read data
+  owner,
+  isPaused,
+  usdcTokenAddress,
+  unallocatedBalance,
+  userCategories,
+  
+  // Write functions
+  deposit,
+  createCategory,
+  allocateToCategory,
+  lockCategory,
+  withdrawFromCategory,
+  
+  // Admin functions
+  pause,
+  unpause,
+  
+  // Transaction states
+  isPending,
+  isConfirming,
+  isSuccess,
+  txHash,
+} = usePocketContract();
+```
+
+#### `useCategoryDetails`
+
+Get details for a specific category.
+
+```javascript
+const {
+  balance,
+  unlockTime,
+  isLoading,
+  refetch,
+} = useCategoryDetails(userAddress, categoryName);
+```
+
+#### `useUserCategories`
+
+Get all categories for a user.
+
+```javascript
+const {
+  categories,
+  isLoading,
+  refetch,
+} = useUserCategories(userAddress);
+```
+
+#### `useGetAllJobs`
+
+Fetch jobs with search and filter parameters.
+
+```javascript
+const {
+  jobs,
+  pagination,
+  isLoadingJobs,
+  error,
+} = useGetAllJobs({
+  page: 1,
+  limit: 10,
+  type: "fulltime",
+  locationType: "remote",
+  search: "developer",
+  skills: "react",
+});
+```
+
+#### `useCreateJob`
+
+Create a new job posting.
+
+```javascript
+const {
+  createJobFn,
+  isPending,
+} = useCreateJob();
+
+await createJobFn({
+  title: "Senior Developer",
+  type: "fulltime",
+  location: "Remote",
+  // ... other fields
+});
+```
+
 ## 🌐 Supported Networks
 
 - **Base Mainnet** (Primary)
@@ -251,6 +362,7 @@ VITE_API_URL=your_api_endpoint
 
 # Contract Addresses (Base Mainnet)
 VITE_PAYROLL_CONTRACT_ADDRESS=0x69b04e89dF5B1dD7Bed665D3B1009F7AF563a171
+VITE_POCKET_CONTRACT_ADDRESS=0x451d13908B0C8bfA8492f4bf5f2b34fC2a82edF9
 VITE_USDC_CONTRACT_ADDRESS=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
 ```
 
@@ -268,6 +380,21 @@ The project interacts with custom smart contracts for payroll distribution on th
 
 **View on BaseScan**: [https://basescan.org/address/0x69b04e89dF5B1dD7Bed665D3B1009F7AF563a171](https://basescan.org/address/0x69b04e89dF5B1dD7Bed665D3B1009F7AF563a171)
 
+#### Pocket Contract (Base Mainnet)
+
+```
+0x451d13908B0C8bfA8492f4bf5f2b34fC2a82edF9
+```
+
+**View on BaseScan**: [https://basescan.org/address/0x451d13908B0C8bfA8492f4bf5f2b34fC2a82edF9](https://basescan.org/address/0x451d13908B0C8bfA8492f4bf5f2b34fC2a82edF9)
+
+The Pocket Contract enables users to:
+- Deposit USDC into the contract
+- Create custom categories for fund organization
+- Allocate funds to specific categories
+- Lock categories for time-based withdrawals
+- Withdraw from unlocked categories
+
 #### USDC Contract (Base Mainnet)
 
 ```
@@ -278,12 +405,26 @@ The project interacts with custom smart contracts for payroll distribution on th
 
 ### Smart Contract Functions
 
+#### Payroll Contract Functions
+
 - **distributeBulk**: Pays multiple employees in one transaction (bulk distribution)
 - **distribute**: Single employee payment
 - **pause/unpause**: Emergency contract pause functionality (admin only)
 - **setTaxPercentage**: Update the tax percentage (admin only)
 - **emergencyWithdraw**: Emergency token withdrawal (admin only)
 - **USDC Approval**: ERC-20 approve function for token spending before distribution
+
+#### Pocket Contract Functions
+
+- **deposit**: Deposit USDC into the contract
+- **createCategory**: Create a new fund category
+- **allocateToCategory**: Allocate funds to a specific category
+- **lockCategory**: Lock a category for a specified duration (prevents withdrawals)
+- **withdrawFromCategory**: Withdraw funds from an unlocked category
+- **getUserCategories**: Get all categories for a user
+- **getCategoryDetails**: Get balance and unlock time for a category
+- **unallocatedBalance**: Get user's unallocated balance
+- **pause/unpause**: Emergency contract pause (admin only)
 
 ### Contract Architecture
 
@@ -295,7 +436,9 @@ The payroll smart contract is built with:
 - **ReentrancyGuard**: Protection against reentrancy attacks
 - **SafeERC20**: Safe token transfer operations
 
-Contract ABIs and interfaces are located in `src/components/constants/contractABI.js`.
+Contract ABIs and interfaces are located in:
+- `src/components/constants/contractABI.js` - Payroll contract
+- `src/components/constants/pocketCotract.js` - Pocket contract
 
 ## 🧪 Testing
 
