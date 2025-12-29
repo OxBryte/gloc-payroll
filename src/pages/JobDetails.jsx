@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, MapPin, Briefcase, DollarSign, Calendar, Edit, Loader2 } from "lucide-react";
 import { useGetJobById } from "../components/hooks/useJobs";
 import { useUser } from "../components/hooks/useUser";
-import EditJobModal from "../components/ui/EditJobModal";
+import EditJobDrawer from "../components/ui/EditJobDrawer";
 
 export default function JobDetails() {
   const { id } = useParams();
@@ -174,9 +174,9 @@ export default function JobDetails() {
         </div>
       </div>
 
-      {/* Edit Job Modal */}
+      {/* Edit Job Drawer */}
       {isEditModalOpen && (
-        <EditJobModal
+        <EditJobDrawer
           job={job}
           setIsOpen={setIsEditModalOpen}
         />
