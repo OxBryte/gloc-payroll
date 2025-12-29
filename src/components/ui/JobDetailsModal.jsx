@@ -1,7 +1,10 @@
-import React from "react";
-import { X, MapPin, Briefcase, DollarSign, Calendar } from "lucide-react";
+import React, { useState } from "react";
+import { X, MapPin, Briefcase, DollarSign, Calendar, Edit } from "lucide-react";
+import EditJobModal from "./EditJobModal";
 
 export default function JobDetailsModal({ job, setIsOpen }) {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   if (!job) return null;
 
   return (
@@ -120,11 +123,28 @@ export default function JobDetailsModal({ job, setIsOpen }) {
 
         {/* Footer */}
         <div className="p-6 border-t border-gray-100 bg-gray-50">
-          <button className="w-full bg-c-color text-white py-3 rounded-xl font-semibold hover:bg-c-bg transition-colors">
-            Apply Now
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={() => setIsEditModalOpen(true)}
+              className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
+            >
+              <Edit className="w-4 h-4" />
+              Edit Job
+            </button>
+            <button className="flex-1 bg-c-color text-white py-3 rounded-xl font-semibold hover:bg-c-bg transition-colors">
+              Apply Now
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Edit Job Modal */}
+      {isEditModalOpen && (
+        <EditJobModal
+          job={job}
+          setIsOpen={setIsEditModalOpen}
+        />
+      )}
     </div>
   );
 }
