@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import JobCard from "../components/features/job/JobCard";
+import PublicJobCard from "../components/features/job/PublicJobCard";
 import { useGetAllJobs } from "../components/hooks/useJobs";
 import { Loader2, Search, Filter } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
@@ -140,7 +140,7 @@ export default function Jobs() {
           {jobs.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
               {jobs.map((job) => (
-                <JobCard key={job._id || job.id} job={job} />
+                <PublicJobCard key={job._id || job.id} job={job} />
               ))}
             </div>
           ) : (

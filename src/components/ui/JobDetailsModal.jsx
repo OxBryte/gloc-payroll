@@ -3,7 +3,7 @@ import { X, MapPin, Briefcase, DollarSign, Calendar, Edit } from "lucide-react";
 import EditJobModal from "./EditJobModal";
 import { useUser } from "../hooks/useUser";
 
-export default function JobDetailsModal({ job, setIsOpen }) {
+export default function JobDetailsModal({ job, setIsOpen, allowEdit = true }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { user } = useUser();
 
@@ -21,6 +21,9 @@ export default function JobDetailsModal({ job, setIsOpen }) {
     job.owner?._id === user._id ||
     job.owner?.id === user.id
   );
+
+  // Only show edit button if allowEdit is true AND user is the owner
+  const canEdit = allowEdit && isJobOwner;
 
   if (!job) return null;
 
@@ -140,8 +143,8 @@ export default function JobDetailsModal({ job, setIsOpen }) {
 
         {/* Footer */}
         <div className="p-6 border-t border-gray-100 bg-gray-50">
-          <div className={`flex gap-3 ${isJobOwner ? "" : "justify-center"}`}>
-            {isJobOwner && (
+          <div className={`flex gap-3 ${canEdit ? "" : "justify-center"}`}>
+            {canEdit && (
               <button
                 onClick={() => setIsEditModalOpen(true)}
                 className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
@@ -150,7 +153,7 @@ export default function JobDetailsModal({ job, setIsOpen }) {
                 Edit Job
               </button>
             )}
-            <button className={`${isJobOwner ? "flex-1" : "w-full"} bg-c-color text-white py-3 rounded-xl font-semibold hover:bg-c-bg transition-colors`}>
+            <button className={`${canEdit ? "flex-1" : "w-full"} bg-c-color text-white py-3 rounded-xl font-semibold hover:bg-c-bg transition-colors`}>
               Apply Now
             </button>
           </div>
