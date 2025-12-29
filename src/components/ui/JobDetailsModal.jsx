@@ -1,9 +1,26 @@
 import React, { useState } from "react";
 import { X, MapPin, Briefcase, DollarSign, Calendar, Edit } from "lucide-react";
 import EditJobModal from "./EditJobModal";
+import { useUser } from "../hooks/useUser";
 
 export default function JobDetailsModal({ job, setIsOpen }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const { user } = useUser();
+
+  // Check if current user is the job owner
+  // Check common field names for job creator/owner
+  const isJobOwner = user && job && (
+    job.createdBy === user.id ||
+    job.createdBy === user._id ||
+    job.createdBy?._id === user._id ||
+    job.createdBy?.id === user.id ||
+    job.userId === user.id ||
+    job.userId === user._id ||
+    job.owner === user.id ||
+    job.owner === user._id ||
+    job.owner?._id === user._id ||
+    job.owner?.id === user.id
+  );
 
   if (!job) return null;
 
@@ -123,15 +140,17 @@ export default function JobDetailsModal({ job, setIsOpen }) {
 
         {/* Footer */}
         <div className="p-6 border-t border-gray-100 bg-gray-50">
-          <div className="flex gap-3">
-            <button
-              onClick={() => setIsEditModalOpen(true)}
-              className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
-            >
-              <Edit className="w-4 h-4" />
-              Edit Job
-            </button>
-            <button className="flex-1 bg-c-color text-white py-3 rounded-xl font-semibold hover:bg-c-bg transition-colors">
+          <div className={`flex gap-3 ${isJobOwner ? "" : "justify-center"}`}>
+            {isJobOwner && (
+              <button
+                onClick={() => setIsEditModalOpen(true)}
+                className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
+              >
+                <Edit className="w-4 h-4" />
+                Edit Job
+              </button>
+            )}
+            <button className={`${isJobOwner ? "flex-1" : "w-full"} bg-c-color text-white py-3 rounded-xl font-semibold hover:bg-c-bg transition-colors`}>
               Apply Now
             </button>
           </div>
