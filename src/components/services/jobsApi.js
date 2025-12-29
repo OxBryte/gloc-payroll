@@ -61,3 +61,22 @@ export async function getAllJobs(params) {
     );
   }
 }
+
+export async function updateJob(jobId, body) {
+  try {
+    // Get token from cookies
+    const token = getCookie("token");
+
+    const response = await axios.put(`${apiURL}jobs/${jobId}`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error while updating job", error);
+    throw new Error(
+      error.response?.data?.error || "An error occurred while updating the job."
+    );
+  }
+}

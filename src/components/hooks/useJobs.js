@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { createJob, getJobs, getAllJobs } from "../services/jobsApi";
+import { createJob, getJobs, getAllJobs, updateJob } from "../services/jobsApi";
 import { useNavigate } from "react-router-dom";
 
 export const useCreateJob = () => {
@@ -59,4 +59,25 @@ export const useGetAllJobs = (params) => {
     isLoadingJobs,
     error,
   };
+};
+
+export const useUpdateJob = () => {
+  const queryClient = useQueryClient();
+  const { mutateAsync: updateJobFn, isPending } = useMutation({
+    mutationKey: ["updateJob"],
+    mutationFn: async ({ jobId, body }) => {
+      return await updateJob(jobId, body);
+    },
+    onSuccess() {
+      toast.success("Job updated successfully!");
+      queryClient.invalidateQueries({ queryKey: ["singleWorkspace"] });
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["allJobs"] });
+    },
+    onError(error) {
+      console.log(error);
+      toast.error(`${error.message}`);
+    },
+  });
+  return { updateJobFn, isPending };
 };
