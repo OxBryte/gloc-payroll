@@ -62,7 +62,10 @@ A modern, decentralized payroll management system built with React, enabling sea
 
 - **Job Posting**: Create and manage job listings with rich text descriptions
 - **Advanced Search**: Filter jobs by type, location, skills, and keywords
-- **Job Details Modal**: Comprehensive job information with company details
+- **Job Details Page**: Dedicated page for viewing complete job information (`/jobs/:id`)
+- **Job Editing**: Edit job listings via drawer interface (owner/workspace only)
+- **Ownership Control**: Edit permissions based on user or workspace ownership
+- **Public Job Cards**: Separate component for public job listings without edit access
 - **Rich Text Editor**: Notion-like editor for creating detailed job descriptions
 - **Pagination Support**: Navigate through job listings efficiently
 - **URL-based Filtering**: Shareable job search URLs with query parameters
@@ -174,6 +177,9 @@ payroll-project/
 │   │   ├── context/           # React context providers
 │   │   ├── features/          # Feature-specific components
 │   │   │   ├── Analytics/     # Analytics components
+│   │   │   ├── job/           # Job board components
+│   │   │   │   ├── JobCard.jsx        # Job card for workspace views
+│   │   │   │   └── PublicJobCard.jsx  # Job card for public listings
 │   │   │   ├── settings/      # Settings pages
 │   │   │   └── workspace/     # Workspace features
 │   │   ├── hooks/             # Custom React hooks
@@ -186,11 +192,17 @@ payroll-project/
 │   │   ├── layouts/           # Layout components
 │   │   ├── lib/               # Utility functions and configs
 │   │   ├── services/          # API service layer
+│   │   │   └── jobsApi.js            # Job API endpoints
 │   │   └── ui/                # Reusable UI components
+│   │       ├── EditJobDrawer.jsx     # Job editing drawer
+│   │       ├── EditJobModal.jsx       # Job editing modal (legacy)
+│   │       └── JobDetailsModal.jsx   # Job details modal (legacy)
 │   ├── pages/                 # Route page components
 │   │   ├── Home.jsx
 │   │   ├── CreatePayroll.jsx
 │   │   ├── Workspace.jsx
+│   │   ├── Jobs.jsx           # Public job listings page
+│   │   ├── JobDetails.jsx      # Individual job details page
 │   │   └── Settings.jsx
 │   ├── App.jsx               # Main app component
 │   ├── Provider.jsx          # Reown AppKit provider
@@ -332,7 +344,53 @@ await createJobFn({
   title: "Senior Developer",
   type: "fulltime",
   location: "Remote",
+  locationType: "remote",
+  skills: ["React", "Node.js"],
+  amount: "$100000 - $150000",
+  duration: "Year",
+  description: "<p>Job description HTML</p>",
+  workspaceId: "workspace-id",
   // ... other fields
+});
+```
+
+#### `useGetJobById`
+
+Fetch a single job by its ID.
+
+```javascript
+const {
+  job,
+  isLoadingJob,
+  error,
+} = useGetJobById(jobId);
+```
+
+#### `useUpdateJob`
+
+Update an existing job posting.
+
+```javascript
+const {
+  updateJobFn,
+  isPending,
+} = useUpdateJob();
+
+await updateJobFn({
+  jobId: "job-id",
+  body: {
+    companyName: "Tech Corp",
+    logo: "https://example.com/logo.png",
+    location: "Remote",
+    locationType: "remote",
+    title: "Senior Developer",
+    type: "fulltime",
+    skills: ["React", "Node.js"],
+    amount: "$100000 - $150000",
+    duration: "Year",
+    description: "<p>Updated description</p>",
+    isActive: true,
+  },
 });
 ```
 
@@ -365,6 +423,29 @@ VITE_PAYROLL_CONTRACT_ADDRESS=0x69b04e89dF5B1dD7Bed665D3B1009F7AF563a171
 VITE_POCKET_CONTRACT_ADDRESS=0x451d13908B0C8bfA8492f4bf5f2b34fC2a82edF9
 VITE_USDC_CONTRACT_ADDRESS=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
 ```
+
+## 📡 API Endpoints
+
+### Job Board API
+
+The application uses the following job-related endpoints:
+
+- **GET** `/api/jobs` - Get all jobs with pagination and filters
+  - Query params: `page`, `limit`, `type`, `locationType`, `search`, `skills`
+  
+- **GET** `/api/jobs/{id}` - Get a single job by ID
+
+- **POST** `/api/jobs/` - Create a new job posting
+  - Requires authentication
+  - Body: `{ title, type, location, locationType, skills, amount, duration, description, workspaceId }`
+
+- **PUT** `/api/jobs/{id}` - Update an existing job
+  - Requires authentication
+  - Only accessible by job creator or workspace owner
+  - Body: `{ companyName, logo, location, locationType, title, type, skills, amount, duration, description, isActive }`
+
+- **GET** `/api/jobs/my/jobs` - Get jobs created by the authenticated user
+  - Requires authentication
 
 ## 📝 Smart Contract Integration
 
@@ -482,6 +563,24 @@ Adjust the tax rate in `src/pages/CreatePayroll.jsx`:
 ```javascript
 const taxRate = 0.03; // 3% - Change as needed
 ```
+
+### Job Board Routes
+
+The application includes the following job-related routes:
+
+- `/jobs` - Public job listings page with search and filters
+- `/jobs/:id` - Individual job details page
+  - Shows full job information
+  - Edit button visible only to job creator or workspace owner
+  - Edit functionality opens a drawer for job updates
+
+### Job Ownership
+
+Job editing permissions are determined by:
+1. **Direct Ownership**: User who created the job
+2. **Workspace Ownership**: Any workspace the user belongs to that created the job
+
+The system checks both conditions before showing the edit button.
 
 ## 🐛 Troubleshooting
 
