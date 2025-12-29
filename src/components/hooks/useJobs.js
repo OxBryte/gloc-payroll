@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { createJob, getJobs, getAllJobs, updateJob } from "../services/jobsApi";
+import { createJob, getJobs, getAllJobs, updateJob, getJobById } from "../services/jobsApi";
 import { useNavigate } from "react-router-dom";
 
 export const useCreateJob = () => {
@@ -61,6 +61,24 @@ export const useGetAllJobs = (params) => {
   };
 };
 
+export const useGetJobById = (jobId) => {
+  const {
+    data: jobData,
+    isLoading: isLoadingJob,
+    error,
+  } = useQuery({
+    queryKey: ["job", jobId],
+    queryFn: () => getJobById(jobId),
+    enabled: !!jobId, // Only run if jobId exists
+  });
+
+  return {
+    job: jobData?.data || jobData,
+    isLoadingJob,
+    error,
+  };
+};
+
 export const useUpdateJob = () => {
   const queryClient = useQueryClient();
   const { mutateAsync: updateJobFn, isPending } = useMutation({
@@ -68,11 +86,12 @@ export const useUpdateJob = () => {
     mutationFn: async ({ jobId, body }) => {
       return await updateJob(jobId, body);
     },
-    onSuccess() {
+    onSuccess(_, variables) {
       toast.success("Job updated successfully!");
       queryClient.invalidateQueries({ queryKey: ["singleWorkspace"] });
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
       queryClient.invalidateQueries({ queryKey: ["allJobs"] });
+      queryClient.invalidateQueries({ queryKey: ["job", variables.jobId] });
     },
     onError(error) {
       console.log(error);

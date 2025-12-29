@@ -62,6 +62,28 @@ export async function getAllJobs(params) {
   }
 }
 
+export async function getJobById(jobId) {
+  try {
+    // Get token from cookies (optional for public jobs)
+    const token = getCookie("token");
+
+    const config = {};
+    if (token) {
+      config.headers = {
+        Authorization: `Bearer ${token}`,
+      };
+    }
+
+    const { data } = await axios.get(`${apiURL}jobs/${jobId}`, config);
+    return data;
+  } catch (error) {
+    console.error("Error while fetching job", error);
+    throw new Error(
+      error.response?.data?.error || "An error occurred while fetching the job."
+    );
+  }
+}
+
 export async function updateJob(jobId, body) {
   try {
     // Get token from cookies
