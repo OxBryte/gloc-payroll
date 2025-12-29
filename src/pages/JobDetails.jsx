@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, MapPin, Briefcase, DollarSign, Calendar, Edit, Loader2 } from "lucide-react";
 import { useGetJobById } from "../components/hooks/useJobs";
 import { useUser } from "../components/hooks/useUser";
+import { useGetWorkspace } from "../components/hooks/useWorkspace";
 import EditJobDrawer from "../components/ui/EditJobDrawer";
 
 export default function JobDetails() {
@@ -10,21 +11,37 @@ export default function JobDetails() {
   const navigate = useNavigate();
   const { job, isLoadingJob, error } = useGetJobById(id);
   const { user } = useUser();
+  const { workspace } = useGetWorkspace();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  // Check if current user is the job owner
-  const isJobOwner = user && job && (
-    job.createdBy === user.id ||
-    job.createdBy === user._id ||
-    job.createdBy?._id === user._id ||
-    job.createdBy?.id === user.id ||
-    job.userId === user.id ||
-    job.userId === user._id ||
-    job.owner === user.id ||
-    job.owner === user._id ||
-    job.owner?._id === user._id ||
-    job.owner?.id === user.id
-  );
+  // Check if current user is the job owner or if user's workspace created the job
+  const isJobOwner = useMemo(() => {
+    if (!user || !job) return false;
+
+    // Check if user is the direct creator
+    const isDirectCreator = 
+      job.createdBy === user.id ||
+      job.createdBy === user._id ||
+      job.createdBy?._id === user._id ||
+      job.createdBy?.id === user.id ||
+      job.userId === user.id ||
+      job.userId === user._id ||
+      job.owner === user.id ||
+      job.owner === user._id ||
+      job.owner?._id === user._id ||
+      job.owner?.id === user.id;
+
+    // Check if job belongs to user's workspace
+    const userWorkspaceIds = workspace
+      ? (Array.isArray(workspace) ? workspace : [workspace])
+          .map((ws) => ws?.id || ws?._id)
+          .filter(Boolean)
+      : [];
+
+    const isWorkspaceJob = job.workspaceId && userWorkspaceIds.includes(job.workspaceId);
+
+    return isDirectCreator || isWorkspaceJob;
+  }, [user, job, workspace]);
 
   if (isLoadingJob) {
     return (
