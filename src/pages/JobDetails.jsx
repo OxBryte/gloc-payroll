@@ -13,6 +13,8 @@ export default function JobDetails() {
   const { user } = useUser();
   const { workspace } = useGetWorkspace();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  console.log(job);
+  console.log(user);
 
   // Check if current user is the job owner or if user's workspace created the job
   const isJobOwner = useMemo(() => {
