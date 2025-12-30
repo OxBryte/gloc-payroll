@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateUser, useUser } from "../../hooks/useUser";
 import { Camera, Loader2, X } from "lucide-react";
-import toast from "react-hot-toast";
 
 export default function Account() {
   const { user } = useUser();
@@ -17,14 +16,11 @@ export default function Account() {
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
   } = useForm({
     defaultValues: {
       username: user?.username || "",
       fullName: user?.fullName || "",
       email: user?.email || "",
-      phone: user?.phone || "",
-      bio: user?.bio || "",
     },
   });
 
@@ -149,7 +145,7 @@ export default function Account() {
           </p>
         </div>
 
-        <div className="flex items-center flex-col gap-4">
+        <div className="flex items-center flex-col gap-4 w-fit">
           <div className="relative">
             <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
               {currentAvatar ? (
@@ -277,26 +273,9 @@ export default function Account() {
               </span>
             )}
           </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              {...register("phone")}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-c-color/20 focus:border-c-color transition-all outline-none"
-              placeholder="Enter your phone number"
-            />
-            {errors.phone && (
-              <span className="text-xs text-red-500">
-                {errors.phone.message}
-              </span>
-            )}
-          </div>
         </div>
 
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <label className="text-sm font-medium text-gray-700 block">Bio</label>
           <textarea
             {...register("bio")}
@@ -307,7 +286,7 @@ export default function Account() {
           <p className="text-xs text-gray-500">
             A short description about yourself (optional)
           </p>
-        </div>
+        </div> */}
 
         {/* Save Button */}
         <div className="flex justify-end pt-4 border-t border-gray-200">
