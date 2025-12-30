@@ -102,3 +102,22 @@ export async function updateJob(jobId, body) {
     );
   }
 }
+
+export async function deleteJob(jobId) {
+  try {
+    // Get token from cookies
+    const token = getCookie("token");
+
+    const response = await axios.delete(`${apiURL}jobs/${jobId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error while deleting job", error);
+    throw new Error(
+      error.response?.data?.error || "An error occurred while deleting the job."
+    );
+  }
+}
