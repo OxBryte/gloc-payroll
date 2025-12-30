@@ -1,6 +1,6 @@
 import { PiBriefcase, PiMapPin } from "react-icons/pi";
 import React, { useState } from "react";
-import { Dot, Trash2, Loader2, Power } from "lucide-react";
+import { Dot, Trash2, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteJob, useToggleJobStatus } from "../../hooks/useJobs";
 
@@ -36,24 +36,28 @@ export default function JobCard({ job, showDelete = false, showToggle = false })
   return (
     <div className="w-full bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-c-color/50 relative">
       {(showDelete || showToggle) && (
-        <div className="absolute top-3 right-3 flex gap-2">
+        <div className="absolute top-3 right-3 flex items-center gap-2">
           {showToggle && (
-            <button
-              onClick={handleToggleStatus}
-              disabled={isToggling}
-              className={`p-1.5 rounded-lg transition-colors disabled:opacity-50 ${
-                job?.isActive
-                  ? "text-green-500 hover:bg-green-50"
-                  : "text-gray-400 hover:bg-gray-50"
-              }`}
-              title={job?.isActive ? "Deactivate job" : "Activate job"}
-            >
+            <div className="flex items-center gap-2">
               {isToggling ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
               ) : (
-                <Power className="w-4 h-4" />
+                <button
+                  onClick={handleToggleStatus}
+                  disabled={isToggling}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-c-color focus:ring-offset-2 disabled:opacity-50 ${
+                    job?.isActive ? "bg-green-500" : "bg-gray-300"
+                  }`}
+                  title={job?.isActive ? "Deactivate job" : "Activate job"}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      job?.isActive ? "translate-x-6" : "translate-x-1"
+                    }`}
+                  />
+                </button>
               )}
-            </button>
+            </div>
           )}
           {showDelete && (
             <button
