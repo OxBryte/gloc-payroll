@@ -1,5 +1,4 @@
 import React from "react";
-// import AllWorkspace from "../components/features/AllWorkspace";
 import EmployeeAnalytics from "../components/features/Analytics/EmployeeAnalytics";
 import PaymentAnalytics from "../components/features/Analytics/PaymentAnalytics";
 import TotalWorkspace from "../components/features/Analytics/TotalWorkspace";
@@ -18,7 +17,6 @@ export default function Home() {
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
         <EmployeeDonutChart />
       </div>
-      {/* <AllWorkspace /> */}
     </div>
   );
 }
