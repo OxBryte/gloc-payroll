@@ -1,6 +1,14 @@
 import React, { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, MapPin, Briefcase, DollarSign, Calendar, Edit, Loader2 } from "lucide-react";
+import {
+  ArrowLeft,
+  MapPin,
+  Briefcase,
+  DollarSign,
+  Calendar,
+  Edit,
+  Loader2,
+} from "lucide-react";
 import { useGetJobById } from "../components/hooks/useJobs";
 import { useUser } from "../components/hooks/useUser";
 import { useGetWorkspace } from "../components/hooks/useWorkspace";
@@ -13,17 +21,13 @@ export default function JobDetails() {
   const { user } = useUser();
   const { workspace } = useGetWorkspace();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  console.log(job);
-  console.log(user);
 
   // Check if current user is the job owner or if user's workspace created the job
   const isJobOwner = useMemo(() => {
     if (!user || !job) return false;
 
     // Check if user is the direct creator
-    const isDirectCreator = 
-     
-      job.userId?._id === user._id ||
+    const isDirectCreator = job.userId?._id === user._id;
 
     // Check if job belongs to user's workspace
     const userWorkspaceIds = workspace
@@ -32,7 +36,8 @@ export default function JobDetails() {
           .filter(Boolean)
       : [];
 
-    const isWorkspaceJob = job.workspaceId && userWorkspaceIds.includes(job.workspaceId);
+    const isWorkspaceJob =
+      job.workspaceId && userWorkspaceIds.includes(job.workspaceId);
 
     return isDirectCreator || isWorkspaceJob;
   }, [user, job, workspace]);
@@ -162,7 +167,9 @@ export default function JobDetails() {
           {/* Skills */}
           {job.skills && job.skills.length > 0 && (
             <div className="space-y-3">
-              <h3 className="font-bold text-gray-900 text-lg">Required Skills</h3>
+              <h3 className="font-bold text-gray-900 text-lg">
+                Required Skills
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {job.skills.map((skill, index) => (
                   <span
@@ -187,12 +194,8 @@ export default function JobDetails() {
 
       {/* Edit Job Drawer */}
       {isEditModalOpen && (
-        <EditJobDrawer
-          job={job}
-          setIsOpen={setIsEditModalOpen}
-        />
+        <EditJobDrawer job={job} setIsOpen={setIsEditModalOpen} />
       )}
     </div>
   );
 }
-
