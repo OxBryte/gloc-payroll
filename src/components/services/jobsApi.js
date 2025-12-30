@@ -22,7 +22,7 @@ export async function createJob(body) {
   }
 }
 
-export async function getJobs(workspaceId) {
+export async function getJobs() {
   try {
     // Get token from cookies
     const token = getCookie("token");
