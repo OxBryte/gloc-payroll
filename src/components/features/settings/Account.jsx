@@ -58,9 +58,7 @@ export default function Account() {
     const fileType = file.type.toLowerCase();
 
     if (!allowedTypes.includes(fileType)) {
-      setError(
-        "Only JPG, JPEG, PNG, and GIF files are allowed."
-      );
+      setError("Only JPG, JPEG, PNG, and GIF files are allowed.");
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -87,7 +85,9 @@ export default function Account() {
     const fileSizeInMB = file.size / (1024 * 1024);
 
     if (fileSizeInMB > MAX_SIZE_MB) {
-      setError(`File size exceeds ${MAX_SIZE_MB}MB. Please upload a smaller image.`);
+      setError(
+        `File size exceeds ${MAX_SIZE_MB}MB. Please upload a smaller image.`
+      );
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -115,7 +115,7 @@ export default function Account() {
   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
-      
+
       // Append text fields
       if (data.username) formData.append("username", data.username);
       if (data.fullName) formData.append("fullName", data.fullName);
@@ -141,13 +141,15 @@ export default function Account() {
       {/* Avatar Section */}
       <div className="space-y-4">
         <div>
-          <h2 className="font-semibold text-lg text-gray-900">Profile Picture</h2>
+          <h2 className="font-semibold text-lg text-gray-900">
+            Profile Picture
+          </h2>
           <p className="text-sm text-gray-500 mt-1">
             Upload a new profile picture (JPG, PNG, GIF - Max 3MB)
           </p>
         </div>
 
-        <div className="flex items-start gap-6">
+        <div className="flex items-center flex-col gap-4">
           <div className="relative">
             <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
               {currentAvatar ? (
@@ -158,7 +160,9 @@ export default function Account() {
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400 text-2xl font-semibold">
-                  {user?.fullName?.charAt(0)?.toUpperCase() || user?.username?.charAt(0)?.toUpperCase() || "U"}
+                  {user?.fullName?.charAt(0)?.toUpperCase() ||
+                    user?.username?.charAt(0)?.toUpperCase() ||
+                    "U"}
                 </div>
               )}
             </div>
@@ -190,9 +194,7 @@ export default function Account() {
               <Camera className="w-4 h-4" />
               {avatarFile ? "Change Photo" : "Upload Photo"}
             </button>
-            {error && (
-              <p className="text-xs text-red-500">{error}</p>
-            )}
+            {error && <p className="text-xs text-red-500">{error}</p>}
           </div>
         </div>
       </div>
@@ -295,9 +297,7 @@ export default function Account() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700 block">
-            Bio
-          </label>
+          <label className="text-sm font-medium text-gray-700 block">Bio</label>
           <textarea
             {...register("bio")}
             rows={4}
