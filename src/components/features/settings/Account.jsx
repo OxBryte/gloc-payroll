@@ -31,8 +31,6 @@ export default function Account() {
         username: user?.username || "",
         fullName: user?.fullName || "",
         email: user?.email || "",
-        phone: user?.phone || "",
-        bio: user?.bio || "",
       });
       setAvatarPreview(user?.avatar || null);
     }
@@ -116,8 +114,6 @@ export default function Account() {
       if (data.username) formData.append("username", data.username);
       if (data.fullName) formData.append("fullName", data.fullName);
       if (data.email) formData.append("email", data.email);
-      if (data.phone) formData.append("phone", data.phone);
-      if (data.bio) formData.append("bio", data.bio);
 
       // Append avatar file if selected
       if (avatarFile) {
