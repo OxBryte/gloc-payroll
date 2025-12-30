@@ -185,7 +185,10 @@ export default function JobDetails() {
 
           {/* Apply Button */}
           <div className="pt-4 border-t border-gray-100">
-            <button className="w-full bg-c-color text-white py-4 rounded-xl font-semibold hover:bg-c-bg transition-colors">
+            <button
+              onClick={() => navigate(`/jobs/${id}/apply`)}
+              className="w-full bg-c-color text-white py-4 rounded-xl font-semibold hover:bg-c-bg transition-colors"
+            >
               Apply Now
             </button>
           </div>

@@ -145,3 +145,29 @@ export async function toggleJobStatus(jobId) {
     );
   }
 }
+
+export async function applyForJob(formData) {
+  try {
+    // Get token from cookies (optional - applications might be public)
+    const token = getCookie("token");
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    const response = await axios.post(`${apiURL}jobs/apply`, formData, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error while applying for job", error);
+    throw new Error(
+      error.response?.data?.error ||
+        "An error occurred while submitting your application."
+    );
+  }
+}

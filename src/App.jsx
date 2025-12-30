@@ -19,6 +19,7 @@ import Subscriptions from "./pages/Subscriptions";
 import Jobs from "./pages/Jobs";
 import JobDetails from "./pages/JobDetails";
 import Careers from "./pages/Careers";
+import Apply from "./pages/Apply";
 import InvoicePage from "./pages/InvoicePage";
 import PixelPrintingAnimation from "./pages/PixelPrintingAnimation";
 import Map from "./pages/Map";
@@ -80,6 +81,7 @@ function App() {
               <Route path="/subscription" element={<Subscriptions />} />
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/jobs/:id" element={<JobDetails />} />
+              <Route path="/jobs/:id/apply" element={<Apply />} />
               <Route path="/:id" element={<h1>Dynamic Route</h1>} />
             </Route>
           </Route>

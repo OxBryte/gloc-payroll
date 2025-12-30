@@ -8,6 +8,7 @@ import {
   getJobById,
   deleteJob,
   toggleJobStatus,
+  applyForJob,
 } from "../services/jobsApi";
 import { useNavigate } from "react-router-dom";
 
@@ -151,4 +152,23 @@ export const useToggleJobStatus = () => {
     },
   });
   return { toggleJobStatusFn, isPending };
+};
+
+export const useApplyForJob = () => {
+  const queryClient = useQueryClient();
+  const { mutateAsync: applyForJobFn, isPending } = useMutation({
+    mutationKey: ["applyForJob"],
+    mutationFn: async (formData) => {
+      return await applyForJob(formData);
+    },
+    onSuccess() {
+      toast.success("Application submitted successfully!");
+      queryClient.invalidateQueries({ queryKey: ["job"] });
+    },
+    onError(error) {
+      console.log(error);
+      toast.error(`${error.message}`);
+    },
+  });
+  return { applyForJobFn, isPending };
 };
