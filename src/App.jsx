@@ -54,7 +54,6 @@ function App() {
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/jobs/:id" element={<JobDetails />} />
               <Route path="/jobs/:id/apply" element={<Apply />} />
-              <Route path="/:id" element={<h1>Dynamic Route</h1>} />
             </Route>
           </Route>
           <Route path="/careers" element={<Careers />} />
