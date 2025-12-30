@@ -22,16 +22,8 @@ export default function JobDetails() {
 
     // Check if user is the direct creator
     const isDirectCreator = 
-      job.createdBy === user.id ||
-      job.createdBy === user._id ||
-      job.createdBy?._id === user._id ||
-      job.createdBy?.id === user.id ||
-      job.userId === user.id ||
-      job.userId === user._id ||
-      job.owner === user.id ||
-      job.owner === user._id ||
-      job.owner?._id === user._id ||
-      job.owner?.id === user.id;
+     
+      job.userId?._id === user._id ||
 
     // Check if job belongs to user's workspace
     const userWorkspaceIds = workspace
