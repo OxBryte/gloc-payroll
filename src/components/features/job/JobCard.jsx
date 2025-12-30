@@ -1,10 +1,13 @@
 import { PiBriefcase, PiMapPin } from "react-icons/pi";
-import React from "react";
-import { Dot } from "lucide-react";
+import React, { useState } from "react";
+import { Dot, Trash2, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useDeleteJob } from "../../hooks/useJobs";
 
-export default function JobCard({ job }) {
+export default function JobCard({ job, showDelete = false }) {
   const navigate = useNavigate();
+  const { deleteJobFn, isPending: isDeleting } = useDeleteJob();
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   if (!job) return null;
 
@@ -12,8 +15,59 @@ export default function JobCard({ job }) {
     navigate(`/jobs/${job._id || job.id}`);
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteJobFn(job._id || job.id);
+      setShowConfirmDelete(false);
+    } catch (error) {
+      // Error is handled by the hook
+    }
+  };
+
   return (
-    <div className="w-full bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-c-color/50">
+    <div className="w-full bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-c-color/50 relative">
+      {showDelete && (
+        <button
+          onClick={() => setShowConfirmDelete(true)}
+          disabled={isDeleting}
+          className="absolute top-3 right-3 p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+          title="Delete job"
+        >
+          {isDeleting ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <Trash2 className="w-4 h-4" />
+          )}
+        </button>
+      )}
+
+      {showConfirmDelete && (
+        <div className="absolute inset-0 bg-white/95 backdrop-blur-sm rounded-lg flex items-center justify-center z-10 p-4">
+          <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-lg max-w-xs w-full">
+            <h3 className="font-semibold text-gray-900 mb-2">Delete Job?</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              Are you sure you want to delete this job? This action cannot be
+              undone.
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowConfirmDelete(false)}
+                className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="flex-1 px-3 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isDeleting ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex w-full gap-3 items-center">
         <div className="w-20 h-20 rounded-lg bg-[#e9e9e9] overflow-hidden">
           <img

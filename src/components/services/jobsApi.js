@@ -121,3 +121,23 @@ export async function deleteJob(jobId) {
     );
   }
 }
+
+export async function toggleJobStatus(jobId) {
+  try {
+    // Get token from cookies
+    const token = getCookie("token");
+
+    const response = await axios.patch(`${apiURL}jobs/${jobId}/toggle-status`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error while toggling job status", error);
+    throw new Error(
+      error.response?.data?.error ||
+        "An error occurred while toggling the job status."
+    );
+  }
+}

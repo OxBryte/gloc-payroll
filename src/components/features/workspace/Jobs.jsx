@@ -37,7 +37,9 @@ export default function Jobs() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
         {jobs?.length > 0 ? (
-          jobs.map((job) => <JobCard key={job._id || job.id} job={job} />)
+          jobs.map((job) => (
+            <JobCard key={job._id || job.id} job={job} showDelete={true} />
+          ))
         ) : (
           <div className="col-span-full py-10 text-center text-gray-500">
             No jobs found. Create one to get started!
