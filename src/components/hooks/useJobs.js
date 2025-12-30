@@ -7,6 +7,7 @@ import {
   updateJob,
   getJobById,
   deleteJob,
+  toggleJobStatus,
 } from "../services/jobsApi";
 import { useNavigate } from "react-router-dom";
 
@@ -128,4 +129,26 @@ export const useDeleteJob = () => {
     },
   });
   return { deleteJobFn, isPending };
+};
+
+export const useToggleJobStatus = () => {
+  const queryClient = useQueryClient();
+  const { mutateAsync: toggleJobStatusFn, isPending } = useMutation({
+    mutationKey: ["toggleJobStatus"],
+    mutationFn: async (jobId) => {
+      return await toggleJobStatus(jobId);
+    },
+    onSuccess(_, jobId) {
+      toast.success("Job status updated successfully!");
+      queryClient.invalidateQueries({ queryKey: ["singleWorkspace"] });
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["allJobs"] });
+      queryClient.invalidateQueries({ queryKey: ["job", jobId] });
+    },
+    onError(error) {
+      console.log(error);
+      toast.error(`${error.message}`);
+    },
+  });
+  return { toggleJobStatusFn, isPending };
 };

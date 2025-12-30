@@ -1,12 +1,13 @@
 import { PiBriefcase, PiMapPin } from "react-icons/pi";
 import React, { useState } from "react";
-import { Dot, Trash2, Loader2 } from "lucide-react";
+import { Dot, Trash2, Loader2, Power } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useDeleteJob } from "../../hooks/useJobs";
+import { useDeleteJob, useToggleJobStatus } from "../../hooks/useJobs";
 
-export default function JobCard({ job, showDelete = false }) {
+export default function JobCard({ job, showDelete = false, showToggle = false }) {
   const navigate = useNavigate();
   const { deleteJobFn, isPending: isDeleting } = useDeleteJob();
+  const { toggleJobStatusFn, isPending: isToggling } = useToggleJobStatus();
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   if (!job) return null;
@@ -24,21 +25,51 @@ export default function JobCard({ job, showDelete = false }) {
     }
   };
 
+  const handleToggleStatus = async () => {
+    try {
+      await toggleJobStatusFn(job._id || job.id);
+    } catch (error) {
+      // Error is handled by the hook
+    }
+  };
+
   return (
     <div className="w-full bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 hover:border-c-color/50 relative">
-      {showDelete && (
-        <button
-          onClick={() => setShowConfirmDelete(true)}
-          disabled={isDeleting}
-          className="absolute top-3 right-3 p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
-          title="Delete job"
-        >
-          {isDeleting ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
-          ) : (
-            <Trash2 className="w-4 h-4" />
+      {(showDelete || showToggle) && (
+        <div className="absolute top-3 right-3 flex gap-2">
+          {showToggle && (
+            <button
+              onClick={handleToggleStatus}
+              disabled={isToggling}
+              className={`p-1.5 rounded-lg transition-colors disabled:opacity-50 ${
+                job?.isActive
+                  ? "text-green-500 hover:bg-green-50"
+                  : "text-gray-400 hover:bg-gray-50"
+              }`}
+              title={job?.isActive ? "Deactivate job" : "Activate job"}
+            >
+              {isToggling ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Power className="w-4 h-4" />
+              )}
+            </button>
           )}
-        </button>
+          {showDelete && (
+            <button
+              onClick={() => setShowConfirmDelete(true)}
+              disabled={isDeleting}
+              className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+              title="Delete job"
+            >
+              {isDeleting ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Trash2 className="w-4 h-4" />
+              )}
+            </button>
+          )}
+        </div>
       )}
 
       {showConfirmDelete && (
