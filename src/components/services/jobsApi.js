@@ -127,11 +127,15 @@ export async function toggleJobStatus(jobId) {
     // Get token from cookies
     const token = getCookie("token");
 
-    const response = await axios.patch(`${apiURL}jobs/${jobId}/toggle-status`, null, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.patch(
+      `${apiURL}jobs/${jobId}/toggle-status`,
+      null,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Error while toggling job status", error);

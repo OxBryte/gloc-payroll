@@ -80,10 +80,10 @@ function App() {
               <Route path="/subscription" element={<Subscriptions />} />
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/jobs/:id" element={<JobDetails />} />
-              <Route path="/careers" element={<Careers />} />
               <Route path="/:id" element={<h1>Dynamic Route</h1>} />
             </Route>
           </Route>
+              <Route path="/careers" element={<Careers />} />
           <Route path="*" element={<h1>404 Not Found</h1>} />
           <Route path="/reset-password/" element={<ResetPassword />} />
           <Route path="/accept-admin" element={<AcceptAdmin />} />
