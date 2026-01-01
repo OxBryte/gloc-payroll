@@ -73,7 +73,7 @@ export default function Tasks() {
       {/* Main Content */}
       <div className="max-w-[720px] mx-auto px-4 md:px-6 py-8">
         {/* Tabs */}
-        <div className="mb-6 border-b border-gray-200">
+        <div className="mb-">
           <div className="flex gap-1 items-center">
             <button
                 key="all"
