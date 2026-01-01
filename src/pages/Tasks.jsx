@@ -48,6 +48,7 @@ export default function Tasks() {
     e.dataTransfer.setData("text/html", task._id || task.id);
     // Add visual feedback
     e.currentTarget.style.opacity = "0.5";
+    e.currentTarget.style.transform = "rotate(2deg)";
   };
 
   const handleDragEnd = (e) => {
