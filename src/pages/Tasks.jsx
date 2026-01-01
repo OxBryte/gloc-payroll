@@ -171,7 +171,7 @@ export default function Tasks() {
                         {column.label}
                       </h3>
                       <span className="text-xs text-white bg-c-color px-2.5 py-1 pt-1.5 rounded-full">
-                        {columnTasks.length}
+                        {columnTasks.length}+3
                       </span>
                     </div>
                   </div>
