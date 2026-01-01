@@ -17,9 +17,9 @@ export default function Tasks() {
   // Filter tasks based on active tab
   const filteredTasks = useMemo(() => {
     if (!tasks || tasks.length === 0) return [];
-    
+
     const now = new Date();
-    
+
     switch (activeTab) {
       case "opened":
         // Tasks where completionDate is in the future (not yet completed)
