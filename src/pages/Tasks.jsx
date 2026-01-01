@@ -85,7 +85,7 @@ export default function Tasks() {
               }`}
             >
               All
-              <span className="text-[8px] text-white bg-c-color rounded-full px-2 py-1 ml-2">
+              <span className="text-[12px] text-white bg-c-color rounded-full px-2 py-1 ml-2">
                 {tasks?.length || 0}
               </span>
             </button>
