@@ -103,9 +103,9 @@ export default function Tasks() {
           <div className="text-center py-20">
             <p className="text-red-500">Error loading tasks: {error.message}</p>
           </div>
-        ) : tasks && tasks.length > 0 ? (
+        ) : filteredTasks && filteredTasks.length > 0 ? (
           <div className="space-y-3">
-            {tasks.map((task) => (
+            {filteredTasks.map((task) => (
               <TaskCard
                 key={task._id || task.id}
                 task={task}
@@ -117,7 +117,9 @@ export default function Tasks() {
         ) : (
           <div className="text-center py-20">
             <p className="text-gray-500 text-lg">
-              No tasks yet. Create your first task!
+              {activeTab === "all"
+                ? "No tasks yet. Create your first task!"
+                : `No ${activeTab} tasks found.`}
             </p>
           </div>
         )}
