@@ -90,7 +90,6 @@ This document outlines the API endpoints required for the Tasks feature.
 {
   "title": "string (required)",
   "description": "string (optional)",
-  "icon": "string (required) - Lucide icon name (e.g., 'CheckCircle2', 'Star', 'Heart', 'Bug', 'Rocket', etc.)",
   "startDate": "2024-01-15T00:00:00.000Z (required) - ISO date string",
   "completionDate": "2024-01-20T00:00:00.000Z (required) - ISO date string"
 }
