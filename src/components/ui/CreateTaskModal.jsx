@@ -36,8 +36,8 @@ export default function CreateTaskModal({ setIsOpen }) {
       {/* Modal Content */}
       <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-bold text-gray-900">Create New Task</h2>
+        <div className="flex items-center justify-between p-5 border-b border-gray-200">
+          <h2 className="text-lg font-bold text-gray-900">Create New Task</h2>
           <button
             onClick={() => setIsOpen(false)}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
