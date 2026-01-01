@@ -53,6 +53,7 @@ export default function Tasks() {
 
   const handleDragEnd = (e) => {
     e.currentTarget.style.opacity = "1";
+    e.currentTarget.style.transform = "rotate(0deg)";
     setDraggedTask(null);
     setDragOverColumn(null);
   };
