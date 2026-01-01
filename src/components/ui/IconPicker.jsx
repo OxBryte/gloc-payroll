@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { Search, X } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 
