@@ -74,7 +74,7 @@ export default function IconPicker({ selectedIcon, onSelectIcon, onClose }) {
         {/* Icons Grid */}
         <div className="flex-1 overflow-y-auto p-4">
           {filteredIcons.length > 0 ? (
-            <div className="grid grid-cols-8 sm:grid-cols-10 md:grid-cols-12 gap-3">
+            <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-2">
               {filteredIcons.map((iconName) => {
                 const IconComponent = LucideIcons[iconName];
                 if (!IconComponent) return null;
@@ -86,20 +86,20 @@ export default function IconPicker({ selectedIcon, onSelectIcon, onClose }) {
                     key={iconName}
                     onClick={() => handleIconSelect(iconName)}
                     className={`
-                      p-3 rounded-lg border-2 transition-all
+                      p-2 rounded-lg border transition-all
                       flex items-center justify-center
-                      hover:bg-gray-50 hover:border-c-color
+                      hover:bg-c-color/10 hover:border-c-color
                       ${
                         isSelected
-                          ? "bg-c-color/10 border-c-color"
+                          ? "bg-c-color/10 border-c-color ring-2 ring-c-color/50"
                           : "border-gray-200"
                       }
                     `}
                     title={iconName}
                   >
                     <IconComponent
-                      className={`w-5 h-5 ${
-                        isSelected ? "text-c-color" : "text-gray-600"
+                      className={`w-6 h-6 ${
+                        isSelected ? "text-c-color" : "text-gray-700"
                       }`}
                     />
                   </button>
@@ -108,7 +108,7 @@ export default function IconPicker({ selectedIcon, onSelectIcon, onClose }) {
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-gray-500">
+              <p className="text-gray-500 text-sm">
                 No icons found matching "{searchQuery}"
               </p>
             </div>
