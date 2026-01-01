@@ -72,17 +72,27 @@ export default function Tasks() {
 
     if (!draggedTask) return;
 
+    // Determine current status (default to "ongoing" if no status)
+    const currentStatus = draggedTask.status || "ongoing";
+
     // Don't update if dropped in the same column
-    if (draggedTask.status === targetStatus) {
+    if (targetStatus === null && !currentStatus) {
       setDraggedTask(null);
       return;
     }
+    if (currentStatus === targetStatus) {
+      setDraggedTask(null);
+      return;
+    }
+
+    // Update task status (null for "all" means no status filter, but we'll set to "ongoing")
+    const newStatus = targetStatus === null ? "ongoing" : targetStatus;
 
     // Update task status
     try {
       await updateTaskFn({
         taskId: draggedTask._id || draggedTask.id,
-        body: { status: targetStatus },
+        body: { status: newStatus },
       });
     } catch (error) {
       console.error("Error updating task status:", error);
