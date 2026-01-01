@@ -14,7 +14,7 @@ export default function TaskCard({ task, onEdit, onDelete }) {
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
+    <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-all duration-200">
       <div className="flex items-start justify-between gap-4">
         {/* Left side - Content */}
         <div className="flex items-start gap-3 flex-1">
