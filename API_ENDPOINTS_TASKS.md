@@ -219,7 +219,6 @@ This document outlines the API endpoints required for the Tasks feature.
   _id: ObjectId (MongoDB) or String,
   title: String (required, min: 1, max: 200),
   description: String (optional, max: 2000),
-  icon: String (required, valid Lucide icon name - e.g., "CheckCircle2", "Star", "Heart", "Bug", "Rocket", etc.),
   startDate: Date (required),
   completionDate: Date (required),
   createdAt: Date (auto-generated),
