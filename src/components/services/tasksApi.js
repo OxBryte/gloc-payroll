@@ -43,7 +43,6 @@ export const getTaskById = async (taskId) => {
  * @param {Object} body - Task data
  * @param {string} body.title - Task title (required)
  * @param {string} body.description - Task description
- * @param {string} body.icon - Task icon (required)
  * @param {string} body.startDate - Start date in ISO format (required)
  * @param {string} body.completionDate - Completion date in ISO format (required)
  * @returns {Promise} Response with created task
