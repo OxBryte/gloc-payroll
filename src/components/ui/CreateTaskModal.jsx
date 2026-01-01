@@ -47,7 +47,7 @@ export default function CreateTaskModal({ setIsOpen }) {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-5 space-y-4">
           {/* Title */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700 block">
