@@ -103,11 +103,11 @@ export default function Tasks() {
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 <span className="text-xs text-white bg-c-color rounded-full px-2 py-1">
-                  ({filteredTasks?.filter((task) => task.status === tab).length})
+                  {filteredTasks?.filter((task) => task.status === tab).length}
                 </span>
               </button>
             ))}
-          </div>
+          </div> */}
         </div>
 
         {isLoading ? (
