@@ -20,6 +20,7 @@ import JobDetails from "./pages/JobDetails";
 import Careers from "./pages/Careers";
 import Apply from "./pages/Apply";
 import InvoicePage from "./pages/InvoicePage";
+import Tasks from "./pages/Tasks";
 
 function App() {
   return (
