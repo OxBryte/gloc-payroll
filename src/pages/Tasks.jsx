@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Plus } from "lucide-react";
 import { useGetTasks } from "../components/hooks/useTasks";
 import TaskCard from "../components/features/tasks/TaskCard";
@@ -11,7 +11,38 @@ export default function Tasks() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [deletingTask, setDeletingTask] = useState(null);
+  const [activeTab, setActiveTab] = useState("all");
   const { tasks, isLoading, error } = useGetTasks();
+
+  // Filter tasks based on active tab
+  const filteredTasks = useMemo(() => {
+    if (!tasks || tasks.length === 0) return [];
+    
+    const now = new Date();
+    
+    switch (activeTab) {
+      case "opened":
+        // Tasks where completionDate is in the future (not yet completed)
+        return tasks.filter((task) => {
+          if (!task.completionDate) return false;
+          return new Date(task.completionDate) > now;
+        });
+      case "closed":
+        // Tasks where completionDate is in the past (completed)
+        return tasks.filter((task) => {
+          if (!task.completionDate) return false;
+          return new Date(task.completionDate) <= now;
+        });
+      case "archived":
+        // Tasks with status "archived" or isArchived flag
+        return tasks.filter((task) => {
+          return task.status === "archived" || task.isArchived === true;
+        });
+      case "all":
+      default:
+        return tasks;
+    }
+  }, [tasks, activeTab]);
 
   return (
     <div className="min-h-screen bg-gray-50">
