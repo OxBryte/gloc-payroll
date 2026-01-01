@@ -21,7 +21,7 @@ export default function Tasks() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
-              <img src="/gloc-logo-3.svg" alt="Logo" className="h-8" />
+              <img src="/gloc-log.svg" alt="Logo" className="h-8" />
             </div>
 
             {/* Right side - Create button and Profile */}
