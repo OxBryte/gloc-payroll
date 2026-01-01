@@ -6,7 +6,7 @@ import CreateTaskModal from "../components/ui/CreateTaskModal";
 import EditTaskModal from "../components/ui/EditTaskModal";
 import DeleteTaskModal from "../components/ui/DeleteTaskModal";
 import { Loader2 } from "lucide-react";
-import { TbLoader2 } from "react-icons/tb";
+import { TbLoader } from "react-icons/tb";
 
 const COLUMNS = [
   { id: "pending", label: "Pending" },
