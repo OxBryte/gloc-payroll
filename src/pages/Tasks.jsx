@@ -1,48 +1,95 @@
 import React, { useState, useMemo } from "react";
 import { Plus } from "lucide-react";
-import { useGetTasks } from "../components/hooks/useTasks";
+import { useGetTasks, useUpdateTask } from "../components/hooks/useTasks";
 import TaskCard from "../components/features/tasks/TaskCard";
 import CreateTaskModal from "../components/ui/CreateTaskModal";
 import EditTaskModal from "../components/ui/EditTaskModal";
 import DeleteTaskModal from "../components/ui/DeleteTaskModal";
 import { Loader2 } from "lucide-react";
 
+const COLUMNS = [
+  { id: "all", label: "All" },
+  { id: "ongoing", label: "Ongoing" },
+  { id: "completed", label: "Completed" },
+  { id: "archived", label: "Archived" },
+];
+
 export default function Tasks() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [deletingTask, setDeletingTask] = useState(null);
-  const [activeTab, setActiveTab] = useState("all");
+  const [draggedTask, setDraggedTask] = useState(null);
+  const [dragOverColumn, setDragOverColumn] = useState(null);
   const { tasks, isLoading, error } = useGetTasks();
+  const { updateTaskFn } = useUpdateTask();
 
-  // Filter tasks based on active tab
-  const filteredTasks = useMemo(() => {
-    if (!tasks || tasks.length === 0) return [];
-
-    const now = new Date();
-
-    switch (activeTab) {
-      case "ongoing":
-        // Tasks where completionDate is in the future (not yet completed)
-        return tasks.filter((task) => {
-          if (!task.completionDate) return false;
-          return new Date(task.completionDate) > now;
-        });
-      case "completed":
-        // Tasks where completionDate is in the past (completed)
-        return tasks.filter((task) => {
-          if (!task.completionDate) return false;
-          return new Date(task.completionDate) <= now;
-        });
-      case "archived":
-        // Tasks with status "archived" or isArchived flag
-        return tasks.filter((task) => {
-          return task.status === "archived" || task.isArchived === true;
-        });
-      case "all":
-      default:
-        return tasks;
+  // Group tasks by status
+  const tasksByStatus = useMemo(() => {
+    if (!tasks || tasks.length === 0) {
+      return {
+        all: [],
+        ongoing: [],
+        completed: [],
+        archived: [],
+      };
     }
-  }, [tasks, activeTab]);
+
+    return {
+      all: tasks,
+      ongoing: tasks.filter((task) => task.status === "ongoing" || !task.status),
+      completed: tasks.filter((task) => task.status === "completed"),
+      archived: tasks.filter((task) => task.status === "archived"),
+    };
+  }, [tasks]);
+
+  const handleDragStart = (e, task) => {
+    setDraggedTask(task);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", task._id || task.id);
+    // Add visual feedback
+    e.currentTarget.style.opacity = "0.5";
+  };
+
+  const handleDragEnd = (e) => {
+    e.currentTarget.style.opacity = "1";
+    setDraggedTask(null);
+    setDragOverColumn(null);
+  };
+
+  const handleDragOver = (e, columnId) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    setDragOverColumn(columnId);
+  };
+
+  const handleDragLeave = () => {
+    setDragOverColumn(null);
+  };
+
+  const handleDrop = async (e, targetStatus) => {
+    e.preventDefault();
+    setDragOverColumn(null);
+
+    if (!draggedTask) return;
+
+    // Don't update if dropped in the same column
+    if (draggedTask.status === targetStatus) {
+      setDraggedTask(null);
+      return;
+    }
+
+    // Update task status
+    try {
+      await updateTaskFn({
+        taskId: draggedTask._id || draggedTask.id,
+        body: { status: targetStatus },
+      });
+    } catch (error) {
+      console.error("Error updating task status:", error);
+    }
+
+    setDraggedTask(null);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
