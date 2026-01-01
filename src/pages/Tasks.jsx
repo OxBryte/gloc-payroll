@@ -170,7 +170,7 @@ export default function Tasks() {
                       <h3 className="font-semibold text-gray-700 text-sm">
                         {column.label}
                       </h3>
-                      <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded-full text-center">
+                      <span className="text-xs text-gray-500 bg-c- px-2 py-1 rounded-full text-center">
                         {columnTasks.length}
                       </span>
                     </div>
