@@ -150,8 +150,8 @@ export default function Tasks() {
                   onDragLeave={handleDragLeave}
                   onDrop={(e) => handleDrop(e, column.id === "all" ? null : column.id)}
                   className={`
-                    min-h-[400px] rounded-lg transition-all duration-200
-                    ${isDraggingOver ? "bg-c-color/5 ring-2 ring-c-color/30" : "bg-gray-50"}
+                    min-h-[400px] rounded-lg transition-all duration-300 ease-in-out
+                    ${isDraggingOver ? "bg-c-color/10 ring-2 ring-c-color/50 scale-[1.02]" : "bg-gray-50"}
                   `}
                 >
                   {/* Column Header */}
