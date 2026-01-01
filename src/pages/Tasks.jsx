@@ -6,7 +6,6 @@ import CreateTaskModal from "../components/ui/CreateTaskModal";
 import EditTaskModal from "../components/ui/EditTaskModal";
 import DeleteTaskModal from "../components/ui/DeleteTaskModal";
 import { Loader2 } from "lucide-react";
-import { TbLoader } from "react-icons/tb";
 
 const COLUMNS = [
   { id: "pending", label: "Pending" },
@@ -171,10 +170,9 @@ export default function Tasks() {
                       <h3 className="font-medium text-gray-700 text-sm">
                         {column.label}
                       </h3>
-                      <div className="text-white flex items-center gap-1.5 bg-c-color px-2.5 py-2 rounded-full">
-                        {/* <TbLoader className="w-4 h-4" /> */}
-                        <p className="text-xs">{columnTasks.length}</p>
-                      </div>
+                      <span className="text-xs text-white bg-c-color px-2.5 py-1 pt-1.5 rounded-full">
+                        {columnTasks.length}
+                      </span>
                     </div>
                   </div>
 
