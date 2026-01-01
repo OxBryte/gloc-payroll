@@ -30,7 +30,7 @@ export default function Tasks() {
                 onClick={() => setIsCreateModalOpen(true)}
                 className="text-sm flex items-center gap-2 px-4 py-2 bg-c-color text-white rounded-lg hover:bg-c-bg transition-colors font-medium"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-4 h-4 text-white" />
                 Create Task
               </button>
               <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition-colors">
