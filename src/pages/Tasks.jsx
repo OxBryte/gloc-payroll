@@ -107,7 +107,7 @@ export default function Tasks() {
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
       <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-[720px] mx-auto px-4 md:px-6 py-4">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
