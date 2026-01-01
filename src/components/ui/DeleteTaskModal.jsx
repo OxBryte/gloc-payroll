@@ -25,7 +25,7 @@ export default function DeleteTaskModal({ task, setIsOpen }) {
       />
 
       {/* Modal Content */}
-      <div className="relative w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-gray-200">
           <div className="flex items-center gap-3">
