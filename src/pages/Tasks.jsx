@@ -172,7 +172,7 @@ export default function Tasks() {
                         {column.label}
                       </h3>
                       <div className="text-xs text-white bg-c-color px-2.5 py-1 pt-1.5 rounded-full">
-                        <TbLoader className="w-4 h-4" />
+                        <TbLoader2 className="w-4 h-4" />
                         <span className="text-xs">{columnTasks.length}</span>
                       </div>
                     </div>
