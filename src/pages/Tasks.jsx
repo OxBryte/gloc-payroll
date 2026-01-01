@@ -31,7 +31,7 @@ export default function Tasks() {
                 className="text-sm flex items-center gap-2 px-4 py-2 bg-c-color text-white rounded-lg hover:bg-c-bg transition-colors font-medium"
               >
                 <Plus className="w-4 h-4" />
-                Create Task
+                Create
               </button>
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0f0f0f] to-c-color-sec cursor-pointer hover:opacity-90 transition-opacity shadow-sm"></div>
             </div>
