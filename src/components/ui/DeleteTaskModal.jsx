@@ -27,12 +27,12 @@ export default function DeleteTaskModal({ task, setIsOpen }) {
       {/* Modal Content */}
       <div className="relative w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between p-5 border-b border-gray-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
               <AlertTriangle className="w-5 h-5 text-red-600" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Delete Task</h2>
+            <h2 className="text-lg font-bold text-gray-900">Delete Task</h2>
           </div>
           <button
             onClick={() => setIsOpen(false)}
