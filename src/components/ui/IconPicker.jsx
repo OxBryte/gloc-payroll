@@ -2,68 +2,32 @@ import React, { useState, useMemo } from "react";
 import { Search, X } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 
-// Popular icons list - you can expand this with more icons from lucide-react
-const POPULAR_ICONS = [
-  "CheckCircle2", "XCircle", "AlertCircle", "Info", "Star", "Heart",
-  "Bookmark", "Flag", "Tag", "Folder", "File", "Image", "Video", "Music",
-  "Settings", "User", "Users", "Mail", "Phone", "MessageSquare", "Bell",
-  "Calendar", "Clock", "Timer", "Zap", "Bolt", "Fire", "Lightbulb",
-  "Target", "Trophy", "Award", "Gift", "ShoppingCart", "CreditCard",
-  "DollarSign", "TrendingUp", "TrendingDown", "BarChart", "PieChart",
-  "Home", "Building", "MapPin", "Globe", "Link", "Share", "Download",
-  "Upload", "Save", "Edit", "Trash2", "Copy", "Cut", "Paste", "Undo",
-  "Redo", "Search", "Filter", "SortAsc", "SortDesc", "List", "Grid",
-  "Menu", "MoreVertical", "MoreHorizontal", "Plus", "Minus", "X",
-  "Check", "ArrowRight", "ArrowLeft", "ArrowUp", "ArrowDown", "ChevronRight",
-  "ChevronLeft", "ChevronUp", "ChevronDown", "Play", "Pause", "Stop",
-  "SkipForward", "SkipBack", "Volume2", "VolumeX", "Mic", "Camera",
-  "Eye", "EyeOff", "Lock", "Unlock", "Key", "Shield", "ShieldCheck",
-  "AlertTriangle", "HelpCircle", "QuestionMarkCircle", "CheckSquare",
-  "Square", "Circle", "Triangle", "Hexagon", "Pentagon", "Diamond",
-  "Code", "Terminal", "Database", "Server", "Cloud", "Wifi", "Bluetooth",
-  "Battery", "BatteryCharging", "Power", "Sun", "Moon", "CloudRain",
-  "CloudSnow", "Wind", "Droplet", "Flame", "Leaf", "Tree", "Flower",
-  "Bug", "Wand2", "Sparkles", "Rocket", "Plane", "Car", "Bike", "Ship",
-  "Train", "Bus", "Truck", "Package", "Box", "Archive", "Briefcase",
-  "Laptop", "Monitor", "Smartphone", "Tablet", "Mouse", "Keyboard",
-  "Headphones", "Speaker", "Radio", "Tv", "Gamepad2", "Dice1", "Dice2",
-  "Dice3", "Dice4", "Dice5", "Dice6", "Puzzle", "PuzzlePiece", "Palette",
-  "Brush", "PenTool", "Eraser", "Scissors", "Ruler", "Compass", "Map",
-  "Navigation", "Route", "Footprints", "Activity", "Pulse", "HeartPulse",
-  "Stethoscope", "Pill", "Syringe", "Bandage", "Cross", "Church", "School",
-  "GraduationCap", "Book", "BookOpen", "Library", "Newspaper", "FileText",
-  "FileCode", "FileJson", "FileSpreadsheet", "FileImage", "FileVideo",
-  "FileAudio", "FileArchive", "FolderOpen", "FolderPlus", "FolderMinus",
-  "FolderX", "FolderKanban", "FolderGit", "FolderGit2", "FolderSearch",
-  "FolderSync", "FolderLock", "FolderHeart", "FolderStar", "FolderUp",
-  "FolderDown", "FolderInput", "FolderOutput", "FolderRoot", "FolderTree",
-  "FolderSymlink", "FolderCheck", "FolderEdit", "FolderX2", "FolderPlus2",
-  "FolderMinus2", "FolderKanban2", "FolderGit2", "FolderSearch2", "FolderSync2",
-  "FolderLock2", "FolderHeart2", "FolderStar2", "FolderUp2", "FolderDown2",
-  "FolderInput2", "FolderOutput2", "FolderRoot2", "FolderTree2", "FolderSymlink2",
-  "FolderCheck2", "FolderEdit2", "FolderX3", "FolderPlus3", "FolderMinus3",
-  "FolderKanban3", "FolderGit3", "FolderGit23", "FolderSearch3", "FolderSync3",
-  "FolderLock3", "FolderHeart3", "FolderStar3", "FolderUp3", "FolderDown3",
-  "FolderInput3", "FolderOutput3", "FolderRoot3", "FolderTree3", "FolderSymlink3",
-  "FolderCheck3", "FolderEdit3", "FolderX4", "FolderPlus4", "FolderMinus4",
-  "FolderKanban4", "FolderGit4", "FolderGit24", "FolderSearch4", "FolderSync4",
-  "FolderLock4", "FolderHeart4", "FolderStar4", "FolderUp4", "FolderDown4",
-  "FolderInput4", "FolderOutput4", "FolderRoot4", "FolderTree4", "FolderSymlink4",
-  "FolderCheck4", "FolderEdit4", "FolderX5", "FolderPlus5", "FolderMinus5",
-  "FolderKanban5", "FolderGit5", "FolderGit25", "FolderSearch5", "FolderSync5",
-  "FolderLock5", "FolderHeart5", "FolderStar5", "FolderUp5", "FolderDown5",
-  "FolderInput5", "FolderOutput5", "FolderRoot5", "FolderTree5", "FolderSymlink5",
-  "FolderCheck5", "FolderEdit5"
-];
-
-// Filter to only include icons that actually exist in lucide-react
-const AVAILABLE_ICONS = POPULAR_ICONS.filter(iconName => {
-  try {
-    return LucideIcons[iconName] !== undefined;
-  } catch {
-    return false;
+// Get all available icons from lucide-react dynamically
+const getAvailableIcons = () => {
+  const icons = [];
+  // Exclude React component types and internal properties
+  const excludeList = [
+    "createLucideIcon",
+    "Icon",
+    "default",
+    "lucideReactNative",
+    "defaultProps",
+  ];
+  
+  for (const iconName in LucideIcons) {
+    if (
+      !excludeList.includes(iconName) &&
+      typeof LucideIcons[iconName] === "function" &&
+      iconName[0] === iconName[0].toUpperCase() // Only capitalized names (components)
+    ) {
+      icons.push(iconName);
+    }
   }
-});
+  
+  return icons.sort();
+};
+
+const AVAILABLE_ICONS = getAvailableIcons();
 
 export default function IconPicker({ selectedIcon, onSelectIcon, onClose }) {
   const [searchQuery, setSearchQuery] = useState("");
