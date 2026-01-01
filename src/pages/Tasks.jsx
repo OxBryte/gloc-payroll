@@ -28,7 +28,7 @@ export default function Tasks() {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setIsCreateModalOpen(true)}
-                className="text-sm flex items-center gap-2 px-3 py-2 bg-c-color text-white rounded-lg hover:bg-c-bg transition-colors font-medium"
+                className="text-sm flex items-center gap-2 px-3 py-1.5 bg-c-color text-white rounded-lg hover:bg-c-bg transition-colors font-medium"
               >
                 <Plus className="w-4 h-4" />
                 Create
