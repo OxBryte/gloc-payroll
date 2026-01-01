@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Plus, User } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useGetTasks } from "../components/hooks/useTasks";
 import TaskCard from "../components/features/tasks/TaskCard";
 import CreateTaskModal from "../components/ui/CreateTaskModal";
