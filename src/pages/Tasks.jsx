@@ -21,13 +21,13 @@ export default function Tasks() {
     const now = new Date();
 
     switch (activeTab) {
-      case "opened":
+      case "ongoing":
         // Tasks where completionDate is in the future (not yet completed)
         return tasks.filter((task) => {
           if (!task.completionDate) return false;
           return new Date(task.completionDate) > now;
         });
-      case "closed":
+      case "completed":
         // Tasks where completionDate is in the past (completed)
         return tasks.filter((task) => {
           if (!task.completionDate) return false;
