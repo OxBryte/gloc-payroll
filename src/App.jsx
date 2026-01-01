@@ -58,6 +58,7 @@ function App() {
             </Route>
           </Route>
           <Route path="/careers" element={<Careers />} />
+          <Route path="/tasks" element={<Tasks />} />
           <Route path="*" element={<h1>404 Not Found</h1>} />
           <Route path="/reset-password/" element={<ResetPassword />} />
           <Route path="/accept-admin" element={<AcceptAdmin />} />
