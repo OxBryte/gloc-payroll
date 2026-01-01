@@ -173,7 +173,7 @@ export default function Tasks() {
                           draggable
                           onDragStart={(e) => handleDragStart(e, task)}
                           onDragEnd={handleDragEnd}
-                          className="transition-all duration-200 hover:scale-[1.02] cursor-move"
+                          className="transition-all duration-300 ease-in-out hover:scale-[1.02] cursor-move active:scale-[0.98]"
                         >
                           <TaskCard
                             task={task}
