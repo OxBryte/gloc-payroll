@@ -142,7 +142,7 @@ export default function Tasks() {
             <p className="text-red-500">Error loading tasks: {error.message}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 overflow-x-auto pb-4 md:pb-0">
             {COLUMNS.map((column) => {
               const columnTasks = tasksByStatus[column.id] || [];
               const isDraggingOver = dragOverColumn === column.id;
@@ -156,7 +156,7 @@ export default function Tasks() {
                     handleDrop(e, column.id === "pending" ? null : column.id)
                   }
                   className={`
-                    min-h-[400px] rounded-lg transition-all duration-300 ease-in-out
+                    min-w-[280px] md:min-w-0 min-h-[400px] rounded-lg transition-all duration-300 ease-in-out flex-shrink-0
                     ${
                       isDraggingOver
                         ? "bg-c-color/10 scale-[1.02]"
