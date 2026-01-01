@@ -23,7 +23,7 @@ export default function TaskCard({ task, onEdit, onDelete }) {
               <div className="relative w-5 h-5 bg-c-color/30 rounded-full">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-c-color rounded-full"></div>
               </div>
-              <span className="text-sm font-normal text-gray-500">
+              <span className="text-xs font-normal text-gray-500">
                 {formatDate(task.startDate)}
               </span>
             </div>
