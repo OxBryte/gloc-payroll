@@ -55,7 +55,7 @@ export default function DeleteTaskModal({ task, setIsOpen }) {
           <button
             type="button"
             onClick={() => setIsOpen(false)}
-            className="px-6 py-2.5 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+            className="text-sm px-6 py-2.5 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
           >
             Cancel
           </button>
