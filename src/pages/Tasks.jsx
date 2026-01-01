@@ -85,7 +85,9 @@ export default function Tasks() {
               }`}
             >
               All
-              <span className="text-xs text-gray-400">({tasks?.length})</span>
+              <span className="text-xs text-white bg-c-color rounded-full px-2 py-1">
+                {tasks?.length}
+              </span>
             </button>
             <div className="w-px h-4 bg-gray-400"></div>
             {["opened", "closed", "archived"].map((tab) => (
