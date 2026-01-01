@@ -227,12 +227,17 @@ This document outlines the API endpoints required for the Tasks feature.
 }
 ```
 
-4. **Icon Values:** The icon field accepts one of these predefined values:
-   - `"task"` - 📋 Task
-   - `"bug"` - 🐛 Bug
-   - `"feature"` - ✨ Feature
-   - `"improvement"` - ⚡ Improvement
-   - `"question"` - ❓ Question
+4. **Icon Values:** The icon field accepts any valid Lucide icon name (string). The frontend uses the `lucide-react` library which provides hundreds of icons. Examples include:
+   - `"CheckCircle2"` - Check circle icon
+   - `"Star"` - Star icon
+   - `"Heart"` - Heart icon
+   - `"Bug"` - Bug icon
+   - `"Rocket"` - Rocket icon
+   - `"Settings"` - Settings icon
+   - `"User"` - User icon
+   - And many more... (see https://lucide.dev/icons for full list)
+   
+   The icon name should match exactly with the Lucide icon component name (case-sensitive).
 
 5. **Date Validation:** 
    - `completionDate` must be equal to or after `startDate`
