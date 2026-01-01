@@ -91,7 +91,7 @@ This document outlines the API endpoints required for the Tasks feature.
 {
   "title": "string (required)",
   "description": "string (optional)",
-  "status": "string (optional) - Default: 'ongoing'. Values: 'ongoing', 'completed', 'archived'",
+  "status": "string (optional) - Default: 'pending'. Values: 'pending', 'ongoing', 'completed', 'archived'",
   "startDate": "2024-01-15T00:00:00.000Z (required) - ISO date string",
   "completionDate": "2024-01-20T00:00:00.000Z (required) - ISO date string"
 }
