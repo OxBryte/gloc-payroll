@@ -76,14 +76,14 @@ export default function Tasks() {
         <div className="mb-4">
           <div className="flex gap-1 items-center">
             <button
-                key="all"
-                onClick={() => setActiveTab("all")}
-                className={`px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${
-                  activeTab === "all"
-                    ? "text-c-color"
-                    : "border-transparent text-gray-400 hover:text-gray-700 hover:border-gray-300"
-                }`}
-              >
+              key="all"
+              onClick={() => setActiveTab("all")}
+              className={`px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${
+                activeTab === "all"
+                  ? "text-c-color"
+                  : "border-transparent text-gray-400 hover:text-gray-700 hover:border-gray-300"
+              }`}
+            >
               All
               <span className="text-xs text-gray-400">({tasks?.length})</span>
             </button>
@@ -107,7 +107,7 @@ export default function Tasks() {
                 </span>
               </button>
             ))}
-          </div> */}
+          </div>
         </div>
 
         {isLoading ? (
