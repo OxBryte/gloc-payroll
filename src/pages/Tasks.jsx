@@ -41,6 +41,7 @@ export default function Tasks() {
 
       {/* Main Content */}
       <div className="max-w-[720px] mx-auto px-4 md:px-6 py-8">
+        
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 className="w-8 h-8 animate-spin text-c-color" />
