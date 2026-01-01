@@ -86,7 +86,7 @@ export default function Tasks() {
               >
                 All
             </button>
-            <div className=""></div>
+            <div className="w-px h-4 bg-gray-200"></div>
             {["opened", "closed", "archived"].map((tab) => (
               <button
                 key={tab}
