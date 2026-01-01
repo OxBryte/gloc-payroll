@@ -3,6 +3,7 @@
 This document outlines the API endpoints required for the Tasks feature.
 
 ## Base URL
+
 ```
 /api/tasks
 ```
@@ -10,11 +11,13 @@ This document outlines the API endpoints required for the Tasks feature.
 ## Endpoints
 
 ### 1. Get All Tasks
+
 **GET** `/api/tasks`
 
 **Description:** Fetch all tasks (no authentication required)
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -34,20 +37,24 @@ This document outlines the API endpoints required for the Tasks feature.
 ```
 
 **Status Codes:**
+
 - `200` - Success
 - `500` - Server error
 
 ---
 
 ### 2. Get Single Task
+
 **GET** `/api/tasks/:id`
 
 **Description:** Fetch a single task by ID (no authentication required)
 
 **Parameters:**
+
 - `id` (path parameter) - Task ID
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -65,6 +72,7 @@ This document outlines the API endpoints required for the Tasks feature.
 ```
 
 **Status Codes:**
+
 - `200` - Success
 - `404` - Task not found
 - `500` - Server error
@@ -72,11 +80,13 @@ This document outlines the API endpoints required for the Tasks feature.
 ---
 
 ### 3. Create Task
+
 **POST** `/api/tasks`
 
 **Description:** Create a new task (no authentication required)
 
 **Request Body:**
+
 ```json
 {
   "title": "string (required)",
@@ -88,6 +98,7 @@ This document outlines the API endpoints required for the Tasks feature.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -106,11 +117,13 @@ This document outlines the API endpoints required for the Tasks feature.
 ```
 
 **Status Codes:**
+
 - `201` - Created successfully
 - `400` - Validation error (missing required fields, invalid dates, etc.)
 - `500` - Server error
 
 **Validation Rules:**
+
 - `title`: Required, string, min 1 character, max 200 characters
 - `description`: Optional, string, max 2000 characters
 - `icon`: Required, must be a valid Lucide icon name (string). Examples: "CheckCircle2", "Star", "Heart", "Bug", "Rocket", "Settings", "User", etc. The frontend uses lucide-react library with hundreds of available icons.
@@ -120,14 +133,17 @@ This document outlines the API endpoints required for the Tasks feature.
 ---
 
 ### 4. Update Task
+
 **PUT** `/api/tasks/:id`
 
 **Description:** Update an existing task (no authentication required)
 
 **Parameters:**
+
 - `id` (path parameter) - Task ID
 
 **Request Body:**
+
 ```json
 {
   "title": "string (optional)",
@@ -139,6 +155,7 @@ This document outlines the API endpoints required for the Tasks feature.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -157,26 +174,31 @@ This document outlines the API endpoints required for the Tasks feature.
 ```
 
 **Status Codes:**
+
 - `200` - Updated successfully
 - `400` - Validation error
 - `404` - Task not found
 - `500` - Server error
 
 **Validation Rules:**
+
 - Same as Create Task, but all fields are optional
 - If both `startDate` and `completionDate` are provided, `completionDate` must be after `startDate`
 
 ---
 
 ### 5. Delete Task
+
 **DELETE** `/api/tasks/:id`
 
 **Description:** Delete a task (no authentication required)
 
 **Parameters:**
+
 - `id` (path parameter) - Task ID
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -185,6 +207,7 @@ This document outlines the API endpoints required for the Tasks feature.
 ```
 
 **Status Codes:**
+
 - `200` - Deleted successfully
 - `404` - Task not found
 - `500` - Server error
@@ -194,6 +217,7 @@ This document outlines the API endpoints required for the Tasks feature.
 ## Data Model
 
 ### Task Schema
+
 ```javascript
 {
   _id: ObjectId (MongoDB) or String,
@@ -214,6 +238,7 @@ This document outlines the API endpoints required for the Tasks feature.
 2. **Date Format:** All dates should be in ISO 8601 format (e.g., `2024-01-15T00:00:00.000Z`).
 
 3. **Error Response Format:**
+
 ```json
 {
   "success": false,
@@ -228,6 +253,7 @@ This document outlines the API endpoints required for the Tasks feature.
 ```
 
 4. **Icon Values:** The icon field accepts any valid Lucide icon name (string). The frontend uses the `lucide-react` library which provides hundreds of icons. Examples include:
+
    - `"CheckCircle2"` - Check circle icon
    - `"Star"` - Star icon
    - `"Heart"` - Heart icon
@@ -236,14 +262,14 @@ This document outlines the API endpoints required for the Tasks feature.
    - `"Settings"` - Settings icon
    - `"User"` - User icon
    - And many more... (see https://lucide.dev/icons for full list)
-   
+
    The icon name should match exactly with the Lucide icon component name (case-sensitive).
 
-5. **Date Validation:** 
+5. **Date Validation:**
+
    - `completionDate` must be equal to or after `startDate`
    - Both dates should be valid future or past dates
 
 6. **Pagination (Optional):** If you want to add pagination later:
    - Query params: `?page=1&limit=10`
    - Response should include: `total`, `page`, `limit`, `totalPages`
-
