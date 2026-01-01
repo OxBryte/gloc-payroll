@@ -26,7 +26,6 @@ This document outlines the API endpoints required for the Tasks feature.
       "_id": "string",
       "title": "string",
       "description": "string",
-      "icon": "string",
       "startDate": "2024-01-15T00:00:00.000Z",
       "completionDate": "2024-01-20T00:00:00.000Z",
       "createdAt": "2024-01-10T00:00:00.000Z",
