@@ -1,17 +1,18 @@
 import React from "react";
 import { Edit, Trash2, Calendar, CheckCircle2 } from "lucide-react";
-import { format } from "date-fns";
+// import { format } from "date-fns";
 import { truncate } from "../../lib/utils";
+import moment from "moment";
 
 export default function TaskCard({ task, onEdit, onDelete }) {
-  const formatDate = (dateString) => {
-    if (!dateString) return "Not set";
-    try {
-      return format(new Date(dateString), "MMM dd, yyyy");
-    } catch {
-      return dateString;
-    }
-  };
+  // const formatDate = (dateString) => {
+  //   if (!dateString) return "Not set";
+  //   try {
+  //     return format(new Date(dateString), "MMM dd, yyyy");
+  //   } catch {
+  //     return dateString;
+  //   }
+  // };
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 w-full transition-all duration-200">
@@ -24,7 +25,7 @@ export default function TaskCard({ task, onEdit, onDelete }) {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-c-color rounded-full"></div>
               </div>
               <span className="text-xs font-normal text-gray-500">
-                {formatDate(task.startDate)}
+                {moment(task.updatedAt).format("MMM DD, YYYY HH:mm")}
               </span>
             </div>
             <h3 className="font-medium text-md text-gray-900 capitalize">
