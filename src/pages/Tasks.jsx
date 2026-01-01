@@ -36,7 +36,7 @@ export default function Tasks() {
 
     return {
       all: tasks,
-      ongoing: tasks.filter((task) => task.status === "ongoing" || !task.status),
+      ongoing: tasks.filter((task) => !task.status || task.status === "ongoing"),
       completed: tasks.filter((task) => task.status === "completed"),
       archived: tasks.filter((task) => task.status === "archived"),
     };
