@@ -86,7 +86,7 @@ export default function Tasks() {
             >
               All
               <span className="text-xs text-white bg-c-color rounded-full px-2 py-1">
-                {tasks?.length}
+                {tasks?.length || 0}
               </span>
             </button>
             <div className="w-px h-4 bg-gray-400"></div>
