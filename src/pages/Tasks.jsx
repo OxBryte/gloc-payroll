@@ -170,14 +170,9 @@ export default function Tasks() {
                       <h3 className="font-semibold text-gray-700 text-sm">
                         {column.label}
                       </h3>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded-full">
-                          {columnTasks.length}
-                        </span>
-                        <button className="text-xs text-gray-500 bg-white px-2 py-1 rounded-full">
-                          <Filter className="w-4 h-4" />
-                        </button>
-                      </div>
+                      <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded-full">
+                        {columnTasks.length}
+                      </span>
                     </div>
                   </div>
 
