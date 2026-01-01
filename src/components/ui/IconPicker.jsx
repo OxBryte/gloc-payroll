@@ -90,6 +90,11 @@ if (typeof window !== "undefined") {
 export default function IconPicker({ selectedIcon, onSelectIcon, onClose }) {
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Debug: Log on mount
+  React.useEffect(() => {
+    console.log("IconPicker mounted with", AVAILABLE_ICONS.length, "icons");
+  }, []);
+
   const filteredIcons = useMemo(() => {
     if (!searchQuery.trim()) {
       return AVAILABLE_ICONS;
