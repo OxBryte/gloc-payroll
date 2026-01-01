@@ -36,7 +36,9 @@ export default function Tasks() {
 
     return {
       all: tasks,
-      ongoing: tasks.filter((task) => !task.status || task.status === "ongoing"),
+      ongoing: tasks.filter(
+        (task) => !task.status || task.status === "ongoing"
+      ),
       completed: tasks.filter((task) => task.status === "completed"),
       archived: tasks.filter((task) => task.status === "archived"),
     };
@@ -150,16 +152,24 @@ export default function Tasks() {
                   key={column.id}
                   onDragOver={(e) => handleDragOver(e, column.id)}
                   onDragLeave={handleDragLeave}
-                  onDrop={(e) => handleDrop(e, column.id === "all" ? null : column.id)}
+                  onDrop={(e) =>
+                    handleDrop(e, column.id === "all" ? null : column.id)
+                  }
                   className={`
                     min-h-[400px] rounded-lg transition-all duration-300 ease-in-out
-                    ${isDraggingOver ? "bg-c-color/10 ring-2 ring-c-color/50 scale-[1.02]" : "bg-gray-50"}
+                    ${
+                      isDraggingOver
+                        ? "bg-c-color/10 ring-2 ring-c-color/50 scale-[1.02]"
+                        : "bg-gray-50"
+                    }
                   `}
                 >
                   {/* Column Header */}
                   <div className="sticky top-0 bg-gray-50 rounded-t-lg p-4 border-b border-gray-200 z-10">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-gray-700">{column.label}</h3>
+                      <h3 className="font-semibold text-gray-700">
+                        {column.label}
+                      </h3>
                       <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded-full">
                         {columnTasks.length}
                       </span>
@@ -186,7 +196,9 @@ export default function Tasks() {
                       ))
                     ) : (
                       <div className="flex items-center justify-center h-[200px] text-gray-400 text-sm">
-                        {column.id === "all" ? "No tasks yet" : `No ${column.label.toLowerCase()} tasks`}
+                        {column.id === "all"
+                          ? "No tasks yet"
+                          : `No ${column.label.toLowerCase()} tasks`}
                       </div>
                     )}
                   </div>
