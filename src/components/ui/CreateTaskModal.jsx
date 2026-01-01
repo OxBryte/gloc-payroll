@@ -24,6 +24,11 @@ export default function CreateTaskModal({ setIsOpen }) {
   const iconName = watch("icon") || selectedIcon;
   const IconComponent = LucideIcons[iconName] || LucideIcons.CheckCircle2;
 
+  const handleIconSelect = (iconName) => {
+    setSelectedIcon(iconName);
+    setValue("icon", iconName);
+  };
+
   const onSubmit = async (data) => {
     try {
       await createTaskFn(data);
