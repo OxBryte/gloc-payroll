@@ -16,9 +16,8 @@ export default function TaskCard({ task, onEdit, onDelete }) {
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between gap-4">
-        {/* Left side - Icon and Content */}
+        {/* Left side - Content */}
         <div className="flex items-start gap-3 flex-1">
-          <div className="mt-1 flex-shrink-0">{getIconComponent(task.icon)}</div>
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-lg text-gray-900 mb-1">
               {task.title}
