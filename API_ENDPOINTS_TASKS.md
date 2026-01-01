@@ -145,7 +145,6 @@ This document outlines the API endpoints required for the Tasks feature.
 {
   "title": "string (optional)",
   "description": "string (optional)",
-  "icon": "string (optional) - one of: task, bug, feature, improvement, question",
   "startDate": "2024-01-15T00:00:00.000Z (optional) - ISO date string",
   "completionDate": "2024-01-20T00:00:00.000Z (optional) - ISO date string"
 }
