@@ -62,7 +62,9 @@ export default function Tasks() {
           </div>
         ) : (
           <div className="text-center py-20">
-            <p className="text-gray-500 text-lg">No tasks yet. Create your first task!</p>
+            <p className="text-gray-500 text-lg">
+              No tasks yet. Create your first task!
+            </p>
           </div>
         )}
       </div>
@@ -86,4 +88,3 @@ export default function Tasks() {
     </div>
   );
 }
-
