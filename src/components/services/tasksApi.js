@@ -24,7 +24,7 @@ api.interceptors.request.use((config) => {
  * @returns {Promise} Response with tasks array
  */
 export const getTasks = async () => {
-  const response = await api.get("/api/tasks");
+  const response = await api.get("/tasks");
   return response.data;
 };
 
@@ -34,7 +34,7 @@ export const getTasks = async () => {
  * @returns {Promise} Response with task object
  */
 export const getTaskById = async (taskId) => {
-  const response = await api.get(`/api/tasks/${taskId}`);
+  const response = await api.get(`/tasks/${taskId}`);
   return response.data;
 };
 
@@ -48,7 +48,7 @@ export const getTaskById = async (taskId) => {
  * @returns {Promise} Response with created task
  */
 export const createTask = async (body) => {
-  const response = await api.post("/api/tasks", body);
+  const response = await api.post("/tasks", body);
   return response.data;
 };
 
@@ -59,7 +59,7 @@ export const createTask = async (body) => {
  * @returns {Promise} Response with updated task
  */
 export const updateTask = async (taskId, body) => {
-  const response = await api.put(`/api/tasks/${taskId}`, body);
+  const response = await api.put(`/tasks/${taskId}`, body);
   return response.data;
 };
 
@@ -69,7 +69,7 @@ export const updateTask = async (taskId, body) => {
  * @returns {Promise} Response
  */
 export const deleteTask = async (taskId) => {
-  const response = await api.delete(`/api/tasks/${taskId}`);
+  const response = await api.delete(`/tasks/${taskId}`);
   return response.data;
 };
 
