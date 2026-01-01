@@ -113,7 +113,7 @@ This document outlines the API endpoints required for the Tasks feature.
 **Validation Rules:**
 - `title`: Required, string, min 1 character, max 200 characters
 - `description`: Optional, string, max 2000 characters
-- `icon`: Required, must be one of: "task", "bug", "feature", "improvement", "question"
+- `icon`: Required, must be a valid Lucide icon name (string). Examples: "CheckCircle2", "Star", "Heart", "Bug", "Rocket", "Settings", "User", etc. The frontend uses lucide-react library with hundreds of available icons.
 - `startDate`: Required, valid ISO date string
 - `completionDate`: Required, valid ISO date string, must be after startDate
 
