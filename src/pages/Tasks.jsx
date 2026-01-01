@@ -92,7 +92,7 @@ export default function Tasks() {
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`
-                  px-4 py-2 text-sm font-medium transition-colors
+                  px-4 py-2 text-sm font-medium transition-colors x
                   ${
                     activeTab === tab
                       ? "text-c-color"
