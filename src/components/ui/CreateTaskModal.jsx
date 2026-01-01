@@ -2,22 +2,27 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { X, Loader2 } from "lucide-react";
 import { useCreateTask } from "../hooks/useTasks";
-
-const ICON_OPTIONS = [
-  { value: "task", label: "📋 Task" },
-  { value: "bug", label: "🐛 Bug" },
-  { value: "feature", label: "✨ Feature" },
-  { value: "improvement", label: "⚡ Improvement" },
-  { value: "question", label: "❓ Question" },
-];
+import IconPicker from "./IconPicker";
+import * as LucideIcons from "lucide-react";
 
 export default function CreateTaskModal({ setIsOpen }) {
   const { createTaskFn, isPending } = useCreateTask();
+  const [selectedIcon, setSelectedIcon] = useState("CheckCircle2");
+  const [showIconPicker, setShowIconPicker] = useState(false);
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      icon: "CheckCircle2",
+    },
+  });
+
+  const iconName = watch("icon") || selectedIcon;
+  const IconComponent = LucideIcons[iconName] || LucideIcons.CheckCircle2;
 
   const onSubmit = async (data) => {
     try {
