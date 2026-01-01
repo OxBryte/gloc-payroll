@@ -63,6 +63,7 @@ export default function TaskCard({ task, onEdit, onDelete }) {
               <Trash2 className="w-4 h-4" />
             </button>
           </div>
+          <div className="w-3 h-3 rounded-full bg-c-color"></div>
         </div>
       </div>
     </div>
