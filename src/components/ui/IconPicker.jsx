@@ -9,7 +9,9 @@ const getAvailableIcons = () => {
       isNaN(Number(key)) &&
       typeof LucideIcons[key] === "function" &&
       key[0] === key[0].toUpperCase() &&
-      !["createLucideIcon", "Icon", "default", "lucideReactNative"].includes(key)
+      !["createLucideIcon", "Icon", "default", "lucideReactNative"].includes(
+        key
+      )
   );
 };
 
