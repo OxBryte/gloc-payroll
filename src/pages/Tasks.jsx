@@ -76,8 +76,8 @@ export default function Tasks() {
 
     if (!draggedTask) return;
 
-    // Determine current status (default to "ongoing" if no status)
-    const currentStatus = draggedTask.status || "ongoing";
+    // Determine current status (default to "pending" if no status)
+    const currentStatus = draggedTask.status || "pending";
 
     // Don't update if dropped in the same column
     if (targetStatus === null && !currentStatus) {
@@ -89,8 +89,8 @@ export default function Tasks() {
       return;
     }
 
-    // Update task status (null for "all" means no status filter, but we'll set to "ongoing")
-    const newStatus = targetStatus === null ? "ongoing" : targetStatus;
+    // Update task status (null for "pending" means no status, which is "pending")
+    const newStatus = targetStatus === null ? "pending" : targetStatus;
 
     // Update task status
     try {
