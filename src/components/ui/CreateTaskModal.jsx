@@ -13,10 +13,10 @@ export default function CreateTaskModal({ setIsOpen }) {
 
   const onSubmit = async (data) => {
     try {
-      // Set default status to "ongoing" if not provided
+      // Set default status to "pending" if not provided
       const taskData = {
         ...data,
-        status: data.status || "ongoing",
+        status: data.status || "pending",
       };
       await createTaskFn(taskData);
       setIsOpen(false);
