@@ -173,7 +173,7 @@ export default function Tasks() {
                       </h3>
                       <div className="text-white flex items-center gap-1.5 bg-c-color px-2.5 py-2 rounded-full">
                         <TbLoader className="w-4 h-4" />
-                        <p className=" text-xs">{columnTasks.length}</p>
+                        <p className="mt-1 text-xs">{columnTasks.length}</p>
                       </div>
                     </div>
                   </div>
