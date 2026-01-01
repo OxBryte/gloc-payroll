@@ -90,7 +90,7 @@ export default function Tasks() {
               </span>
             </button>
             <div className="w-px h-4 bg-gray-400"></div>
-            {["opened", "closed", "archived"].map((tab) => (
+            {["ongoing", "completed", "archived"].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
