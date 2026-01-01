@@ -71,16 +71,21 @@ const POPULAR_ICONS = [
 
 // Filter to only include icons that actually exist in lucide-react
 const getAvailableIcons = () => {
-  return POPULAR_ICONS.filter(iconName => {
-    try {
-      return LucideIcons[iconName] !== undefined && typeof LucideIcons[iconName] === "function";
-    } catch {
-      return false;
+  const available = [];
+  for (const iconName of POPULAR_ICONS) {
+    if (LucideIcons[iconName] && typeof LucideIcons[iconName] === "function") {
+      available.push(iconName);
     }
-  });
+  }
+  return available;
 };
 
 const AVAILABLE_ICONS = getAvailableIcons();
+
+// Debug: Log available icons count
+if (typeof window !== "undefined") {
+  console.log("Available icons:", AVAILABLE_ICONS.length);
+}
 
 export default function IconPicker({ selectedIcon, onSelectIcon, onClose }) {
   const [searchQuery, setSearchQuery] = useState("");
