@@ -26,22 +26,14 @@ export default function EditTaskModal({ task, setIsOpen }) {
         }
       };
 
-      const icon = task.icon || "CheckCircle2";
-      setSelectedIcon(icon);
       reset({
         title: task.title || "",
         description: task.description || "",
-        icon: icon,
         startDate: formatDateForInput(task.startDate),
         completionDate: formatDateForInput(task.completionDate),
       });
     }
   }, [task, reset]);
-
-  const handleIconSelect = (iconName) => {
-    setSelectedIcon(iconName);
-    setValue("icon", iconName);
-  };
 
   const onSubmit = async (data) => {
     try {
