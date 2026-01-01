@@ -174,6 +174,15 @@ export default function CreateTaskModal({ setIsOpen }) {
           </div>
         </form>
       </div>
+
+      {/* Icon Picker Modal */}
+      {showIconPicker && (
+        <IconPicker
+          selectedIcon={iconName}
+          onSelectIcon={handleIconSelect}
+          onClose={() => setShowIconPicker(false)}
+        />
+      )}
     </div>
   );
 }
