@@ -8,10 +8,10 @@ import DeleteTaskModal from "../components/ui/DeleteTaskModal";
 import { Loader2 } from "lucide-react";
 
 const COLUMNS = [
-  { id: "pending", label: "Pending" },
-  { id: "ongoing", label: "Ongoing" },
-  { id: "completed", label: "Completed" },
-  { id: "archived", label: "Archived" },
+  { id: "pending", label: "Pending", color: "bg-yellow-500" },
+  { id: "ongoing", label: "Ongoing", color: "bg-blue-500" },
+  { id: "completed", label: "Completed", color: "bg-green-500" },
+  { id: "archived", label: "Archived", color: "bg-gray-500" },
 ];
 
 export default function Tasks() {
@@ -159,25 +159,27 @@ export default function Tasks() {
                     min-h-[400px] rounded-lg transition-all duration-300 ease-in-out
                     ${
                       isDraggingOver
-                        ? "bg-c-color/10 ring-2 ring-c-color/50 scale-[1.02]"
+                        ? "bg-c-color/10 scale-[1.02]"
                         : "bg-gray-50"
                     }
                   `}
                 >
                   {/* Column Header */}
-                  <div className="sticky top-0 bg-white rounded-lg px-4 py-2.5 border border-gray-200 z-10">
+                  <div className="sticky top-0 bg-white rounded-lg px-4 py-2.5 border border-gray-200 z-10 w-full mb-4">
                     <div className="flex items-center justify-between">
                       <h3 className="font-medium text-gray-700 text-sm">
                         {column.label}
                       </h3>
-                      <span className="text-xs text-white bg-c-color px-2.5 py-1 pt-1.5 rounded-full">
+                      <span
+                        className={`text-xs text-white ${column.color} px-2.5 py-1 pt-1.5 rounded-full`}
+                      >
                         {columnTasks.length}
                       </span>
                     </div>
                   </div>
 
                   {/* Tasks List */}
-                  <div className="p-3 space-y-2 min-h-[300px]">
+                  <div className="space-y-2 min-h-[300px] w-full">
                     {columnTasks.length > 0 ? (
                       columnTasks.map((task) => (
                         <div
@@ -185,7 +187,7 @@ export default function Tasks() {
                           draggable
                           onDragStart={(e) => handleDragStart(e, task)}
                           onDragEnd={handleDragEnd}
-                          className="transition-all duration-300 ease-in-out hover:scale-[1.02] cursor-move active:scale-[0.98]"
+                          className="w-full transition-all duration-300 ease-in-out hover:scale-[1.02] cursor-move active:scale-[0.98]"
                         >
                           <TaskCard
                             task={task}
