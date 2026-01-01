@@ -151,7 +151,7 @@ export default function Tasks() {
                   onDragOver={(e) => handleDragOver(e, column.id)}
                   onDragLeave={handleDragLeave}
                   onDrop={(e) =>
-                    handleDrop(e, column.id === "all" ? null : column.id)
+                    handleDrop(e, column.id === "pending" ? null : column.id)
                   }
                   className={`
                     min-h-[400px] rounded-lg transition-all duration-300 ease-in-out
