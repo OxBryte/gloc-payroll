@@ -59,7 +59,7 @@ export default function DeleteTaskModal({ task, setIsOpen }) {
         </div>
 
         {/* Actions */}
-        <div className="flex justify-end gap-3 p-6 border-t border-gray-200">
+        <div className="flex justify-end gap-3 p-5 border-t border-gray-200">
           <button
             type="button"
             onClick={() => setIsOpen(false)}
