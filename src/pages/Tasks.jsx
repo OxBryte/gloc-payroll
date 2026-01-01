@@ -84,7 +84,8 @@ export default function Tasks() {
                     : "border-transparent text-gray-400 hover:text-gray-700 hover:border-gray-300"
                 }`}
               >
-                All
+              All
+              
             </button>
             <div className="w-px h-4 bg-gray-400"></div>
             {["opened", "closed", "archived"].map((tab) => (
