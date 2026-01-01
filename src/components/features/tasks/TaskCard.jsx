@@ -43,16 +43,22 @@ export default function TaskCard({ task, onEdit, onDelete }) {
         </div>
 
         {/* Right side - Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2" onMouseDown={(e) => e.stopPropagation()}>
           <button
-            onClick={onEdit}
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit();
+            }}
             className="p-2 text-gray-600 hover:text-c-color hover:bg-gray-100 rounded-lg transition-colors"
             title="Edit task"
           >
             <Edit className="w-4 h-4" />
           </button>
           <button
-            onClick={onDelete}
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete();
+            }}
             className="p-2 text-gray-600 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
             title="Delete task"
           >
