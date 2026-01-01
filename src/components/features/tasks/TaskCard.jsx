@@ -19,7 +19,7 @@ export default function TaskCard({ task, onEdit, onDelete }) {
         {/* Left side - Content */}
         <div className="flex items-start gap-3 p-3">
           <div className="flex-1 min-w-0 space-y-2">
-            <div className="flex items-center gap-1.5">
+            <div className="flex  items-center gap-1.5">
               <div className="relative w-5 h-5 bg-c-color/30 rounded-full">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-c-color rounded-full"></div>
               </div>
