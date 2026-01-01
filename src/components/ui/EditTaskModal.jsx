@@ -98,31 +98,6 @@ export default function EditTaskModal({ task, setIsOpen }) {
             />
           </div>
 
-          {/* Icon */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">
-              Icon <span className="text-red-500">*</span>
-            </label>
-            <button
-              type="button"
-              onClick={() => setShowIconPicker(true)}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-c-color/20 focus:border-c-color transition-all outline-none bg-white hover:bg-gray-50 flex items-center justify-between"
-            >
-              <div className="flex items-center gap-3">
-                <IconComponent className="w-5 h-5 text-gray-600" />
-                <span className="text-gray-700">{iconName}</span>
-              </div>
-              <span className="text-gray-400 text-sm">Click to select</span>
-            </button>
-            <input
-              type="hidden"
-              {...register("icon", { required: "Icon is required" })}
-            />
-            {errors.icon && (
-              <span className="text-xs text-red-500">{errors.icon.message}</span>
-            )}
-          </div>
-
           {/* Date Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Start Date */}
