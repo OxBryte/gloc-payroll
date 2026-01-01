@@ -1,19 +1,13 @@
 import React from "react";
 import { Edit, Trash2, Calendar, CheckCircle2 } from "lucide-react";
 import { format } from "date-fns";
+import * as LucideIcons from "lucide-react";
 
 export default function TaskCard({ task, onEdit, onDelete }) {
   const getIconComponent = (iconName) => {
-    // You can expand this with more icons
-    const iconMap = {
-      task: "📋",
-      bug: "🐛",
-      feature: "✨",
-      improvement: "⚡",
-      question: "❓",
-      default: "📝",
-    };
-    return iconMap[iconName] || iconMap.default;
+    // Get the icon component from lucide-react
+    const IconComponent = LucideIcons[iconName] || LucideIcons.CheckCircle2;
+    return <IconComponent className="w-6 h-6 text-gray-600" />;
   };
 
   const formatDate = (dateString) => {
