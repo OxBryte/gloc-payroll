@@ -8,7 +8,7 @@ import DeleteTaskModal from "../components/ui/DeleteTaskModal";
 import { Loader2 } from "lucide-react";
 
 const COLUMNS = [
-  { id: "all", label: "All" },
+  { id: "pending", label: "Pending" },
   { id: "ongoing", label: "Ongoing" },
   { id: "completed", label: "Completed" },
   { id: "archived", label: "Archived" },
