@@ -27,7 +27,7 @@ export default function Tasks() {
   const tasksByStatus = useMemo(() => {
     if (!tasks || tasks.length === 0) {
       return {
-        all: [],
+        pending: [],
         ongoing: [],
         completed: [],
         archived: [],
@@ -35,10 +35,8 @@ export default function Tasks() {
     }
 
     return {
-      all: tasks,
-      ongoing: tasks.filter(
-        (task) => !task.status || task.status === "ongoing"
-      ),
+      pending: tasks.filter((task) => !task.status || task.status === "pending"),
+      ongoing: tasks.filter((task) => task.status === "ongoing"),
       completed: tasks.filter((task) => task.status === "completed"),
       archived: tasks.filter((task) => task.status === "archived"),
     };
