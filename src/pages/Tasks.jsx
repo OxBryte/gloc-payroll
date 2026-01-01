@@ -165,7 +165,7 @@ export default function Tasks() {
                   `}
                 >
                   {/* Column Header */}
-                  <div className="sticky top-0 bg-gray-50 rounded-t-lg p-4 border-b border-gray-200 z-10">
+                  <div className="sticky top-0 bg-gray-50 rounded-t-lg p-4 border border-gray-200 z-10">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-gray-700">
                         {column.label}
