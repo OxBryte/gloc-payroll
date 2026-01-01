@@ -118,47 +118,7 @@ export default function Tasks() {
       </nav>
 
       {/* Main Content */}
-      <div className="max-w-[720px] mx-auto px-4 md:px-6 py-8">
-        {/* Tabs */}
-        <div className="mb-4">
-          <div className="flex gap-1 items-center">
-            <button
-              key="all"
-              onClick={() => setActiveTab("all")}
-              className={`px-4 py-2 text-sm font-medium transition-colors cursor-pointer ${
-                activeTab === "all"
-                  ? "text-c-color"
-                  : "border-transparent text-gray-400 hover:text-gray-700 hover:border-gray-300"
-              }`}
-            >
-              All
-              <span className="text-xs text-white bg-c-color rounded-full px-2 py-1 ml-2">
-                {tasks?.length || 0}
-              </span>
-            </button>
-            <div className="w-px h-4 bg-gray-400"></div>
-            {["ongoing", "completed", "archived"].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`
-                  px-4 py-2 text-sm font-medium transition-colors cursor-pointer
-                  ${
-                    activeTab === tab
-                      ? "text-c-color"
-                      : "border-transparent text-gray-400 hover:text-gray-700 hover:border-gray-300"
-                  }
-                `}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                <span className="text-xs text-white bg-c-color rounded-full px-2 py-1 ml-2">
-                  {tasks?.filter((task) => task.status === tab).length || 0}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-
+      <div className="max-w-[1400px] mx-auto px-4 md:px-6 py-8">
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 className="w-8 h-8 animate-spin text-c-color" />
@@ -167,24 +127,60 @@ export default function Tasks() {
           <div className="text-center py-20">
             <p className="text-red-500">Error loading tasks: {error.message}</p>
           </div>
-        ) : filteredTasks && filteredTasks.length > 0 ? (
-          <div className="space-y-3">
-            {filteredTasks.map((task) => (
-              <TaskCard
-                key={task._id || task.id}
-                task={task}
-                onEdit={() => setEditingTask(task)}
-                onDelete={() => setDeletingTask(task)}
-              />
-            ))}
-          </div>
         ) : (
-          <div className="text-center py-20">
-            <p className="text-gray-500 text-lg">
-              {activeTab === "all"
-                ? "No tasks yet. Create your first task!"
-                : `No ${activeTab} tasks found.`}
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {COLUMNS.map((column) => {
+              const columnTasks = tasksByStatus[column.id] || [];
+              const isDraggingOver = dragOverColumn === column.id;
+
+              return (
+                <div
+                  key={column.id}
+                  onDragOver={(e) => handleDragOver(e, column.id)}
+                  onDragLeave={handleDragLeave}
+                  onDrop={(e) => handleDrop(e, column.id === "all" ? null : column.id)}
+                  className={`
+                    min-h-[400px] rounded-lg transition-all duration-200
+                    ${isDraggingOver ? "bg-c-color/5 ring-2 ring-c-color/30" : "bg-gray-50"}
+                  `}
+                >
+                  {/* Column Header */}
+                  <div className="sticky top-0 bg-gray-50 rounded-t-lg p-4 border-b border-gray-200 z-10">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold text-gray-700">{column.label}</h3>
+                      <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded-full">
+                        {columnTasks.length}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Tasks List */}
+                  <div className="p-3 space-y-2 min-h-[300px]">
+                    {columnTasks.length > 0 ? (
+                      columnTasks.map((task) => (
+                        <div
+                          key={task._id || task.id}
+                          draggable
+                          onDragStart={(e) => handleDragStart(e, task)}
+                          onDragEnd={handleDragEnd}
+                          className="transition-all duration-200 hover:scale-[1.02] cursor-move"
+                        >
+                          <TaskCard
+                            task={task}
+                            onEdit={() => setEditingTask(task)}
+                            onDelete={() => setDeletingTask(task)}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <div className="flex items-center justify-center h-[200px] text-gray-400 text-sm">
+                        {column.id === "all" ? "No tasks yet" : `No ${column.label.toLowerCase()} tasks`}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
