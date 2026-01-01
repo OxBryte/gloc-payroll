@@ -48,7 +48,7 @@ export default function DeleteTaskModal({ task, setIsOpen }) {
             Are you sure you want to delete this task? This action cannot be
             undone.
           </p>
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="bg-gray-50 rounded-lg p-4 mb-4">
             <p className="font-semibold text-gray-900">{task.title}</p>
             {task.description && (
               <p className="text-sm text-gray-600 mt-1 line-clamp-2">
