@@ -171,7 +171,7 @@ export default function Tasks() {
                       <h3 className="font-medium text-gray-700 text-sm">
                         {column.label}
                       </h3>
-                      <div className="text-xs text-white flex items-center gap-2 bg-c-color px-2.5 py-1 pt-1.5 rounded-full">
+                      <div className="text-xs text-white flex items-center gap-1.5 bg-c-color px-2.5 py-1 pt-1.5 rounded-full">
                         <TbLoader className="w-4 h-4" />
                         <span className="text-xs">{columnTasks.length}</span>
                       </div>
