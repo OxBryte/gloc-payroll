@@ -194,7 +194,7 @@ export default function Tasks() {
                       ))
                     ) : (
                       <div className="flex items-center justify-center h-[200px] text-gray-400 text-sm">
-                        {column.id === "all"
+                        {column.id === "pending"
                           ? "No tasks yet"
                           : `No ${column.label.toLowerCase()} tasks`}
                       </div>
