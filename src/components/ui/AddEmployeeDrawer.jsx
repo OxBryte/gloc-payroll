@@ -18,38 +18,128 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
   const [parseError, setParseError] = useState("");
   const fileInputRef = useRef();
 
-  // Handle file upload and parse CSV
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setParseError("");
-    setParsedEmployees([]);
-    if (file) {
-      setUploadedFile(file);
-      if (file.name.endsWith(".csv")) {
-        Papa.parse(file, {
-          header: true,
-          skipEmptyLines: true,
-          complete: (results) => {
-            if (results.errors.length) {
-              setParseError(
-                "Error parsing CSV file. Please check your file format."
-              );
-              return;
-            }
-            // Add workspaceId to each employee
-            const employees = results.data.map((emp) => ({
-              ...emp,
-              workspaceId,
-            }));
-            setParsedEmployees(employees);
-          },
-          error: () => setParseError("Failed to parse CSV file."),
-        });
-      } else {
-        setParseError("Only CSV files are supported at the moment.");
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  setParseError("");
+  setParsedEmployees([]);
+  
+  if (!file) return;
+  
+  // Validate file size (e.g., 5MB max)
+  const maxSize = 5 * 1024 * 1024; // 5MB
+  if (file.size > maxSize) {
+    setParseError("File size exceeds 5MB limit.");
+    setUploadedFile(null);
+    return;
+  }
+  
+  // Validate file type
+  if (!file.name.endsWith(".csv") && !file.type.includes("csv")) {
+    setParseError("Only CSV files are supported.");
+    setUploadedFile(null);
+    return;
+  }
+  
+  setUploadedFile(file);
+  
+  // Parse CSV with better error handling
+  Papa.parse(file, {
+    header: true,
+    skipEmptyLines: true,
+    dynamicTyping: true,
+    transformHeader: (header) => header.trim().toLowerCase(),
+    complete: (results) => {
+      if (results.errors.length) {
+        const errorMessages = results.errors.map(err => 
+          `Row ${err.row}: ${err.message}`
+        ).join(', ');
+        setParseError(`CSV parsing errors: ${errorMessages}`);
+        return;
       }
+      
+      if (results.data.length === 0) {
+        setParseError("CSV file is empty or contains no valid data.");
+        return;
+      }
+      
+      // Validate required columns
+      const requiredColumns = ['name', 'email'];
+      const firstRow = results.data[0];
+      const missingColumns = requiredColumns.filter(col => 
+        !Object.keys(firstRow).includes(col)
+      );
+      
+      if (missingColumns.length > 0) {
+        setParseError(`Missing required columns: ${missingColumns.join(', ')}`);
+        return;
+      }
+      
+      // Validate each employee record
+      const validatedEmployees = [];
+      const validationErrors = [];
+      
+      results.data.forEach((emp, index) => {
+        const validationResult = validateEmployeeData(emp, index);
+        if (validationResult.isValid) {
+          validatedEmployees.push({
+            ...validationResult.employee,
+            workspaceId,
+          });
+        } else {
+          validationErrors.push(`Row ${index + 2}: ${validationResult.error}`);
+        }
+      });
+      
+      if (validationErrors.length > 0) {
+        setParseError(`Data validation errors:\n${validationErrors.slice(0, 3).join('\n')}`);
+        if (validationErrors.length > 3) {
+          setParseError(prev => `${prev}\n...and ${validationErrors.length - 3} more errors`);
+        }
+      } else {
+        setParsedEmployees(validatedEmployees);
+      }
+    },
+    error: (error) => {
+      setParseError(`Failed to parse CSV: ${error.message}`);
+      setUploadedFile(null);
+    },
+  });
+};
+
+// Helper validation function
+const validateEmployeeData = (employee, index) => {
+  const errors = [];
+  
+  // Required fields
+  if (!employee.name || employee.name.trim() === '') {
+    errors.push('Name is required');
+  }
+  
+  if (!employee.email || employee.email.trim() === '') {
+    errors.push('Email is required');
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(employee.email)) {
+    errors.push('Invalid email format');
+  }
+  
+  // Validate salary if present
+  if (employee.salary && (isNaN(employee.salary) || employee.salary < 0)) {
+    errors.push('Salary must be a positive number');
+  }
+  
+  // Validate date if present
+  if (employee.employmentDate) {
+    const date = new Date(employee.employmentDate);
+    if (isNaN(date.getTime())) {
+      errors.push('Invalid employment date');
     }
+  }
+  
+  return {
+    isValid: errors.length === 0,
+    employee: errors.length === 0 ? employee : null,
+    error: errors.join(', ')
   };
+};
 
   // Submit handler for single employee
   const onSubmitSingle = (data) => {
