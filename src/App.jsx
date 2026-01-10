@@ -21,6 +21,7 @@ import Careers from "./pages/Careers";
 import Apply from "./pages/Apply";
 import InvoicePage from "./pages/InvoicePage";
 import Tasks from "./pages/Tasks";
+import Wallet from "./pages/Wallet";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
           <Route path="*" element={<h1>404 Not Found</h1>} />
           <Route path="/reset-password/" element={<ResetPassword />} />
           <Route path="/accept-admin" element={<AcceptAdmin />} />
+          <Route path="/wallet" element={<Wallet />} />
         </Routes>
       </BrowserRouter>
     </>
