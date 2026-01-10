@@ -25,8 +25,7 @@ export default function BottomBar() {
                     {item.label}
                   </span>
                 )}
-              </div>
-            </button>
+            </div>
           ))}
         </div>
       </div>
