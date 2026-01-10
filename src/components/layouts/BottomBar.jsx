@@ -30,7 +30,6 @@ export default function BottomBar() {
                   }`}
                 />
               </div>
-              </span>
             </button>
           ))}
         </div>
