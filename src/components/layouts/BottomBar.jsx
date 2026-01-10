@@ -30,14 +30,6 @@ export default function BottomBar() {
                   }`}
                 />
               </div>
-              <span
-                className={`text-xs font-medium transition-colors ${
-                  item.active
-                    ? "text-c-color"
-                    : "text-gray-400 group-hover:text-gray-600"
-                }`}
-              >
-                {item.label}
               </span>
             </button>
           ))}
