@@ -8,6 +8,7 @@ export default function BottomBar() {
     { icon: BookUser, label: "Address Book", active: false },
     { icon: ShieldCheck, label: "Security", active: false },
   ];
+    
   return (
     <>
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[760px] bg-white border-t border-gray-100 px-6 py-4 z-50">
