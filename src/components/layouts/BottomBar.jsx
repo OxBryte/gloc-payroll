@@ -9,7 +9,7 @@ export default function BottomBar() {
     {
       icon: BookUser,
       label: "Address Book",
-      active: activeTab === "Address Book",
+      active: activeTab === "Address ",
     },
     { icon: ShieldCheck, label: "Security", active: activeTab === "Security" },
   ];
