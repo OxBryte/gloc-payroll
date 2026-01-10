@@ -15,6 +15,7 @@ export default function BottomBar() {
           {navItems.map((item, index) => (
             <div
               key={index}
+              onClick={() => setActiveTab(item.label)}
               className={`p-2 rounded-full flex items-center gap-2 cursor-pointer hover:opacity-60 transition-colors ${
                 item.active ? "bg-c-color text-white" : "text-gray-300"
               }`}
