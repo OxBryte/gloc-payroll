@@ -26,7 +26,7 @@ export default function BottomBar() {
               >
                       <item.icon className={`w-6 h-6 ${item.active ? "" : ""}`} />
 ¸                      <span> {item.label} </span>
-              </div>
+          </div>
             </button>
           ))}
         </div>
