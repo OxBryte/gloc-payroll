@@ -28,5 +28,6 @@ export default function BottomBar() {
                       {item.active && <span className="w-2 h-2 bg-green-500 rounded-full"></span>}
     </div>
     </div>
+    </div>
   );
 }
