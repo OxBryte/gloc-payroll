@@ -15,7 +15,7 @@ const Wallet = () => {
         </div>
       </div>
       <div className="mt-10 w-full max-w-[760px] mx-auto relative">
-jij
+<div className=""></div>
       </div>
       <BottomBar />
     </div>
