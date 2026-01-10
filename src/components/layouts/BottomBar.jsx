@@ -12,7 +12,7 @@ export default function BottomBar() {
     
   return (
     <>
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[760px] bg-white border-t border-gray-100 px-6 py-4 z-50">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full bg-white border-t border-gray-100 px-6 py-4 z-50">
         <div className="flex justify-around items-center">
           {navItems.map((item, index) => (
             <button
