@@ -13,17 +13,12 @@ export default function BottomBar() {
       <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-full bg-white px-3 py-2 rounded-full shadow-md  z-50 max-w-fit mx-auto">
         <div className="flex justify-around items-center">
           {navItems.map((item, index) => (
-            <button
+            <div
               key={index}
-              className="flex flex-col items-center gap-1 group"
+              className={`p-2 rounded-full flex items-center gap-2 transition-colors ${
+                item.active ? "bg-c-color text-white" : "text-gray-400"
+              }`}
             >
-              <div
-                className={`p-2 rounded-full flex items-center gap-2 transition-colors ${
-                  item.active
-                    ? "bg-c-color text-white"
-                    : "text-gray-400 group-hover:bg-gray-50 group-hover:text-gray-600"
-                }`}
-              >
                 <item.icon className={`w-6 h-6 ${item.active ? "" : ""}`} />
                 {item.active && (
                   <span className="text-xs font-medium">
