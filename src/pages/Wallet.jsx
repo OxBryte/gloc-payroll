@@ -10,7 +10,6 @@ const Wallet = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center">
-      {/* Main Container constrained to 760px */}
       <div className="w-full max-w-[760px] min-h-screen relative flex flex-col">
         {/* Content Area */}
         <div className="flex-1 flex flex-col items-center justify-center p-6 pb-24">
