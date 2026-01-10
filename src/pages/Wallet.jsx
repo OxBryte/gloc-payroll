@@ -8,7 +8,7 @@ const Wallet = () => {
   const { address, isConnected } = useAppKitAccount();
 
   return (
-    <div className="min-h-screen w-full mx-auto relative">
+    <div className="min-h-screen w-full relative">
       <div className="w-full border-b border-b-gray-200 p-4 flex items-center justify-between">
         <img src="/gloc-logo.svg" alt="logo" className="w-8" />
         {/* <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0f0f0f] to-c-color-sec cursor-pointer hover:opacity-90 transition-opacity shadow-sm"></div> */}
