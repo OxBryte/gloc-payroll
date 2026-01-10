@@ -29,7 +29,6 @@ export default function BottomBar() {
                   <span className="w-2 h-2 bg-green-500 rounded-full">
                   </span>
                 )}
-                <span className="text-sm font-medium"></span>
               </div>
             </button>
           ))}
