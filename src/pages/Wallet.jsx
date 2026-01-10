@@ -14,7 +14,7 @@ const Wallet = () => {
           <img src="/gloc-logo.svg" alt="logo" className="w-8" />
         </div>
       </div>
-      <div className="w-full max-w-[760px] mx-auto relative flex flex-col"></div>
+      <div className="w-full max-w-[760px] mx-auto relati"></div>
       <BottomBar />
     </div>
   );
