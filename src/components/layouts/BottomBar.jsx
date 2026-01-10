@@ -5,9 +5,10 @@ export default function BottomBar() {
 
 
   const navItems = [
-    { icon: WalletIcon, label: "Wallet", active: true },
+    { icon: WalletIcon, label: "Wallet", active: false },
     { icon: BookUser, label: "Address Book", active: false },
     { icon: ShieldCheck, label: "Security", active: false },
+    { icon: User, label: "Profile", active: false },
   ];
     
   return (
