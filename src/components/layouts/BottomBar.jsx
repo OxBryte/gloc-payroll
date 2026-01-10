@@ -4,7 +4,7 @@ import { Wallet as WalletIcon, BookUser, ShieldCheck } from "lucide-react";
 export default function BottomBar() {
   const navItems = [
     { icon: WalletIcon, label: "Wallet", active: false },
-    { icon: BookUser, label: "Address Book", active: true },
+    { icon: BookUser, label: "Address Book", active: false },
     { icon: ShieldCheck, label: "Security", active: false },
   ];
 
