@@ -14,22 +14,6 @@ const Wallet = () => {
         {/* Content Area */}
         <div className="flex-1 flex flex-col items-center justify-center p-6 pb-24">
           <div className="w-full max-w-sm space-y-8 text-center">
-            <div className="space-y-4">
-              <div className="mx-auto w-20 h-20 bg-c-color/5 rounded-2xl flex items-center justify-center mb-6">
-                <img
-                  src="/gloc-logo.svg"
-                  alt="Gloc Logo"
-                  className="w-12 h-12"
-                />
-              </div>
-              <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
-                Connect Wallet
-              </h1>
-              <p className="text-gray-500 text-lg leading-relaxed">
-                Connect your wallet to access your dashboard and manage your
-                payroll securely.
-              </p>
-            </div>
 
             <div className="space-y-4 pt-4">
               {isConnected ? (
