@@ -13,13 +13,7 @@ const Wallet = () => {
       <div className="w-full  min-h-screen relative flex flex-col">
         {/* Content Area */}
         <div className="flex-1 flex flex-col items-center justify-center p-6 pb-24">
-          <div className="w-full max-w-sm space-y-8 text-center">
-
-            <div className="pt-8 text-xs text-gray-400">
-              By connecting, you agree to our Terms of Service and Privacy
-              Policy.
-            </div>
-          </div>
+          <div className="w-full max-w-sm space-y-8 text-center"></div>
         </div>
 
         {/* Fixed Bottom Navigation Bar */}
