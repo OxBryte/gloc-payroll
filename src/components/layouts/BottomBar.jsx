@@ -22,7 +22,7 @@ export default function BottomBar() {
             <div
               key={index}
               onClick={() => setActiveTab(item.label)}
-              className={`px-2 py-1 rounded-full flex items-center gap-2 cursor-pointer hover:opacity-60 transition-colors ${
+              className={`px-2 py-1.5 rounded-full flex items-center gap-2 cursor-pointer hover:opacity-60 transition-colors ${
                 item.active ? "bg-c-color text-white" : "text-gray-300"
               }`}
             >
