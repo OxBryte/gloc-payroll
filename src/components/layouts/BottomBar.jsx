@@ -8,7 +8,7 @@ export default function BottomBar() {
     { icon: WalletIcon, label: "Wallet", active: activeTab === "Wallet" },
     { icon: BookUser, label: "Address Book", active: activeTab === "Address Book" },
     { icon: ShieldCheck, label: "Security", active: activeTab === "Security" },
-  ];
+  ];    
 
   return (
     <>
