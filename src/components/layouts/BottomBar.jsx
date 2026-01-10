@@ -10,7 +10,7 @@ export default function BottomBar() {
 
   return (
     <>
-      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-full bg-white border-t border-gray-100  z-50 max-w-fit mx-auto">
+      <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-full bg-white border-t border-gray-100 px-4 z-50 max-w-fit mx-auto">
         <div className="flex justify-around items-center">
           {navItems.map((item, index) => (
             <button
