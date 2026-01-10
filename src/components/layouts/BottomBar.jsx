@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Wallet as WalletIcon, BookUser, ShieldCheck } from "lucide-react";
 
 export default function BottomBar() {
