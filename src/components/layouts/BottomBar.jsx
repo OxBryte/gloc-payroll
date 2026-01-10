@@ -2,10 +2,12 @@ import React from "react";
 import { Wallet as WalletIcon, BookUser, ShieldCheck } from "lucide-react";
 
 export default function BottomBar() {
+  const [activeTab, setActiveTab] = useState("Wallet");
+
   const navItems = [
-    { icon: WalletIcon, label: "Wallet", active: false },
-    { icon: BookUser, label: "Address Book", active: false },
-    { icon: ShieldCheck, label: "Security", active: true },
+    { icon: WalletIcon, label: "Wallet", active: activeTab === "Wallet" },
+    { icon: BookUser, label: "Address Book", active: activeTab === "Address Book" },
+    { icon: ShieldCheck, label: "Security", active: activeTab === "Security" },
   ];
 
   return (
