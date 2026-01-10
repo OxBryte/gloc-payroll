@@ -1,15 +1,13 @@
-import React from 'react'
+import React from "react";
 import { Wallet as WalletIcon, BookUser, ShieldCheck } from "lucide-react";
 
 export default function BottomBar() {
-
-
   const navItems = [
     { icon: WalletIcon, label: "Wallet", active: true },
     { icon: BookUser, label: "Address Book", active: false },
     { icon: ShieldCheck, label: "Security", active: false },
   ];
-    
+
   return (
     <>
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full bg-white border-t border-gray-100 px-6 py-4 z-50">
