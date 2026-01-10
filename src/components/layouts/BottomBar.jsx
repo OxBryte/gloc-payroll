@@ -24,11 +24,7 @@ export default function BottomBar() {
                     : "text-gray-400 group-hover:bg-gray-50 group-hover:text-gray-600"
                 }`}
               >
-                <item.icon
-                  className={`w-6 h-6 ${
-                    item.active ? "" : ""
-                  }`}
-                />
+                <item.icon className={`w-6 h-6 ${item.active ? "" : ""}`} />
               </div>
             </button>
           ))}
