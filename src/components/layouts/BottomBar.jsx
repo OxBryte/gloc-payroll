@@ -28,7 +28,7 @@ export default function BottomBar() {
             >
               <item.icon className={`w-6 h-6 ${item.active ? "" : ""}`} />
               {item.active && (
-                <span className="text-xs font-medium">{item.label}</span>
+                <span className="mt-1text-xs font-medium">{item.label}</span>
               )}
             </div>
           ))}
