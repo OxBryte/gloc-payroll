@@ -9,7 +9,7 @@ const Wallet = () => {
 
   return (
     <div className="min-h-screen flex justify-center relative">
-      <div className="w-full  min-h-screen relative flex flex-col"></div>
+      <div className="w-full max-w-[760px] mx-auto min-h-screen relative flex flex-col"></div>
       <BottomBar />
     </div>
   );
