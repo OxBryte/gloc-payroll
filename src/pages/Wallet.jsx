@@ -8,7 +8,7 @@ const Wallet = () => {
   const { address, isConnected } = useAppKitAccount();
 
   return (
-    <div className="min-h-screen  flex justify-center relative">
+    <div className="min-h-screen flex justify-center relative">
       <div className="w-full  min-h-screen relative flex flex-col"></div>
       <BottomBar />
     </div>
