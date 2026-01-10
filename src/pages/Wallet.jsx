@@ -7,12 +7,6 @@ const Wallet = () => {
   const { open } = useAppKit();
   const { address, isConnected } = useAppKitAccount();
 
-  const navItems = [
-    { icon: WalletIcon, label: "Wallet", active: true },
-    { icon: BookUser, label: "Address Book", active: false },
-    { icon: ShieldCheck, label: "Security", active: false },
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center">
       {/* Main Container constrained to 760px */}
