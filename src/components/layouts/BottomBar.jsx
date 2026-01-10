@@ -16,7 +16,7 @@ export default function BottomBar() {
             <div
               key={index}
               className={`p-2 rounded-full flex items-center gap-2 transition-colors ${
-                item.active ? "bg-c-color text-white" : "t"
+                item.active ? "bg-c-color text-white" : "text-gray-400"
               }`}
             >
               <item.icon className={`w-6 h-6 ${item.active ? "" : ""}`} />
