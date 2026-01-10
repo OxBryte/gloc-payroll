@@ -20,7 +20,7 @@ export default function BottomBar() {
               <div
                 className={`p-2 rounded-full transition-colors ${
                   item.active
-                    ? "bg-c-color/10 text-c-color"
+                    ? "bg-c-color text-white"
                     : "text-gray-400 group-hover:bg-gray-50 group-hover:text-gray-600"
                 }`}
               >
