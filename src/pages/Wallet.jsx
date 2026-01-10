@@ -9,7 +9,7 @@ const Wallet = () => {
 
   return (
     <div className="min-h-screen w-full relative">
-      <div className="w-full border-b border-b-gray-200 p-4">
+      <div className="w-full border-b border-b-gray-200 p-4 sticky top-0 bg-white z-10">
         <div className="w-full max-w-[760px] mx-auto flex items-center justify-between">
           <img src="/gloc-logo.svg" alt="logo" className="w-8" />
         </div>
