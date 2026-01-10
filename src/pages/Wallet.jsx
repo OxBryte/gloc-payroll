@@ -1,7 +1,6 @@
 import React from "react";
 import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
 import { Wallet as WalletIcon, BookUser, ShieldCheck } from "lucide-react";
-import { truncateAddress } from "../components/lib/utils";
 import BottomBar from "../components/layouts/BottomBar";
 
 const Wallet = () => {
