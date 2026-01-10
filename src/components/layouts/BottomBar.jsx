@@ -6,9 +6,13 @@ export default function BottomBar() {
 
   const navItems = [
     { icon: WalletIcon, label: "Wallet", active: activeTab === "Wallet" },
-    { icon: BookUser, label: "Address Book", active: activeTab === "Address Book" },
+    {
+      icon: BookUser,
+      label: "Address Book",
+      active: activeTab === "Address Book",
+    },
     { icon: ShieldCheck, label: "Security", active: activeTab === "Security" },
-  ];    
+  ];
 
   return (
     <>
