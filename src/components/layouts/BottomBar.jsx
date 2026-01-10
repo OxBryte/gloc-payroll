@@ -18,7 +18,7 @@ export default function BottomBar() {
               className="flex flex-col items-center gap-1 group"
             >
               <div
-                className={`p-2 rounded-xl transition-colors ${
+                className={`p-2 rounded-full transition-colors ${
                   item.active
                     ? "bg-c-color/10 text-c-color"
                     : "text-gray-400 group-hover:bg-gray-50 group-hover:text-gray-600"
