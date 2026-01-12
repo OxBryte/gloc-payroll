@@ -51,6 +51,21 @@ const AddEmployeeDrawer = ({ setIsOpen, workspaceId }) => {
     }
   };
 
+  // Missing validation for required fields in CSV
+const validateEmployeeData = (employee) => {
+  const requiredFields = ['name', 'email', 'role'];
+  const missingFields = requiredFields.filter(field => !employee[field]);
+  return missingFields;
+};
+
+ 
+const employees = results.data
+  .filter(emp => emp.name && emp.email) // Filter out incomplete rows
+  .map((emp) => ({
+    ...emp,
+    workspaceId,
+  }));
+
   // Submit handler for single employee
   const onSubmitSingle = (data) => {
     const updatedData = {
