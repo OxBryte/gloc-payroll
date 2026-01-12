@@ -36,6 +36,10 @@ A modern, decentralized payroll management system built with React, enabling sea
 ### 💰 Payroll Processing
 
 - **Bulk Payroll Distribution**: Pay multiple employees in a single transaction
+- **Bulk Employee Management**: Update salaries and manage employees in bulk
+- **Bulk Workspace Operations**: Invite admins and allocate funds across workspaces
+- **Bulk Job Board Management**: Update job statuses and manage listings efficiently
+- **Bulk Analytics**: Gather performance metrics across multiple entities
 - **USDC Payments**: Process payments using USDC stablecoin
 - **Automated Tax Calculation**: Built-in 3% tax calculation on payroll
 - **Transaction Tracking**: Monitor all payroll transactions with on-chain verification
