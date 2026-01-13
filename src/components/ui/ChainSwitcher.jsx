@@ -1,7 +1,38 @@
 import React from "react";
 import { useChain } from "../hooks/useChain";
 
-export default function ChainSwitcher() {
+//  Added props interface
+interface ChainSwitcherProps {
+  // Configuration for which chains to show
+  showMainnet?: boolean;
+  showTestnet?: boolean;
+  
+  // Disable specific chains
+  disableMainnet?: boolean;
+  disableTestnet?: boolean;
+  
+  // Callback when chain switches
+  onChainSwitch?: (chainId: number, chainName: string) => void;
+  
+  // Custom styling
+  className?: string;
+  buttonClassName?: string;
+  activeButtonClassName?: string;
+  disabledButtonClassName?: string;
+}
+
+export default function ChainSwitcher({
+  // Default props
+  showMainnet = true,
+  showTestnet = true,
+  disableMainnet = false,
+  disableTestnet = false,
+  onChainSwitch,
+  className = "",
+  buttonClassName = "px-3 py-2 text-xs font-medium rounded-md transition-colors",
+  activeButtonClassName = "text-white cursor-not-allowed",
+  disabledButtonClassName = "bg-gray-200 text-gray-700 hover:bg-gray-300"
+}: ChainSwitcherProps) {
   const {
     chainId,
     currentChainName,
@@ -12,10 +43,29 @@ export default function ChainSwitcher() {
     isPending,
   } = useChain();
 
+  //  Handle chain switch with callback
+  const handleSwitchToTestnet = async () => {
+    if (!disableTestnet) {
+      await switchToBaseTestnet();
+      if (onChainSwitch && chainId) {
+        onChainSwitch(chainId, "Base Testnet");
+      }
+    }
+  };
+
+  const handleSwitchToMainnet = async () => {
+    if (!disableMainnet) {
+      await switchToBaseMainnet();
+      if (onChainSwitch && chainId) {
+        onChainSwitch(chainId, "Base Mainnet");
+      }
+    }
+  };
+
   // Add safety check for when chainId is not available
   if (!chainId) {
     return (
-      <div className="flex items-center gap-2">
+      <div className={`flex items-center gap-2 ${className}`}>
         <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-lg">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-gray-400" />
@@ -29,7 +79,7 @@ export default function ChainSwitcher() {
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className={`flex items-center gap-2 ${className}`}>
       <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-lg">
         <div className="flex items-center gap-2">
           <div
@@ -44,29 +94,41 @@ export default function ChainSwitcher() {
       </div>
 
       <div className="flex gap-1">
-        <button
-          onClick={switchToBaseTestnet}
-          disabled={isTestnet || isPending}
-          className={`px-3 py-2 text-xs font-medium rounded-md transition-colors ${
-            isTestnet
-              ? "bg-blue-500 text-white cursor-not-allowed"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
-        >
-          {isPending ? "Switching..." : "Testnet"}
-        </button>
+        {/*  Conditionally render Testnet button */}
+        {showTestnet && (
+          <button
+            onClick={handleSwitchToTestnet}
+            disabled={isTestnet || isPending || disableTestnet}
+            className={`${buttonClassName} ${
+              isTestnet
+                ? `bg-blue-500 ${activeButtonClassName}`
+                : `${disabledButtonClassName}`
+            } ${
+              disableTestnet ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            aria-label="Switch to Base Testnet"
+          >
+            {isPending ? "Switching..." : "Testnet"}
+          </button>
+        )}
 
-        <button
-          onClick={switchToBaseMainnet}
-          disabled={isMainnet || isPending}
-          className={`px-3 py-2 text-xs font-medium rounded-md transition-colors ${
-            isMainnet
-              ? "bg-green-500 text-white cursor-not-allowed"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
-        >
-          {isPending ? "Switching..." : "Mainnet"}
-        </button>
+        {/*  Conditionally render Mainnet button */}
+        {showMainnet && (
+          <button
+            onClick={handleSwitchToMainnet}
+            disabled={isMainnet || isPending || disableMainnet}
+            className={`${buttonClassName} ${
+              isMainnet
+                ? `bg-green-500 ${activeButtonClassName}`
+                : `${disabledButtonClassName}`
+            } ${
+              disableMainnet ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            aria-label="Switch to Base Mainnet"
+          >
+            {isPending ? "Switching..." : "Mainnet"}
+          </button>
+        )}
       </div>
     </div>
   );
