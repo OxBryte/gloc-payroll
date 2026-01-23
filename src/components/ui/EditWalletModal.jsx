@@ -159,7 +159,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
         </div>
 
         {/* Footer */}
-        <div className="p-6">
+        <div className="p">
           <button
             onClick={handleSave}
             className="w-full py-3 px-6 bg-c-color text-white rounded-lg text-sm font-medium hover:bg-c-color/90 transition-colors"
