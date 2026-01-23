@@ -167,7 +167,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
             {/* Wallet Icon Display */}
             <div className="relative">
               <div
-                className="w-24 h-30 rounded-full flex items-center justify-center overflow-hidden border-2 border-gray-200"
+                className="w-30 h-30 rounded-full flex items-center justify-center overflow-hidden border-2 border-gray-200"
                 style={{ backgroundColor: selectedBgColor }}
               >
                 {imagePreview ? (
