@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { truncateAddress, truncateTxHash } from "../components/lib/utils";
 import BottomBar from "../components/layouts/BottomBar";
-import { useAccount } from "wagmi";
 import { HiOutlinePlus, HiChevronDown, HiChevronUp } from "react-icons/hi";
 import WalletMenu from "../components/ui/WalletMenu";
 import AddWalletModal from "../components/ui/AddWalletModal";
