@@ -259,7 +259,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
             </div>
 
             {/* Background Color Picker */}
-            <div className="flex-1">
+            <div className="">
               <label className="text-sm font-medium text-gray-700 mb-3 block">
                 Background Color
               </label>
