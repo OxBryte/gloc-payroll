@@ -57,6 +57,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
       setImagePreview(null);
     }
   }, [wallet]);
+  
   const handleSave = () => {
     if (!walletName.trim()) {
       alert("Please enter a wallet name");
