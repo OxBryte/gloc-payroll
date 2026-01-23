@@ -20,7 +20,9 @@ const Wallet = () => {
             <div className="flex gap-2 items-center">
             <div className="w-10 h-10 rounded-full bg-c-color"></div>
               <div className="space-y-2">
-                
+                <p className="text-sm font-medium">John Doe</p>
+                <p className="text-xs text-gray-500">0x1234567890</p>
+              </div>
 </div>
             </div>
           </div>
