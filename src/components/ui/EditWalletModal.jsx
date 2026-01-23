@@ -268,7 +268,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
                   <button
                     key={index}
                     onClick={() => setSelectedBgColor(color)}
-                    className={`w-10 h-10 rounded-full transition-all ${
+                    className={`w-8 h-8 rounded-full transition-all ${
                       selectedBgColor === color
                         ? "ring-2 ring-gray-900 ring-offset-2"
                         : "hover:scale-110"
