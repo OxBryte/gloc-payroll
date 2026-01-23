@@ -2,7 +2,7 @@ import React from "react";
 import { truncateAddress } from "../components/lib/utils";
 import BottomBar from "../components/layouts/BottomBar";
 import { useAccount } from "wagmi";
-
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
 
 const Wallet = () => {
   // const { open } = useAppKit();
