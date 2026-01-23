@@ -87,17 +87,9 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
         const imageDataUrl = reader.result;
         setImagePreview(imageDataUrl);
         setSelectedImage(imageDataUrl);
-        setSelectedEmoji(null); // Clear emoji when image is selected
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const handleEmojiSelect = (emoji) => {
-    setSelectedEmoji(emoji);
-    setSelectedImage(null); // Clear image when emoji is selected
-    setImagePreview(null);
-    setShowEmojiPicker(false);
   };
 
   const handleRemoveImage = () => {
