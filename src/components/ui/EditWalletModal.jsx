@@ -149,16 +149,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
                 )}
               </div>
               
-              {/* Image Upload Button */}
-              <div className="relative mt-2">
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
-                >
-                  <MoreHorizontal className="w-4 h-4 text-gray-600" />
-                </button>
-               
-              </div>
+             
             </div>
 
             {/* Background Gradient Picker */}
