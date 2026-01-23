@@ -9,34 +9,8 @@ const Wallet = () => {
   // const { open } = useAppKit();
   // const { address, isConnected } = useAppKitAccount();
   const { address } = useAccount();
-  const [showMenu, setShowMenu] = useState(false);
-  const menuRef = useRef(null);
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setShowMenu(false);
-      }
-    };
-
-    if (showMenu) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showMenu]);
-
-  const handleMenuClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setShowMenu(!showMenu);
-  };
 
   const handleMenuOption = (option) => {
-    setShowMenu(false);
     // Handle menu option actions here
     console.log(`Selected option: ${option}`);
   };
