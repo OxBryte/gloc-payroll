@@ -52,31 +52,31 @@ const WalletMenu = ({ onOptionSelect }) => {
           </button>
           <button
             onClick={() => handleMenuOption("edit-picture")}
-            className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+            className="w-full text-left px-4 py-2.5 text-sm text-white hover:bg-c-color/80 transition-colors"
           >
             Edit Picture
           </button>
           <button
             onClick={() => handleMenuOption("transactions")}
-            className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+            className="w-full text-left px-4 py-2.5 text-sm text-white hover:bg-c-color/80 transition-colors"
           >
             Transactions
           </button>
           <button
             onClick={() => handleMenuOption("copy-address")}
-            className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+            className="w-full text-left px-4 py-2.5 text-sm text-white hover:bg-c-color/80 transition-colors"
           >
             Copy Address
           </button>
           <button
             onClick={() => handleMenuOption("qr-code")}
-            className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+            className="w-full text-left px-4 py-2.5 text-sm text-white hover:bg-c-color/80 transition-colors"
           >
             QR Code
           </button>
           <button
             onClick={() => handleMenuOption("export-wallet")}
-            className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-100"
+            className="w-full text-left px-4 py-2.5 text-sm text-white hover:bg-c-color/80 transition-colors border-t border-gray-100"
           >
             Export Wallet
           </button>
