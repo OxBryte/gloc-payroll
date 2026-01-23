@@ -46,7 +46,7 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
           <QRCodeSVG
             value={wallet.address}
             size={300}
-            roun
+            round={true}
             level="H"
             bgColor="#ffffff"
             includeMargin={true}
