@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { LuHistory, LuPen, LuUser } from "react-icons/lu";
+import { LuDownload, LuHistory, LuPen, LuUser } from "react-icons/lu";
 import { LuCopy } from "react-icons/lu";
 import { LuQrCode } from "react-icons/lu";
 
