@@ -26,6 +26,7 @@ const Wallet = () => {
                 </p>
               </div>
             </div>
+            
           </div>
           <div className="border-b border-b-gray-100"></div>
           <div className="w-full px-4 py-3 flex gap-3 items-center justify-between">
