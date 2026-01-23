@@ -57,7 +57,7 @@ const WalletMenu = ({ onOptionSelect }) => {
             className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] rounded-lg transition-colors"
           >
             <LuPen size={14} />
-            Edit Name
+            Edit Wallet
           </button>
           <button
             onClick={() => handleMenuOption("edit-picture")}
