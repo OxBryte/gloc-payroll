@@ -5,6 +5,7 @@ import BottomBar from "../components/layouts/BottomBar";
 import { HiOutlinePlus } from "react-icons/hi";
 import WalletMenu from "../components/ui/WalletMenu";
 import EditWalletModal from "../components/ui/EditWalletModal";
+import QRCodeModal from "../components/ui/QRCodeModal";
 import toast from "react-hot-toast";
 
 const Wallet = () => {
