@@ -56,7 +56,7 @@ const Wallet = () => {
           </div>
         </div>
 
-        
+        {/* Nwe */}
       </div>
       <BottomBar />
     </div>
