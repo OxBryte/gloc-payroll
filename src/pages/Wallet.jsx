@@ -62,7 +62,7 @@ const Wallet = () => {
             <HiOutlinePlus size={20} className="" />
             <p>Create New Wallet</p>
           </div>
-            {/* <p>Import Wallet</p> */}
+          {/* <p>Import Wallet</p> */}
         </div>
       </div>
       <BottomBar />
