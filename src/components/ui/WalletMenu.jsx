@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { LuDownload, LuHistory, LuPen, LuUser } from "react-icons/lu";
-import { LuCopy } from "react-icons/lu";
-import { LuQrCode } from "react-icons/lu";
+import { LuCopy, LuDownload, LuHistory, LuPen, LuQrCode, LuUser } from "react-icons/lu";
 
 const WalletMenu = ({ onOptionSelect }) => {
   const [showMenu, setShowMenu] = useState(false);
