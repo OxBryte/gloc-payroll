@@ -138,6 +138,38 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
                   <div className="w-full h-full"></div>
                 )}
               </div>
+              
+              {/* Image Upload Button */}
+              <div className="relative mt-2">
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
+                >
+                  <MoreHorizontal className="w-4 h-4 text-gray-600" />
+                </button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInputRef}
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+                {imagePreview && (
+                  <button
+                    onClick={() => {
+                      setSelectedImage(null);
+                      setImagePreview(null);
+                      if (fileInputRef.current) {
+                        fileInputRef.current.value = "";
+                      }
+                    }}
+                    className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                    title="Remove image"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Background Gradient Picker */}
