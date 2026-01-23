@@ -21,7 +21,9 @@ const Wallet = () => {
               <div className="w-12 h-12 rounded-full bg-c-color"></div>
               <div className="space-y-1">
                 <p className="text-lg font-medium">John Doe</p>
-                <p className="text-xs text-gray-500">{truncateAddress(address)}</p>
+                <p className="text-xs text-gray-500">
+                  {truncateAddress(address)}
+                </p>
               </div>
             </div>
           </div>
