@@ -58,7 +58,7 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
             size={200}
             level="H"
             bgColor="#ffffff"
-marh
+includeMargin={true}
           />
 
           {/* Address with Copy Button */}
