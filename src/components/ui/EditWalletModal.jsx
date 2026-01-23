@@ -22,7 +22,7 @@ const BACKGROUND_GRADIENTS = [
   "linear-gradient(135deg, #00b894 0%, #00cec9 100%)", // Green to Cyan
   "linear-gradient(135deg, #e17055 0%, #d63031 100%)", // Orange to Red
   "linear-gradient(135deg, #2d3436 0%, #636e72 100%)", // Dark Gray to Gray
-  "linear-gradient(135deg, #000000 0%, #434343 100%)",  // Black to Dark Gray
+  "linear-gradient(135deg, #000000 0%, #434343 100%)", // Black to Dark Gray
   "linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%)", // Orange to Pink
   "linear-gradient(135deg, #c471ed 0%, #f64f59 100%)", // Purple to Red
   "linear-gradient(135deg, #12c2e9 0%, #c471ed 100%)", // Blue to Purple
@@ -32,15 +32,16 @@ const BACKGROUND_GRADIENTS = [
   "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)", // Dark Blue to Light Blue
   "linear-gradient(135deg, #ee9ca7 0%, #ffdde1 100%)", // Pink to Light Pink
   "linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%)", // Light Gray to Dark Blue
-  "linear-gradient(135deg, #f093fb 0%, #4facfe 100%)"  // Pink to Blue
+  "linear-gradient(135deg, #f093fb 0%, #4facfe 100%)", // Pink to Blue
 ];
 
 const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
   const [walletName, setWalletName] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedGradient, setSelectedGradient] = useState(BACKGROUND_GRADIENTS[0]);
+  const [selectedGradient, setSelectedGradient] = useState(
+    BACKGROUND_GRADIENTS[0],
+  );
   const [imagePreview, setImagePreview] = useState(null);
-
 
   // Initialize form when wallet changes
   React.useEffect(() => {
@@ -121,8 +122,6 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
                   <div className="w-full h-full"></div>
                 )}
               </div>
-              
-             
             </div>
 
             {/* Background Gradient Picker */}
