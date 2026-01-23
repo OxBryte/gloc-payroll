@@ -50,6 +50,15 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
             level="H"
             bgColor="#ffffff"
             marginSize={5}
+            imageSettings={{
+              src: "https://static.zpao.com/favicon.png",
+              x: undefined,
+              y: undefined,
+              height: 24,
+              width: 24,
+              opacity: 1,
+              excavate: true,
+            }}
           />
         </div>
         <button
