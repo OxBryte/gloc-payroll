@@ -47,7 +47,6 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
             value={wallet.address}
             size={300}
             round={true}
-            level="H"
             bgColor="#ffffff"
             level="L"
             marginSize={5}
