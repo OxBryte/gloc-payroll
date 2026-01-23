@@ -172,49 +172,6 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
                 >
                   <MoreHorizontal className="w-4 h-4 text-gray-600" />
                 </button>
-
-                {/* Image Picker Dropdown */}
-                {showImagePicker && (
-                  <div
-                    ref={imagePickerRef}
-                    className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10 w-48"
-                  >
-                    <div className="space-y-3">
-                      <div>
-                        <label className="text-xs font-medium text-gray-700 mb-2 block">
-                          Upload Image
-                        </label>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          ref={fileInputRef}
-                          onChange={handleImageUpload}
-                          className="hidden"
-                        />
-                        <button
-                          onClick={() => {
-                            fileInputRef.current?.click();
-                            setShowImagePicker(false);
-                          }}
-                          className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                        >
-                          Choose Image
-                        </button>
-                      </div>
-                      {imagePreview && (
-                        <button
-                          onClick={() => {
-                            handleRemoveImage();
-                            setShowImagePicker(false);
-                          }}
-                          className="w-full px-3 py-2 text-sm border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors"
-                        >
-                          Remove Image
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
 
