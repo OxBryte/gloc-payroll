@@ -2,7 +2,6 @@ import React from "react";
 import { X, Copy } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { truncateAddress } from "../lib/utils";
-import toast from "react-hot-toast";
 
 const QRCodeModal = ({ isOpen, onClose, wallet }) => {
   if (!isOpen || !wallet) return null;
