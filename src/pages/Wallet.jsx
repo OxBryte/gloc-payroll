@@ -1,18 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import { truncateAddress } from "../components/lib/utils";
 import BottomBar from "../components/layouts/BottomBar";
 // import { useAccount } from "wagmi";
 import { HiOutlinePlus } from "react-icons/hi";
 import WalletMenu from "../components/ui/WalletMenu";
+import EditWalletModal from "../components/ui/EditWalletModal";
 
 const Wallet = () => {
   // const { open } = useAppKit();
   // const { address, isConnected } = useAppKitAccount();
- const address = "0x1234567890123456789012345678901234567890";
+  const address = "0x1234567890123456789012345678901234567890";
+  
+  // Sample wallet data - in a real app, this would come from state/context
+  const [wallets, setWallets] = useState([
+    {
+      id: "1",
+      name: "John Doe",
+      address: address,
+      balance: 0,
+      image: null,
+      emoji: null,
+      bgColor: "#000000",
+    },
+    {
+      id: "2",
+      name: "John Doe",
+      address: address,
+      balance: 0,
+      image: null,
+      emoji: null,
+      bgColor: "#000000",
+    },
+  ]);
+  
+  const [editingWallet, setEditingWallet] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
-  const handleMenuOption = (option) => {
+  const handleMenuOption = (option, walletId) => {
     // Handle menu option actions here
-    console.log(`Selected option: ${option}`);
+    console.log(`Selected option: ${option} for wallet: ${walletId}`);
+    
+    if (option === "edit-wallet") {
+      const wallet = wallets.find((w) => w.id === walletId);
+      if (wallet) {
+        setEditingWallet(wallet);
+        setShowEditModal(true);
+      }
+    }
+  };
+
+  const handleSaveWallet = (updatedWallet) => {
+    setWallets((prevWallets) =>
+      prevWallets.map((w) =>
+        w.id === updatedWallet.id ? updatedWallet : w
+      )
+    );
+    setShowEditModal(false);
+    setEditingWallet(null);
   };
   return (
     <div className="min-h-screen w-full relative">
