@@ -44,15 +44,14 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
           {/* QR Code */}
 
           <div className="flex items-center justify-center">
-            
+            <QRCodeSVG
+              value={wallet.address}
+              size={200}
+              level="H"
+              bgColor="#ffffff"
+              includeMargin={true}
+            />
           </div>
-          <QRCodeSVG
-            value={wallet.address}
-            size={200}
-            level="H"
-            bgColor="#ffffff"
-            includeMargin={true}
-          />
           <button
             onClick={onClose}
             className="w-fit py-3 px-6 bg-c-color text-white rounded-lg text-sm font-medium hover:bg-c-color/90 transition-colors"
