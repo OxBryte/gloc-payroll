@@ -5,16 +5,45 @@ const AddWalletModal = ({ isOpen, onClose, onAddWallet }) => {
   const [walletName, setWalletName] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
 
+  const generateDummyTransactions = (count = 3) => {
+    const types = ["sent", "received", "swap"];
+    const statuses = ["completed", "pending"];
+    const transactions = [];
+
+    for (let i = 0; i < count; i++) {
+      const type = types[Math.floor(Math.random() * types.length)];
+      const status = statuses[Math.floor(Math.random() * statuses.length)];
+      const amount = (Math.random() * 500 + 10).toFixed(2);
+      const date = new Date();
+      date.setDate(date.getDate() - Math.floor(Math.random() * 7));
+
+      transactions.push({
+        id: `tx_${Date.now()}_${i}`,
+        hash: `0x${Math.random().toString(16).substring(2, 66)}`,
+        type,
+        status,
+        amount: parseFloat(amount),
+        to: `0x${Math.random().toString(16).substring(2, 42)}`,
+        from: `0x${Math.random().toString(16).substring(2, 42)}`,
+        timestamp: date.toISOString(),
+        fee: (Math.random() * 3).toFixed(4),
+      });
+    }
+
+    return transactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (walletName.trim() && walletAddress.trim()) {
+      const initialBalance = Math.random() * 1000 + 50;
       onAddWallet({
         id: Date.now().toString(),
         name: walletName.trim(),
         address: walletAddress.trim(),
-        balance: 0,
+        balance: parseFloat(initialBalance.toFixed(2)),
         avatar: null,
-        transactions: [],
+        transactions: generateDummyTransactions(3),
         createdAt: new Date().toISOString(),
       });
       setWalletName("");
