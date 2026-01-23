@@ -157,14 +157,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
                 >
                   <MoreHorizontal className="w-4 h-4 text-gray-600" />
                 </button>
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  onChange={handleImageUpload}
-                  className="hidden"
-                />
-              
+               
               </div>
             </div>
 
