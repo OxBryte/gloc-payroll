@@ -58,7 +58,7 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
                 includeMargin={true}
               />
             </div>
-          </div>
+
 
           {/* Address with Copy Button */}
           <div className="space-y-2">
