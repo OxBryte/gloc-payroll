@@ -76,7 +76,7 @@ const WalletMenu = ({ onOptionSelect }) => {
           </button>
           <button
             onClick={() => handleMenuOption("export-wallet")}
-            className="w-full text-left px-4 py-2.5 text-sm text-white hover:bg-c-color/80 transition-colors border-t border-gray-100"
+            className="w-full text-left px-4 py-2.5 text-[14px] font-light text-white hover:bg-c-color/80 transition-colors border-t border-gray-100"
           >
             Export Wallet
           </button>
