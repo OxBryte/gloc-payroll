@@ -1,41 +1,28 @@
 import React, { useState, useRef } from "react";
 import { X, MoreHorizontal } from "lucide-react";
 
-// Popular emojis for wallet icons
-const POPULAR_EMOJIS = [
-  "💰", "💳", "💵", "💴", "💶", "💷", "💸", "💊", "💎", "🏦",
-  "🎯", "🚀", "⭐", "🌟", "💫", "🔥", "💪", "🎨", "🎭", "🎪",
-  "🏝️", "🌴", "🌊", "⛰️", "🏔️", "🌅", "🌄", "🌈", "☀️", "🌙",
-  "🦄", "🐉", "🦁", "🐯", "🐻", "🐼", "🐨", "🦊", "🐰", "🐶",
-  "🎮", "🎲", "🃏", "🎴", "🀄", "🎰", "🎸", "🎺", "🎻", "🎹",
-  "🍕", "🍔", "🍟", "🌮", "🌯", "🍜", "🍱", "🍣", "🍙", "🍘",
-  "⚽", "🏀", "🏈", "⚾", "🎾", "🏐", "🏉", "🎱", "🏓", "🏸",
-  "🚗", "🚕", "🚙", "🚌", "🚎", "🏎️", "🚓", "🚑", "🚒", "🚐",
-  "🎁", "🎀", "🎂", "🎃", "🎄", "🎅", "🤶", "🧑‍🎄", "🎆", "🎇"
-];
-
-// Background colors (20 major colors)
-const BACKGROUND_COLORS = [
-  "#FF6B9D", // Hot Pink
-  "#FF1493", // Deep Pink
-  "#DC143C", // Crimson
-  "#FF4500", // Orange Red
-  "#FF8C00", // Dark Orange
-  "#FFD700", // Gold
-  "#FFA500", // Orange
-  "#32CD32", // Lime Green
-  "#228B22", // Forest Green
-  "#00CED1", // Dark Turquoise
-  "#00BFFF", // Deep Sky Blue
-  "#4169E1", // Royal Blue
-  "#0000CD", // Medium Blue
-  "#9370DB", // Medium Slate Blue
-  "#BA55D3", // Medium Orchid
-  "#8B4513", // Saddle Brown
-  "#A0522D", // Sienna
-  "#708090", // Slate Gray
-  "#2F4F4F", // Dark Slate Gray
-  "#000000"  // Black
+// Background gradients (20 gradient options)
+const BACKGROUND_GRADIENTS = [
+  "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", // Purple to Purple
+  "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)", // Pink to Red
+  "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)", // Blue to Cyan
+  "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)", // Green to Teal
+  "linear-gradient(135deg, #fa709a 0%, #fee140 100%)", // Pink to Yellow
+  "linear-gradient(135deg, #30cfd0 0%, #330867 100%)", // Cyan to Purple
+  "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)", // Light Blue to Pink
+  "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)", // Pink to Light Pink
+  "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)", // Peach to Orange
+  "linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)", // Red to Dark Red
+  "linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%)", // Teal to Green
+  "linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%)", // Yellow to Orange
+  "linear-gradient(135deg, #81ecec 0%, #74b9ff 100%)", // Light Blue to Blue
+  "linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%)", // Light Purple to Purple
+  "linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%)", // Pink to Yellow
+  "linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%)", // Purple to Light Purple
+  "linear-gradient(135deg, #00b894 0%, #00cec9 100%)", // Green to Cyan
+  "linear-gradient(135deg, #e17055 0%, #d63031 100%)", // Orange to Red
+  "linear-gradient(135deg, #2d3436 0%, #636e72 100%)", // Dark Gray to Gray
+  "linear-gradient(135deg, #000000 0%, #434343 100%)"  // Black to Dark Gray
 ];
 
 const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
