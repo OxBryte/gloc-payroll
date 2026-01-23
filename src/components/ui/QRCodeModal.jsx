@@ -60,14 +60,13 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
             bgColor="#ffffff"
             includeMargin={true}
           />
+          <button
+            onClick={onClose}
+            className="w-fit py-3 px-6 bg-c-color text-white rounded-lg text-sm font-medium hover:bg-c-color/90 transition-colors"
+          >
+            Close
+          </button>
         </div>
-
-        <button
-          onClick={onClose}
-          className="w-fit py-3 px-6 bg-c-color text-white rounded-lg text-sm font-medium hover:bg-c-color/90 transition-colors"
-        >
-          Close
-        </button>
       </div>
     </div>
   );
