@@ -49,7 +49,7 @@ const WalletMenu = ({ onOptionSelect }) => {
             onClick={() => handleMenuOption("edit-name")}
             className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white hover:bg-c-color/80 transition-colors"
           >
-            <LuPen size={16} />
+            <LuPen size={14} />
             Edit Name
           </button>
           <button
