@@ -90,7 +90,7 @@ const WalletMenu = ({ onOptionSelect }) => {
           </button>
           <button
             onClick={() => handleMenuOption("export-wallet")}
-            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg cursor-pointer transition-colors"
+            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg cursor-pointer transition-colors cursor-pointer"
           >
             <LuDownload size={14} />
             Export Wallet
