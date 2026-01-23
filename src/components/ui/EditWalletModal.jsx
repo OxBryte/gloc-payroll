@@ -32,22 +32,6 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
 
-  // Close image picker when clicking outside
-  React.useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (imagePickerRef.current && !imagePickerRef.current.contains(event.target)) {
-        setShowImagePicker(false);
-      }
-    };
-
-    if (showImagePicker) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showImagePicker]);
 
   // Initialize form when wallet changes
   React.useEffect(() => {
