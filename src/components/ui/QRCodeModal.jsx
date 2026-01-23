@@ -51,7 +51,7 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
             bgColor="#ffffff"
             marginSize={5}
             imageSettings={{
-              src: "https://static.zpao.com/favicon.png",
+              src: "/gloc",
               x: undefined,
               y: undefined,
               height: 24,
