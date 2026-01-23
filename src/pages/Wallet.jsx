@@ -28,7 +28,17 @@ const Wallet = () => {
             </div>
           </div>
           <div className="border-b border-b-gray-100"></div>
-          
+          <div className="w-full px-4 py-3 flex gap-3 items-center justify-between">
+            <div className="flex gap-2 items-center">
+              <div className="w-12 h-12 rounded-full bg-c-color"></div>
+              <div className="space-y-0.5">
+                <p className="text-lg font-medium">John Doe</p>
+                <p className="text-xs text-gray-500">
+                  {truncateAddress(address)}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <BottomBar />
