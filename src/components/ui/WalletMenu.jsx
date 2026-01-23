@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { LuPen, LuUser } from "react-icons/lu";
+import { LuHistory, LuPen, LuUser } from "react-icons/lu";
 
 const WalletMenu = ({ onOptionSelect }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -63,6 +63,7 @@ const WalletMenu = ({ onOptionSelect }) => {
             onClick={() => handleMenuOption("transactions")}
             className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] rounded-lg transition-colors"
           >
+            <LuHistory size={14} />
             Transactions
           </button>
           <button
