@@ -28,29 +28,28 @@ const BACKGROUND_GRADIENTS = [
 const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
   const [walletName, setWalletName] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedEmoji, setSelectedEmoji] = useState(null);
-  const [selectedBgColor, setSelectedBgColor] = useState("#000000");
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedGradient, setSelectedGradient] = useState(BACKGROUND_GRADIENTS[0]);
+  const [showImagePicker, setShowImagePicker] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-  const emojiPickerRef = useRef(null);
+  const imagePickerRef = useRef(null);
 
-  // Close emoji picker when clicking outside
+  // Close image picker when clicking outside
   React.useEffect(() => {
     const handleClickOutside = (event) => {
-      if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target)) {
-        setShowEmojiPicker(false);
+      if (imagePickerRef.current && !imagePickerRef.current.contains(event.target)) {
+        setShowImagePicker(false);
       }
     };
 
-    if (showEmojiPicker) {
+    if (showImagePicker) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showEmojiPicker]);
+  }, [showImagePicker]);
 
   // Initialize form when wallet changes
   React.useEffect(() => {
