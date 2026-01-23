@@ -2,7 +2,7 @@ import React from "react";
 import { truncateAddress } from "../components/lib/utils";
 import BottomBar from "../components/layouts/BottomBar";
 import { useAccount } from "wagmi";
-import { ThreeDotsVertical } from "lucide-react";
+
 
 const Wallet = () => {
   // const { open } = useAppKit();
