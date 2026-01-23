@@ -57,10 +57,10 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
         </div>
         <div className="flex items-center justify-center">
           <button
-            onClick={handleCopyAddress}
+            onClick={onClose}
             className="w-fit py-3 px-6 bg-c-color text-white rounded-lg text-sm font-medium hover:bg-c-color/90 transition-colors"
           >
-            Copy Address
+            Close
           </button>
         </div>
         <button
