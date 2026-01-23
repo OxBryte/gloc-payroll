@@ -8,7 +8,7 @@ import WalletMenu from "../components/ui/WalletMenu";
 const Wallet = () => {
   // const { open } = useAppKit();
   // const { address, isConnected } = useAppKitAccount();
-  const { address } = useAccount();
+ const address = "0x1234567890123456789012345678901234567890";
 
   const handleMenuOption = (option) => {
     // Handle menu option actions here
