@@ -35,6 +35,8 @@ const Wallet = () => {
   
   const [editingWallet, setEditingWallet] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [qrCodeWallet, setQrCodeWallet] = useState(null);
+  const [showQRModal, setShowQRModal] = useState(false);
 
   const handleMenuOption = (option, walletId) => {
     // Handle menu option actions here
