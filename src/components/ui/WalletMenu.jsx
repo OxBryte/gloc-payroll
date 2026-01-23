@@ -61,35 +61,35 @@ const WalletMenu = ({ onOptionSelect }) => {
           </button>
           <button
             onClick={() => handleMenuOption("edit-picture")}
-            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg transition-colors"
+            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg cursor-pointer transition-colors"
           >
             <LuUser size={14} />
             Edit Picture
           </button>
           <button
             onClick={() => handleMenuOption("transactions")}
-            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg transition-colors"
+            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg cursor-pointer transition-colors"
           >
             <LuHistory size={14} />
             Transactions
           </button>
           <button
             onClick={() => handleMenuOption("copy-address")}
-            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg transition-colors"
+            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg cursor-pointer transition-colors"
           >
             <LuCopy size={14} />
             Copy Address
           </button>
           <button
             onClick={() => handleMenuOption("qr-code")}
-            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg transition-colors"
+            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg cursor-pointer transition-colors"
           >
             <LuQrCode size={14} />
             QR Code
           </button>
           <button
             onClick={() => handleMenuOption("export-wallet")}
-            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg transition-colors"
+            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg cursor-pointer transition-colors"
           >
             <LuDownload size={14} />
             Export Wallet
