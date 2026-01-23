@@ -2,6 +2,7 @@ import React from "react";
 // import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
 import { truncateAddress } from "../components/lib/utils";
 import BottomBar from "../components/layouts/BottomBar";
+import { useAccount } from "wagmi";
 
 const Wallet = () => {
   // const { open } = useAppKit();
