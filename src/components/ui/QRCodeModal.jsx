@@ -49,6 +49,7 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
             round={true}
             level="H"
             bgColor="#ffffff"
+            g
             marginSize={5}
             // imageSettings={{
             //   src: "/gloc-logo.svg",
