@@ -137,7 +137,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
             {/* Background Gradient Picker */}
             <div className="">
               <label className="text-sm font-medium text-gray-700 mb-3 block">
-                Select background color
+                Select background gradient
               </label>
               <div className="grid grid-cols-10 gap-2 w-fit">
                 {BACKGROUND_GRADIENTS.map((gradient, index) => (
