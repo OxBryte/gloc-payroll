@@ -58,12 +58,10 @@ const Wallet = () => {
 
         {/* New Wallet */}
         <div className="w-full space-y-4">
-
-        <div className="w-full bg-c-color text-white rounded-[20px] p-4 flex items-center justify-center gap-3 cursor-pointer hover:bg-c-color/80 hover:scale-98 transition-all duration-300">
-          <HiOutlinePlus size={20} className="" />
-          <p>Create New Wallet</p>
+          <div className="w-full bg-c-color text-white rounded-[20px] p-4 flex items-center justify-center gap-3 cursor-pointer hover:bg-c-color/80 hover:scale-98 transition-all duration-300">
+            <HiOutlinePlus size={20} className="" />
+            <p>Create New Wallet</p>
           </div>
-          
         </div>
       </div>
       <BottomBar />
