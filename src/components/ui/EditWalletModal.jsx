@@ -92,13 +92,6 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
     }
   };
 
-  const handleRemoveImage = () => {
-    setSelectedImage(null);
-    setImagePreview(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
 
   const handleSave = () => {
     if (!walletName.trim()) {
