@@ -63,14 +63,14 @@ includeMargin={true}
 
         </div>
 
-        {/* Footer */}
-        <div className="p-6 border-t border-gray-200">
           <button
             onClick={onClose}
             className="w-full py-3 px-6 bg-c-color text-white rounded-lg text-sm font-medium hover:bg-c-color/90 transition-colors"
           >
             Close
           </button>
+        {/* Footer */}
+        <div className="p-6 border-t border-gray-200">
         </div>
       </div>
     </div>
