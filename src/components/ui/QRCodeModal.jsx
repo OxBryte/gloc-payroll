@@ -49,7 +49,7 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
             round={true}
             level="H"
             bgColor="#ffffff"
-            includeMargin={true}
+            ={true}
           />
         </div>
         <button
