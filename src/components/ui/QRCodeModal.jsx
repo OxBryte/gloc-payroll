@@ -33,32 +33,31 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
       <div className="relative w-full max-w-md mx-auto overflow-hidden">
         {/* Content */}
 
-          {/* Wallet Info */}
-          <div className="text-center space-y-2">
-            <p className="text-lg font-medium text-gray-900">{wallet.name}</p>
-            <p className="text-sm text-gray-500">
-              {truncateAddress(wallet.address)}
-            </p>
-          </div>
-
-          {/* QR Code */}
-
-          <div className="flex items-center justify-center">
-            <QRCodeSVG
-              value={wallet.address}
-              size={200}
-              level="H"
-              bgColor="#ffffff"
-              includeMargin={true}
-            />
-          </div>
-          <button
-            onClick={onClose}
-            className="w-fit py-3 px-6 bg-c-color text-white rounded-lg text-sm font-medium hover:bg-c-color/90 transition-colors"
-          >
-            Close
-          </button>
+        {/* Wallet Info */}
+        <div className="text-center space-y-2">
+          <p className="text-lg font-medium text-gray-900">{wallet.name}</p>
+          <p className="text-sm text-gray-500">
+            {truncateAddress(wallet.address)}
+          </p>
         </div>
+
+        {/* QR Code */}
+
+        <div className="flex items-center justify-center">
+          <QRCodeSVG
+            value={wallet.address}
+            size={200}
+            level="H"
+            bgColor="#ffffff"
+            includeMargin={true}
+          />
+        </div>
+        <button
+          onClick={onClose}
+          className="w-fit py-3 px-6 bg-c-color text-white rounded-lg text-sm font-medium hover:bg-c-color/90 transition-colors"
+        >
+          Close
+        </button>
       </div>
     </div>
   );
