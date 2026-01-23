@@ -67,37 +67,47 @@ const Wallet = () => {
       </div>
       <div className="mt-10 w-full max-w-[480px] mx-auto relative space-y-6">
         <div className="w-full h-full bg-white rounded-[20px] border border-gray-100 py-2">
-          <div className="w-full px-4 py-3 flex gap-3 items-center justify-between">
-            <div className="flex gap-2 items-center">
-              <div className="w-10 h-10 rounded-full bg-c-color"></div>
-              <div className="space-y-0.5">
-                <p className="text-[16px] font-medium">John Doe</p>
-                <p className="text-[12px] text-gray-500">
-                  {truncateAddress(address)}
-                </p>
+          {wallets.map((wallet, index) => (
+            <div key={wallet.id}>
+              <div className="w-full px-4 py-3 flex gap-3 items-center justify-between">
+                <div className="flex gap-2 items-center">
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0"
+                    style={{ backgroundColor: wallet.bgColor }}
+                  >
+                    {wallet.image ? (
+                      <img
+                        src={wallet.image}
+                        alt={wallet.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : wallet.emoji ? (
+                      <span className="text-xl">{wallet.emoji}</span>
+                    ) : (
+                      <div className="w-full h-full bg-c-color"></div>
+                    )}
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-[16px] font-medium">{wallet.name}</p>
+                    <p className="text-[12px] text-gray-500">
+                      {truncateAddress(wallet.address)}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 relative">
+                  <p className="text-[18px] font-medium">
+                    ${wallet.balance.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </p>
+                  <WalletMenu
+                    onOptionSelect={(option) => handleMenuOption(option, wallet.id)}
+                  />
+                </div>
               </div>
+              {index < wallets.length - 1 && (
+                <div className="border-b border-b-gray-100"></div>
+              )}
             </div>
-            <div className="flex items-center gap-3 relative">
-              <p className="text-[18px] font-medium">$0.00</p>
-              <WalletMenu onOptionSelect={handleMenuOption} />
-            </div>
-          </div>
-          <div className="border-b border-b-gray-100"></div>
-          <div className="w-full px-4 py-3 flex gap-3 items-center justify-between">
-            <div className="flex gap-2 items-center">
-              <div className="w-10 h-10 rounded-full bg-c-color"></div>
-              <div className="space-y-0.5">
-                <p className="text-[16px] font-medium">John Doe</p>
-                <p className="text-[12px] text-gray-500">
-                  {truncateAddress(address)}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <p className="text-[18px] font-medium">$0.00</p>
-              <WalletMenu onOptionSelect={handleMenuOption} />
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* New Wallet */}
