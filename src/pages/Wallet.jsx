@@ -18,7 +18,7 @@ const Wallet = () => {
         <div className="w-full h-full bg-white rounded-lg border border-gray-100">
           <div className="w-full p-4 flex gap-3">
             <div className="flex gap-2 items-center">
-              <div className="w-10 h-12 rounded-full bg-c-color"></div>
+              <div className="w-12 h-12 rounded-full bg-c-color"></div>
               <div className="space-y-1">
                 <p className="text-lg font-medium">John Doe</p>
                 <p className="text-xs text-gray-500">0x1234567890</p>
