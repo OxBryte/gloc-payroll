@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, MoreHorizontal } from "lucide-react";
+import { X } from "lucide-react";
 
 // Background gradients (30 gradient options)
 const BACKGROUND_GRADIENTS = [
