@@ -71,7 +71,7 @@ const Wallet = () => {
                 <div className="flex gap-2 items-center">
                   <div
                     className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0"
-                    style={{ backgroundColor: wallet.bgColor }}
+                    style={{ background: wallet.gradient || "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" }}
                   >
                     {wallet.image ? (
                       <img
@@ -79,11 +79,7 @@ const Wallet = () => {
                         alt={wallet.name}
                         className="w-full h-full object-cover"
                       />
-                    ) : wallet.emoji ? (
-                      <span className="text-xl">{wallet.emoji}</span>
-                    ) : (
-                      <div className="w-full h-full bg-c-color"></div>
-                    )}
+                    ) : null}
                   </div>
                   <div className="space-y-0.5">
                     <p className="text-[16px] font-medium">{wallet.name}</p>
