@@ -54,7 +54,7 @@ const WalletMenu = ({ onOptionSelect }) => {
           </button>
           <button
             onClick={() => handleMenuOption("edit-picture")}
-            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white hover:bg-c-color/80 transition-colors"
+            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] rounded-lg transition-colors"
           >
             <LuUser size={14} />
             Edit Picture
