@@ -40,7 +40,6 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedGradient, setSelectedGradient] = useState(BACKGROUND_GRADIENTS[0]);
   const [imagePreview, setImagePreview] = useState(null);
-  const fileInputRef = useRef(null);
 
 
   // Initialize form when wallet changes
