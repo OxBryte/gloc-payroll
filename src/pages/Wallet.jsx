@@ -27,7 +27,7 @@ const Wallet = () => {
               </div>
             </div>
           </div>
-          <hr className="border-b border-b-gray-200" />
+          <div className="border-b border-b-gray-200" />
         </div>
       </div>
       <BottomBar />
