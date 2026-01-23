@@ -28,7 +28,6 @@ const BACKGROUND_COLORS = [
   "#8B4513", // Saddle Brown
   "#708090", // Slate Gray
   "#000000"  // Black
-  
 ];
 
 const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
