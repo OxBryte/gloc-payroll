@@ -57,7 +57,7 @@ const Wallet = () => {
         </div>
 
         {/* New Wallet */}
-        <div className="w-full h-full bg-c-color  rounded-[20px] p-4 flex items-center justify-center gap-3">
+        <div className="w-full h-full bg-c-color text-white rounded-[20px] p-4 flex items-center justify-center gap-3">
           <HiOutlinePlus size={20} className="" />
           <p>Create New Wallet</p>
         </div>
