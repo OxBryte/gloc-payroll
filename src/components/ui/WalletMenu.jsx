@@ -39,7 +39,7 @@ const WalletMenu = ({ onOptionSelect }) => {
     <div ref={menuRef} className="relative">
       <HiOutlineDotsVertical
         size={20}
-        className="text-gray-400 cursor-pointer hover"
+        className="text-gray-400 cursor-pointer hover:text-gray-600 transition-colors duration-300"
         onClick={handleMenuClick}
       />
       {showMenu && (
