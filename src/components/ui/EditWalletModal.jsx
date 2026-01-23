@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { X, MoreHorizontal } from "lucide-react";
 
 // Background gradients (30 gradient options)
@@ -57,7 +57,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
       setImagePreview(null);
     }
   }, [wallet]);
-  
+
   const handleSave = () => {
     if (!walletName.trim()) {
       alert("Please enter a wallet name");
