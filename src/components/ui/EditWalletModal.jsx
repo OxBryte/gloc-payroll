@@ -164,21 +164,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
                   onChange={handleImageUpload}
                   className="hidden"
                 />
-                {imagePreview && (
-                  <button
-                    onClick={() => {
-                      setSelectedImage(null);
-                      setImagePreview(null);
-                      if (fileInputRef.current) {
-                        fileInputRef.current.value = "";
-                      }
-                    }}
-                    className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
-                    title="Remove image"
-                  >
-                    ×
-                  </button>
-                )}
+              
               </div>
             </div>
 
