@@ -163,7 +163,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
         {/* Content */}
         <div className="p-6 space-y-6">
           {/* Wallet Icon Section */}
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex items-start justify-between w-full gap-4">
             {/* Wallet Icon Display */}
             <div className="relative">
               <div
