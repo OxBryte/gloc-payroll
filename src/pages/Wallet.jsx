@@ -45,6 +45,16 @@ const Wallet = () => {
         setEditingWallet(wallet);
         setShowEditModal(true);
       }
+    } else if (option === "copy-address") {
+      const wallet = wallets.find((w) => w.id === walletId);
+      if (wallet) {
+        navigator.clipboard.writeText(wallet.address).then(() => {
+          toast.success("Address copied to clipboard!");
+        }).catch((err) => {
+          console.error("Failed to copy address:", err);
+          toast.error("Failed to copy address");
+        });
+      }
     }
   };
 
