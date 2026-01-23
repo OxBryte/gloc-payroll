@@ -39,7 +39,7 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
+        <div className=" space-y-6">
           {/* Wallet Info */}
           <div className="text-center space-y-2">
             <p className="text-lg font-medium text-gray-900">{wallet.name}</p>
