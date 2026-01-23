@@ -115,8 +115,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
       ...wallet,
       name: walletName.trim(),
       image: selectedImage,
-      emoji: selectedEmoji,
-      bgColor: selectedBgColor,
+      gradient: selectedGradient,
     });
     onClose();
   };
