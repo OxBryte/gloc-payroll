@@ -45,7 +45,7 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
         <div className="flex items-center justify-center">
           <QRCodeSVG
             value={wallet.address}
-            size={200}
+            size={230}
             level="H"
             bgColor="#ffffff"
             includeMargin={true}
