@@ -14,16 +14,20 @@ const POPULAR_EMOJIS = [
   "🎁", "🎀", "🎂", "🎃", "🎄", "🎅", "🤶", "🧑‍🎄", "🎆", "🎇"
 ];
 
-// Background colors (24 colors as shown in the image)
+// Background colors (12 major colors)
 const BACKGROUND_COLORS = [
-  "#FF6B9D", "#FFB6C1", "#FFC0CB", "#FF69B4", "#FF1493", "#C71585",
-  "#87CEEB", "#B0E0E6", "#ADD8E6", "#00CED1", "#48D1CC", "#40E0D0",
-  "#9370DB", "#BA55D3", "#DA70D6", "#DDA0DD", "#EE82EE", "#FF00FF",
-  "#90EE90", "#98FB98", "#00FF00", "#32CD32", "#228B22", "#006400",
-  "#FFD700", "#FFA500", "#FF8C00", "#FF7F50", "#FF6347", "#FF4500",
-  "#DC143C", "#B22222", "#8B0000", "#800000", "#A52A2A", "#CD5C5C",
-  "#F4A460", "#D2B48C", "#DEB887", "#BC8F8F", "#A0522D", "#8B4513",
-  "#2F4F4F", "#708090", "#778899", "#4682B4", "#4169E1", "#0000CD"
+  "#FF6B9D", // Hot Pink
+  "#DC143C", // Crimson
+  "#4169E1", // Royal Blue
+  "#00CED1", // Dark Turquoise
+  "#9370DB", // Medium Slate Blue
+  "#32CD32", // Lime Green
+  "#228B22", // Forest Green
+  "#FFD700", // Gold
+  "#FF8C00", // Dark Orange
+  "#8B4513", // Saddle Brown
+  "#708090", // Slate Gray
+  "#000000"  // Black
 ];
 
 const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
