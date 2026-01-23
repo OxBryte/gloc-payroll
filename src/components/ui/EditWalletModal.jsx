@@ -27,12 +27,12 @@ const BACKGROUND_COLORS = [
 ];
 
 const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
-  const [walletName, setWalletName] = useState(wallet?.name || "");
-  const [selectedImage, setSelectedImage] = useState(wallet?.image || null);
-  const [selectedEmoji, setSelectedEmoji] = useState(wallet?.emoji || null);
-  const [selectedBgColor, setSelectedBgColor] = useState(wallet?.bgColor || "#000000");
+  const [walletName, setWalletName] = useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedEmoji, setSelectedEmoji] = useState(null);
+  const [selectedBgColor, setSelectedBgColor] = useState("#000000");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [imagePreview, setImagePreview] = useState(wallet?.image || null);
+  const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
   const emojiPickerRef = useRef(null);
 
