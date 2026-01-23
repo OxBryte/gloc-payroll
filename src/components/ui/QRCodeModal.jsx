@@ -61,10 +61,6 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
 includeMargin={true}
           />
 
-          {/* Info Text */}
-          <p className="text-xs text-gray-500 text-center">
-            Scan this QR code to receive payments to this wallet address
-          </p>
         </div>
 
         {/* Footer */}
