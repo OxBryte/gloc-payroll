@@ -19,7 +19,9 @@ const Wallet = () => {
           <div className="w-full p-4 flex gap-3">
             <div className="flex gap-2 items-center">
             <div className="w-10 h-10 rounded-full bg-c-color"></div>
-
+              <div className="space-y-2">
+                
+</div>
             </div>
           </div>
         </div>
