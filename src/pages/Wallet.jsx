@@ -67,7 +67,6 @@ const initialWallets = [
 ];
 
 const Wallet = () => {
-  const { address } = useAccount();
   const [wallets, setWallets] = useState(initialWallets);
   const [expandedWallets, setExpandedWallets] = useState({});
   const [showAddModal, setShowAddModal] = useState(false);
