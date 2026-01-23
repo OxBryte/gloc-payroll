@@ -19,8 +19,7 @@ const Wallet = () => {
       address: address,
       balance: 0,
       image: null,
-      emoji: null,
-      bgColor: "#000000",
+      gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     },
     {
       id: "2",
@@ -28,8 +27,7 @@ const Wallet = () => {
       address: address,
       balance: 0,
       image: null,
-      emoji: null,
-      bgColor: "#000000",
+      gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
     },
   ]);
   
