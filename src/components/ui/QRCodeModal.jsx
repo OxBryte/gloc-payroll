@@ -5,20 +5,6 @@ import { truncateAddress } from "../lib/utils";
 import toast from "react-hot-toast";
 
 const QRCodeModal = ({ isOpen, onClose, wallet }) => {
-  const handleCopyAddress = () => {
-    if (wallet?.address) {
-      navigator.clipboard
-        .writeText(wallet.address)
-        .then(() => {
-          toast.success("Address copied to clipboard!");
-        })
-        .catch((err) => {
-          console.error("Failed to copy address:", err);
-          toast.error("Failed to copy address");
-        });
-    }
-  };
-
   if (!isOpen || !wallet) return null;
 
   return (
