@@ -31,7 +31,6 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
   const [selectedGradient, setSelectedGradient] = useState(BACKGROUND_GRADIENTS[0]);
   const [showImagePicker, setShowImagePicker] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-  const fileInputRef = useRef(null);
   const imagePickerRef = useRef(null);
 
   // Close image picker when clicking outside
