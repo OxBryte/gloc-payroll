@@ -43,7 +43,7 @@ const WalletMenu = ({ onOptionSelect }) => {
         onClick={handleMenuClick}
       />
       {showMenu && (
-        <div className="absolute right-0 top-8 z-50 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+        <div className="absolute right-0 top-8 z-50 w-48 bg-c-bg border border-gray-200 rounded-lg shadow-lg overflow-hidden">
           <button
             onClick={() => handleMenuOption("edit-name")}
             className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
