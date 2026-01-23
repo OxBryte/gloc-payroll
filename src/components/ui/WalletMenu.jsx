@@ -7,7 +7,6 @@ import {
   LuPen,
   LuQrCode,
   LuArrowUpRight,
-  LuSend,
 } from "react-icons/lu";
 
 const WalletMenu = ({ onOptionSelect }) => {
