@@ -16,7 +16,7 @@ const Wallet = () => {
       </div>
       <div className="mt-10 w-full max-w-[560px] mx-auto relative">
         <div className="w-full h-full bg-white rounded-lg border border-gray-100">
-          .p-
+          .p-4
         </div>
       </div>
       <BottomBar />
