@@ -29,9 +29,8 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
   const [walletName, setWalletName] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedGradient, setSelectedGradient] = useState(BACKGROUND_GRADIENTS[0]);
-  const [showImagePicker, setShowImagePicker] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-  const imagePickerRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   // Close image picker when clicking outside
   React.useEffect(() => {
