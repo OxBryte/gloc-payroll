@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { LuHistory, LuPen, LuUser } from "react-icons/lu";
 import { LuCopy } from "react-icons/lu";
+import { LuQrCode } from "react-icons/lu";
 
 const WalletMenu = ({ onOptionSelect }) => {
   const [showMenu, setShowMenu] = useState(false);
@@ -78,6 +79,7 @@ const WalletMenu = ({ onOptionSelect }) => {
             onClick={() => handleMenuOption("qr-code")}
             className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] rounded-lg transition-colors"
           >
+            <LuQrCode size={14} />
             QR Code
           </button>
           <button
