@@ -23,6 +23,7 @@ const Wallet = () => {
                 <p className="text-sm font-medium">John Doe</p>
                 <p className="text-xs text-gray-500">0x1234567890</p>
               </div>
+              </div>
 </div>
             </div>
           </div>
