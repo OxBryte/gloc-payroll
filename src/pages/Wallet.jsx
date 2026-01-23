@@ -55,6 +55,8 @@ const Wallet = () => {
             </div>
           </div>
         </div>
+
+        
       </div>
       <BottomBar />
     </div>
