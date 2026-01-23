@@ -57,7 +57,7 @@ const Wallet = () => {
         </div>
 
         {/* New Wallet */}
-        <div className="w-full h-full bg-white rounded-[20px] border border-gray-100 p-4">
+        <div className="w-full h-full bg-white rounded-[20px] border border-gray-100 p-4 fle">
          
         </div>
       </div>
