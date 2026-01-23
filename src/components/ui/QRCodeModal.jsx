@@ -35,7 +35,7 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
 
         {/* Wallet Info */}
         <div className="text-center space-y-2">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-white">
             {truncateAddress(wallet.address)}
           </p>
         </div>
