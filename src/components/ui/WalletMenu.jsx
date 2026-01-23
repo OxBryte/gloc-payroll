@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import { LuPen } from "react-icons/lu";
 
 const WalletMenu = ({ onOptionSelect }) => {
   const [showMenu, setShowMenu] = useState(false);
