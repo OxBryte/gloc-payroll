@@ -118,6 +118,11 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
       return;
     }
 
+    if (!wallet) {
+      console.error("No wallet provided to edit");
+      return;
+    }
+
     onSave({
       ...wallet,
       name: walletName.trim(),
@@ -128,7 +133,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
     onClose();
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || !wallet) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
