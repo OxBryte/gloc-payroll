@@ -31,16 +31,6 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
 
       {/* Modal */}
       <div className="relative w-full max-w-md overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between p-6">
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-gray-800 rounded-lg transition-colors cursor-pointer"
-          >
-            <X className="w-5 h-5 text-white" />
-          </button>
-        </div>
-
         {/* Content */}
         <div className=" space-y-6">
           {/* Wallet Info */}
