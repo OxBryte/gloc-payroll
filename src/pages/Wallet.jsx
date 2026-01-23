@@ -119,6 +119,20 @@ const Wallet = () => {
           {/* <p>Import Wallet</p> */}
         </div>
       </div>
+
+      {/* Edit Wallet Modal */}
+      {editingWallet && (
+        <EditWalletModal
+          isOpen={showEditModal}
+          onClose={() => {
+            setShowEditModal(false);
+            setEditingWallet(null);
+          }}
+          wallet={editingWallet}
+          onSave={handleSaveWallet}
+        />
+      )}
+
       <BottomBar />
     </div>
   );
