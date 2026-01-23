@@ -6,7 +6,7 @@ import BottomBar from "../components/layouts/BottomBar";
 const Wallet = () => {
   // const { open } = useAppKit();
   // const { address, isConnected } = useAppKitAccount();
-
+  const { address } = useAccount();
   return (
     <div className="min-h-screen w-full relative">
       <div className="w-full border-b border-b-gray-200 p-4 sticky top-0 z-10">
