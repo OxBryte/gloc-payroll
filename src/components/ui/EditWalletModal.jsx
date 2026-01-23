@@ -218,23 +218,23 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
               </div>
             </div>
 
-            {/* Background Color Picker */}
+            {/* Background Gradient Picker */}
             <div className="">
               <label className="text-sm font-medium text-gray-700 mb-3 block">
-                Background Color
+                Background Gradient
               </label>
               <div className="grid grid-cols-5 gap-2 w-fit">
-                {BACKGROUND_COLORS.map((color, index) => (
+                {BACKGROUND_GRADIENTS.map((gradient, index) => (
                   <button
                     key={index}
-                    onClick={() => setSelectedBgColor(color)}
+                    onClick={() => setSelectedGradient(gradient)}
                     className={`w-8 h-8 rounded-full transition-all ${
-                      selectedBgColor === color
+                      selectedGradient === gradient
                         ? "ring-2 ring-gray-900 ring-offset-2"
                         : "hover:scale-110"
                     }`}
-                    style={{ backgroundColor: color }}
-                    title={color}
+                    style={{ background: gradient }}
+                    title={`Gradient ${index + 1}`}
                   />
                 ))}
               </div>
