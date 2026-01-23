@@ -56,15 +56,13 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
     if (wallet) {
       setWalletName(wallet.name || "");
       setSelectedImage(wallet.image || null);
-      setSelectedEmoji(wallet.emoji || null);
-      setSelectedBgColor(wallet.bgColor || "#000000");
+      setSelectedGradient(wallet.gradient || BACKGROUND_GRADIENTS[0]);
       setImagePreview(wallet.image || null);
     } else {
       // Reset form when wallet is null
       setWalletName("");
       setSelectedImage(null);
-      setSelectedEmoji(null);
-      setSelectedBgColor("#000000");
+      setSelectedGradient(BACKGROUND_GRADIENTS[0]);
       setImagePreview(null);
     }
   }, [wallet]);
