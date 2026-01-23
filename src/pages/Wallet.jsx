@@ -2,7 +2,7 @@ import React from "react";
 import { truncateAddress } from "../components/lib/utils";
 import BottomBar from "../components/layouts/BottomBar";
 import { useAccount } from "wagmi";
-import { HiOutlineDotVertical } from "react-icons/hi";
+import { HiOutlineDotsVertical } from "react-icons/hi";
 
 const Wallet = () => {
   // const { open } = useAppKit();
@@ -29,7 +29,7 @@ const Wallet = () => {
             </div>
             <div className="flex items-center gap-3">
               <p className="text-[18px] font-medium">$0.00</p>
-              <HiOutlineDotVertical />
+              <HiOutlineDotsVertical />
             </div>
           </div>
           <div className="border-b border-b-gray-100"></div>
