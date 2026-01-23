@@ -139,7 +139,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
               <label className="text-sm font-medium text-gray-700 mb-3 block">
                 Background Gradient
               </label>
-              <div className="grid grid-cols-6 gap-2 w-fit">
+              <div className="grid grid-cols-10 gap-2 w-fit">
                 {BACKGROUND_GRADIENTS.map((gradient, index) => (
                   <button
                     key={index}
