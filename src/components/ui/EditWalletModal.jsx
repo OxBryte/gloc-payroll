@@ -103,7 +103,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-4">
           {/* Wallet Name Input */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700 block">
