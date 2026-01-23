@@ -3,7 +3,6 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import {
   LuCopy,
   LuDownload,
-  LuHistory,
   LuPen,
   LuQrCode,
   LuArrowUpRight,
