@@ -32,7 +32,7 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
         <div className="flex items-center justify-between p-6">
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
+            className="p-2 hover:bg-gray-800 rounded-lg transition-colors cursor-pointer"
           >
             <X className="w-5 h-5 text-white" />
           </button>
