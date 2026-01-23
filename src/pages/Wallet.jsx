@@ -27,7 +27,7 @@ const Wallet = () => {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <p className="text-[12px] ">Wallet</p>
+              <p className="text-[12px]">Wallet</p>
             </div>
           </div>
           <div className="border-b border-b-gray-100"></div>
