@@ -50,15 +50,15 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
             bgColor="#ffffff"
             level="L"
             marginSize={5}
-            imageSettings={{
-              src: "/gloc-logo.svg",
-              x: undefined,
-              y: undefined,
-              height: 40,
-              width: 40,
-              opacity: 1,
-              excavate: true,
-            }}
+            // imageSettings={{
+            //   src: "/gloc-logo.svg",
+            //   x: undefined,
+            //   y: undefined,
+            //   height: 40,
+            //   width: 40,
+            //   opacity: 1,
+            //   excavate: true,
+            // }}
           />
         </div>
         <button
