@@ -1,6 +1,6 @@
 import React from "react";
 // import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
-// import { truncateAddress } from "../components/lib/utils";
+import { truncateAddress } from "../components/lib/utils";
 import BottomBar from "../components/layouts/BottomBar";
 
 const Wallet = () => {
