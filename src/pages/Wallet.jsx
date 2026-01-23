@@ -147,6 +147,18 @@ const Wallet = () => {
         />
       )}
 
+      {/* QR Code Modal */}
+      {qrCodeWallet && (
+        <QRCodeModal
+          isOpen={showQRModal}
+          onClose={() => {
+            setShowQRModal(false);
+            setQrCodeWallet(null);
+          }}
+          wallet={qrCodeWallet}
+        />
+      )}
+
       <BottomBar />
     </div>
   );
