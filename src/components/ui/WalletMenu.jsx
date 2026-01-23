@@ -7,6 +7,7 @@ import {
   LuPen,
   LuQrCode,
   LuArrowUpRight,
+  LuSend,
 } from "react-icons/lu";
 
 const WalletMenu = ({ onOptionSelect }) => {
@@ -70,7 +71,7 @@ const WalletMenu = ({ onOptionSelect }) => {
             onClick={() => handleMenuOption("transactions")}
             className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg cursor-pointer transition-colors"
           >
-            <LuHistory size={14} />
+            <LuSend size={14} />
             Transactions
           </button>
           <button
