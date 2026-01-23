@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { truncateAddress } from "../components/lib/utils";
 import BottomBar from "../components/layouts/BottomBar";
 import { useAccount } from "wagmi";
-import { HiOutlineDotsVertical, HiOutlinePlus } from "react-icons/hi";
+import { HiOutlinePlus } from "react-icons/hi";
+import WalletMenu from "../components/ui/WalletMenu";
 
 const Wallet = () => {
   // const { open } = useAppKit();
