@@ -58,6 +58,12 @@ const Wallet = () => {
           toast.error("Failed to copy address");
         });
       }
+    } else if (option === "qr-code") {
+      const wallet = wallets.find((w) => w.id === walletId);
+      if (wallet) {
+        setQrCodeWallet(wallet);
+        setShowQRModal(true);
+      }
     }
   };
 
