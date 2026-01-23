@@ -7,12 +7,15 @@ import toast from "react-hot-toast";
 const QRCodeModal = ({ isOpen, onClose, wallet }) => {
   const handleCopyAddress = () => {
     if (wallet?.address) {
-      navigator.clipboard.writeText(wallet.address).then(() => {
-        toast.success("Address copied to clipboard!");
-      }).catch((err) => {
-        console.error("Failed to copy address:", err);
-        toast.error("Failed to copy address");
-      });
+      navigator.clipboard
+        .writeText(wallet.address)
+        .then(() => {
+          toast.success("Address copied to clipboard!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy address:", err);
+          toast.error("Failed to copy address");
+        });
     }
   };
 
@@ -50,15 +53,12 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
 
           {/* QR Code */}
 
-
-              <QRCodeSVG
-                value={wallet.address}
-                size={200}
-                level="H"
-                includeMargin={true}
-              />
-
-
+          <QRCodeSVG
+            value={wallet.address}
+            size={200}
+            level="H"
+            includeMargin={true}
+          />
 
           {/* Address with Copy Button */}
           <div className="space-y-2">
