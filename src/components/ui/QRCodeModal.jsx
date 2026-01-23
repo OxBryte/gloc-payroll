@@ -1,5 +1,4 @@
 import React from "react";
-import { X, Copy } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { truncateAddress } from "../lib/utils";
 
