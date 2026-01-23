@@ -30,7 +30,7 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-md mx-auto overflow-hidden space-y-6 l">
+      <div className="relative w-full max-w-md mx-auto overflow-hidden space-y-6 place">
         {/* Content */}
 
         {/* Wallet Info */}
