@@ -182,23 +182,17 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
               {/* Options Button */}
               <div className="relative mt-2">
                 <button
-                  onClick={() => {
-                    if (imagePreview) {
-                      handleRemoveImage();
-                    } else {
-                      setShowEmojiPicker(!showEmojiPicker);
-                    }
-                  }}
+                  onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                   className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
                 >
                   <MoreHorizontal className="w-4 h-4 text-gray-600" />
                 </button>
 
                 {/* Emoji/Image Picker Dropdown */}
-                {showEmojiPicker && !imagePreview && (
+                {showEmojiPicker && (
                   <div
                     ref={emojiPickerRef}
-                    className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10 w-64 max-h-64 overflow-y-auto"
+                    className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-10 w-64 max-h-80 overflow-y-auto"
                   >
                     <div className="space-y-3">
                       <div>
@@ -213,22 +207,41 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
                           className="hidden"
                         />
                         <button
-                          onClick={() => fileInputRef.current?.click()}
+                          onClick={() => {
+                            fileInputRef.current?.click();
+                            setShowEmojiPicker(false);
+                          }}
                           className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                         >
                           Choose Image
                         </button>
                       </div>
+                      {imagePreview && (
+                        <button
+                          onClick={() => {
+                            handleRemoveImage();
+                            setShowEmojiPicker(false);
+                          }}
+                          className="w-full px-3 py-2 text-sm border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                        >
+                          Remove Image
+                        </button>
+                      )}
                       <div>
                         <label className="text-xs font-medium text-gray-700 mb-2 block">
                           Select Emoji
                         </label>
-                        <div className="grid grid-cols-8 gap-1">
+                        <div className="grid grid-cols-8 gap-1 max-h-40 overflow-y-auto">
                           {POPULAR_EMOJIS.map((emoji, index) => (
                             <button
                               key={index}
-                              onClick={() => handleEmojiSelect(emoji)}
-                              className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded transition-colors text-xl"
+                              onClick={() => {
+                                handleEmojiSelect(emoji);
+                                setShowEmojiPicker(false);
+                              }}
+                              className={`w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded transition-colors text-xl ${
+                                selectedEmoji === emoji ? "bg-c-color/20 ring-2 ring-c-color" : ""
+                              }`}
                             >
                               {emoji}
                             </button>
