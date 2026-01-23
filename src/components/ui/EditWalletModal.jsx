@@ -14,19 +14,27 @@ const POPULAR_EMOJIS = [
   "🎁", "🎀", "🎂", "🎃", "🎄", "🎅", "🤶", "🧑‍🎄", "🎆", "🎇"
 ];
 
-// Background colors (12 major colors)
+// Background colors (20 major colors)
 const BACKGROUND_COLORS = [
   "#FF6B9D", // Hot Pink
+  "#FF1493", // Deep Pink
   "#DC143C", // Crimson
-  "#4169E1", // Royal Blue
-  "#00CED1", // Dark Turquoise
-  "#9370DB", // Medium Slate Blue
+  "#FF4500", // Orange Red
+  "#FF8C00", // Dark Orange
+  "#FFD700", // Gold
+  "#FFA500", // Orange
   "#32CD32", // Lime Green
   "#228B22", // Forest Green
-  "#FFD700", // Gold
-  "#FF8C00", // Dark Orange
+  "#00CED1", // Dark Turquoise
+  "#00BFFF", // Deep Sky Blue
+  "#4169E1", // Royal Blue
+  "#0000CD", // Medium Blue
+  "#9370DB", // Medium Slate Blue
+  "#BA55D3", // Medium Orchid
   "#8B4513", // Saddle Brown
+  "#A0522D", // Sienna
   "#708090", // Slate Gray
+  "#2F4F4F", // Dark Slate Gray
   "#000000"  // Black
 ];
 
