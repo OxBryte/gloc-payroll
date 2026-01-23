@@ -61,28 +61,6 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
 includeMargin={true}
           />
 
-          {/* Address with Copy Button */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">
-              Wallet Address
-            </label>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={wallet.address}
-                readOnly
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-sm font-mono"
-              />
-              <button
-                onClick={handleCopyAddress}
-                className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                title="Copy address"
-              >
-                <Copy className="w-5 h-5 text-gray-600" />
-              </button>
-            </div>
-          </div>
-
           {/* Info Text */}
           <p className="text-xs text-gray-500 text-center">
             Scan this QR code to receive payments to this wallet address
