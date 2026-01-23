@@ -54,8 +54,8 @@ const QRCodeModal = ({ isOpen, onClose, wallet }) => {
               src: "/gloc-logo.svg",
               x: undefined,
               y: undefined,
-              height: 24,
-              width: 24,
+              height: 40,
+              width: 40,
               opacity: 1,
               excavate: true,
             }}
