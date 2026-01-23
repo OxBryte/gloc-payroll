@@ -51,10 +51,7 @@ const Wallet = () => {
             </div>
             <div className="flex items-center gap-3">
               <p className="text-[18px] font-medium">$0.00</p>
-              <HiOutlineDotsVertical
-                size={20}
-                className="text-gray-400 cursor-pointer"
-              />
+              <WalletMenu onOptionSelect={handleMenuOption} />
             </div>
           </div>
         </div>
