@@ -263,7 +263,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
               <label className="text-sm font-medium text-gray-700 mb-3 block">
                 Background Color
               </label>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-4 gap-2 w-fit">
                 {BACKGROUND_COLORS.map((color, index) => (
                   <button
                     key={index}
