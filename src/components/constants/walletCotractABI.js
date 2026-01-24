@@ -1,1 +1,1 @@
-expo
+export const walletContractABI = 
