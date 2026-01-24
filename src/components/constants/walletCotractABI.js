@@ -1,1 +1,1 @@
-export const walletContractABI = 
+export const walletContractABI = 0x6c3989c17d2aa86dd93a84337b8aab6f2747b595;
