@@ -6,6 +6,7 @@ import { HiOutlinePlus } from "react-icons/hi";
 import WalletMenu from "../components/ui/WalletMenu";
 import EditWalletModal from "../components/ui/EditWalletModal";
 import QRCodeModal from "../components/ui/QRCodeModal";
+import SendModal from "../components/ui/SendModal";
 import toast from "react-hot-toast";
 
 const Wallet = () => {
@@ -37,6 +38,8 @@ const Wallet = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [qrCodeWallet, setQrCodeWallet] = useState(null);
   const [showQRModal, setShowQRModal] = useState(false);
+  const [sendWallet, setSendWallet] = useState(null);
+  const [showSendModal, setShowSendModal] = useState(false);
 
   const handleMenuOption = (option, walletId) => {
     // Handle menu option actions here
@@ -63,6 +66,12 @@ const Wallet = () => {
       if (wallet) {
         setQrCodeWallet(wallet);
         setShowQRModal(true);
+      }
+    } else if (option === "send") {
+      const wallet = wallets.find((w) => w.id === walletId);
+      if (wallet) {
+        setSendWallet(wallet);
+        setShowSendModal(true);
       }
     }
   };
