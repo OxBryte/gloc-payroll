@@ -168,7 +168,17 @@ const Wallet = () => {
         />
       )}
 
-      
+      {/* Send Modal */}
+      {showSendModal && (
+        <SendModal
+          isOpen={showSendModal}
+          onClose={() => {
+            setShowSendModal(false);
+            setSendWallet(null);
+          }}
+          wallet={sendWallet}
+        />
+      )}
 
       <BottomBar />
     </div>
