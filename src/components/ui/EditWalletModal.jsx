@@ -104,16 +104,7 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
 
         {/* Content */}
         <div className="p-6 space-y-4">
-          {/* Wallet Name Input */}
-          <div className="space-y-2">
-            <input
-              type="text"
-              placeholder="Enter wallet name"
-              value={walletName}
-              onChange={(e) => setWalletName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent outline-none"
-            />
-          </div>
+          
           {/* Wallet Icon Section */}
           <div className="flex flex-col items-center justify-between w-full gap-4">
             {/* Wallet Icon Display */}
