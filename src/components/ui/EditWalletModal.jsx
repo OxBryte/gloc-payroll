@@ -104,7 +104,6 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
 
         {/* Content */}
         <div className="p-6 space-y-4">
-          
           {/* Wallet Icon Section */}
           <div className="flex flex-col items-center justify-between w-full gap-4">
             {/* Wallet Icon Display */}
