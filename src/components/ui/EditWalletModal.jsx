@@ -146,6 +146,16 @@ const EditWalletModal = ({ isOpen, onClose, wallet, onSave }) => {
               </div>
             </div>
           </div>
+          {/* Wallet Name Input */}
+          <div className="space-y-2">
+            <input
+              type="text"
+              placeholder="Enter wallet name"
+              value={walletName}
+              onChange={(e) => setWalletName(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent outline-none"
+            />
+          </div>
         </div>
 
         {/* Footer */}
