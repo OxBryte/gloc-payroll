@@ -168,6 +168,8 @@ const Wallet = () => {
         />
       )}
 
+      
+
       <BottomBar />
     </div>
   );
