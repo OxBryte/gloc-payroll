@@ -1,1 +1,1 @@
-export const walletContractABI = 
+export const walletContractABI = []
