@@ -1,3 +1,4 @@
+
 export const walletContractABI = [
   {
     anonymous: false,
