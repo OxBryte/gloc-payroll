@@ -1,4 +1,4 @@
-export const walletContractAddress = "";
+export const walletContractAddress = "0xEF32bEb498E1BD4eE9862384cf07a0Baa174A084";
 export const walletContractABI = [
   {
     anonymous: false,
