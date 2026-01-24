@@ -11,7 +11,7 @@ A modern, decentralized payroll management system built with React, enabling sea
 | **Network**            | Base Mainnet                                                                             |
 | **Payroll Contract**   | `0x69b04e89dF5B1dD7Bed665D3B1009F7AF563a171`                                             |
 | **Pocket Contract**    | `0x451d13908B0C8bfA8492f4bf5f2b34fC2a82edF9`                                             |
-| **Wallet Contract**      | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`                                             |
+| **Wallet Contract**      | `0xEF32bEb498E1BD4eE9862384cf07a0Baa174A084`                                             |
 | **USDC Contract**      | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`                                             |
 | **Website**            | [https://gloc.pro](https://gloc.pro)                                                     |
 | **BaseScan (Payroll)** | [View Contract](https://basescan.org/address/0x69b04e89dF5B1dD7Bed665D3B1009F7AF563a171) |
