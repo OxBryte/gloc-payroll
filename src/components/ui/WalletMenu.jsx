@@ -60,7 +60,13 @@ const WalletMenu = ({ onOptionSelect }) => {
             <LuPen size={14} />
             Edit Wallet
           </button>
-        in
+          <button
+            onClick={() => handleMenuOption("edit-picture")}
+            className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg cursor-pointer transition-colors cursor-pointer"
+          >
+            <LuSend size={14} />
+            Send
+          </button>
           <button
             onClick={() => handleMenuOption("transactions")}
             className="w-full text-left px-2.5 py-1.5 flex items-center gap-2 text-[14px] font-light text-white/80 hover:bg-[#1F1F1F] hover:text-white rounded-lg cursor-pointer transition-colors cursor-pointer"
