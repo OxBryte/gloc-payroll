@@ -117,3 +117,36 @@ export async function getWalletBalance(walletId) {
     );
   }
 }
+
+/**
+ * Update wallet details
+ * PUT /wallet/{id}
+ */
+export async function updateWallet(walletId, body) {
+  try {
+    const token = getCookie("token");
+
+    // Check if body is FormData (for file uploads)
+    const isFormData = body instanceof FormData;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    // Only set Content-Type for non-FormData requests
+    // FormData sets its own Content-Type with boundary
+    if (!isFormData) {
+      config.headers["Content-Type"] = "application/json";
+    }
+
+    const { data } = await axios.put(`${apiURL}wallet/${walletId}`, body, config);
+    return data;
+  } catch (error) {
+    console.error("Error updating wallet:", error);
+    throw new Error(
+      error.response?.data?.message || "An error occurred while updating wallet"
+    );
+  }
+}
