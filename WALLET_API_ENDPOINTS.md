@@ -248,6 +248,71 @@ Authorization: Bearer <token>
 
 ---
 
+### 6. Update Wallet
+
+**PUT** `/wallet/{id}`
+
+**Description:** Update wallet details (name, image, gradient)
+
+**Headers:**
+- `Authorization: Bearer <token>` (required)
+- `Content-Type: application/json` (or `multipart/form-data` if uploading image)
+
+**Parameters:**
+- `id` (path parameter) - Wallet ID
+
+**Request Body:**
+
+```json
+{
+  "name": "string (optional) - Wallet name",
+  "image": "string (optional) - Image URL or base64. Set to null to remove image",
+  "gradient": "string (optional) - CSS gradient string"
+}
+```
+
+**Note:** All fields are optional. Only include the fields you want to update. To remove an image, set `image` to `null`.
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "message": "Wallet updated successfully",
+  "data": {
+    "_id": "string",
+    "userId": "string",
+    "name": "string",
+    "address": "string",
+    "balance": 0,
+    "image": "string | null",
+    "gradient": "string",
+    "createdAt": "2024-01-15T00:00:00.000Z",
+    "updatedAt": "2024-01-15T00:00:00.000Z"
+  }
+}
+```
+
+**Status Codes:**
+- `200` - Updated successfully
+- `400` - Validation error (invalid field values, etc.)
+- `401` - Unauthorized (invalid or missing token)
+- `404` - Wallet not found
+- `403` - Forbidden (wallet belongs to another user)
+- `500` - Server error
+
+**Validation Rules:**
+- `name`: Optional, string, min 1 character, max 100 characters (if provided)
+- `image`: Optional, string (URL or base64) or null to remove
+- `gradient`: Optional, string (CSS gradient)
+- **Note:** The `address` field cannot be updated for security reasons
+
+**Security Note:**
+- Ensure the wallet belongs to the authenticated user before allowing updates
+- Do not allow updating the wallet address (security risk)
+
+---
+
 ## Data Models
 
 ### Wallet Schema
