@@ -23,6 +23,7 @@ const data = [
     name: "Jobs (coming soon)",
     icon: <Briefcase size={22} />,
     link: "/jobs",
+    disabled: true,
   },
 ];
 
@@ -32,6 +33,7 @@ const data2 = [
     name: "Subscription ",
     icon: <LuHandshake size={22} />,
     link: "/subscription",
+    disabled: true,
   },
   {
     id: 2,
@@ -63,9 +65,25 @@ export default function Sidebar() {
             {data.map((item) => {
               const match = matchPath(
                 { path: item.link, end: item.link === "/" },
-                pathname
+                pathname,
               );
               const isActive = Boolean(match);
+
+              if (item.disabled) {
+                return (
+                  <div
+                    key={item.id}
+                    className="flex opacity-50 cursor-not-allowed"
+                  >
+                    <div className="w-[5px] h-[50px] rounded-r-lg"></div>
+                    <div className="flex items-center w-full h-[50px] px-3 ml-2 text-sm font-light rounded-lg">
+                      {item.icon}
+                      <span className="ml-2">{item.name}</span>
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <Link to={item.link} key={item.id} className="flex">
                   {/* left indicator only if active */}
@@ -89,6 +107,22 @@ export default function Sidebar() {
           <div className="py-3 pr-3 flex flex-col gap-3 w-full border-b border-b-white/10">
             {data2.map((item) => {
               const isActive = pathname === item.link;
+
+              if (item.disabled) {
+                return (
+                  <div
+                    key={item.id}
+                    className="flex opacity-50 cursor-not-allowed"
+                  >
+                    <div className="w-[5px] h-[50px] rounded-r-lg"></div>
+                    <div className="flex items-center w-full h-[50px] px-3 ml-2 text-sm font-light rounded-lg">
+                      {item.icon}
+                      <span className="ml-2">{item.name}</span>
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <Link to={item.link} key={item.id} className="flex">
                   {/* left indicator only if active */}

@@ -338,7 +338,7 @@ const CreatePayroll = () => {
                     <img src="/celo.svg" alt="" className="w-6" />
                     <p className="text-sm font-medium">Celo</p>
                   </div>
-                  <div
+                  {/* <div
                     className={`border ${
                       chain === "starknet"
                         ? "border-c-color bg-c-color/20"
@@ -350,7 +350,7 @@ const CreatePayroll = () => {
                   >
                     <img src="/starknet.svg" alt="" className="w-6" />
                     <p className="text-sm font-medium">Starknet</p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
