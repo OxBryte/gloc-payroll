@@ -40,7 +40,6 @@ export default function CreateJob() {
   const descriptionValue = watch("description");
 
   const onSubmit = async (data) => {
-   
     // Parse skills
     const skillsArray = data.skills
       .split(",")
@@ -65,6 +64,7 @@ export default function CreateJob() {
       duration: "Year", // Defaulting for now as requested schema doesn't match form exactly, or we can add a field
       description: data.description,
       workspaceId: singleWorkspace?.id,
+      experience: data.experience,
     };
 
     try {
@@ -199,24 +199,41 @@ export default function CreateJob() {
                 </span>
               )}
             </div>
-          </div>
-
-          {/* Skills */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">
-              Required Skills
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. React, Node.js, TypeScript (comma separated)"
-              {...register("skills", { required: "Skills are required" })}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-c-color/20 focus:border-c-color transition-all outline-none"
-            />
-            {errors.skills && (
-              <span className="text-xs text-red-500">
-                {errors.skills.message}
-              </span>
-            )}
+            {/* Skills */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700 block">
+                Required Skills
+              </label>
+              <input
+                type="text"
+                placeholder="e.g. React, Node.js, TypeScript (comma separated)"
+                {...register("skills", { required: "Skills are required" })}
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-c-color/20 focus:border-c-color transition-all outline-none"
+              />
+              {errors.skills && (
+                <span className="text-xs text-red-500">
+                  {errors.skills.message}
+                </span>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700 block">
+                Experience
+              </label>
+              <input
+                type="number"
+                placeholder="e.g. 2 years"
+                {...register("experience", {
+                  required: "Experience is required",
+                })}
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-c-color/20 focus:border-c-color transition-all outline-none"
+              />
+              {errors.experience && (
+                <span className="text-xs text-red-500">
+                  {errors.experience.message}
+                </span>
+              )}
+            </div>
           </div>
 
           {/* Description */}

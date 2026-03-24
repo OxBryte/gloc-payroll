@@ -44,6 +44,7 @@ export default function EditJobDrawer({ job, setIsOpen }) {
         skills: skillsString,
         minSalary: minSalary,
         maxSalary: maxSalary,
+        experience: job.experience || "",
         duration: job.duration || "",
         description: job.description || "",
         isActive: job.isActive !== undefined ? job.isActive : true,
@@ -86,6 +87,7 @@ export default function EditJobDrawer({ job, setIsOpen }) {
       duration: data.duration,
       description: data.description,
       isActive: data.isActive,
+      experience: data.experience,
     };
 
     try {
@@ -314,6 +316,26 @@ export default function EditJobDrawer({ job, setIsOpen }) {
                 {errors.skills && (
                   <span className="text-xs text-red-500">
                     {errors.skills.message}
+                  </span>
+                )}
+              </div>
+
+              {/* Experience */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 block">
+                  Experience
+                </label>
+                <input
+                  type="number"
+                  placeholder="e.g. 2 years"
+                  {...register("experience", {
+                    required: "Experience is required",
+                  })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
+                />
+                {errors.experience && (
+                  <span className="text-xs text-red-500">
+                    {errors.experience.message}
                   </span>
                 )}
               </div>

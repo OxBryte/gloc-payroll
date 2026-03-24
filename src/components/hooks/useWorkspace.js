@@ -4,6 +4,7 @@ import {
   deleteWorkspace,
   getSingleWorkspace,
   getWorkspace,
+  updateWorkspace,
 } from "../services/workspaceApi";
 import toast from "react-hot-toast";
 
@@ -82,4 +83,26 @@ export const useDeleteWorkspace = () => {
     },
   });
   return { deleteWorkspaceFn, isDeleting: isPending };
+};
+
+export const useUpdateWorkspace = () => {
+  const queryClient = useQueryClient();
+  const { mutateAsync: updateWorkspaceFn, isPending: isUpdating } = useMutation(
+    {
+      mutationKey: ["updateWorkspace"],
+      mutationFn: async ({ id, body }) => {
+        return await updateWorkspace(id, body);
+      },
+      onSuccess(data) {
+        toast.success(`${data.message}`);
+        queryClient.invalidateQueries({ queryKey: ["workspace"] });
+        queryClient.invalidateQueries({ queryKey: ["singleWorkspace"] });
+      },
+      onError(error) {
+        console.log(error);
+        toast.error(`${error.message}`);
+      },
+    }
+  );
+  return { updateWorkspaceFn, isUpdating };
 };

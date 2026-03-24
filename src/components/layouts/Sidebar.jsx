@@ -20,10 +20,10 @@ const data = [
   },
   {
     id: 3,
-    name: "Jobs (coming soon)",
+    name: "Jobs",
     icon: <Briefcase size={22} />,
     link: "/jobs",
-    disabled: true,
+    disabled: false,
   },
 ];
 

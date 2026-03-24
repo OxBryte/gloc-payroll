@@ -81,7 +81,7 @@ const CreatePayroll = () => {
       totalTax,
       singleWorkspace?.id,
       selectedEmployees,
-    ]
+    ],
   );
 
   // USDC Approval hook
@@ -134,11 +134,11 @@ const CreatePayroll = () => {
 
     // Check if all selected employees have wallet addresses
     const employeesWithoutAddress = selectedEmployees.filter(
-      (emp) => !emp.address || emp.address === "N/A"
+      (emp) => !emp.address || emp.address === "N/A",
     );
     if (employeesWithoutAddress.length > 0) {
       toast.error(
-        `${employeesWithoutAddress.length} employee(s) don't have wallet addresses`
+        `${employeesWithoutAddress.length} employee(s) don't have wallet addresses`,
       );
       return;
     }
@@ -153,11 +153,14 @@ const CreatePayroll = () => {
 
     try {
       // Step 1: Check and approve USDC if needed
-      if (needsApproval(totalAmount)) {
+      // Add 0.5 USDC buffer to the approval amount
+      const approvalAmount = totalAmount + 0.5;
+
+      if (needsApproval(approvalAmount)) {
         setCurrentStep("approving");
         toast.loading("Approving USDC...", { id: "approval" });
 
-        await approveUsdc(totalAmount);
+        await approveUsdc(approvalAmount);
 
         // Wait for approval to be confirmed
         await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -171,8 +174,11 @@ const CreatePayroll = () => {
       toast.loading("Processing payroll distribution...", { id: "distribute" });
 
       // Prepare recipients and amounts
+      // Amount sent to contract should include tax so it's not deducted from salary
       const recipients = selectedEmployees.map((emp) => emp.address);
-      const grossAmounts = selectedEmployees.map((emp) => emp.salary);
+      const grossAmounts = selectedEmployees.map(
+        (emp) => emp.salary + emp.salary * taxRate,
+      );
 
       await distributeBulk(recipients, grossAmounts);
 

@@ -22,9 +22,7 @@ export default function Tabbar({ slug, data }) {
                       ${isActive ? "bg-c-color text-white" : ""}`}
               >
                 {item.icon}
-                <span className="whitespace-nowrap">
-                  {item.name} {item.id === 4 && "(Coimg soon)"}{" "}
-                </span>
+                <span className="whitespace-nowrap">{item.name}</span>
               </div>
             </NavLink>
           );

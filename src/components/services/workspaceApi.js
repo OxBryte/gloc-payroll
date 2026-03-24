@@ -82,3 +82,23 @@ export async function deleteWorkspace(workspaceId) {
     );
   }
 }
+export async function updateWorkspace(workspaceId, body) {
+  try {
+    // Get token from cookies
+    const token = getCookie("token"); // or whatever your cookie name is
+
+    const response = await axios.put(`${apiURL}workspace/${workspaceId}`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error during while updating workspace", error);
+    throw new Error(
+      error.response?.data?.error ||
+        "An error occurred while updating workspace"
+    );
+  }
+}

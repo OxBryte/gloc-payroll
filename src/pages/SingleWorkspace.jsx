@@ -1,22 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { HiOutlineBriefcase } from "react-icons/hi2";
 import { PiReceipt, PiUsersThreeLight } from "react-icons/pi";
 import { RiAdminLine, RiHome5Line } from "react-icons/ri";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Edit2, Upload, Check, X, Loader2 } from "lucide-react";
 import Tabbar from "../components/layouts/Tabbar";
 import Overview from "../components/features/workspace/Overview";
 import Payroll from "../components/features/workspace/Payroll";
 import Employees from "../components/features/workspace/Employees";
 import Admins from "../components/features/workspace/Admins";
 import Jobs from "../components/features/workspace/Jobs";
-import { useGetSingleWorkspace } from "../components/hooks/useWorkspace";
+import {
+  useGetSingleWorkspace,
+  useUpdateWorkspace,
+} from "../components/hooks/useWorkspace";
 import CreateJob from "../components/features/workspace/CreateJob";
 
 export default function SingleWorkspace() {
   const { slug, id: activeLink } = useParams();
   const location = useLocation();
   const createIt = location.search;
+
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [newName, setNewName] = useState("");
 
   const data = [
     {
@@ -59,6 +65,39 @@ export default function SingleWorkspace() {
   const { singleWorkspace, isLoadingSingleWorkspace, error } =
     useGetSingleWorkspace(slug);
 
+  const { updateWorkspaceFn, isUpdating } = useUpdateWorkspace();
+
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("logo", file);
+
+    try {
+      await updateWorkspaceFn({ id: singleWorkspace?.id, body: formData });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleNameUpdate = async () => {
+    if (!newName.trim() || newName === singleWorkspace?.name) {
+      setIsEditingName(false);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", newName);
+
+    try {
+      await updateWorkspaceFn({ id: singleWorkspace?.id, body: formData });
+      setIsEditingName(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   if (isLoadingSingleWorkspace) {
     return (
       <div className="w-full h-full min-h-[70dvh] flex flex-col gap-3 items-center justify-center">
@@ -93,12 +132,77 @@ export default function SingleWorkspace() {
             >
               <ChevronLeft size={20} />
             </div>
-            <img
-              src={singleWorkspace?.logo}
-              alt=""
-              className="rounded-lg w-10"
-            />
-            <h1 className="text-2xl font-semibold">{singleWorkspace?.name}</h1>
+
+            {/* Logo with Upload Overlay */}
+            <div className="relative group overflow-hidden rounded-lg w-12 h-12 border border-gray-100">
+              <img
+                src={singleWorkspace?.logo}
+                alt=""
+                className="w-full h-full object-cover transition-transform group-hover:scale-110"
+              />
+              <label className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                <Upload size={16} className="text-white" />
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handleLogoUpload}
+                  disabled={isUpdating}
+                />
+              </label>
+              {isUpdating && (
+                <div className="absolute inset-0 bg-white/60 flex items-center justify-center">
+                  <Loader2 size={16} className="animate-spin text-c-color" />
+                </div>
+              )}
+            </div>
+
+            {/* Name Editing Section */}
+            <div className="flex items-center gap-2 flex-1">
+              {isEditingName ? (
+                <div className="flex items-center gap-2 w-full max-w-md">
+                  <input
+                    type="text"
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    className="flex-1 text-2xl font-semibold bg-gray-50 border-b-2 border-c-color outline-none px-1 py-0.5"
+                    autoFocus
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleNameUpdate();
+                      if (e.key === "Escape") setIsEditingName(false);
+                    }}
+                  />
+                  <button
+                    onClick={handleNameUpdate}
+                    disabled={isUpdating}
+                    className="p-1 hover:bg-green-50 rounded text-green-600 transition-colors"
+                  >
+                    <Check size={20} />
+                  </button>
+                  <button
+                    onClick={() => setIsEditingName(false)}
+                    className="p-1 hover:bg-red-50 rounded text-red-600 transition-colors"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <h1 className="text-2xl font-semibold">
+                    {singleWorkspace?.name}
+                  </h1>
+                  <div
+                    className="text-gray-400 hover:text-c-color cursor-pointer transition-colors p-1"
+                    onClick={() => {
+                      setNewName(singleWorkspace?.name || "");
+                      setIsEditingName(true);
+                    }}
+                  >
+                    <Edit2 size={16} />
+                  </div>
+                </>
+              )}
+            </div>
           </div>
           <p>{singleWorkspace?.description}</p>
           <div className="space-y-2">
