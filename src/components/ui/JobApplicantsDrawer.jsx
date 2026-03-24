@@ -1,5 +1,5 @@
 import React from "react";
-import { X, Loader2, User, Mail, FileText, ExternalLink } from "lucide-react";
+import { X, Loader2, User, Mail, FileText, ExternalLink, MessageSquare } from "lucide-react";
 import { useGetApplicants } from "../hooks/useJobs";
 
 export default function JobApplicantsDrawer({ jobId, isOpen, setIsOpen, jobTitle }) {
@@ -63,6 +63,18 @@ export default function JobApplicantsDrawer({ jobId, isOpen, setIsOpen, jobTitle
                           <Mail size={14} className="text-gray-400" />
                           <span>{applicant.email}</span>
                         </div>
+
+                        {applicant.coverLetter && (
+                          <div className="mt-4 pt-4 border-t border-gray-50">
+                            <div className="flex items-center gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                              <MessageSquare size={12} />
+                              Cover Letter
+                            </div>
+                            <p className="text-sm text-gray-600 leading-relaxed bg-gray-50/50 p-3 rounded-lg border border-gray-100/50 italic font-light">
+                              "{applicant.coverLetter}"
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </div>
 
