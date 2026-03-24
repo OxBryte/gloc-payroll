@@ -73,7 +73,9 @@ export default function EditJobDrawer({ job, setIsOpen }) {
       .filter((skill) => skill.length > 0);
 
     // Format amount
-    const amountString = `$${data.minSalary} - $${data.maxSalary}`;
+    const amountString = data.maxSalary
+      ? `$${data.minSalary} - $${data.maxSalary}`
+      : `$${data.minSalary}`;
 
     const payload = {
       companyName: data.companyName,
@@ -270,16 +272,14 @@ export default function EditJobDrawer({ job, setIsOpen }) {
                     <input
                       type="number"
                       placeholder="Max"
-                      {...register("maxSalary", {
-                        required: "Max salary is required",
-                      })}
+                      {...register("maxSalary")}
                       className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                     />
                   </div>
                 </div>
-                {(errors.minSalary || errors.maxSalary) && (
+                {errors.minSalary && (
                   <span className="text-xs text-red-500">
-                    {errors.minSalary?.message || errors.maxSalary?.message}
+                    {errors.minSalary?.message}
                   </span>
                 )}
               </div>

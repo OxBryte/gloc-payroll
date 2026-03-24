@@ -9,6 +9,7 @@ import {
   deleteJob,
   toggleJobStatus,
   applyForJob,
+  getApplicants,
 } from "../services/jobsApi";
 import { useNavigate } from "react-router-dom";
 
@@ -171,4 +172,22 @@ export const useApplyForJob = () => {
     },
   });
   return { applyForJobFn, isPending };
+};
+
+export const useGetApplicants = (jobId) => {
+  const {
+    data: applicantsData,
+    isLoading: isLoadingApplicants,
+    error,
+  } = useQuery({
+    queryKey: ["applicants", jobId],
+    queryFn: () => getApplicants(jobId),
+    enabled: !!jobId,
+  });
+
+  return {
+    applicants: applicantsData?.data || [],
+    isLoadingApplicants,
+    error,
+  };
 };

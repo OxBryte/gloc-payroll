@@ -47,7 +47,9 @@ export default function CreateJob() {
       .filter((skill) => skill.length > 0);
 
     // Format amount
-    const amountString = `$${data.minSalary} - $${data.maxSalary}`;
+    const amountString = data.maxSalary
+      ? `$${data.minSalary} - $${data.maxSalary}`
+      : `$${data.minSalary}`;
 
     // Determine location type (simple logic for now)
     const locationType = data.location.toLowerCase().includes("remote")
@@ -162,7 +164,7 @@ export default function CreateJob() {
             {/* Salary */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700 block">
-                Salary Range
+                Salary Range (USD) / year
               </label>
               <div className="flex items-center gap-2">
                 <div className="relative w-full">
@@ -186,16 +188,14 @@ export default function CreateJob() {
                   <input
                     type="number"
                     placeholder="Max"
-                    {...register("maxSalary", {
-                      required: "Max salary is required",
-                    })}
+                    {...register("maxSalary")}
                     className="w-full pl-8 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-c-color/20 focus:border-c-color transition-all outline-none"
                   />
                 </div>
               </div>
-              {(errors.minSalary || errors.maxSalary) && (
+              {errors.minSalary && (
                 <span className="text-xs text-red-500">
-                  {errors.minSalary?.message || errors.maxSalary?.message}
+                  {errors.minSalary?.message}
                 </span>
               )}
             </div>

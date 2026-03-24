@@ -3,12 +3,15 @@ import React, { useState } from "react";
 import { Dot, Trash2, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteJob, useToggleJobStatus } from "../../hooks/useJobs";
+import JobApplicantsDrawer from "../../ui/JobApplicantsDrawer";
+import { User } from "lucide-react";
 
 export default function JobCard({ job, showDelete = false, showToggle = false }) {
   const navigate = useNavigate();
   const { deleteJobFn, isPending: isDeleting } = useDeleteJob();
   const { toggleJobStatusFn, isPending: isToggling } = useToggleJobStatus();
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [isApplicantsOpen, setIsApplicantsOpen] = useState(false);
 
   if (!job) return null;
 
@@ -20,7 +23,7 @@ export default function JobCard({ job, showDelete = false, showToggle = false })
     try {
       await deleteJobFn(job._id || job.id);
       setShowConfirmDelete(false);
-    } catch (error) {
+    } catch {
       // Error is handled by the hook
     }
   };
@@ -28,7 +31,7 @@ export default function JobCard({ job, showDelete = false, showToggle = false })
   const handleToggleStatus = async () => {
     try {
       await toggleJobStatusFn(job._id || job.id);
-    } catch (error) {
+    } catch {
       // Error is handled by the hook
     }
   };
@@ -142,13 +145,31 @@ export default function JobCard({ job, showDelete = false, showToggle = false })
           {job.amount}{" "}
           <span className="font-light text-sm text-gray-400">/yearly</span>
         </p>
-        <button
-          onClick={handleViewDetails}
-          className="w-fit px-4 py-2 text-white bg-c-color text-sm cursor-pointer hover:bg-c-bg rounded-lg"
-        >
-          View Details
-        </button>
+        <div className="flex items-center gap-2">
+          {showToggle && (
+            <button
+              onClick={() => setIsApplicantsOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-2 text-c-color bg-c-color/5 hover:bg-c-color/10 text-sm font-medium rounded-lg transition-colors border border-c-color/20"
+            >
+              <User size={16} />
+              Applicants
+            </button>
+          )}
+          <button
+            onClick={handleViewDetails}
+            className="w-fit px-4 py-2 text-white bg-c-color text-sm cursor-pointer hover:bg-c-bg rounded-lg transition-colors shadow-sm"
+          >
+            View Details
+          </button>
+        </div>
       </div>
+
+      <JobApplicantsDrawer
+        jobId={job._id || job.id}
+        isOpen={isApplicantsOpen}
+        setIsOpen={setIsApplicantsOpen}
+        jobTitle={job.title}
+      />
     </div>
   );
 }

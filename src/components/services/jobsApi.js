@@ -171,3 +171,21 @@ export async function applyForJob(formData) {
     );
   }
 }
+export async function getApplicants(jobId) {
+  try {
+    const token = getCookie("token");
+
+    const { data } = await axios.get(`${apiURL}jobs/${jobId}/applicants`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error while fetching applicants", error);
+    throw new Error(
+      error.response?.data?.error ||
+        "An error occurred while fetching applicants."
+    );
+  }
+}
