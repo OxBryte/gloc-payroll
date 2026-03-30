@@ -1,11 +1,16 @@
 import React from "react";
 import JobCard from "../job/JobCard";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetJobs } from "../../hooks/useJobs";
+import { useGetSingleWorkspace } from "../../hooks/useWorkspace";
 import { Loader2 } from "lucide-react";
 
 export default function Jobs() {
-  const { jobs, isLoadingJobs } = useGetJobs();
+  const { slug } = useParams();
+  const { singleWorkspace } = useGetSingleWorkspace(slug);
+  const workspaceId = singleWorkspace?._id || singleWorkspace?.id;
+
+  const { jobs, isLoadingJobs } = useGetJobs(workspaceId);
 
   if (isLoadingJobs) {
     return (

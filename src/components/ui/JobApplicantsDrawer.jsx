@@ -1,9 +1,10 @@
 import React from "react";
-import { X, Loader2, User, Mail, FileText, ExternalLink, MessageSquare } from "lucide-react";
-import { useGetApplicants } from "../hooks/useJobs";
+import { X, Loader2, User, Mail, FileText, ExternalLink, MessageSquare, CheckCircle, XCircle } from "lucide-react";
+import { useGetApplicants, useUpdateApplicationStatus } from "../hooks/useJobs";
 
 export default function JobApplicantsDrawer({ jobId, isOpen, setIsOpen, jobTitle }) {
   const { applicants, isLoadingApplicants, error } = useGetApplicants(jobId);
+  const { updateStatusFn, isPending } = useUpdateApplicationStatus();
 
   if (!isOpen) return null;
 
@@ -78,18 +79,52 @@ export default function JobApplicantsDrawer({ jobId, isOpen, setIsOpen, jobTitle
                       </div>
                     </div>
 
+                  <div className="flex flex-col items-end gap-2">
                     {applicant.resume && (
                       <a
                         href={applicant.resume}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-lg hover:bg-black transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-900 border border-transparent text-white text-xs rounded-lg hover:bg-black transition-colors"
                       >
                         <FileText size={14} />
                         Resume
                         <ExternalLink size={12} className="opacity-70" />
                       </a>
                     )}
+
+                    {(!applicant.status || applicant.status === "applied") ? (
+                      <div className="flex items-center gap-2 mt-2">
+                        <button
+                          onClick={() => updateStatusFn({ id: applicant._id, status: "accepted" })}
+                          disabled={isPending}
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 border border-green-200 text-xs rounded-lg hover:bg-green-100 transition-colors disabled:opacity-50"
+                        >
+                          <CheckCircle size={14} />
+                          Accept
+                        </button>
+                        <button
+                          onClick={() => updateStatusFn({ id: applicant._id, status: "rejected" })}
+                          disabled={isPending}
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-700 border border-red-200 text-xs rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50"
+                        >
+                          <XCircle size={14} />
+                          Reject
+                        </button>
+                      </div>
+                    ) : (
+                      <div
+                        className={`mt-2 px-3 py-1 text-xs font-semibold rounded-full border ${
+                          applicant.status === "accepted"
+                            ? "bg-green-50 text-green-700 border-green-200"
+                            : "bg-red-50 text-red-700 border-red-200"
+                        }`}
+                      >
+                        {applicant.status?.charAt(0).toUpperCase() +
+                          applicant.status?.slice(1)}
+                      </div>
+                    )}
+                  </div>
                   </div>
                 </div>
               ))}

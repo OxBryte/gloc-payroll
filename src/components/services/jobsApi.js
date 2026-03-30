@@ -22,15 +22,18 @@ export async function createJob(body) {
   }
 }
 
-export async function getJobs() {
+export async function getJobs(workspaceId) {
   try {
     // Get token from cookies
     const token = getCookie("token");
+
+    const params = workspaceId ? { workspaceId } : {};
 
     const { data } = await axios.get(`${apiURL}jobs/my/jobs`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      params,
     });
     return data;
   } catch (error) {
@@ -186,6 +189,29 @@ export async function getApplicants(jobId) {
     throw new Error(
       error.response?.data?.error ||
         "An error occurred while fetching applicants."
+    );
+  }
+}
+
+export async function updateApplicationStatus(id, status) {
+  try {
+    const token = getCookie("token");
+
+    const response = await axios.patch(
+      `${apiURL}jobs/applications/${id}/status`,
+      { status },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error while updating application status", error);
+    throw new Error(
+      error.response?.data?.error ||
+        "An error occurred while updating the application status."
     );
   }
 }

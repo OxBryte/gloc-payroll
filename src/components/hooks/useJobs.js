@@ -10,6 +10,7 @@ import {
   toggleJobStatus,
   applyForJob,
   getApplicants,
+  updateApplicationStatus,
 } from "../services/jobsApi";
 import { useNavigate } from "react-router-dom";
 
@@ -39,14 +40,14 @@ export const useCreateJob = () => {
   return { createJobFn, isPending };
 };
 
-export const useGetJobs = () => {
+export const useGetJobs = (workspaceId) => {
   const {
     data: jobsData,
     isLoading: isLoadingJobs,
     error,
   } = useQuery({
-    queryKey: ["jobs"],
-    queryFn: getJobs,
+    queryKey: ["jobs", workspaceId],
+    queryFn: () => getJobs(workspaceId),
   });
 
   return { jobs: jobsData?.data || [], isLoadingJobs, error };
@@ -190,4 +191,23 @@ export const useGetApplicants = (jobId) => {
     isLoadingApplicants,
     error,
   };
+};
+
+export const useUpdateApplicationStatus = () => {
+  const queryClient = useQueryClient();
+  const { mutateAsync: updateStatusFn, isPending } = useMutation({
+    mutationKey: ["updateApplicationStatus"],
+    mutationFn: async ({ id, status }) => {
+      return await updateApplicationStatus(id, status);
+    },
+    onSuccess() {
+      toast.success("Application status updated!");
+      queryClient.invalidateQueries({ queryKey: ["applicants"] });
+    },
+    onError(error) {
+      console.log(error);
+      toast.error(`${error.message}`);
+    },
+  });
+  return { updateStatusFn, isPending };
 };
