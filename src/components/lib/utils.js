@@ -131,3 +131,18 @@ export const convertTaxToUSDC = (taxAmount) => {
   const usdcTaxAmount = Math.floor(taxAmount * 1000000);
   return BigInt(usdcTaxAmount);
 };
+
+// utility function to display job amount with correct currency symbol
+export const displayAmount = (amount, currency) => {
+  if (!amount) return "";
+  const symbol = currency === "USD" ? "$" : currency === "NGN" ? "₦" : "";
+  
+  // Remove any existing currency symbols to prevent double symbols
+  let cleanAmount = amount.replace(/\$/g, "").replace(/₦/g, "");
+  
+  // Fallback to $ for legacy jobs without currency, or use the selected symbol
+  const finalSymbol = symbol || "$";
+  
+  return `${finalSymbol}${cleanAmount.trim()}`;
+};
+

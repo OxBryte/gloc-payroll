@@ -24,10 +24,12 @@ export default function EditJobDrawer({ job, setIsOpen }) {
       let minSalary = "";
       let maxSalary = "";
       if (job.amount) {
-        const amountMatch = job.amount.match(/\$([\d,]+)\s*-\s*\$([\d,]+)/);
-        if (amountMatch) {
-          minSalary = amountMatch[1].replace(/,/g, "");
-          maxSalary = amountMatch[2].replace(/,/g, "");
+        const amounts = job.amount.match(/\d[,\d]*\.?\d*/g);
+        if (amounts && amounts.length >= 1) {
+          minSalary = amounts[0].replace(/,/g, "");
+          if (amounts.length >= 2) {
+            maxSalary = amounts[1].replace(/,/g, "");
+          }
         }
       }
 
@@ -42,6 +44,7 @@ export default function EditJobDrawer({ job, setIsOpen }) {
         title: job.title || "",
         type: job.type || "fulltime",
         skills: skillsString,
+        currency: job.currency || "NGN",
         minSalary: minSalary,
         maxSalary: maxSalary,
         experience: job.experience || "",
@@ -74,8 +77,8 @@ export default function EditJobDrawer({ job, setIsOpen }) {
 
     // Format amount
     const amountString = data.maxSalary
-      ? `$${data.minSalary} - $${data.maxSalary}`
-      : `$${data.minSalary}`;
+      ? `${data.minSalary} - ${data.maxSalary}`
+      : `${data.minSalary}`;
 
     const payload = {
       companyName: data.companyName,
@@ -86,6 +89,7 @@ export default function EditJobDrawer({ job, setIsOpen }) {
       type: data.type.toLowerCase(),
       skills: skillsArray,
       amount: amountString,
+      currency: data.currency,
       duration: data.duration,
       description: data.description,
       isActive: data.isActive,
@@ -245,6 +249,27 @@ export default function EditJobDrawer({ job, setIsOpen }) {
                 )}
               </div>
 
+              {/* Currency */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 block">
+                  Currency
+                </label>
+                <select
+                  {...register("currency", {
+                    required: "Currency is required",
+                  })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent bg-white"
+                >
+                  <option value="NGN">Naira (₦)</option>
+                  <option value="USD">US Dollar ($)</option>
+                </select>
+                {errors.currency && (
+                  <span className="text-xs text-red-500">
+                    {errors.currency.message}
+                  </span>
+                )}
+              </div>
+
               {/* Salary Range */}
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-700 block">
@@ -252,28 +277,22 @@ export default function EditJobDrawer({ job, setIsOpen }) {
                 </label>
                 <div className="flex items-center gap-2">
                   <div className="relative w-full">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
-                      $
-                    </span>
                     <input
                       type="number"
                       placeholder="Min"
                       {...register("minSalary", {
                         required: "Min salary is required",
                       })}
-                      className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                     />
                   </div>
                   <span className="text-gray-400">-</span>
                   <div className="relative w-full">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
-                      $
-                    </span>
                     <input
                       type="number"
                       placeholder="Max"
                       {...register("maxSalary")}
-                      className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-c-color focus:border-transparent"
                     />
                   </div>
                 </div>

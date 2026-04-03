@@ -2,6 +2,7 @@ import { PiBriefcase, PiMapPin } from "react-icons/pi";
 import React from "react";
 import { Dot } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { displayAmount } from "../../lib/utils";
 
 export default function PublicJobCard({ job }) {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ export default function PublicJobCard({ job }) {
       </div>
       <div className="flex items-center gap-3 justify-between w-full">
         <p className="font-bold text-lg">
-          {job.amount}{" "}
+          {displayAmount(job.amount, job.currency)}{" "}
           <span className="font-light text-sm text-gray-400">/yearly</span>
         </p>
         <button

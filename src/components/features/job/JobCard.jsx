@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDeleteJob, useToggleJobStatus } from "../../hooks/useJobs";
 import JobApplicantsDrawer from "../../ui/JobApplicantsDrawer";
 import { User } from "lucide-react";
+import { displayAmount } from "../../lib/utils";
 
 export default function JobCard({ job, showDelete = false, showToggle = false }) {
   const navigate = useNavigate();
@@ -142,7 +143,7 @@ export default function JobCard({ job, showDelete = false, showToggle = false })
       </div>
       <div className="flex items-center gap-3 justify-between w-full">
         <p className="font-bold text-lg">
-          {job.amount}{" "}
+          {displayAmount(job.amount, job.currency)}{" "}
           <span className="font-light text-sm text-gray-400">/yearly</span>
         </p>
         <div className="flex items-center gap-2">

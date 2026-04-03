@@ -13,6 +13,7 @@ import { useGetJobById } from "../components/hooks/useJobs";
 import { useUser } from "../components/hooks/useUser";
 import { useGetWorkspace } from "../components/hooks/useWorkspace";
 import EditJobDrawer from "../components/ui/EditJobDrawer";
+import { displayAmount } from "../components/lib/utils";
 
 export default function JobDetails() {
   const { id } = useParams();
@@ -142,7 +143,7 @@ export default function JobDetails() {
                 <DollarSign className="w-4 h-4" />
                 <span>Salary</span>
               </div>
-              <p className="font-semibold text-sm">{job.amount}</p>
+              <p className="font-semibold text-sm">{displayAmount(job.amount, job.currency)}</p>
             </div>
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="flex items-center gap-2 text-gray-500 text-xs mb-2">
