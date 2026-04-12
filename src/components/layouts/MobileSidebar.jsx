@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { X, Users } from "lucide-react";
 import React from "react";
 import { GoRocket } from "react-icons/go";
 import { IoDiceOutline } from "react-icons/io5";
@@ -22,12 +22,12 @@ const data = [
     icon: <GoRocket size={22} />,
     link: "workspace",
   },
-  // {
-  //   id: 3,
-  //   name: "Payroll",
-  //   icon: <IoDiceOutline size={22} />,
-  //   link: "/payroll",
-  // },
+  {
+    id: 3,
+    name: "Applicants",
+    icon: <Users size={22} />,
+    link: "/applicants",
+  },
 ];
 
 const data2 = [

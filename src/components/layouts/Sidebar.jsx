@@ -3,7 +3,7 @@ import { GoRocket } from "react-icons/go";
 import { LuHandshake } from "react-icons/lu";
 import { RiDashboardLine, RiSettingsLine } from "react-icons/ri";
 import { Link, matchPath, useLocation } from "react-router-dom";
-import { Briefcase } from "lucide-react";
+import { Briefcase, Users } from "lucide-react";
 
 const data = [
   {
@@ -23,6 +23,13 @@ const data = [
     name: "Jobs",
     icon: <Briefcase size={22} />,
     link: "/jobs",
+    disabled: false,
+  },
+  {
+    id: 4,
+    name: "Applicants",
+    icon: <Users size={22} />,
+    link: "/applicants",
     disabled: false,
   },
 ];

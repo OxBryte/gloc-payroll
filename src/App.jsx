@@ -22,6 +22,7 @@ import Apply from "./pages/Apply";
 import InvoicePage from "./pages/InvoicePage";
 import Tasks from "./pages/Tasks";
 import Wallet from "./pages/Wallet";
+import Applicants from "./pages/Applicants";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
               <Route path="/jobs" element={<Jobs />} />
               <Route path="/jobs/:id" element={<JobDetails />} />
               <Route path="/jobs/:id/apply" element={<Apply />} />
+              <Route path="/applicants" element={<Applicants />} />
             </Route>
           </Route>
           <Route path="/careers" element={<Careers />} />
