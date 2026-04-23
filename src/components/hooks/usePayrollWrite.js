@@ -499,3 +499,533 @@ export function usePayrollAdmin() {
     error,
   };
 }
+
+/**
+ * Hook for bulk employee management operations
+ */
+export function useBulkEmployeeOperations() {
+  const [txHash, setTxHash] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [operationError, setOperationError] = useState(null);
+
+  // AppKit send transaction hook
+  const { sendTransactionAsync } = useSendTransaction();
+
+  // Bulk employee salary updates (if contract supports it)
+  const bulkUpdateSalaries = useCallback(
+    async (employeeAddresses, newSalaries) => {
+      try {
+        setIsProcessing(true);
+        setOperationError(null);
+        setIsSuccess(false);
+
+        if (employeeAddresses.length !== newSalaries.length) {
+          throw new Error("Employee addresses and salaries arrays must match");
+        }
+
+        if (employeeAddresses.length === 0 || employeeAddresses.length > 20) {
+          throw new Error("Must update 1-20 employees at a time");
+        }
+
+        // Convert salaries to USDC units
+        const salariesInUnits = newSalaries.map((salary) =>
+          parseUnits(salary.toString(), USDC_DECIMALS)
+        );
+
+        // Encode bulk update function call
+        const data = encodeFunctionData({
+          abi: contractABI,
+          functionName: "bulkUpdateEmployeeSalaries",
+          args: [employeeAddresses, salariesInUnits],
+        });
+
+        setIsConfirming(true);
+        toast.loading("Processing bulk salary updates...", {
+          id: "bulk-salary-update",
+        });
+
+        const hash = await sendTransactionAsync({
+          to: contractAddress,
+          data,
+          chainId: base.id,
+        });
+
+        if (hash) {
+          setTxHash(hash);
+          setIsSuccess(true);
+          toast.success(`Successfully updated ${employeeAddresses.length} employee salaries!`, {
+            id: "bulk-salary-update",
+          });
+          return hash;
+        }
+
+        throw new Error("No transaction hash returned");
+      } catch (error) {
+        setOperationError(error);
+        toast.error(
+          error?.shortMessage || error?.message || "Failed to update employee salaries",
+          { id: "bulk-salary-update" }
+        );
+        throw error;
+      } finally {
+        setIsProcessing(false);
+        setIsConfirming(false);
+      }
+    },
+    [sendTransactionAsync]
+  );
+
+  // Bulk employee removal
+  const bulkRemoveEmployees = useCallback(
+    async (employeeAddresses) => {
+      try {
+        setIsProcessing(true);
+        setOperationError(null);
+        setIsSuccess(false);
+
+        if (employeeAddresses.length === 0 || employeeAddresses.length > 25) {
+          throw new Error("Must remove 1-25 employees at a time");
+        }
+
+        // Encode bulk removal function call
+        const data = encodeFunctionData({
+          abi: contractABI,
+          functionName: "bulkRemoveEmployees",
+          args: [employeeAddresses],
+        });
+
+        setIsConfirming(true);
+        toast.loading(`Removing ${employeeAddresses.length} employees...`, {
+          id: "bulk-employee-removal",
+        });
+
+        const hash = await sendTransactionAsync({
+          to: contractAddress,
+          data,
+          chainId: base.id,
+        });
+
+        if (hash) {
+          setTxHash(hash);
+          setIsSuccess(true);
+          toast.success(`Successfully removed ${employeeAddresses.length} employees!`, {
+            id: "bulk-employee-removal",
+          });
+          return hash;
+        }
+
+        throw new Error("No transaction hash returned");
+      } catch (error) {
+        setOperationError(error);
+        toast.error(
+          error?.shortMessage || error?.message || "Failed to remove employees",
+          { id: "bulk-employee-removal" }
+        );
+        throw error;
+      } finally {
+        setIsProcessing(false);
+        setIsConfirming(false);
+      }
+    },
+    [sendTransactionAsync]
+  );
+
+  return {
+    bulkUpdateSalaries,
+    bulkRemoveEmployees,
+    isProcessing,
+    isConfirming,
+    isSuccess,
+    txHash,
+    error: operationError,
+  };
+}
+
+/**
+ * Hook for bulk workspace operations
+ */
+export function useBulkWorkspaceOperations() {
+  const [txHash, setTxHash] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [operationError, setOperationError] = useState(null);
+
+  // AppKit send transaction hook
+  const { sendTransactionAsync } = useSendTransaction();
+
+  // Bulk admin invitations
+  const bulkInviteAdmins = useCallback(
+    async (adminAddresses, workspaceId) => {
+      try {
+        setIsProcessing(true);
+        setOperationError(null);
+        setIsSuccess(false);
+
+        if (adminAddresses.length === 0 || adminAddresses.length > 15) {
+          throw new Error("Must invite 1-15 admins at a time");
+        }
+
+        // Encode bulk admin invitation function call
+        const data = encodeFunctionData({
+          abi: contractABI,
+          functionName: "bulkInviteWorkspaceAdmins",
+          args: [adminAddresses, workspaceId],
+        });
+
+        setIsConfirming(true);
+        toast.loading(`Inviting ${adminAddresses.length} admins...`, {
+          id: "bulk-admin-invite",
+        });
+
+        const hash = await sendTransactionAsync({
+          to: contractAddress,
+          data,
+          chainId: base.id,
+        });
+
+        if (hash) {
+          setTxHash(hash);
+          setIsSuccess(true);
+          toast.success(`Successfully invited ${adminAddresses.length} admins!`, {
+            id: "bulk-admin-invite",
+          });
+          return hash;
+        }
+
+        throw new Error("No transaction hash returned");
+      } catch (error) {
+        setOperationError(error);
+        toast.error(
+          error?.shortMessage || error?.message || "Failed to invite admins",
+          { id: "bulk-admin-invite" }
+        );
+        throw error;
+      } finally {
+        setIsProcessing(false);
+        setIsConfirming(false);
+      }
+    },
+    [sendTransactionAsync]
+  );
+
+  // Bulk workspace fund allocation
+  const bulkAllocateWorkspaceFunds = useCallback(
+    async (workspaceIds, amounts) => {
+      try {
+        setIsProcessing(true);
+        setOperationError(null);
+        setIsSuccess(false);
+
+        if (workspaceIds.length !== amounts.length) {
+          throw new Error("Workspace IDs and amounts arrays must match");
+        }
+
+        if (workspaceIds.length === 0 || workspaceIds.length > 10) {
+          throw new Error("Must allocate to 1-10 workspaces at a time");
+        }
+
+        // Convert amounts to USDC units
+        const amountsInUnits = amounts.map((amount) =>
+          parseUnits(amount.toString(), USDC_DECIMALS)
+        );
+
+        // Encode bulk fund allocation function call
+        const data = encodeFunctionData({
+          abi: contractABI,
+          functionName: "bulkAllocateWorkspaceFunds",
+          args: [workspaceIds, amountsInUnits],
+        });
+
+        setIsConfirming(true);
+        toast.loading(`Allocating funds to ${workspaceIds.length} workspaces...`, {
+          id: "bulk-fund-allocation",
+        });
+
+        const hash = await sendTransactionAsync({
+          to: contractAddress,
+          data,
+          chainId: base.id,
+        });
+
+        if (hash) {
+          setTxHash(hash);
+          setIsSuccess(true);
+          toast.success(`Successfully allocated funds to ${workspaceIds.length} workspaces!`, {
+            id: "bulk-fund-allocation",
+          });
+          return hash;
+        }
+
+        throw new Error("No transaction hash returned");
+      } catch (error) {
+        setOperationError(error);
+        toast.error(
+          error?.shortMessage || error?.message || "Failed to allocate workspace funds",
+          { id: "bulk-fund-allocation" }
+        );
+        throw error;
+      } finally {
+        setIsProcessing(false);
+        setIsConfirming(false);
+      }
+    },
+    [sendTransactionAsync]
+  );
+
+  return {
+    bulkInviteAdmins,
+    bulkAllocateWorkspaceFunds,
+    isProcessing,
+    isConfirming,
+    isSuccess,
+    txHash,
+    error: operationError,
+  };
+}
+
+/**
+ * Hook for bulk job board operations
+ */
+export function useBulkJobOperations() {
+  const [txHash, setTxHash] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [operationError, setOperationError] = useState(null);
+
+  // AppKit send transaction hook
+  const { sendTransactionAsync } = useSendTransaction();
+
+  // Bulk job status updates
+  const bulkUpdateJobStatus = useCallback(
+    async (jobIds, newStatuses) => {
+      try {
+        setIsProcessing(true);
+        setOperationError(null);
+        setIsSuccess(false);
+
+        if (jobIds.length !== newStatuses.length) {
+          throw new Error("Job IDs and statuses arrays must match");
+        }
+
+        if (jobIds.length === 0 || jobIds.length > 20) {
+          throw new Error("Must update 1-20 jobs at a time");
+        }
+
+        // Encode bulk job status update function call
+        const data = encodeFunctionData({
+          abi: contractABI,
+          functionName: "bulkUpdateJobStatuses",
+          args: [jobIds, newStatuses],
+        });
+
+        setIsConfirming(true);
+        toast.loading(`Updating ${jobIds.length} job statuses...`, {
+          id: "bulk-job-update",
+        });
+
+        const hash = await sendTransactionAsync({
+          to: contractAddress,
+          data,
+          chainId: base.id,
+        });
+
+        if (hash) {
+          setTxHash(hash);
+          setIsSuccess(true);
+          toast.success(`Successfully updated ${jobIds.length} job statuses!`, {
+            id: "bulk-job-update",
+          });
+          return hash;
+        }
+
+        throw new Error("No transaction hash returned");
+      } catch (error) {
+        setOperationError(error);
+        toast.error(
+          error?.shortMessage || error?.message || "Failed to update job statuses",
+          { id: "bulk-job-update" }
+        );
+        throw error;
+      } finally {
+        setIsProcessing(false);
+        setIsConfirming(false);
+      }
+    },
+    [sendTransactionAsync]
+  );
+
+  // Bulk job removal
+  const bulkRemoveJobs = useCallback(
+    async (jobIds) => {
+      try {
+        setIsProcessing(true);
+        setOperationError(null);
+        setIsSuccess(false);
+
+        if (jobIds.length === 0 || jobIds.length > 25) {
+          throw new Error("Must remove 1-25 jobs at a time");
+        }
+
+        // Encode bulk job removal function call
+        const data = encodeFunctionData({
+          abi: contractABI,
+          functionName: "bulkRemoveJobs",
+          args: [jobIds],
+        });
+
+        setIsConfirming(true);
+        toast.loading(`Removing ${jobIds.length} jobs...`, {
+          id: "bulk-job-removal",
+        });
+
+        const hash = await sendTransactionAsync({
+          to: contractAddress,
+          data,
+          chainId: base.id,
+        });
+
+        if (hash) {
+          setTxHash(hash);
+          setIsSuccess(true);
+          toast.success(`Successfully removed ${jobIds.length} jobs!`, {
+            id: "bulk-job-removal",
+          });
+          return hash;
+        }
+
+        throw new Error("No transaction hash returned");
+      } catch (error) {
+        setOperationError(error);
+        toast.error(
+          error?.shortMessage || error?.message || "Failed to remove jobs",
+          { id: "bulk-job-removal" }
+        );
+        throw error;
+      } finally {
+        setIsProcessing(false);
+        setIsConfirming(false);
+      }
+    },
+    [sendTransactionAsync]
+  );
+
+  return {
+    bulkUpdateJobStatus,
+    bulkRemoveJobs,
+    isProcessing,
+    isConfirming,
+    isSuccess,
+    txHash,
+    error: operationError,
+  };
+}
+
+/**
+ * Hook for bulk analytics and reporting
+ */
+export function useBulkAnalytics() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [analyticsData, setAnalyticsData] = useState(null);
+  const [error, setError] = useState(null);
+
+  // Get bulk analytics for multiple workspaces
+  const getBulkWorkspaceAnalytics = useCallback(
+    async (workspaceIds) => {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        if (workspaceIds.length === 0 || workspaceIds.length > 10) {
+          throw new Error("Must analyze 1-10 workspaces at a time");
+        }
+
+        // This would typically make API calls to get analytics data
+        // For now, we'll simulate the bulk analytics gathering
+        const analytics = await Promise.all(
+          workspaceIds.map(async (workspaceId) => {
+            // Simulate API calls for each workspace
+            const payrollCount = Math.floor(Math.random() * 50) + 1;
+            const totalPaid = Math.floor(Math.random() * 10000) + 1000;
+            const employeeCount = Math.floor(Math.random() * 20) + 1;
+
+            return {
+              workspaceId,
+              payrollCount,
+              totalPaid,
+              employeeCount,
+              averageSalary: totalPaid / employeeCount,
+              lastPayrollDate: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
+            };
+          })
+        );
+
+        setAnalyticsData({
+          totalWorkspaces: workspaceIds.length,
+          totalPayrolls: analytics.reduce((sum, a) => sum + a.payrollCount, 0),
+          totalPaid: analytics.reduce((sum, a) => sum + a.totalPaid, 0),
+          totalEmployees: analytics.reduce((sum, a) => sum + a.employeeCount, 0),
+          workspaceAnalytics: analytics,
+        });
+
+        return analytics;
+      } catch (err) {
+        setError(err);
+        throw err;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
+
+  // Get bulk employee performance metrics
+  const getBulkEmployeeMetrics = useCallback(
+    async (employeeAddresses) => {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        if (employeeAddresses.length === 0 || employeeAddresses.length > 20) {
+          throw new Error("Must analyze 1-20 employees at a time");
+        }
+
+        // Simulate bulk employee metrics gathering
+        const metrics = await Promise.all(
+          employeeAddresses.map(async (address) => {
+            const totalPaid = Math.floor(Math.random() * 5000) + 500;
+            const payrollCount = Math.floor(Math.random() * 12) + 1;
+
+            return {
+              address,
+              totalPaid,
+              payrollCount,
+              averagePayment: totalPaid / payrollCount,
+              lastPaymentDate: new Date(Date.now() - Math.random() * 60 * 24 * 60 * 60 * 1000),
+              paymentConsistency: Math.random() > 0.2 ? "Good" : "Needs Improvement",
+            };
+          })
+        );
+
+        return metrics;
+      } catch (err) {
+        setError(err);
+        throw err;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
+
+  return {
+    getBulkWorkspaceAnalytics,
+    getBulkEmployeeMetrics,
+    analyticsData,
+    isLoading,
+    error,
+  };
+}
